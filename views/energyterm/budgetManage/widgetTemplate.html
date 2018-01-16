@@ -1,0 +1,80 @@
+<script type="text/html" id="modify-record-float">
+    <div class="budgetFloat">
+        <div class="remarkTitle">
+            填写批注
+        </div>
+        <div class="remarkText">
+            <ptext-textarea length="100" placeholder="请填写预算相关说明，100字以内">
+                 </ptext-textarea>
+        </div>
+        <div class="remarkSave">
+            <pbutton-blue text="保存"></pbutton-blue>
+        </div>
+        <div class="reportTitle">预算修改记录</div>
+        <div class="reportTable">
+            <ul class="tableHead tableUl">
+                <li>修改时间</li>
+                <li>操作人</li>
+                <li>操作</li>
+                <li>能耗预算</li>
+                <li>批注</li>
+            </ul>
+            <div class="tableCont">
+                <ul class="tableLine tableUl">
+                    <li>201711.11 16:52</li>
+                    <li>张三</li>
+                    <li>编辑预算</li>
+                    <li>110，100</li>
+                    <li class="remarkTd">
+                        <span class="cell">同意了以了以上的飞洒发斯蒂芬斯蒂芬</span></li>
+
+                </ul>
+                <ul class="tableLine tableUl">
+                    <li>201711.11 16:52</li>
+                    <li>张三</li>
+                    <li>编辑预算</li>
+                    <li>110，100</li>
+                    <li class="remarkTd">
+                        <span class="cell">同意了以上的飞洒发斯蒂芬斯蒂芬同意了以上的飞洒发斯蒂芬斯蒂芬</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</script>
+<script type="text/html" id="day-Item-Plan">
+    <div class="itemPlanFloat">
+        <div class="pieChart" id="dayItemChart"></div>
+        <div class="chartInfo">
+            <ul class="infoUl">
+                <li class="circle"><span></span></li>
+                <li class="name">消防栓</li>
+                <li class="value">215<em class="unit">kwh</em></li>
+            </ul>
+        </div>
+    </div>
+</script>
+<script type="text/html" id="set-plan-window">
+    <div class="planSetWindow">
+        <div class="explainHead">欢迎设置能耗计划，合理的计划可以更有效的控制预算！</div>
+        <div class="stitle">什么是能耗计划</div>
+        <div class="scont what">在设置建筑能耗预算后，为了更好的控制能耗，通常会把能耗预算拆分到分项-日这个维度进行实际管理，拆分出来的结果就叫做能耗计划。</div>
+        <div class="stitle">如何设置能耗计划</div>
+        <div class="scont">为了把能耗预算拆分到分项－日能耗计划，需要分两步完成，第一步 选择手动拆分，第二步将拆分后的结果自动拆分到日分项计划。</div>
+        <ul class="stepUl">
+            <li><span class="num">1</span>选择手动拆分方式，将月预算拆分成日计划或月分项计划</li>
+            <li><span class="num">2</span>填写每项或每日的计划，并保存</li>
+            <li><span class="num">3</span>将拆分后的结果，自动计算日-分项计划</li>
+        </ul>
+        <div class="imgExplain"></div>
+        <div class="chooseButton">
+            <div class="leftCheck">
+                <pswitch-checkbox text="我是复选" change="eventCall"></pswitch-checkbox>
+            </div>
+            <div class="rigthButton">
+                <span class="btitle">设置能耗计划</span>
+                <pbutton-blue icon="I" text="按分项拆分" style="margin-right: 20px;"></pbutton-blue>
+                <pbutton-blue icon="I" text="按日期拆分"></pbutton-blue>
+            </div>
+        </div>
+    </div>
+</script>

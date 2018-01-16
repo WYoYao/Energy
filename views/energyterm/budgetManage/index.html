@@ -1,0 +1,154 @@
+<link rel="stylesheet" href="/css/energyterm/budgetManage/index.css" />
+<script src="/js/energyterm/budgetManage/controller.js"></script>
+<script src="/js/energyterm/budgetManage/model.js"></script>
+<script src="/js/energyterm/budgetManage/event.js"></script>
+
+<% include widgetTemplate.html %>
+<div class="budgetMangeWrap" id="budgetMange">
+    <pwindow-float id="modifyRecordFloat" templateid="modify-record-float" title="预算修改记录" isshade="false" onclick="eventStop(event)">
+                <animate maxpx="0" minpx="-820" orientation="right"></animate>
+    </pwindow-float>
+    <pwindow-float id="dayItemPlan" templateid="day-Item-Plan" title="2017年12月22日分项计划能耗" isshade="false" onclick="eventStop(event)">
+                <animate maxpx="0" minpx="-500" orientation="right"></animate>
+    </pwindow-float>
+    <pwindow-global id="setPlanWindow" templateid="set-plan-window"></pwindow-global>
+    <div class="idayPlanFloat">
+        <div class="floatHead">
+            <span>2017年12月计划能耗</span>
+            <span class="close">x</span>
+        </div>
+        <div class="columnChart" id="itemDayChart"></div>
+    </div>
+    <div class="budManCont" style="display: block;">
+        <div class="budManHeader">
+            <div class="leftTitle">
+                <div class="backButton">
+                    <pbutton-white icon="I"></pbutton-white>
+                </div>
+                首页<em class="line">/</em><span class="boldColor">预算管理</span>
+            </div>
+            <span>能耗目标设置</span>
+        </div>
+        <div class="monthBudgets">
+            <div class="leftButton norButton"><span><</span></div>
+            <div class="rightButton norButton"><span>></span></div>
+            <div class="monthBlocks">
+                <div class="itemBlock" v-for="(item,index) in energyBudgetList">
+                    <div class="blockTitle">
+                        <span v-text="item.planDateStr">2017.02</span>
+                        <span class="now" v-show="item.isNowMonth">本月</span>
+                        <em class="picEm" title="预算已被锁定" v-show="item.state==0">s</em>
+                        <div class="remark"><em class="picEm">h</em>备注信息</div>
+                    </div>
+                    <div class="blockInfo" v-show="item.ifHasBudget&&!item.editBudgetShow&&!item.changeWarnShow">
+                        <div class="bCont">
+                            <div class="lineInfo">
+                                <span>预算管理节点</span>
+                                <div class="newWrap" v-show="item.isBudgetUpdated&&item.state!=0">
+                                    <span class="hasNew" onclick="showChangeWarn(event)"><em class="picEm">y</em>有更新</span>
+                                    <div class="budgetPop">
+                                        <div class="popTitle">该建筑预算管理节点现已改为"{{item.newBudgetItemName}}"，是否使用新管理节点重新创建预算？</div>
+                                        <div class="popSubtitle">使用新节点创建预算会删除原预算及计划</div>
+                                        <div class="popButton">
+                                            <pbutton-white text="使用新节点创建" @click="againCreate(item,$event)" style="float: right;"></pbutton-white>
+                                            <pbutton-white text="取消" click="hideChangeWarn" style="float: right; margin-right: 20px;"></pbutton-white>
+                                        </div>
+                                    </div>
+                                </div>
+                                <span class="infoData smallFont" v-text="item.budgetItemName"></span>
+                            </div>
+                            <div class="lineInfo">
+                                <span>能耗预算</span>
+                                <span class="infoData">{{item.energyDataBudget}}<em class="unitFont">kWh</em></span>
+                            </div>
+                            <div class="lineInfo" v-show="item.energyDataReal">
+                                <span>实际能耗</span>
+                                <span class="infoData">{{item.energyDataReal}}<em class="unitFont">kWh</em></span>
+                            </div>
+                            <div class="lineInfo" v-show="item.realOccupyBudgetRatio">
+                                <span>实际能耗占预算比</span>
+                                <span class="infoData" v-bind:class="{'redFont':item.realOccupyBudgetRatio>100}">{{item.realOccupyBudgetRatio}}%</span>
+                            </div>
+                            <div class="planLine" v-show="item.ifHasPlan">
+                                <span class="checkPlan"><em class="picEm">h</em>查看能耗计划</span>
+                                <span class="downPlan">D</span>
+                                <span class="editPlan">`</span>
+                            </div>
+                            <div class="planLine" v-show="!item.ifHasPlan">
+                                <span class="createPlan"><em class="picEm">J</em>创建能耗计划</span>
+                            </div>
+                        </div>
+                        <div class="bBottom">
+                            <span class="editBudget" title="预算已被锁定，无法编辑" v-bind:class="{'disabled':item.state==0}" v-on:click="showEditPanel(item)"><em class="picEm">`</em>编辑预算</span>
+                            <div class="downBudget"><em class="picEm">D</em>下载报告</div>
+                        </div>
+                    </div>
+                    <div class="createPanel" v-show="!item.ifHasBudget&&!item.editBudgetShow">
+                       <span v-on:click="createNewBudget(item)"><em class="picEm">J</em>点击创建预算</span> 
+                    </div>
+                    <div class="blockEdit" v-show="item.editBudgetShow">
+                        <div class="sign"><span v-show="item.ifHasPlan">若编辑预算，保存后会删除已创建的能耗计划！</span></div>
+                        <div class="bInput">
+                            <ptext-text text="'kWh'" placeholder="'请输入总预算'" value="item.energyDataBudget" bind='true'>             
+                            </ptext-text>
+                        </div>
+                        <div class="bInput">
+                            <ptext-text text="'kWh/m³'" placeholder="'请输入单平米能耗'" value="item.energyDataBudgetPerSquare" bind='true'>               
+                            </ptext-text>
+                        </div>
+                        <div class="bText">
+                            <ptext-textarea length="100" placeholder="'请填写预算相关说明，100字以内'" value="item.remark" bind='true'>
+                            </ptext-textarea>
+                        </div>
+                        <div class="bConnect"></div>
+                        <div class="editButton">
+                            <pbutton-blue text="保存" style="float: right;" click="saveSureShow"></pbutton-blue>
+                            <div class="budgetPop saveSurePop">
+                                <div class="popTitle">确定要保存{{item.isNowMonth?'本月':item.planDateStr.replace('.','年')+'月'}}能耗预算吗？</div>
+                                <div class="popSubtitle" v-show="item.isNowMonth">本月预算创建后立刻生效，生效后将无法编辑！</div>
+                                <div class="popSubtitle" v-show="!item.isNowMonth">预算到该月立刻生效，生效后将无法编辑！</div>
+                                <div class="popButton">
+                                    <pbutton-white text="取消" click="cancelSaveSure" style="float: right;"></pbutton-white>
+                                    <pbutton-white text="确定" @click="sureSaveBudget(item)" style="float: right; margin-right: 20px;"></pbutton-white>
+                                </div>
+                            </div>
+                            <div class="editCancel">
+                                <pbutton-blue text="取消" isborder="false" @click="closeEditPanel(item,index)"></pbutton-blue>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="changeWarn" v-show="item.changeWarnShow">
+                        <div class="bCont">
+                            <div class="lineInfo">
+                                <span>当前预算管理节点:</span>
+                                <span class="blackFont">{{item.budgetItemName}}</span>
+                            </div>
+                            <div class="lineInfo">
+                                <span>该建筑预算管理节点已改为：</span>
+                                <span class="blackFont">{{item.newBudgetItemName}}</span>
+                            </div>
+                            <div class="lineInfo">
+                                是否使用新的预算管理节点重新创建预算                      
+                            </div>
+                        </div>
+                        <div class="changeButton">
+                            <pbutton-white text="继续编辑" style="margin-right: 10px; width: 114px;" @click="continueEdit(item)"></pbutton-white>
+                            <pbutton-white text="使用新节点创建" @click="againCreate(item,$event)"></pbutton-white>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="chartWrap">
+            <div class="chartTitle">历时月参考值</div>
+            <div class="chartSubtile">
+                <span class="label plan"><em></em>计划能耗</span>
+                <span class="label real"><em></em>实测能耗</span>
+                <span class="label over"><em></em>实测能耗超计划</span>
+                <span>单位：<em>kWh</em></span>
+            </div>
+            <div class="chartCont" id="historyEnergyChart"></div>
+        </div>
+    </div>
+    <% include planSet.html %>
+</div>

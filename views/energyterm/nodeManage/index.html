@@ -1,0 +1,26 @@
+<% include ../../header.html %>
+
+    <!-- 单个F的公共样式 Start  -->
+    <link rel="stylesheet" href="/css/energyterm/nodeManage/public.css">
+    <!-- 单个F的公共样式 Start  -->
+
+    <!-- 准备创建Vue Start  -->
+    <script src="/js/energyterm/index.js"></script>
+    <!-- 准备创建Vue End    -->
+
+    <!-- 加载需要的组件 Start -->
+    <% include ./component/budget_com.html %>
+
+        <!-- 挂载DOM -->
+        <div id="app">
+            <div class="body">
+
+                <% include ./moreBuild.html %>
+
+                    <% include ./subOption.html %>
+
+                        <% include ./budget.html %>
+            </div>
+        </div>
+
+        <% include ../../footer.html %>

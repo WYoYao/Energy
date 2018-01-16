@@ -1,0 +1,83 @@
+<link rel="stylesheet" href="/css/energyterm/nodeManage/budget.css">
+
+<script src="/js/energyterm/nodeManage/budget/controller.js"></script>
+<script src="/js/energyterm/nodeManage/budget/event.js"></script>
+<script src="/js/energyterm/nodeManage/budget/model.js"></script>
+
+<div class="budget_content" v-cloak v-if="onPage=='budget'">
+
+    <!-- 头部 Start -->
+    <div class="sitemap">
+
+        <!-- 返回按钮Start -->
+        <div class="backbtn" @click='alert("返回")'>
+            I
+        </div>
+        <!-- 返回按钮End -->
+
+        <!-- 面包屑文字Start -->
+        <div class="map_index">
+            首页&nbsp;/&nbsp;
+            <span class="map_name">
+                编辑博锐尚格大厦预算管理节点
+            </span>
+        </div>
+        <!-- 面包屑文字End -->
+
+    </div>
+    <!-- 头部 End -->
+
+    <!-- 内容部分 Start -->
+    <div class="contenter">
+
+        <!-- 文字提示 Start -->
+        <div class="title">
+            点击选择预算管理节点
+        </div>
+        <!-- 文字提示 End -->
+
+        <!--  树结构 Start -->
+
+        <mybudgetnode :budget_tree="BudgetNodeTree" />
+
+        <!-- 竖线 Start  -->
+        <div class="box">
+
+            <div class="view noleft">
+                <p class="code">
+                    可算找回来了
+                </p>
+            </div>
+
+            <div class="block">
+
+                <div class="view noright">
+                    <p class="code">
+                        可算找回来了
+                    </p>
+                </div>
+
+                <div class="view noright">
+                    <p class="code">
+                        可算找回来了
+                    </p>
+                </div>
+            </div>
+
+        </div>
+        <!-- 竖线 End -->
+
+        <!--  树结构 End -->
+
+    </div>
+    <!-- 内容部分 End -->
+
+    <!--  底部内容 Start -->
+    <div class="bottomer">
+        <div class="save">
+            <pbutton-blue text="保存"></pbutton-blue>
+        </div>
+    </div>
+    <!--  底部内容 End -->
+
+</div>

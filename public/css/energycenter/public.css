@@ -1,0 +1,28 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    width: calc(100% - 22px);
+    height: calc(100% - 11px);
+    padding: 10px 10px 0;
+    background: #F8F8F8;
+}
+#app{
+    width: 100%;
+    height: 100%;
+    border-radius: 3px;
+    border: 1px solid #D9E2E8;
+    border-bottom: none;
+    background: #FFFFFF;
+}
+.body{
+    width: 100%;
+    height: 100%;
+}
+.redFont{
+    color: #F87C7C !important;
+}
+.greenFont{
+    color: #68C5B3 !important;
+}

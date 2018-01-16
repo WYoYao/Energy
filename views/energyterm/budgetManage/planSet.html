@@ -1,0 +1,128 @@
+<link rel="stylesheet" href="/css/energyterm/budgetManage/planSet.css" />
+<div class="budManCont" style="display: none;">
+    <div class="budManHeader">
+        <div class="leftTitle">
+            <div class="backButton">
+                <pbutton-white icon="I"></pbutton-white>
+            </div>
+            首页<em class="line">/</em>预算管理<em class="line">/</em><span class="boldColor">设置博瑞尚格大厦<em class="line">-</em>2017.12能耗计划</span>
+        </div>
+    </div>
+    <div class="energyPlanWrap">
+        <div class="planHead">
+            <div class="energyBlock">
+                <div class="dateInfo">月能耗预算<span class="date">(12.01~12.31)</span></div>
+                <div class="energyData">8,5656<span class="unit">kWh</span></div>
+            </div>
+            <div class="operateSymbol">-</div>
+            <div class="energyBlock">
+                <div class="dateInfo">已发生能耗<span class="date">(12.01~12.31)</span></div>
+                <div class="energyData">8,5656<span class="unit">kWh</span></div>
+            </div>
+            <div class="operateSymbol">=</div>
+            <div class="energyBlock">
+                <div class="dateInfo">剩余预算<span class="date">(12.01~12.31)</span></div>
+                <div class="energyData">8,5656<span class="unit">kWh</span></div>
+            </div>
+            <div class="autoButton">
+                <pbutton-white icon="I" text="自动分配"></pbutton-white>
+            </div>
+        </div>
+        <div class="planPanelMenu">
+            <div class="menuButton">
+                <ptab-button id="" datasource="dataArr" text="name" sel=""></ptab-button>
+            </div>
+            <div class="info">计划能耗汇总：<span>856,562</span><em class="unit">kWh</em>低于剩余预算：41,000,00<em class="unit">kWh</em></div>
+            <div class="showChart">
+                <pbutton-white icon="L" text="计划能耗"></pbutton-white>
+            </div>
+            <div class="showChart">
+                <pbutton-white icon="$" text="计划能耗"></pbutton-white>
+            </div>
+        </div>
+        <div class="countMachine">
+            <div class="machineHead">
+                <span class="add normal">增加计划能耗</span>
+                <span class="cut sel">减少计划能耗</span>
+            </div>
+            <div class="inputBox">
+                <span class="symbol">+</span>
+                <div class="text">
+                    <ptext-text placeholder="" text="kWh">
+                                </ptext-text>
+                </div>
+            </div>
+            <div class="sureButton">
+                <pbutton-blue text="确定" style="width: 100%"></pbutton-blue>
+            </div>
+        </div>
+        <div class="itemPlan" style="display: none;">
+            <div class="tableHead tableUl">
+                <div>分项名称</div>
+                <div>同比能耗</div>
+                <div>环比能耗</div>
+                <div>计划能耗</div>
+                <div class="Percent">本月已发生能耗比例</div>
+            </div>
+            <div class="planTable">
+                <div class="tableUl tableLine">
+                    <div>送排风机</div>
+                    <div>58<span>kWh</span></div>
+                    <div>58<span>kWh</span></div>
+                    <div class="editPlan">
+                        <div class="eInput">
+                            <ptext-text placeholder="" text="kWh">
+                                </ptext-text>
+                        </div>
+                        <div class="connect"></div>
+                        <div class="adjustNum">
+                            <span class="text">5.5%</span>
+                            <div class="arrow">
+                                <span class="upArrow">t</span>
+                                <span class="upArrow">b</span>
+                            </div>
+                        </div>
+                        <div class="countPic"></div>
+
+                    </div>
+                    <div class="Percent">12.2%<span></span></div>
+                    <div class="showChart"><em class="picEm">$</em>逐日计划</div>
+                </div>
+            </div>
+        </div>
+        <div class="dayPlan">
+            <div class="tableHead">
+                <span>日</span> <span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span>
+            </div>
+            <div class="planTable">
+                <div class="dayCell past">
+                    <div class="date"><span>1</span><span class="showChart"><em class="picEm">L</em>分项计划</span></div>
+                    <div class="realValue">420<span class="unit">kWh</span></div>
+                    <div class="inputBox" style="display: none;">
+                        <div class="input">
+                            <ptext-text placeholder="" text="kWh">
+                                </ptext-text>
+                        </div>
+                        <div class="countPic"></div>
+                    </div>
+                </div>
+                <div class="dayCell now">
+                    <div class="date">
+                        <span>2</span><span class="showChart"><em class="picEm">L</em>分项计划</span>
+                    </div>
+                    <div class="realValue" style="display: none;">420<span class="unit">kWh</span></div>
+                    <div class="inputBox">
+                        <div class="input">
+                            <ptext-text placeholder="" text="kWh">
+                                </ptext-text>
+                        </div>
+                        <div class="countPic"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bottomButton">
+            <pbutton-blue text="保存"></pbutton-blue>
+        </div>
+    </div>
+</div>

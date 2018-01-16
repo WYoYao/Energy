@@ -1,0 +1,63 @@
+<!-- 单个预算的节点 Start -->
+
+<script type="text/html" id="budgetnode">
+
+    <!-- <div class="block"> -->
+            <!-- template  -->
+            <div class="block" v-for="item in node_tree">
+                        <div class="view" :class="{noright:item.childs.length==0}">
+                            <p class="code" :title="item.energyItemName" v-text="item.energyItemName">
+                            </p>
+                        </div>
+                        <budgetnode :node_tree="item.childs"/>
+            </div>
+
+    <!-- </div> -->
+
+</script>
+
+<script>
+
+    Vue.component('budgetnode', {
+        template: "#budgetnode",
+        props: ["node_tree"],
+        beforeMount: function () {
+
+            console.log(this.node_tree);
+        }
+    })
+</script>
+
+<!-- 单个预算的节点 End   -->
+
+<!--  预算管理的节点  -->
+<script type="text/html" id="budget_com">
+
+            <!-- 竖线 Start  -->
+            <div class="box">
+
+                    <div class="view noleft">
+                        <p class="code" :title="budget_tree.energyItemName" v-text="budget_tree.energyItemName">
+                           
+                        </p>
+                    </div>
+        
+                    <budgetnode :node_tree="budget_tree.childs"/>
+        
+            </div>
+            <!-- 竖线 End -->
+
+</script>
+
+<script>
+
+    Vue.component('mybudgetnode', {
+        template: "#budget_com",
+        props: ["budget_tree"],
+        beforeMount: function () {
+
+            console.log(this.budget_tree);
+        }
+
+    })
+</script>
