@@ -424,6 +424,8 @@ v.pushComponent({
     name: 'global',
     data: {
         onPage: '',
+        NodeManageModel: {
+        },   // 编辑的预算节点 和计划管理节点时候需要查询的节点信息
     },
     methods: {
         toThousands: toThousands,
@@ -439,6 +441,7 @@ $(function () {
 
     v.createVue();
     // v.initPage('more_build');
-    //v.initPage('subOption');
-    v.initPage('budget');
+    v.initPage('subOption');
+    // v.initPage('budget');
+    //v.initPage('plan');
 });

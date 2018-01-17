@@ -26,3 +26,10 @@ body{
 .greenFont{
     color: #68C5B3 !important;
 }
+.grayFont{
+    color: #6D6D6D !important;
+}
+.moreblackFont{
+    color: #151515 !important;
+    font-weight: 500;
+}

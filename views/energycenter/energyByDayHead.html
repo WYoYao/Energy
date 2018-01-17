@@ -1,0 +1,36 @@
+<link rel="stylesheet" href="/css/energycenter/energyByDayHead.css">
+
+<script src="/js/energycenter/energyByDayHead/controller.js"></script>
+<script src="/js/energycenter/energyByDayHead/model.js"></script>
+<script src="/js/energycenter/energyByDayHead/event.js"></script>
+
+<div v-if="onPage == 'energybyday'" id="energyByDay">
+    
+    <div id="energyByDayHead">
+        <div class="energyByDayHead_back">
+            <i class="per-bIcon">I</i>
+        </div>
+        <div class="energyByDayHead_backtext">
+            <span @click="v.initPage('centerindex')">首页 /</span>
+            <span>{{projectUserSel.projectName}}&nbsp;&nbsp;{{projectUserSel.timeDayShow}}能耗详情 /</span>
+            <span>日能耗详情</span>
+        </div>
+        <div class="energyByDayHead_download">
+            <pbutton-white icon="D" text="下载日能耗报告"></pbutton-white>
+        </div>
+        <div class="energyByDayHead_time">
+            <ptime-calendar id="energyByDayHead_ptime" orientation="down" sel="DTimeSel">
+                <panel timetype="d" align="left" double="false" iscommontime="false"></panel>
+            </ptime-calendar>
+        </div>
+    </div>
+
+    <div id="energyByDayBody">
+        <% include ./energyByDayBody.html %>
+    </div>
+    
+
+</div>
+
+
+

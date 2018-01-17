@@ -4,11 +4,11 @@
             填写批注
         </div>
         <div class="remarkText">
-            <ptext-textarea length="100" placeholder="请填写预算相关说明，100字以内">
+            <ptext-textarea length="100" placeholder="'请填写预算相关说明，100字以内'" id="newRemarkText">
                  </ptext-textarea>
         </div>
         <div class="remarkSave">
-            <pbutton-blue text="保存"></pbutton-blue>
+            <pbutton-blue text="保存" @click="budgetRemarkSave()"></pbutton-blue>
         </div>
         <div class="reportTitle">预算修改记录</div>
         <div class="reportTable">
@@ -20,22 +20,14 @@
                 <li>批注</li>
             </ul>
             <div class="tableCont">
-                <ul class="tableLine tableUl">
-                    <li>201711.11 16:52</li>
-                    <li>张三</li>
-                    <li>编辑预算</li>
-                    <li>110，100</li>
+                <ul class="tableLine tableUl" v-for="item in selEnergyBudget.historyList">
+                    <li v-text="item.updateTime"></li>
+                    <li v-text="item.operateUser"></li>
+                    <li v-text="item.operate"></li>
+                    <li v-text="item.energyDataBudget"></li>
                     <li class="remarkTd">
-                        <span class="cell">同意了以了以上的飞洒发斯蒂芬斯蒂芬</span></li>
+                        <span class="cell" v-text="item.remark"></span></li>
 
-                </ul>
-                <ul class="tableLine tableUl">
-                    <li>201711.11 16:52</li>
-                    <li>张三</li>
-                    <li>编辑预算</li>
-                    <li>110，100</li>
-                    <li class="remarkTd">
-                        <span class="cell">同意了以上的飞洒发斯蒂芬斯蒂芬同意了以上的飞洒发斯蒂芬斯蒂芬</span></li>
                 </ul>
             </div>
         </div>
@@ -68,12 +60,12 @@
         <div class="imgExplain"></div>
         <div class="chooseButton">
             <div class="leftCheck">
-                <pswitch-checkbox text="我是复选" change="eventCall"></pswitch-checkbox>
+                <pswitch-checkbox text="下次不再提示" change="eventCall"></pswitch-checkbox>
             </div>
             <div class="rigthButton">
                 <span class="btitle">设置能耗计划</span>
-                <pbutton-blue icon="I" text="按分项拆分" style="margin-right: 20px;"></pbutton-blue>
-                <pbutton-blue icon="I" text="按日期拆分"></pbutton-blue>
+                <pbutton-blue icon=":" text="按分项拆分" style="margin-right: 20px;" @click="itemAllocateShow()"></pbutton-blue>
+                <pbutton-blue icon="﹂" text="按日期拆分" @click="dayAllocateShow()"></pbutton-blue>
             </div>
         </div>
     </div>

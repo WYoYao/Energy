@@ -59,7 +59,7 @@
             <!-- 主建筑 预算管理节点标题 End -->
 
             <!-- 非主建筑 预算管理节点标题 Start -->
-            <div class="ide mt" v-if="!item.isMain" v-for="info in item.nodes.budget" :title="info.name">
+            <div class="ide mt" v-if="!item.isMain" v-for="info in item.nodes.budget" :title="info.name" @click="redirectTobudget(item)">
                 预算管理总节点：{{info.name}}
                 <span class="icon">
                     `
@@ -68,7 +68,7 @@
             <!-- 非主建筑 预算管理节点标题 End -->
 
             <!-- 编辑节点按钮 Start  -->
-            <div class="ide">
+            <div class="ide" @click="redirectToPlan(item)">
                 已选计划管理节点：{{item.nodes.plan.length}}个
                 <span class="icon">
                     `
@@ -89,34 +89,34 @@
         <!-- <div class="item clear">
 
             <div class="head"> -->
-                <!-- 博锐尚格大厦 -->
-                <!-- icon Start -->
-                <!-- <span class="icon">
+        <!-- 博锐尚格大厦 -->
+        <!-- icon Start -->
+        <!-- <span class="icon">
                     主建筑
                 </span> -->
-                <!-- icon　End -->
-            <!-- </div> -->
+        <!-- icon　End -->
+        <!-- </div> -->
 
-            <!-- 节点标题 Start -->
-            <!-- <div class="ide mt">
+        <!-- 节点标题 Start -->
+        <!-- <div class="ide mt">
                 已选计划管理节点：23个
                 <span class="icon">
                     `
                 </span>
             </div> -->
-            <!-- 节点标题 End -->
+        <!-- 节点标题 End -->
 
-            <!-- 编辑节点按钮 Start  -->
-            <!-- <div class="ide">
+        <!-- 编辑节点按钮 Start  -->
+        <!-- <div class="ide">
                 已选计划管理节点：23个
                 <span class="icon">
                     `
                 </span>
             </div> -->
-            <!-- 编辑节点按钮 End  -->
+        <!-- 编辑节点按钮 End  -->
 
-            <!--   节点集合 Start   -->
-            <!-- <div class="nodes">
+        <!--   节点集合 Start   -->
+        <!-- <div class="nodes">
                 <span class="child">电锅炉</span>
                 <span class="child">电锅炉</span>
                 <span class="child">电锅炉</span>
@@ -214,7 +214,7 @@
                 <span class="child">电锅炉</span>
                 <span class="child">电锅炉</span>
             </div> -->
-            <!--   节点集合 End   -->
+        <!--   节点集合 End   -->
 
 
 

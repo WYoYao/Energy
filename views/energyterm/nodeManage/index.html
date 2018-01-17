@@ -10,17 +10,20 @@
 
     <!-- 加载需要的组件 Start -->
     <% include ./component/budget_com.html %>
+        <% include ./component/plan_com.html %>
 
-        <!-- 挂载DOM -->
-        <div id="app">
-            <div class="body">
+            <!-- 挂载DOM -->
+            <div id="app">
+                <div class="body">
 
-                <% include ./moreBuild.html %>
+                    <% include ./moreBuild.html %>
 
-                    <% include ./subOption.html %>
+                        <% include ./subOption.html %>
 
-                        <% include ./budget.html %>
+                            <% include ./budget.html %>
+
+                                <% include ./plan.html %>
+                </div>
             </div>
-        </div>
 
-        <% include ../../footer.html %>
+            <% include ../../footer.html %>

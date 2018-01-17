@@ -1,11 +1,11 @@
 <link rel="stylesheet" href="/css/energycenter/centerindex.css">
 
 <script src="/js/energycenter/centerindex/controller.js"></script>
-<script src="/js/energycenter/centerindex/event.js"></script>
 <script src="/js/energycenter/centerindex/model.js"></script>
+<script src="/js/energycenter/centerindex/event.js"></script>
 
 
-<div id="index" v-if='onPage="centerindex"'>
+<div id="index" v-if='onPage=="centerindex"'>
 
     <pnotice-message id="index_message"></pnotice-message>
 
@@ -58,125 +58,128 @@
     
     <!-- 表格 -->
     <div id="index_foot">
-            <div class="index_foot_head">
-                <span class="index_grid_span1 index_grid_span01">
-                    <span>项目名称</span>
-                    <div class="index_grid_pic" sort="indexsort0" @click="indexGridSord(event)">
-                        <i class="per-bIcon">t</i>
-                        <i class="per-bIcon">b</i>
-                    </div>
-                </span>
-                <span class="index_grid_span2">
-                    <span>项目类型</span>
-                    <div class="index_grid_pic" sort="indexsort1" @click="indexGridSord(event)">
-                        <i class="per-bIcon">t</i>
-                        <i class="per-bIcon">b</i>
-                    </div>
-                </span>
-                <span class="index_grid_span3">
-                    <span>所属气候带</span>
-                    <div class="index_grid_pic" sort="indexsort2" @click="indexGridSord(event)">
-                        <i class="per-bIcon">t</i>
-                        <i class="per-bIcon">b</i>
-                    </div>
-                </span>
-                <span class="index_grid_span4">
-                    <span>项目面积(m²)</span>
-                    <div class="index_grid_pic" sort="indexsort3" @click="indexGridSord(event)">
-                        <i class="per-bIcon">t</i>
-                        <i class="per-bIcon">b</i>
-                    </div>
-                </span>
-                <span class="index_grid_span5">
-                    <span class="index_foot_littlegray index_foot_little"></span>
-                    <span v-show="indexPage.energy">预算能耗 ( kWh )</span>
-                    <span v-show="!indexPage.energy">单平米预算能耗 ( kWh )</span>
-                    <div :class="indexPage.energy ? 'index_grid_pic' : 'index_grid_pic2'" sort="indexsort4" @click="indexGridSord(event)">
-                        <i class="per-bIcon">t</i>
-                        <i class="per-bIcon">b</i>
-                    </div>
-                </span>
-                <span class="index_grid_span6">
-                    <span>预算同比</span>
-                    <div class="index_grid_pic" sort="indexsort5" @click="indexGridSord(event)">
-                        <i class="per-bIcon">t</i>
-                        <i class="per-bIcon">b</i>
-                    </div>
-                </span>
-                <span class="index_grid_span7">
-                    <span>预算环比</span>
-                    <div class="index_grid_pic" sort="indexsort6" @click="indexGridSord(event)">
-                        <i class="per-bIcon">t</i>
-                        <i class="per-bIcon">b</i>
-                    </div>
-                </span>
-                <span class="index_grid_span8" >
-                    <span class="index_foot_littleblue index_foot_little" v-show="NotSelFutureMonth"></span>
-                    <span v-show="indexPage.energy" v-if="NotSelFutureMonth">实际能耗 ( kWh )</span>
-                    <span v-show="!indexPage.energy" v-if="NotSelFutureMonth">实际单平米能耗 ( kWh )</span>
-                    <div v-show="NotSelFutureMonth" :class="indexPage.energy ? 'index_grid_pic' : 'index_grid_pic2'" sort="indexsort7" @click="indexGridSord(event)">
-                        <i class="per-bIcon">t</i>
-                        <i class="per-bIcon">b</i>
-                    </div>
-                </span>
-                <span class="index_grid_span9">
-                    <span v-show="NotSelFutureMonth"><img src=""></span>
-                    <span v-show="NotSelFutureMonth">能耗预算比</span>
-                    <div v-show="NotSelFutureMonth" class="index_grid_pic" sort="indexsort8" @click="indexGridSord(event)">
-                        <i class="per-bIcon">t</i>
-                        <i class="per-bIcon">b</i>
-                    </div>
-                </span>
-                <span class="index_grid_span10">
-                    <span>能耗计划</span>
-                </span>
-                <span class="index_grid_span11"></span>
-            </div>
-            <div class="index_foot_neck">
-                <span class="index_grid_span1 index_grid_span01">项目总和</span>
-                <span class="index_grid_span2"></span>
-                <span class="index_grid_span3"></span>
-                <span class="index_grid_span4">{{projectInfo.totalAreaShow}}</span>
-                <span class="index_grid_span5" v-if="indexPage.energy">{{projectInfo.totalEnergyBudgetShow}}</span>
-                <span class="index_grid_span5" v-if="!indexPage.energy"></span>
-                <span class="index_grid_span6"></span>
-                <span class="index_grid_span7"></span>
-                <span class="index_grid_span8" v-show="NotSelFutureMonth" v-if="indexPage.energy">{{projectInfo.totalEnergyRealShow}}</span>
-                <span class="index_grid_span8" v-show="NotSelFutureMonth" v-if="!indexPage.energy"></span>
-                <span class="index_grid_span9" v-show="NotSelFutureMonth" v-if="projectInfo.totalEnengyOccupyBudegetPercent==null">-</span>
-                <span class="index_grid_span9" v-show="NotSelFutureMonth" v-if="projectInfo.totalEnengyOccupyBudegetPercent!=null" :class="projectInfo.totalEnengyOccupyBudegetPercent >= 100 ? 'redFont' : 'greenFont'">{{projectInfo.totalEnengyOccupyBudegetPercent+"%"}}</span>
-                <span class="index_grid_span10"></span>
-                <span class="index_grid_span11"></span>
-            </div>
-        <ul id="index_foot_ul">
-            <li class="index_foot_li" v-for="(item,index) in projectInfo.projectInfo" @click.stop="item.dataStatus != 1 ? IndexBudgetWindowOpen(item) : void 0" @mouseenter="indexGridHover(index)">
-                <span class="index_grid_span0">{{index+1}}</span>
-                <span class="index_grid_span1">{{item.projectName}}</span>
-                <span class="index_grid_span2">{{item.buildingTypeName}}</span>
-                <span class="index_grid_span3">{{item.climateZoneName}}</span>
-                <span class="index_grid_span4">{{item.areaShow}}</span>
-                <span class="index_grid_span5" v-show="item.dataStatus == 0" v-if="indexPage.energy">{{item.energyBudgetShow}}</span>
-                <span class="index_grid_span5" v-show="item.dataStatus == 0" v-if="!indexPage.energy">{{item.enengyBudegetPerSquareShow}}</span>
-                <span class="index_grid_span6" v-show="item.dataStatus == 0" v-if="indexPage.energy" :class="item.sameRatio > 0 ? 'redFont' : 'greenFont'">{{item.sameRatio}}</span>
-                <span class="index_grid_span6" v-show="item.dataStatus == 0" v-if="!indexPage.energy" :class="item.sameRatioPerSquare > 0 ? 'redFont' : 'greenFont'">{{item.sameRatioPerSquare}}</span>
-                <span class="index_grid_span7" v-show="item.dataStatus == 0" v-if="indexPage.energy" :class="item.circleRatio > 0 ? 'redFont' : 'greenFont'">{{item.circleRatio}}</span>
-                <span class="index_grid_span7" v-show="item.dataStatus == 0" v-if="!indexPage.energy" :class="item.circleRatioPerSquare > 0 ? 'redFont' : 'greenFont'">{{item.circleRatioPerSquare}}</span>
-                <span class="index_grid_span8" v-show="item.dataStatus == 0" v-if="indexPage.energy"><span v-show="NotSelFutureMonth">{{item.energyRealShow}}</span></span>
-                <span class="index_grid_span8" v-show="item.dataStatus == 0" v-if="!indexPage.energy"><span v-show="NotSelFutureMonth">{{item.energyRealPerSquareShow}}</span></span>
-                <span class="index_grid_span9" v-show="item.dataStatus == 0">
-                    <span v-show="NotSelFutureMonth" v-if="item.enengyOccupyBudegetPercent != null" :class="item.enengyOccupyBudegetPercent > 100 ? 'redFont' : 'greenFont'">{{item.enengyOccupyBudegetPercent}}%</span>
-                    <span v-show="NotSelFutureMonth" v-if="item.enengyOccupyBudegetPercent == null">-</span>
-                </span>
-                <span class="index_grid_span10" v-show="item.dataStatus == 0">
-                    <div><pbutton-blue isborder="false" icon="M" text="查看计划" @click.stop=""></pbutton-blue></div>
-                </span>
-                <span class="index_grid_span12" v-show="item.dataStatus == 1">项目该月未上线,无数据……</span>
-                <span class="index_grid_span12" v-show="item.dataStatus == 2">{{item.remark}}</span>
-                <span class="index_grid_span11">
-                    <div><pbutton-blue isborder="false" text="'查看能耗详情'" bind="true" disabled="item.dataStatus == 1" @click.stop=""></pbutton-blue></div>
-                </span>
-            </li>
-        </ul>
+        <div class="index_foot_head">
+            <span class="index_grid_span1 index_grid_span01">
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;项目名称</span>
+                <div class="index_grid_pic" @click="indexGridSord(0)">
+                    <i class="per-bIcon">t</i>
+                    <i class="per-bIcon">b</i>
+                </div>
+            </span>
+            <span class="index_grid_span2">
+                <span>项目类型</span>
+                <div class="index_grid_pic" @click="indexGridSord(1)">
+                    <i class="per-bIcon">t</i>
+                    <i class="per-bIcon">b</i>
+                </div>
+            </span>
+            <span class="index_grid_span3">
+                <span>所属气候带</span>
+                <div class="index_grid_pic" @click="indexGridSord(2)">
+                    <i class="per-bIcon">t</i>
+                    <i class="per-bIcon">b</i>
+                </div>
+            </span>
+            <span class="index_grid_span4">
+                <span>项目面积(m²)</span>
+                <div class="index_grid_pic" @click="indexGridSord(3)">
+                    <i class="per-bIcon">t</i>
+                    <i class="per-bIcon">b</i>
+                </div>
+            </span>
+            <span class="index_grid_span5">
+                <span class="index_foot_littlegray index_foot_little"></span>
+                <span v-show="indexPage.energy">预算能耗 ( kWh )</span>
+                <span v-show="!indexPage.energy">单平米预算能耗 ( kWh )</span>
+                <div :class="indexPage.energy ? 'index_grid_pic' : 'index_grid_pic2'" @click="indexGridSord(4)">
+                    <i class="per-bIcon">t</i>
+                    <i class="per-bIcon">b</i>
+                </div>
+            </span>
+            <span class="index_grid_span6">
+                <span>预算同比</span>
+                <div class="index_grid_pic" @click="indexGridSord(5)">
+                    <i class="per-bIcon">t</i>
+                    <i class="per-bIcon">b</i>
+                </div>
+            </span>
+            <span class="index_grid_span7">
+                <span>预算环比</span>
+                <div class="index_grid_pic" @click="indexGridSord(6)">
+                    <i class="per-bIcon">t</i>
+                    <i class="per-bIcon">b</i>
+                </div>
+            </span>
+            <span class="index_grid_span8" >
+                <span class="index_foot_littleblue index_foot_little" v-show="NotSelFutureMonth"></span>
+                <span v-show="indexPage.energy" v-if="NotSelFutureMonth">实际能耗 ( kWh )</span>
+                <span v-show="!indexPage.energy" v-if="NotSelFutureMonth">实际单平米能耗 ( kWh )</span>
+                <div v-show="NotSelFutureMonth" :class="indexPage.energy ? 'index_grid_pic' : 'index_grid_pic2'" @click="indexGridSord(7)">
+                    <i class="per-bIcon">t</i>
+                    <i class="per-bIcon">b</i>
+                </div>
+            </span>
+            <span class="index_grid_span9">
+                <span v-show="NotSelFutureMonth"><img src=""></span>
+                <span v-show="NotSelFutureMonth">能耗预算比</span>
+                <div v-show="NotSelFutureMonth" class="index_grid_pic" @click="indexGridSord(8)">
+                    <i class="per-bIcon">t</i>
+                    <i class="per-bIcon">b</i>
+                </div>
+            </span>
+            <span class="index_grid_span10">
+                <span>能耗计划</span>
+            </span>
+            <span class="index_grid_span11"></span>
+        </div>
+        <div class="index_foot_neck">
+            <span class="index_grid_span1 index_grid_span01">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;项目总和</span>
+            <span class="index_grid_span2"></span>
+            <span class="index_grid_span3"></span>
+            <span class="index_grid_span4">{{projectInfo.totalAreaShow}}</span>
+            <span class="index_grid_span5" v-if="indexPage.energy">{{projectInfo.totalEnergyBudgetShow}}</span>
+            <span class="index_grid_span5" v-if="!indexPage.energy"></span>
+            <span class="index_grid_span6"></span>
+            <span class="index_grid_span7"></span>
+            <span class="index_grid_span8" v-show="NotSelFutureMonth" v-if="indexPage.energy">{{projectInfo.totalEnergyRealShow}}</span>
+            <span class="index_grid_span8" v-show="NotSelFutureMonth" v-if="!indexPage.energy"></span>
+            <span class="index_grid_span9" v-show="NotSelFutureMonth" v-if="projectInfo.totalEnengyOccupyBudegetPercent==null">-</span>
+            <span class="index_grid_span9" v-show="NotSelFutureMonth" v-if="projectInfo.totalEnengyOccupyBudegetPercent!=null" :class="projectInfo.totalEnengyOccupyBudegetPercent >= 100 ? 'redFont' : 'greenFont'">{{projectInfo.totalEnengyOccupyBudegetPercent+"%"}}</span>
+            <span class="index_grid_span10"></span>
+            <span class="index_grid_span11"></span>
+        </div>
+        <div class="index_foot_ul_wrap">
+            <ul id="index_foot_ul">
+                <li class="index_foot_li" v-for="(item,index) in projectInfo.projectInfo" @click.stop="item.dataStatus != 1 ? IndexBudgetWindowOpen(item) : void 0" @mouseenter="indexGridHover(index)">
+                    <span class="index_grid_span0">{{index+1}}</span>
+                    <span class="index_grid_span1">{{item.projectName}}</span>
+                    <span class="index_grid_span2">{{item.buildingTypeName}}</span>
+                    <span class="index_grid_span3">{{item.climateZoneName}}</span>
+                    <span class="index_grid_span4">{{item.areaShow}}</span>
+                    <span class="index_grid_span5" v-show="item.dataStatus == 0" v-if="indexPage.energy">{{item.energyBudgetShow}}</span>
+                    <span class="index_grid_span5" v-show="item.dataStatus == 0" v-if="!indexPage.energy">{{item.enengyBudegetPerSquareShow}}</span>
+                    <span class="index_grid_span6" v-show="item.dataStatus == 0" v-if="indexPage.energy" :class="item.sameRatio > 0 ? 'redFont' : 'greenFont'">{{item.sameRatio}}</span>
+                    <span class="index_grid_span6" v-show="item.dataStatus == 0" v-if="!indexPage.energy" :class="item.sameRatioPerSquare > 0 ? 'redFont' : 'greenFont'">{{item.sameRatioPerSquare}}</span>
+                    <span class="index_grid_span7" v-show="item.dataStatus == 0" v-if="indexPage.energy" :class="item.circleRatio > 0 ? 'redFont' : 'greenFont'">{{item.circleRatio}}</span>
+                    <span class="index_grid_span7" v-show="item.dataStatus == 0" v-if="!indexPage.energy" :class="item.circleRatioPerSquare > 0 ? 'redFont' : 'greenFont'">{{item.circleRatioPerSquare}}</span>
+                    <span class="index_grid_span8" v-show="item.dataStatus == 0" v-if="indexPage.energy"><span v-show="NotSelFutureMonth">{{item.energyRealShow}}</span></span>
+                    <span class="index_grid_span8" v-show="item.dataStatus == 0" v-if="!indexPage.energy"><span v-show="NotSelFutureMonth">{{item.energyRealPerSquareShow}}</span></span>
+                    <span class="index_grid_span9" v-show="item.dataStatus == 0">
+                        <span v-show="NotSelFutureMonth" v-if="item.enengyOccupyBudegetPercent != null" :class="item.enengyOccupyBudegetPercent > 100 ? 'redFont' : 'greenFont'">{{item.enengyOccupyBudegetPercent}}%</span>
+                        <span v-show="NotSelFutureMonth" v-if="item.enengyOccupyBudegetPercent == null">-</span>
+                    </span>
+                    <span class="index_grid_span10" v-show="item.dataStatus == 0">
+                        <div v-show="item.ifHasPlan"><pbutton-blue isborder="false" icon="M" text="查看计划" @click.stop=""></pbutton-blue></div>
+                        <div v-show="!item.ifHasPlan">无</div>
+                    </span>
+                    <span class="index_grid_span12" v-show="item.dataStatus == 1">项目该月未上线,无数据……</span>
+                    <span class="index_grid_span12" v-show="item.dataStatus == 2">{{item.remark}}</span>
+                    <span class="index_grid_span11">
+                        <div><pbutton-blue isborder="false" text="'查看能耗详情'" bind="true" disabled="item.dataStatus == 1 || !NotSelFutureMonth" @click.stop=""></pbutton-blue></div>
+                    </span>
+                </li>
+            </ul>
+        </div>
     </div>
 
     <!-- 侧弹窗 -->

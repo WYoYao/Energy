@@ -4,15 +4,21 @@
 
     <div class="block">
 
-                <template v-for="item in node_tree">
-                        <div class="view" :class="{noright:item.childs.length==0}">
-                            <p class="code" :title="item.energyItemName" v-text="item.energyItemName">
-                            </p>
-                        </div>
-                        <budgetnode :node_tree="item.childs"/>
-                </template>
-         
-    </div>
+            <div class="view" v-for="(item,index) in node_tree" :class="{
+                firsts:(node_tree.length>1 && index==0),
+                lasts:(node_tree.length>1 && index==(node_tree.length-1)),
+                normal:node_tree.length==1
+            }">
+                <div class="code">
+                    <div class="border"></div>
+                    <div class="title" :title="item.energyItemName" v-text="item.energyItemName">
+
+                    </div>
+                    <div class="border" :class="{noborder:!item.childs.length}"></div>
+                </div>
+                <budgetnode :node_tree="item.childs"/>
+            </div>
+        </div>
 
 </script>
 
@@ -35,15 +41,18 @@
 
             <!-- 竖线 Start  -->
             <div class="box">
-
-                    <div class="view noleft">
-                        <p class="code" :title="budget_tree.energyItemName" v-text="budget_tree.energyItemName">
-                           
-                        </p>
+                    <div class="block">
+                        <div class="view">
+                            <div class="code">
+                                <div class="border noborder"></div>
+                                <div class="title" :class="{on:budget_tree.isBudgetNode}" :title="budget_tree.energyItemName">
+                                    <i></i>{{budget_tree.energyItemName}}
+                                </div>
+                                <div class="border"></div>
+                            </div>
+                            <budgetnode :node_tree="budget_tree.childs"/>
+                        </div>
                     </div>
-        
-                    <budgetnode :node_tree="budget_tree.childs"/>
-        
             </div>
             <!-- 竖线 End -->
 
@@ -54,10 +63,5 @@
     Vue.component('mybudgetnode', {
         template: "#budget_com",
         props: ["budget_tree"],
-        beforeMount: function () {
-
-            console.log(this.budget_tree);
-        }
-
     })
 </script>

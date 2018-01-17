@@ -5,10 +5,10 @@
 
 <% include widgetTemplate.html %>
 <div class="budgetMangeWrap" id="budgetMange">
-    <pwindow-float id="modifyRecordFloat" templateid="modify-record-float" title="预算修改记录" isshade="false" onclick="eventStop(event)">
+    <pwindow-float id="modifyRecordFloat" templateid="modify-record-float" title="预算修改记录" isshade="false" onclick="eventStop(event)"  onclick="eventStop(event)">
                 <animate maxpx="0" minpx="-820" orientation="right"></animate>
     </pwindow-float>
-    <pwindow-float id="dayItemPlan" templateid="day-Item-Plan" title="2017年12月22日分项计划能耗" isshade="false" onclick="eventStop(event)">
+    <pwindow-float id="dayItemPlan" templateid="day-Item-Plan" title="2017年12月22日分项计划能耗" isshade="false" onclick="eventStop(event)"  onclick="eventStop(event)">
                 <animate maxpx="0" minpx="-500" orientation="right"></animate>
     </pwindow-float>
     <pwindow-global id="setPlanWindow" templateid="set-plan-window"></pwindow-global>
@@ -32,13 +32,13 @@
         <div class="monthBudgets">
             <div class="leftButton norButton"><span><</span></div>
             <div class="rightButton norButton"><span>></span></div>
-            <div class="monthBlocks">
+            <div class="monthBlocks" id="monthBudgets">
                 <div class="itemBlock" v-for="(item,index) in energyBudgetList">
                     <div class="blockTitle">
                         <span v-text="item.planDateStr">2017.02</span>
                         <span class="now" v-show="item.isNowMonth">本月</span>
                         <em class="picEm" title="预算已被锁定" v-show="item.state==0">s</em>
-                        <div class="remark"><em class="picEm">h</em>备注信息</div>
+                        <div class="remark" @click.stop="showModifyRecord(item)"><em class="picEm">﹁</em>备注信息</div>
                     </div>
                     <div class="blockInfo" v-show="item.ifHasBudget&&!item.editBudgetShow&&!item.changeWarnShow">
                         <div class="bCont">
@@ -46,7 +46,7 @@
                                 <span>预算管理节点</span>
                                 <div class="newWrap" v-show="item.isBudgetUpdated&&item.state!=0">
                                     <span class="hasNew" onclick="showChangeWarn(event)"><em class="picEm">y</em>有更新</span>
-                                    <div class="budgetPop">
+                                    <div class="budgetPop" onclick="eventStop(event)">
                                         <div class="popTitle">该建筑预算管理节点现已改为"{{item.newBudgetItemName}}"，是否使用新管理节点重新创建预算？</div>
                                         <div class="popSubtitle">使用新节点创建预算会删除原预算及计划</div>
                                         <div class="popButton">
@@ -70,20 +70,20 @@
                                 <span class="infoData" v-bind:class="{'redFont':item.realOccupyBudgetRatio>100}">{{item.realOccupyBudgetRatio}}%</span>
                             </div>
                             <div class="planLine" v-show="item.ifHasPlan">
-                                <span class="checkPlan"><em class="picEm">h</em>查看能耗计划</span>
+                                <span class="checkPlan"><em class="picEm">﹂</em>查看能耗计划</span>
                                 <span class="downPlan">D</span>
-                                <span class="editPlan">`</span>
+                                <span class="editPlan" v-show="!item.isPastMonth" v-on:click="showEditPlan(item,$event)">`</span>
                             </div>
-                            <div class="planLine" v-show="!item.ifHasPlan">
+                            <div class="planLine" v-show="!item.ifHasPlan&&!item.isPastMonth">
                                 <span class="createPlan"><em class="picEm">J</em>创建能耗计划</span>
                             </div>
                         </div>
                         <div class="bBottom">
-                            <span class="editBudget" title="预算已被锁定，无法编辑" v-bind:class="{'disabled':item.state==0}" v-on:click="showEditPanel(item)"><em class="picEm">`</em>编辑预算</span>
+                            <span class="editBudget" title="预算已被锁定，无法编辑" v-bind:class="{'disabled':item.state==0}" v-on:click="showEditPanel(item)" v-show="item.isNextMonth"><em class="picEm">`</em>编辑预算</span>
                             <div class="downBudget"><em class="picEm">D</em>下载报告</div>
                         </div>
                     </div>
-                    <div class="createPanel" v-show="!item.ifHasBudget&&!item.editBudgetShow">
+                    <div class="createPanel" v-show="!item.ifHasBudget&&!item.editBudgetShow&&!item.isPastMonth">
                        <span v-on:click="createNewBudget(item)"><em class="picEm">J</em>点击创建预算</span> 
                     </div>
                     <div class="blockEdit" v-show="item.editBudgetShow">
@@ -97,13 +97,13 @@
                             </ptext-text>
                         </div>
                         <div class="bText">
-                            <ptext-textarea length="100" placeholder="'请填写预算相关说明，100字以内'" value="item.remark" bind='true'>
+                            <ptext-textarea length="100" placeholder="'请填写预算相关说明，100字以内'" value="item.newRemark" bind='true'>
                             </ptext-textarea>
                         </div>
                         <div class="bConnect"></div>
                         <div class="editButton">
                             <pbutton-blue text="保存" style="float: right;" click="saveSureShow"></pbutton-blue>
-                            <div class="budgetPop saveSurePop">
+                            <div class="budgetPop saveSurePop" onclick="eventStop(event)">
                                 <div class="popTitle">确定要保存{{item.isNowMonth?'本月':item.planDateStr.replace('.','年')+'月'}}能耗预算吗？</div>
                                 <div class="popSubtitle" v-show="item.isNowMonth">本月预算创建后立刻生效，生效后将无法编辑！</div>
                                 <div class="popSubtitle" v-show="!item.isNowMonth">预算到该月立刻生效，生效后将无法编辑！</div>

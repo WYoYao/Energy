@@ -321,6 +321,9 @@ function convertPercentage(num) {
 
         if (argu) data = Object.assign(data, argu);
 
+        // onPage 切换到当前页面
+        data.onPage = name;
+
         // 循环修改Vue 实例中的内容
         Object.keys(data).reduce(function (con, key, index) {
 
@@ -330,9 +333,6 @@ function convertPercentage(num) {
 
         // beforeMount 方法执行
         beforeMount.call(this._instance);
-
-        // onPage 切换到当前页面
-        this.onPage = name;
     }
 
     window.VueReady = VueReady;
@@ -346,6 +346,13 @@ v.pushComponent({
     name: 'global',
     data: {
         onPage: '',
+        lookPlanParamObj:{},
+        projectUserSel:{
+            projectName:"北京中央人民大会堂",
+            buildingId:"drada",
+            timeDay:"2017.12.1 00:00:00",
+            timeDayShow:"2017.12"
+        }
     },
     methods: {
         toThousands: toThousands,
@@ -360,5 +367,121 @@ v.pushComponent({
 $(function () {
 
     v.createVue();
-    v.initPage('centerindex')
+    // v.initPage('centerindex');
+    // v.initPage('lookplan');
+    v.initPage('energybyday');
 });
+
+
+
+var chartControl = function(){
+    this.options = {
+        chart: {
+            zoomType: 'xy'
+        },
+        title: {//标题
+            text: ''
+        },
+        xAxis: {
+            categories: [],
+            visible:true,
+        },
+        yAxis: [{
+            title: {
+                text: ''
+            },
+            gridLineWidth:0,
+        }],
+        legend: {
+            enabled:false,
+        },
+        tooltip: {
+            shared: true,
+            backgroundColor: '#ffffff',   // 背景颜色
+            borderColor: '#ffffff',         // 边框颜色
+            borderRadius: 10,             // 边框圆角
+            borderWidth: 1,               // 边框宽度
+            shadow: true,                 // 是否显示阴影
+            animation: true,              // 是否启用动画效果
+            style: {                      // 文字内容相关样式
+                fontSize: "14px",
+                fontWeight: "blod",
+                fontFamily: "Courir new"
+            }
+        },
+        labels:{
+            // items:[
+            //     {
+            //         html:"qwedhfiosmanfpoidfoi",
+            //         style:{
+            //             'background':'blue',
+            //             top:'10px',
+            //             left:'10px',
+            //             'font-size' : '30px',
+            //             width:'30px',
+            //             height:'400px',
+            //             position:'absolute',
+            //             display:'block'
+            //         }
+            //     }
+            // ]
+        },
+        plotOptions: {
+            column: {
+                grouping: false,
+                shadow: false,
+                borderWidth: 0,
+                // dataLabels:{
+                //     enabled:true, // dataLabels设为true
+                //     style:{
+                //         color:'#D7DEE9'
+                //     }
+                // }
+            }
+        },
+        series: [
+        ],
+        credits:{
+            enabled:false
+        },
+        annotations: [{
+            labels: [
+        ],
+            labelOptions: {
+            }
+        }],
+        exporting:{
+            enabled:false,
+        }
+    },
+    this.chart = null;
+}
+
+chartControl.prototype.InitChart = function(el){
+    this.chart == null ? this.chart = Highcharts.chart(el,this.options) : void 0;
+    return this.chart;
+}
+chartControl.prototype.addSeries = function(paramObj){
+    this.options.series.push(paramObj);
+}
+
+chartControl.prototype.update = function(id,data){
+    this.chart.update({
+        series : [{
+            id : id,
+            data : data
+        }]
+    })
+}
+chartControl.prototype.xAxisUpdate = function(data){
+    this.chart.xAxis[0].update({
+        categories : data
+    })
+}
+
+
+
+var ProjectSelectParam = {
+    BudgetAndPlanIntegrity : [{name:"不限",id:0,sel:true},{name:"有预算有计划",id:1,sel:false},{name:"有预算无计划",id:2,sel:false},{name:"无预算无计划",id:3,sel:false}],
+    projectArea : [{name:"不限",id:0,sel:true},{name:"0~1",id:1,sel:false},{name:"1~2",id:2,sel:false},{name:"2~5",id:3,sel:false},{name:"5~10",id:4,sel:false},{name:"10~15",id:5,sel:false},{name:"15~20",id:6,sel:false},{name:"20~25",id:7,sel:false},{name:"25~30",id:8,sel:false},{name:"30及以上",id:9,sel:false}]
+}

@@ -1,8 +1,8 @@
 <link rel="stylesheet" href="/css/energyterm/budgetManage/planSet.css" />
-<div class="budManCont" style="display: none;">
+<div class="planAllocate" v-show="planAllocateShow" id="planset">
     <div class="budManHeader">
         <div class="leftTitle">
-            <div class="backButton">
+            <div class="backButton" @click="backMainClick()">
                 <pbutton-white icon="I"></pbutton-white>
             </div>
             首页<em class="line">/</em>预算管理<em class="line">/</em><span class="boldColor">设置博瑞尚格大厦<em class="line">-</em>2017.12能耗计划</span>
@@ -30,7 +30,7 @@
         </div>
         <div class="planPanelMenu">
             <div class="menuButton">
-                <ptab-button id="" datasource="dataArr" text="name" sel=""></ptab-button>
+                <ptab-button id="choosePlanButton" datasource="dataArr" text="name" sel="chooseAllocate"></ptab-button>
             </div>
             <div class="info">计划能耗汇总：<span>856,562</span><em class="unit">kWh</em>低于剩余预算：41,000,00<em class="unit">kWh</em></div>
             <div class="showChart">
@@ -56,7 +56,7 @@
                 <pbutton-blue text="确定" style="width: 100%"></pbutton-blue>
             </div>
         </div>
-        <div class="itemPlan" style="display: none;">
+        <div class="itemPlan" v-show="itemPlanShow">
             <div class="tableHead tableUl">
                 <div>分项名称</div>
                 <div>同比能耗</div>
@@ -90,7 +90,7 @@
                 </div>
             </div>
         </div>
-        <div class="dayPlan">
+        <div class="dayPlan" v-show="!itemPlanShow">
             <div class="tableHead">
                 <span>日</span> <span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span>
             </div>

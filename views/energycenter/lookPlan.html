@@ -1,0 +1,29 @@
+<link rel="stylesheet" href="/css/energycenter/lookPlan.css">
+
+<script src="/js/energycenter/lookPlan/controller.js"></script>
+<script src="/js/energycenter/lookPlan/event.js"></script>
+<script src="/js/energycenter/lookPlan/model.js"></script>
+
+<div id="lookPlan" v-if='onPage=="lookplan"'>
+    <div class="lookPlan_head">
+        {{"能耗计划"}}
+        <div>
+            <pbutton-white icon="D" text="下载能耗计划" click=""></pbutton-white>
+        </div>
+    </div>
+    <div class="lookPlan_grid">
+        <div class="lookPlan_grid_head">
+            <span v-for="item in planGridData">{{item.itemName}}</span>
+        </div>
+        <ul class="lookPlan_grid_body">
+            <li class="lookPlan_grid_tr" v-for="model,index in planGridData[0].itemData">
+                <span class="lookPlan_grid_tr_span1">{{index+1}}</span>
+                <span class="lookPlan_grid_tr_span2" v-for="data in planGridData">{{Math.ceil(data.itemData[index].planData)}}</span>
+            </li>
+            <li class="lookPlan_grid_tr">
+                <span class="lookPlan_grid_tr_span1">汇总</span>
+                <span class="lookPlan_grid_tr_span2" v-for="ex in planGridData">{{Math.ceil(ex.totalData)}}</span>
+            </li>
+        </ul>
+    </div>
+</div>

@@ -6,7 +6,16 @@ v.pushComponent({
         NodeManage: [], //预算管理列表
     },
     methods: {
+        // 跳转预算管理节点管理页面
+        redirectTobudget: function (NodeManageModel) {
 
+            v.initPage('budget', { NodeManageModel: NodeManageModel });
+        },
+        // 跳转计划管理节点页面
+        redirectToPlan: function (item) {
+
+            v.initPage('plan', { NodeManageModel: NodeManageModel });
+        },
     },
     computed: {
         // 管理分享列表
@@ -24,8 +33,6 @@ v.pushComponent({
 
                 return [];
             }
-
-
         }
     },
     beforeMount() {

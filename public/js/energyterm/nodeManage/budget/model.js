@@ -3,7 +3,7 @@
 v.pushComponent({
     name: 'budget',
     data: {
-        budget: [], //预算管理列表
+        BudgetNodeEditTree: [], //预算管理列表
     },
     methods: {
 
@@ -13,8 +13,7 @@ v.pushComponent({
         BudgetNodeTree: function () {
 
             // 唯一的 预算管理节点总数
-            var isBudgetNode_number = _.random(1, 100),
-                MAX_number = _.random(5, 10);
+            var MAX_number = _.random(10, 20);
 
             function energyItem(index) {
 
@@ -42,6 +41,7 @@ v.pushComponent({
 
         var _that = this;
 
+        subOption_controller.NodeManagementService({ buildingId: _that.NodeManageModel.buildingId })
 
     }
 })

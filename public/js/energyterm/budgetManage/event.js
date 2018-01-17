@@ -1,11 +1,6 @@
 $(function () {
     v.initPage('budget_manage');
-    //var columnDateArr = [{ "x": 1483200000000, "y": 3200, }, { "x": 1485878400000, "y": 3300 }, { "x": 1488297600000, "y": 3100 }, { "x": 1490976000000, "y": 3185 }, { "x": 1493568000000, "y": 3080 }, { "x": 1496246400000, "y": 3111 }, { "x": 1498838400000, "y": 3310 }, { "x": 1501516800000, "y": 3210 }];
-    //var columnDateArr2 = [{ "x": 1483200000000, "y": 3000, "color": "#02a9d1" }, { "x": 1485878400000, "y": 2300, "color": "#02a9d1" }, { "x": 1488297600000, "y": 2100, "color": "#02a9d1" }, { "x": 1490976000000, "y": 3185, "color": "#F89054" }, { "x": 1493568000000, "y": 3280, "color": "#02a9d1" }, { "x": 1496246400000, "y": 2911, "color": "#02a9d1" }, { "x": 1498838400000, "y": 3010, "color": "#02a9d1" }, { "x": 1501516800000, "y": 2880, "color": "#02a9d1" }];
 
-    //budgetController.historyEnergyChart = columnComparisonChart('historyEnergyChart');
-    //budgetController.historyEnergyChart.series[0].setData(columnDateArr);
-    //budgetController.historyEnergyChart.series[1].setData(columnDateArr2);
 
     //budgetController.itemDayChart = columnComparisonChart('itemDayChart');
     //budgetController.itemDayChart.series[0].setData(columnDateArr);
@@ -17,10 +12,14 @@ $(function () {
     //$("#dayItemPlan").pshow();
     //$("#setPlanWindow").pshow();
 
+    $(document).on('click', function () {
 
+        $("#monthBudgets .budgetPop").css({ 'display': 'none' });
+    });
 });
 var dataArr = [{ name: "按分项拆分" }, { name: "按日期拆分" }];
 function showChangeWarn(event) {
+    event.stopPropagation();
     var $this = $(event.currentTarget);
     var $budgetPop = $this.siblings(".budgetPop");
     if ($budgetPop.is(":visible")) {
@@ -43,4 +42,15 @@ function cancelSaveSure(event) {//保存预算确认 取消
     var $this = $(event.currentTarget);
     var $saveSurePop = $this.parents(".saveSurePop");
     $saveSurePop.hide();
+}
+function eventStop(event) {
+    event.stopPropagation();
+}
+function chooseAllocate(event) {
+    var selIndex = event.pEventAttr.index;
+    if (selIndex == 0) {
+        v.instance.itemPlanShow = true;//分项
+    } else {
+        v.instance.itemPlanShow = false;//天
+    }
 }

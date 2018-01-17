@@ -1,8 +1,11 @@
-
-$(function(){
-    v._instance.indexDrawChart();  
-   
-})
+function budgetFillInputBlur(){
+    $("#TotalBudgetFill input").blur(function(){
+        $("#TotalBudgetFill").pverifi() ? v._instance.projectBudgetEditCache.square = Math.ceil(v._instance.projectBudgetEditCache.total/v._instance.projectSel.projectInfo.area) : void 0;
+    })
+    $("#squareBudgetFill input").blur(function(){
+        $("#squareBudgetFill").pverifi() ? v._instance.projectBudgetEditCache.total = v._instance.projectBudgetEditCache.square*v._instance.projectSel.projectInfo.area : void 0;
+    })
+}
 function indexTimeSel(){
     v._instance.createGetListParam();
     v._instance.indexIsThisMonth();
@@ -47,13 +50,3 @@ function RGBToHex(rgb){
     //alert(hexColor)  
     return hexColor;  
  }  
-
- //创建预算界面两个输入框直接的联动
- $(function(){
-    $("#TotalBudgetFill input").blur(function(){
-        $("#TotalBudgetFill").pverifi() ? v._instance.projectBudgetEditCache.square = Math.ceil(v._instance.projectBudgetEditCache.total/v._instance.projectSel.projectInfo.area) : void 0;
-    })
-    $("#squareBudgetFill input").blur(function(){
-        $("#squareBudgetFill").pverifi() ? v._instance.projectBudgetEditCache.total = v._instance.projectBudgetEditCache.square*v._instance.projectSel.projectInfo.area : void 0;
-    })
- })

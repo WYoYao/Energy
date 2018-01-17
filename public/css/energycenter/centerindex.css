@@ -127,9 +127,14 @@
 .index_foot_neck{
     background: #F8F8F8;
 }
-#index_foot_ul{
+.index_foot_ul_wrap{
+    overflow: hidden;
     width: 100%;
     height: calc(100% - 60px);
+}
+#index_foot_ul{
+    width: calc(100% + 5px);
+    height: 100%;
     overflow: scroll;
 }
 .index_foot_li{
@@ -161,7 +166,7 @@
     color: #6d6d6d;
 }
 .index_grid_span01{
-    margin-left: 3%;
+    margin-left: 2.5%;
 }
 .index_grid_span1{
     width: 15%;
@@ -185,10 +190,10 @@
     width: 6%;
 }
 .index_grid_span8{
-    width: 12%;
+    width: 15%;
 }
 .index_grid_span9{
-    width: 9%;
+    width: 6%;
 }
 .index_grid_span10{
     width: 6%;
@@ -208,7 +213,7 @@
     width: 49%;
 }
 .index_grid_span1>.index_grid_pic{
-    left:60px;
+    left:75px;
 }
 .index_grid_span2>.index_grid_pic{
     left:60px;

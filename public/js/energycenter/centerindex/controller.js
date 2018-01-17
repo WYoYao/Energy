@@ -10,7 +10,7 @@ var indexController = {
     },
     //获取所有项目节点
     getAllItemInfo : function(success,err,complete){
-        // this.POSTAJAX('FCT_NodeManagementService',"",success,err,complete);
+        // this.POSTAJAX('FNCT_NodeManagementService',"",success,err,complete);
         success({
             content:[
                 {

@@ -40,10 +40,18 @@ v.pushComponent({
     },
     methods:{
         IndexInit : function(){                                      //页面初次加载
+            // setTimeout(function(){
+            //     v._instance.indexDrawChart();                              //初始化图表
+            //     budgetFillInputBlur();                              //绑定输入框失去焦点自动计算
+            // },1)
             this.selThisMonth('index_head_ptime');                  //将时间插件时间选择为这个月
             this.getAllItemInfo();                                  //获取所有项目存在计划节点
             this.getProjectScreenInfo();                            //获取项目筛选参数
             this.getAllProjectInfo();                               //获取所有项目数据
+            this.$nextTick(function(){
+                this.indexDrawChart();                              //初始化图表
+                budgetFillInputBlur();                              //绑定输入框失去焦点自动计算
+            })
         },
 
         getAllItemInfo : function(){                                 //获取所有项目分项列表
@@ -205,9 +213,9 @@ v.pushComponent({
                     item.enengyOccupyBudegetPercent != null ? item.enengyOccupyBudegetPercent = Math.toFixed({value:item.enengyOccupyBudegetPercent,isByInt:true}) : void 0;
                     //处理图表使用数据
                     // energyBudgetData.push([item.energyBudget,item.projectId+'Budget'])
-                    energyBudgetData.push( item.energyBudget == null ? [0,item.projectId+'Budget'] : [item.energyBudget,item.projectId+'Budget'])
+                    energyBudgetData.push( item.energyBudget == null ? [0,item.projectId+'Budget'] : [Math.toFixed({value:item.energyBudget,fixedNum:1}),item.projectId+'Budget'])
                     // energyRealData.push([item.energyReal,item.projectId+'Real'])
-                    energyRealData.push( item.energyReal == null ? [0,item.projectId+'Real'] : [item.energyReal,item.projectId+'Real'])
+                    energyRealData.push( item.energyReal == null ? [0,item.projectId+'Real'] : [Math.floor(item.energyReal),item.projectId+'Real'])
                     // energyPercent.push([item.enengyOccupyBudegetPercent,item.projectId+'Percent'])
                     energyPercent.push( item.enengyOccupyBudegetPercent == null ? [0,item.projectId+'Percent'] : [item.enengyOccupyBudegetPercent,item.projectId+'Percent'])
                     energyxAxis.push(item.projectName)
@@ -409,6 +417,11 @@ v.pushComponent({
             window.chart = new chartControl();
             chart.options.xAxis.visible = false;
             chart.options.chart.plotBackgroundColor = "#F8F8F8";
+            Highcharts.setOptions({
+                lang: {
+                    thousandsSep: ','
+                }
+            });
             chart.options.yAxis.push({
                 title: {
                     text: ''
@@ -497,8 +510,7 @@ v.pushComponent({
             chart.InitChart('index_chart');
         },
         
-        indexGridSord : function(ev){                                //表头排序按钮被点击
-            var index = parseInt($(ev.srcElement.parentElement).attr("sort").slice(9));
+        indexGridSord : function(index){                                //表头排序按钮被点击
             var topcolor = RGBToHex($(".index_grid_pic").eq(index).find("i").eq(0).css("color"));
             var botcolor = RGBToHex($(".index_grid_pic").eq(index).find("i").eq(1).css("color"));
             if((topcolor=="#C3CDD0" && botcolor=="#C3CDD0")){
@@ -665,7 +677,8 @@ v.pushComponent({
         indexGridHover : function(index){
             console.log(index)
             // chart.chart.tooltip.refresh(chart.chart.series[0].data[index+1]);
-        }
+        },
+
     },
     beforeMount:function(){
         this.IndexInit();
