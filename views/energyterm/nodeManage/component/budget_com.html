@@ -2,17 +2,17 @@
 
 <script type="text/html" id="budgetnode">
 
-    <!-- <div class="block"> -->
-            <!-- template  -->
-            <div class="block" v-for="item in node_tree">
+    <div class="block">
+
+                <template v-for="item in node_tree">
                         <div class="view" :class="{noright:item.childs.length==0}">
                             <p class="code" :title="item.energyItemName" v-text="item.energyItemName">
                             </p>
                         </div>
                         <budgetnode :node_tree="item.childs"/>
-            </div>
-
-    <!-- </div> -->
+                </template>
+         
+    </div>
 
 </script>
 
