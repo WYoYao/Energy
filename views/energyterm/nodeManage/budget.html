@@ -1,5 +1,3 @@
-<link rel="stylesheet" href="/css/energyterm/nodeManage/budget.css">
-
 <script src="/js/energyterm/nodeManage/budget/controller.js"></script>
 <script src="/js/energyterm/nodeManage/budget/event.js"></script>
 <script src="/js/energyterm/nodeManage/budget/model.js"></script>
@@ -10,7 +8,7 @@
     <div class="sitemap">
 
         <!-- 返回按钮Start -->
-        <div class="backbtn" @click='alert("返回")'>
+        <div class="backbtn" @click='onPage="subOption"'>
             I
         </div>
         <!-- 返回按钮End -->
@@ -38,7 +36,7 @@
 
         <!--  树结构 Start -->
 
-        <mybudgetnode :budget_tree="BudgetNodeTree" />
+        <mybudgetnode :handler_click="handler_selected" :budget_tree="BudgetNodeTree" />
 
         <!--  树结构 End -->
 
@@ -47,7 +45,8 @@
 
     <!--  底部内容 Start -->
     <div class="bottomer">
-        <div class="save">
+        <div class="save" @click.capture="$('#confirmWindow').pshow({title:'您修改了预算管理节点',subtitle:'修改预算管理节点后，默认选择新节点下的所有叶子节点为计划管理节点，是否继续保存'})">
+            <!-- <div class="save" @click.capture="BudgetNodeEditSubmit()"> -->
             <pbutton-blue text="保存"></pbutton-blue>
         </div>
     </div>

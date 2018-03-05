@@ -4,13 +4,21 @@
     <link rel="stylesheet" href="/css/energyterm/nodeManage/public.css">
     <!-- 单个F的公共样式 Start  -->
 
-    <!-- 准备创建Vue Start  -->
-    <script src="/js/energyterm/index.js"></script>
-    <!-- 准备创建Vue End    -->
+
+    <!--  加载对应的CSS Start -->
+    <link rel="stylesheet" href="/css/energyterm/nodeManage/moreBuild.css">
+    <link rel="stylesheet" href="/css/energyterm/nodeManage/subOption.css">
+    <link rel="stylesheet" href="/css/energyterm/nodeManage/budget.css">
+    <link rel="stylesheet" href="/css/energyterm/nodeManage/plan.css">
+    <!--  加载对应的CSS End   -->
 
     <!-- 加载需要的组件 Start -->
     <% include ./component/budget_com.html %>
         <% include ./component/plan_com.html %>
+
+            <!-- 成功失败提示 -->
+            <pnotice-message id="globalnotice"></pnotice-message>
+
 
             <!-- 挂载DOM -->
             <div id="app">

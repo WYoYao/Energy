@@ -1,5 +1,3 @@
-<link rel="stylesheet" href="/css/energyterm/nodeManage/plan.css">
-
 <script src="/js/energyterm/nodeManage/plan/controller.js"></script>
 <script src="/js/energyterm/nodeManage/plan/event.js"></script>
 <script src="/js/energyterm/nodeManage/plan/model.js"></script>
@@ -10,17 +8,17 @@
     <div class="sitemap">
 
         <!-- 返回按钮Start -->
-        <div class="backbtn" @click='alert("返回")'>
+        <div class="backbtn" @click='isCenter?v.initPage("energybyproject"):(NodeManages.length?onPage="subOption":v.initPage("subOption"))'>
             I
         </div>
         <!-- 返回按钮End -->
 
         <!-- 面包屑文字Start -->
         <div class="map_index">
-            <em>首页&nbsp;/&nbsp;</em>
-            <em>管理分项节点&nbsp;/&nbsp;</em>
+            <em style="cursor: pointer;" @click="isCenter?v.initPage('energybyproject'):v.initPage('more_build')">首页&nbsp;/&nbsp;</em>
+            <em v-if="!isCenter" style="cursor: pointer;" @click='onPage="subOption"'>管理分项节点&nbsp;/&nbsp;</em>
             <span class="map_name">
-                编辑博锐尚格大厦预算管理节点
+                编辑{{NodeManageModel.buildingName}}计划管理节点
             </span>
         </div>
         <!-- 面包屑文字End -->
@@ -32,39 +30,15 @@
     <div class="contenter">
 
         <!-- 文字提示 Start -->
-        <div class="title">
+        <div class="title" v-if="NodeManageModel.nodes">
             已选计划管理节点：
-            <i>23个</i>
+            <i>{{IsCheckedList.length}}个</i>
         </div>
         <!-- 文字提示 End -->
 
         <!-- 节点集合 Start -->
-        <div class="nodes">
-            <span title="照明0" class="child">照明0</span>
-            <span title="照明照明照明照明1" class="child">照明照明照明照明1</span>
-            <span title="照明照明照明照明照明2" class="child">照明照明照明照明照明2</span>
-            <span title="照明照明照明照明3" class="child">照明照明照明照明3</span>
-            <span title="照明照明4" class="child">照明照明4</span>
-            <span title="照明5" class="child">照明5</span>
-            <span title="照明照明照明照明6" class="child">照明照明照明照明6</span>
-            <span title="照明照明照明照明7" class="child">照明照明照明照明7</span>
-            <span title="照明照明照明8" class="child">照明照明照明8</span>
-            <span title="照明照明照明照明9" class="child">照明照明照明照明9</span>
-            <span title="照明10" class="child">照明10</span>
-            <span title="照明照明照明11" class="child">照明照明照明11</span>
-            <span title="照明照明照明照明照明12" class="child">照明照明照明照明照明12</span>
-            <span title="照明照明照明照明照明13" class="child">照明照明照明照明照明13</span>
-            <span title="照明14" class="child">照明14</span>
-            <span title="照明照明15" class="child">照明照明15</span>
-            <span title="照明照明照明照明16" class="child">照明照明照明照明16</span>
-            <span title="照明照明照明17" class="child">照明照明照明17</span>
-            <span title="照明18" class="child">照明18</span>
-            <span title="照明照明照明照明19" class="child">照明照明照明照明19</span>
-            <span title="照明照明照明20" class="child">照明照明照明20</span>
-            <span title="照明21" class="child">照明21</span>
-            <span title="照明照明照明照明照明22" class="child">照明照明照明照明照明22</span>
-            <span title="照明23" class="child">照明23</span>
-            <span title="照明照明照明照明24" class="child">照明照明照明照明24</span>
+        <div class="nodes" v-if="NodeManageModel.nodes">
+            <span v-for="item in IsCheckedList" class="child" :title="item.energyItemName" v-text="item.energyItemName"></span>
         </div>
         <!-- 节点集合End -->
 
@@ -72,14 +46,15 @@
         <div class="tip">
             <i class="icon important">!</i>通过过点击
             <i class="icon add">J</i>
-            <i class="icon add">-</i> 展开/收起分项树，系统自动选择当前分项树所有最末级分项为计划管理节点。其中
-            <img class="imgicon" src="/images/energyterm/nodeManage/black.png"> 为中心版的管理节点，建议中心版的管理节点没有被上级收起。
+            <i class="icon add">-</i> 展开/收起分项树，系统自动选择当前分项树所有最末级节点为计划管理节点。
+            其中标记
+            <img class="imgicon" src="/images/energyterm/nodeManage/black.png"> 的节点为中心版的管理节点，建议不要选择这类节点的上级节点为计划管理节点。
         </div>
         <!-- 文字提示 End -->
 
         <!--  树结构 Start -->
 
-        <myplannode :plan_tree="BudgetNodeTree" />
+        <myplannode :plan_tree="PlanNodeEditTreeArray" :handler="handlerclick" :suboptiontop="suboptiontop" />
 
         <!--  树结构 End -->
 
@@ -88,7 +63,7 @@
 
     <!--  底部内容 Start -->
     <div class="bottomer">
-        <div class="save">
+        <div class="save" @click.capture="savePlanNode()">
             <pbutton-blue text="保存"></pbutton-blue>
         </div>
     </div>

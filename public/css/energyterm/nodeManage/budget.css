@@ -109,20 +109,21 @@
 }
 
 .budget_content .box .view{
+    position: relative;
     border-left: 2px solid #F0F3F6;
 }
 
-.budget_content .box .view:first-child,
 .budget_content .box .view:last-child{
     border-left:none;
 }
 
 .budget_content .box .view.firsts::before{
-    content: "　";
+    position: absolute;
+    left: -2px;
+    content: " ";
     width: 2px;
-    height: 15px;
-    background: #F0F3F6;
-    margin-top: 16px;
+    height: 16px;
+    background: #FFFFFF;
 }
 
 .budget_content .box .view.lasts::before{
@@ -170,7 +171,7 @@
     font-size: 12px;
     cursor: pointer;
 }
-
+.budget_content .box .code .title:hover,
 .budget_content .box .code .title.on{
     background: #00A8D3;
     color: #FFFFFF;

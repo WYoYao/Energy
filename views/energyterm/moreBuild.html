@@ -1,15 +1,15 @@
-<link rel="stylesheet" href="/css/energyterm/moreBuild.css">
-
 <script src="/js/energyterm/moreBuild/controller.js"></script>
 <script src="/js/energyterm/moreBuild/event.js"></script>
 <script src="/js/energyterm/moreBuild/model.js"></script>
 
+<pwindow-modal id="modalWindow" title="预警、报警设置" templateid="alarmModel"></pwindow-modal>
+
 <!-- 多建筑列表Start -->
-<div class="more_box" v-if='onPage="more_build"'>
-    <div class="header">
+<div class="more_box" v-cloak v-show='onPage=="more_build"'>
+    <div class="header" v-show="onBlock!='detail'">
 
         <!-- 建筑选择Start -->
-        <div class="build_select">
+        <div class="build_select" v-show="Buildings.length>1">
             <pcombobox-normal id="'build_select'" sel='handler_build_select' bind="true">
                 <header placeholder="建筑：全部"></header>
                 <item datasource="BuildingsCed" text="buildingName"></item>
@@ -19,33 +19,38 @@
 
         <!-- 基础设置Start -->
         <div class="build_sett">
-            <pcombobox-normal id="'build_select'" bind="true">
-                <header placeholder="2号"></header>
-                <item datasource="[{name:'leo'}]" text="name"></item>
-                <verify errtip="不可超过5个字" verifytype="length" length="5"></verify>
+            <pcombobox-normal style="width:143px;" id="'build_setting'" sel="build_select_sel" bind="true">
+                <header placeholder="基础设置"></header>
+                <item datasource="[{name:'预警、报警设置',index:0},{name:'管理分项节点',index:1}]" text="name"></item>
             </pcombobox-normal>
         </div>
         <!-- 基础设置End -->
 
         <!-- 预算管理Start -->
-        <div class="build_pre">
-            <pbutton-white text="预算管理" icon="D"></pbutton-white>
+        <div class="build_pre" @click.capture="v.initPage('budget_manage',v.instance.currentBuild.buildingId)">
+            <pbutton-white text="预算管理" icon="G"></pbutton-white>
+        </div>
+        <!-- 预算管理End -->
+
+        <!-- 预算管理Start -->
+        <div class="build_pre downloadBtn" v-show="onBlock=='list'" @click.capture="downLoadMonthPDF()">
+            <pbutton-white text="下载月能耗报告" icon="D"></pbutton-white>
         </div>
         <!-- 预算管理End -->
 
         <!-- 日历选择Start -->
         <div class="build_date">
             <ptime-calendar id="divCalendar" orientation="down" sel="handler_date_select">
-                <panel timetype="My" align="left" double="false"></panel>
+                <panel iscommontime="false" timetype="M" align="right" double="false"></panel>
             </ptime-calendar>
         </div>
         <!-- 日历选择End -->
 
     </div>
-    <div class="content">
+    <div class="content" v-show="onBlock=='more'">
 
         <!-- 单个建筑Start -->
-        <div class="item" v-for='item in BuildingEnergyOutlinesCed'>
+        <div class="item" @click="handler_block_click(item)" v-for='(item,index) in BuildingEnergyOutlinesCed'>
             <div class="theader">
 
                 <!-- 项目名称Start -->
@@ -54,7 +59,7 @@
                 <!-- 项目名称End -->
 
                 <!--  Icon 标识 Start -->
-                <span class="projecticon" v-if='item.main'>项目</span>
+                <span class="projecticon" v-if='item.isMain'>项目</span>
                 <!-- Icon 标识 End -->
 
                 <!-- 文本提示 Start -->
@@ -76,12 +81,12 @@
 
                         <!-- 实际能耗 Start -->
                         <div class="energy">
-                            实际能耗
+                            月能耗
                         </div>
 
                         <div class="number">
-                            <em v-text='item.monthEnergyData'></em>
-                            <span class="company">kWh</span>
+                            <em v-text='item.monthEnergyData==0?"--":item.monthEnergyData' :title="item.monthEnergyData+'kWh'"></em>
+                            <span class="company" v-text='item.monthEnergyData==0?"":"kWh"'></span>
                         </div>
                         <!-- 实际能耗 End -->
 
@@ -91,12 +96,12 @@
 
                         <!-- 目标能耗 Start -->
                         <div class="energy">
-                            目标能耗
+                            月预算
                         </div>
 
                         <div class="number">
-                            <em v-text='item.monthBudgetData'></em>
-                            <span class="company">kWh</span>
+                            <em v-text='item.monthBudgetData?item.monthBudgetData:"--"' :title="item.monthBudgetData+'kWh'"></em>
+                            <span class="company" v-text='item.monthBudgetData==0?"":"kWh"'></span>
                         </div>
                         <!-- 目标能耗 End -->
 
@@ -106,7 +111,7 @@
                 <!-- 能耗部分 End -->
 
                 <!-- 进度条文字 Start -->
-                <div :style="{'padding-left': 'calc('+ (item.proportionNumber>100?100:item.proportionNumber) +'% - '+ (item.proportionNumber>100?100:item.proportionNumber) +'px)'}"
+                <div v-show="item.monthBudgetData" :style="{'padding-left': 'calc('+ (item.proportionNumber>100?100:item.proportionNumber) +'% - '+ (item.proportionNumber>100?100:item.proportionNumber) +'px)'}"
                     class="progress_number" class="progress_number" :class="{'blue_color':item.proportionNumber<=100,'report_color':item.proportionNumber>100}"
                     v-text='item.proportionName'>
                 </div>
@@ -115,15 +120,61 @@
                 <!-- 进度条部分 Start -->
                 <div class="progress">
                     <!--  超过部分 -->
-                    <div :style="{width:''+ item.proportionNumber>100?100:item.proportionNumber +'%'}" class="innser_progress" :class="{'blue_bgcolor':item.proportionNumber<=100,'report_bgcolor':item.proportionNumber>100}"></div>
+                    <div :style="{width:''+ item.proportionNumberBai +'%'}" class="innser_progress" :class="{'blue_bgcolor':item.proportionNumber<=100,'report_bgcolor':item.proportionNumber>100}"></div>
                 </div>
                 <!-- 进度条部分 End -->
-
 
             </div>
         </div>
         <!-- 单个建筑End -->
 
     </div>
+
+    <div class="content" v-show="onBlock=='list'">
+        <% include ../energycenter/energyByProject/energyByProjectBody.html %>
+    </div>
+
+    <div v-if="onBlock=='detail'" class="border">
+        <!-- 头部 Start -->
+        <div class="sitemap">
+
+            <!-- 返回按钮Start -->
+            <div class="backbtn" @click='v.initPage("more_build")'>
+                I
+            </div>
+            <!-- 返回按钮End -->
+
+            <!-- 面包屑文字Start -->
+            <div class="map_index">
+                <em style="cursor:pointer;" @click='v.initPage("more_build")'>首页&nbsp;/&nbsp;</em>
+                <span class="map_name">
+                    {{currentBuild.buildingName}}日能耗与预算
+                </span>
+            </div>
+            <!-- 面包屑文字End -->
+
+            <!-- 预算管理Start -->
+            <div class="daterightdownload downloadBtn" @click.capture="downLoadDayPDF()">
+                <pbutton-white text="下载日能耗报告" icon="D"></pbutton-white>
+            </div>
+            <!-- 预算管理End -->
+
+            <!-- 日历选择Start -->
+            <div class="daterightdate">
+                <ptime-calendar id="daterightdate" orientation="down" sel="DTimeSel">
+                    <panel commontime="['d','pd']" timetype="d" align="right" double="false"></panel>
+                </ptime-calendar>
+            </div>
+            <!-- 日历选择End -->
+
+
+        </div>
+        <!-- 头部 End -->
+    </div>
+
+    <div class="content" v-if="onBlock=='detail'">
+        <% include ../energycenter/energyByDay/energyByDayBody.html %>
+    </div>
+
 </div>
 <!-- 多建筑列表End   -->

@@ -1,0 +1,32 @@
+<link rel="stylesheet" href="/css/energycenter/energyByProject/energyByProjectHead.css">
+<script src="/js/energycenter/energyByProject/energyByProjectHead/controller.js"></script>
+<script src="/js/energycenter/energyByProject/energyByProjectHead/model.js"></script>
+<script src="/js/energycenter/energyByProject/energyByProjectHead/event.js"></script>
+
+<div v-if="onPage == 'energybyproject'" v-show="Ploading == 0"  id="energyByProject" v-cloak>
+
+    <div id="energyByProjectHead">
+        <div class="energyProHead_back" @click="v.initPage('centerindex')">
+            <i class="per-bIcon">I</i>
+        </div>
+        <div class="energyProHead_text">
+            <span @click="v.initPage('centerindex')">首页 /  </span>
+            <span>{{projectUserSel.projectName}}&nbsp;&nbsp;{{projectUserSel.timeDayShow}}能耗详情</span>
+        </div>
+        <div class="energyProHead_but1">
+            <pbutton-white icon="G" text="预算设置" @click.stop="PBudgetWindowOpenReady(projectUserSel)" ></pbutton-white>
+        </div>
+        <div class="energyProHead_but2">
+            <pbutton-white @click="PEnergyMonthDownload" icon="D" text="下载月能耗报告" ></pbutton-white>
+        </div>
+        <!-- <div class="energyProHead_time">
+            <ptime-calendar id="energyProHead_ptime" orientation="down" sel="PTimeSel">
+                <panel timetype="M" align="left" double="false" iscommontime="false"></panel>
+            </ptime-calendar>
+        </div> -->
+    </div>
+
+    <div id="energyByProWrap">
+        <% include ./energyByProjectBody.html %>
+    </div>
+</div>

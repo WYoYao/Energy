@@ -1,0 +1,223 @@
+<link rel="stylesheet" href="/css/energycenter/energyByProject/energyByProjectBody.css">
+<!-- <link rel="stylesheet" href="/css/energycenter/public.css"> -->
+<script src="/js/energycenter/energyByProject/energyByProjectBody/controller.js"></script>
+<script src="/js/energycenter/energyByProject/energyByProjectBody/model.js"></script>
+<script src="/js/energycenter/energyByProject/energyByProjectBody/event.js"></script>
+
+
+
+<div id="PBBody" >
+    
+    <ploading-part id="Ppartloading" text="努力加载中..."></ploading-part>
+    <div class="PB_left">
+        <div class="PB_leftWrap">
+            <div class="PB_timeto" v-if="(new Date(TC(PBaseMessage.timeTo))).format('yyyy-M') == getThisMonth().format('yyyy-M')">数据统计截止至{{(new Date()).format("yyyy.M.d h:m")}}</div>
+            <!-- 能耗信息 -->
+            <div class="PB_lefttop">
+
+                <div class="PB_danger PB_warnordanger" v-if="PprojectInfo.buildingEnergyStatus == 2 && this.PBaseMessage.NowModel =='term'">
+                   能耗报警&nbsp;&nbsp;超标率{{FBI(PprojectInfo.alarmRatio)}}%<a v-show="PprojectInfo.alarmOverdue == 1">(已过期)</a>
+                </div>
+
+                <div class="PB_warn PB_warnordanger" v-if="PprojectInfo.buildingEnergyStatus == 1 && this.PBaseMessage.NowModel =='term'">
+                   能耗预警&nbsp;&nbsp;风险率{{FBI(PprojectInfo.warningRatio*100)}}%
+                </div>
+
+                <div class="PB_LT_text1 PB_LT_div1" >月累计能耗</div>
+
+                <div :class="PprojectInfo.buildingEnergyStatus == 2 ? 'redFont' : 'blackFont'" class="PB_LT_div2">
+                    <span class="PB_LT_text2">{{PprojectInfo.monthEnergyData != null ? toThousands(FON(PprojectInfo.monthEnergyData)) : noData}}</span>
+                    <span class="PB_LT_text1" v-show="PprojectInfo.monthEnergyData != null">&nbsp;kWh</span>
+                </div>
+
+                <div class="PB_LT_text1 PB_LT_div1">月预算</div>
+
+                <!-- 有预算 -->
+                <div class="PB_LT_div2" v-if="PprojectSomeInfo.ifHasBudget">
+                    <span class="PB_LT_text2 blackFont">{{PprojectInfo.monthBudgetData==null ? noData : toThousands(Math.ceil(PprojectInfo.monthBudgetData))}}</span>
+                    <span class="PB_LT_text1" v-show="PprojectInfo.monthBudgetData != null">&nbsp;kWh</span>
+                </div>
+                <!-- 当前月及未来月没有预算 -->
+                <div class="PB_LT_div2" v-if="!PprojectSomeInfo.ifHasBudget && (new Date(TC(PBaseMessage.timeFrom))).getTime() >= getThisMonth().getTime()">
+                   <span class="PB_LT_text3" @click.stop="PbudgetEdit">设置月预算</span>
+                </div>
+                <!-- 历史月没有预算 -->
+                <div class="PB_LT_div2" v-if="!PprojectSomeInfo.ifHasBudget && getThisMonth().getTime() > (new Date(TC(PBaseMessage.timeFrom))).getTime()">
+                   <span class="PB_LT_text4">未设置</span>
+                </div>
+
+                <!-- 占地用 -->
+                <div class="PB_LT_div3"></div>
+
+                <div class="PB_LT_div4" v-if="PprojectSomeInfo.ifHasBudget">已过时间占比 :  {{FBI(PprojectInfo.passedTimeRatio*100)}}%</div>
+
+                <div class="PB_LT_div5" v-if="PprojectSomeInfo.ifHasBudget">
+                    <div><div class="PB_LT_div5item1"></div></div>
+                    <div><div class="PB_LT_div5item1"></div></div>
+                    <div><div class="PB_LT_div5item1"></div></div>
+                    <div><div class="PB_LT_div5item1"></div></div>
+                    <div><div class="PB_LT_div5item1"></div></div>
+                    <div><div class="PB_LT_div5item1"></div></div>
+                    <div><div class="PB_LT_div5item1"></div></div>
+                    <div><div class="PB_LT_div5item1"></div></div>
+                    <div><div class="PB_LT_div5item1"></div></div>
+                    <div><div class="PB_LT_div5item1"></div></div>
+                </div>
+
+                <div class="PB_LT_div4" v-if="PprojectSomeInfo.ifHasBudget">当前累计能耗占月预算比 :  {{FBI(PprojectInfo.energyOccupyBudgetRatio*100)}}%</div>
+
+                <div class="PB_LT_div5" v-if="PprojectSomeInfo.ifHasBudget">
+                    <div><div class="PB_LT_div5item2"></div></div>
+                    <div><div class="PB_LT_div5item2"></div></div>
+                    <div><div class="PB_LT_div5item2"></div></div>
+                    <div><div class="PB_LT_div5item2"></div></div>
+                    <div><div class="PB_LT_div5item2"></div></div>
+                    <div><div class="PB_LT_div5item2"></div></div>
+                    <div><div class="PB_LT_div5item2"></div></div>
+                    <div><div class="PB_LT_div5item2"></div></div>
+                    <div><div class="PB_LT_div5item2"></div></div>
+                    <div><div class="PB_LT_div5item2"></div></div>
+                </div>
+                    
+
+            </div>
+
+            <!-- 圆圈 -->
+            <div class="PB_leftmiddle" v-show="PprojectSomeInfo.ifHasPlan || (PprojectSomeInfo.ifHasBudget && (PBaseMessage.timeFrom == getThisMonth().format('yyyy-M-d h:m:s')) && PBaseMessage.NowModel == 'term')">
+                <div class="PB_LM_canvas_wrap" v-show="PprojectSomeInfo.ifHasPlan">
+                    <div id="PB_LM_canvas"></div>
+                    <div id="PB_circle_wrap">
+                        <div id="PB_circle"></div>
+                    </div>
+                    <div id="PB_pointer_wrap">
+                        <!-- <canvas id="PB_pointer" width="8" height="65"></canvas> -->
+                        <div id="PB_pointer"><img src="/images/energycenter/energybyproject/point.png"></div>
+                    </div>  
+                    <div class="PB_number ABM" :class="PprojectInfo.energyOccupyPlanRatio>1 ? 'redFont' : 'greenFont'">{{FBI(PprojectInfo.energyOccupyPlanRatio*100)}}%</div>
+                </div>
+                <div class="PB_LM_text" v-if="PprojectSomeInfo.ifHasPlan">月累计能耗占当前总计划比</div>
+                <div class="PB_LM_button" v-if="PBaseMessage.NowModel == 'term' && (PBaseMessage.timeFrom == getThisMonth().format('yyyy-M-d h:m:s'))" v-show="PprojectSomeInfo.ifHasPlan">
+                    <pbutton-white icon="`" text="编辑能耗计划" @click="PenergyByProEditPlan"></pbutton-white>
+                </div>
+                <div class="PB_LM_button PB_LM_MT" v-if="PBaseMessage.NowModel == 'term' && (PBaseMessage.timeFrom == getThisMonth().format('yyyy-M-d h:m:s'))" v-show="!PprojectSomeInfo.ifHasPlan && PprojectSomeInfo.ifHasBudget && !PprojectInfo.isBudgetUpdated">
+                    <pbutton-blue icon="J" isborder='false' text="创建能耗计划" @click="PenergyByProCreatePlan"></pbutton-blue>
+                </div>
+            </div>
+
+            <div class="PB_leftbottom">
+
+                <div class="PB_LB_box">
+                    <div class="PB_LB_div1">   
+                        <span class="PB_LB_text1 PB_LB_text11">同比&nbsp;</span>
+                        <span class="PB_LB_text2 ABM" v-if="PprojectInfo.sameRatio != null" :class="PprojectInfo.sameRatio > 0 ? 'redFont' : 'greenFont'">
+                            <span style="margin-right:-8px;" v-show="PprojectInfo.sameRatio > 0">+</span>
+                            <!-- <span v-show="!(PprojectInfo.sameRatio >= 0)">-</span> -->
+                            {{FBI(PprojectInfo.sameRatio*100)}}%
+                        </span>
+                        <span class="PB_LB_text2" v-if="PprojectInfo.sameRatio == null">{{noData}}</span>
+                    </div>
+                    <div class="PB_LB_div2">
+                        <span class="PB_LB_text3">同比能耗&nbsp;</span>
+                        <span class="PB_LB_text4 ABM" v-if="PprojectInfo.sameRatioData != null">{{FON(PprojectInfo.sameRatioData)}}</span>
+                        <span class="PB_LB_text4" v-if="PprojectInfo.sameRatioData == null">{{noData}}</span>
+                        <span class="PB_LB_text1 ABM" v-if="PprojectInfo.sameRatioData != null">kWh</span>
+                    </div>
+                    <!-- <div class="PB_LB_div3 PB_LB_text5">{{PBaseMessage.timeFrom}}  ~  {{PBaseMessage.timeTo}}</div> -->
+                </div> 
+
+                <div class="PB_LB_box">
+                    <div class="PB_LB_div1">
+                        <span class="PB_LB_text1 PB_LB_text11">环比&nbsp;</span>
+                        <span class="PB_LB_text2 ABM" v-if="PprojectInfo.circleRatio != null" :class="PprojectInfo.circleRatio > 0 ? 'redFont' : 'greenFont'">
+                            <span style="margin-right:-8px;" v-show="PprojectInfo.circleRatio > 0">+</span>
+                            <!-- <span v-show="!(PprojectInfo.circleRatio >= 0)">-</span> -->
+                            {{FBI(PprojectInfo.circleRatio*100)}}%
+                        </span>
+                        <span class="PB_LB_text2" v-if="PprojectInfo.circleRatio == null">{{noData}}</span>
+                    </div>
+                    <div class="PB_LB_div2">
+                        <span class="PB_LB_text3">环比能耗&nbsp;</span>
+                        <span class="PB_LB_text4 ABM" v-if="PprojectInfo.circleRatioData != null">{{FON(PprojectInfo.circleRatioData)}}</span>
+                        <span class="PB_LB_text4" v-if="PprojectInfo.circleRatioData == null">{{noData}}</span>
+                        <span class="PB_LB_text1 ABM" v-if="PprojectInfo.circleRatioData != null">kWh</span>
+                    </div>
+                    <!-- <div class="PB_LB_div3 PB_LB_text5">{{PBaseMessage.timeFrom}}  ~  {{PBaseMessage.timeTo}}</div> -->
+                </div> 
+
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <div class="PB_right">
+        <div class="PB_chart_wrap" @mouseleave="chartLeave(PChartHoverNum)">
+            <div class="PB_chart_title">
+                <span>逐日能耗统计与计划&nbsp;&nbsp;</span>
+                <span @click.stop="PproToDayEnergy">查看日能耗详情 ></span>
+            </div>
+            <div class="PB_chart_lables">
+                <span class="PB_chart_text2">单位:kWh</span>
+                <span class="PB_chart_text">实际能耗高于计划</span>
+                <span class="PB_chart_littlebox PB_chart_mreal"></span>
+                <span class="PB_chart_text">实际能耗低于计划</span>
+                <span class="PB_chart_littlebox PB_chart_lreal"></span>
+                <span class="PB_chart_text">计划能耗</span>
+                <span class="PB_chart_littlebox PB_chart_plan"></span>
+            </div>
+
+            <div id="PB_CTooltip" v-if="PChartTooltip.show" :style="{top:PChartTooltip.y + 'px',left:PChartTooltip.x + 'px'}">
+                <div class="clear"><div class="tip1">{{(new Date(TC(PproDayAndItemInfo.day[PChartTooltip.index].time))).format("M.d")}}</div><div class="tiptd tip1" v-show="(new Date(TC(PproDayAndItemInfo.day[PChartTooltip.index].time))).format('M.d') == (new Date()).format('M.d')">今日</div></div>
+                <div>实际能耗<a class="ABM">   : {{PproDayAndItemInfo.day[PChartTooltip.index].energyData == null ? noData : toThousands(FON(PproDayAndItemInfo.day[PChartTooltip.index].energyData))}}</a><a v-show="PproDayAndItemInfo.day[PChartTooltip.index].energyData != null" class="AMT">kWh</a></div>
+                <div class="PB_CTooltipt1">计划能耗<a class="ABM">   : {{PproDayAndItemInfo.day[PChartTooltip.index].planData == null ? noData : toThousands(Math.ceil(PproDayAndItemInfo.day[PChartTooltip.index].planData))}}</a><a v-show="PproDayAndItemInfo.day[PChartTooltip.index].planData != null" class="AMT">kWh</a></div>
+                <div v-show="PproDayAndItemInfo.day[PChartTooltip.index].time == getToday().format('yyyy-M-d h:m:s')" class="PB_todayC_go" @click.stop="PproToDayEnergy()">点击查看能耗详情 ></div>
+            </div>
+
+            <div id="PB_chart"></div>
+
+        </div>
+
+        <div class="PB_items">
+            <div class="PB_items_title">分项能耗统计</div>
+            <div class="PB_items_lh" v-if="PprojectSomeInfo.ifHasPlanItems">
+                <span class="PB_items_lh_t1">分项</span>
+                <span class="PB_items_lh_t1">实际能耗(kWh)</span>
+                <span class="PB_items_lh_special">
+                    <span @click="PItemsPageSel(0)" :class="PprojectGridPage ? 'PB_items_lh_t2' : 'PB_items_lh_t3'">月总计划</span>
+                    <span @click="PItemsPageSel(1)" :class="!PprojectGridPage ? 'PB_items_lh_t2' : 'PB_items_lh_t3'">截止到当前时间计划</span>
+                    <span class="PB_items_lh_t1">( kWh )</span>
+                </span>
+                <span class="PB_items_lh_t1">实际能耗占计划比</span>
+            </div>
+            <ul class="PB_items_ul" v-if="PprojectSomeInfo.ifHasPlanItems">
+                <li class="PB_items_li" v-for="(model,index) in PproDayAndItemInfo.items" @click.stop="PproToDayEnergy(model)">
+                    <span class="PB_items_span1 tTM PFR" :title="model.energyItemName">{{model.energyItemName}}</span>
+                    <span class="PB_items_span2 tTM AMT" :title="FON(model.energyData)">{{FON(model.energyData)}}<span style="float:right;" v-show="model.energyData!=null">&nbsp;kWh</span></span>
+                    <span class="PB_items_span3">
+                        <div><div class="PB_items_bar"></div></div>
+                    </span>
+                    <span class="PB_items_span4 tTM AMT" :title="Math.ceil(model.monthEnergyPlan)" v-show="PprojectGridPage" v-if="PprojectSomeInfo.ifHasPlan">{{model.monthEnergyPlan == null ? noData : toThousands(Math.ceil(model.monthEnergyPlan))}}</span>
+                    <span class="PB_items_span4 tTM AMT" :title="Math.ceil(model.monthTodayEnergyPlan)" v-show="!PprojectGridPage" v-if="PprojectSomeInfo.ifHasPlan">{{model.monthTodayEnergyPlan == null ? noData : toThousands(Math.ceil(model.monthTodayEnergyPlan))}}</span>
+                    <span class="PB_items_span4" v-if="!PprojectSomeInfo.ifHasPlan">{{noData}}</span>
+                    <span class="PB_items_span5">
+                        <div v-if="PprojectSomeInfo.ifHasPlan" class="PB_LittleCanvas" :id="'PB_sectorCanvas'+index"></div>
+                        <div class="PB_items_s5d AMT" v-show="PprojectGridPage" v-if="PprojectSomeInfo.ifHasPlan" :title="FBI(model.planRatio*100)">{{model.planRatio !=null ? FBI(model.planRatio*100) + '%' : noData}}</div>
+                        <div class="PB_items_s5d AMT" v-show="!PprojectGridPage" v-if="PprojectSomeInfo.ifHasPlan" :title="FBI(model.planRatioToday*100)">{{model.planRatioToday != null ? FBI(model.planRatioToday*100) + '%' : noData}}</div>
+                        <div v-if="!PprojectSomeInfo.ifHasPlan">{{noData}}</div>
+                    </span>
+                    <span class="PB_items_span6">查看详情></span>
+                </li>
+            </ul>
+            <div class="PB_noitems" v-show="!PprojectSomeInfo.ifHasPlanItems&&PBaseMessage.NowModel == 'term'">
+                <div @click="PtoPlanItemEdit">建筑未设置计划管理节点,点击设置 ></div>
+            </div>
+            
+            <div class="PB_noitems" v-show="!PprojectSomeInfo.ifHasPlanItems&&PBaseMessage.NowModel == 'center'">
+                <pnotice-nodata text="暂无分项数据" subtitle="建筑未设置计划管理节点"></pnotice-nodata>
+            </div>
+        </div>
+
+    </div>
+
+</div>

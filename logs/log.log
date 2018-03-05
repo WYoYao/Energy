@@ -1,225 +1,40 @@
-[2018-01-11 11:59:32.878] [ERROR] log_file - 加载Number错误：Error: connect ECONNREFUSED 192.168.100.196:9001
+[2018-03-05 18:26:27.551] [ERROR] log_file - 获取/GetUserInfo的数据err：Error: connect ECONNREFUSED 192.168.100.101:8881
     at Object._errnoException (util.js:1024:11)
     at _exceptionWithHostPort (util.js:1046:20)
     at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1182:14)
-[2018-01-11 11:59:32.886] [ERROR] log_file - 加载pconst错误：Error: connect ECONNREFUSED 192.168.100.196:9001
+[2018-03-05 18:27:26.721] [ERROR] log_file - 加载Array错误：Error: connect ECONNREFUSED 192.168.100.25:9000
     at Object._errnoException (util.js:1024:11)
     at _exceptionWithHostPort (util.js:1046:20)
     at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1182:14)
-[2018-01-11 11:59:32.889] [ERROR] log_file - 加载Date错误：Error: connect ECONNREFUSED 192.168.100.196:9001
+[2018-03-05 18:27:26.728] [ERROR] log_file - 加载Number错误：Error: connect ECONNREFUSED 192.168.100.25:9000
     at Object._errnoException (util.js:1024:11)
     at _exceptionWithHostPort (util.js:1046:20)
     at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1182:14)
-[2018-01-11 11:59:32.890] [ERROR] log_file - 加载String错误：Error: connect ECONNREFUSED 192.168.100.196:9001
+[2018-03-05 18:27:26.729] [ERROR] log_file - 加载Math错误：Error: connect ECONNREFUSED 192.168.100.25:9000
     at Object._errnoException (util.js:1024:11)
     at _exceptionWithHostPort (util.js:1046:20)
     at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1182:14)
-[2018-01-11 11:59:32.892] [ERROR] log_file - 加载Array错误：Error: connect ECONNREFUSED 192.168.100.196:9001
+[2018-03-05 18:27:26.730] [ERROR] log_file - 加载ptool错误：Error: connect ECONNREFUSED 192.168.100.25:9000
     at Object._errnoException (util.js:1024:11)
     at _exceptionWithHostPort (util.js:1046:20)
     at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1182:14)
-[2018-01-11 11:59:32.894] [ERROR] log_file - 加载Math错误：Error: connect ECONNREFUSED 192.168.100.196:9001
+[2018-03-05 18:27:26.732] [ERROR] log_file - 加载Date错误：Error: connect ECONNREFUSED 192.168.100.25:9000
     at Object._errnoException (util.js:1024:11)
     at _exceptionWithHostPort (util.js:1046:20)
     at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1182:14)
-[2018-01-11 11:59:32.896] [ERROR] log_file - 加载ptool错误：Error: connect ECONNREFUSED 192.168.100.196:9001
+[2018-03-05 18:27:26.733] [ERROR] log_file - 加载pconst错误：Error: connect ECONNREFUSED 192.168.100.25:9000
     at Object._errnoException (util.js:1024:11)
     at _exceptionWithHostPort (util.js:1046:20)
     at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1182:14)
-[2018-01-11 11:59:32.899] [ERROR] log_file - 加载psecret错误：Error: connect ECONNREFUSED 192.168.100.196:9001
+[2018-03-05 18:27:26.734] [ERROR] log_file - 加载psecret错误：Error: connect ECONNREFUSED 192.168.100.25:9000
     at Object._errnoException (util.js:1024:11)
     at _exceptionWithHostPort (util.js:1046:20)
     at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1182:14)
-[2018-01-11 12:04:24.389] [ERROR] log_file - 加载Array错误：Error: connect ECONNREFUSED 192.168.100.196:9001
+[2018-03-05 18:27:26.735] [ERROR] log_file - 加载String错误：Error: connect ECONNREFUSED 192.168.100.25:9000
     at Object._errnoException (util.js:1024:11)
     at _exceptionWithHostPort (util.js:1046:20)
     at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1182:14)
-[2018-01-11 12:04:24.395] [ERROR] log_file - 加载Date错误：Error: connect ECONNREFUSED 192.168.100.196:9001
+[2018-03-05 18:28:09.674] [ERROR] log_file - 获取/GetUserInfo的数据err：Error: connect ECONNREFUSED 192.168.100.101:8881
     at Object._errnoException (util.js:1024:11)
     at _exceptionWithHostPort (util.js:1046:20)
     at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1182:14)
-[2018-01-11 12:04:24.397] [ERROR] log_file - 加载Number错误：Error: connect ECONNREFUSED 192.168.100.196:9001
-    at Object._errnoException (util.js:1024:11)
-    at _exceptionWithHostPort (util.js:1046:20)
-    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1182:14)
-[2018-01-11 12:04:24.399] [ERROR] log_file - 加载Math错误：Error: connect ECONNREFUSED 192.168.100.196:9001
-    at Object._errnoException (util.js:1024:11)
-    at _exceptionWithHostPort (util.js:1046:20)
-    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1182:14)
-[2018-01-11 12:04:24.402] [ERROR] log_file - 加载psecret错误：Error: connect ECONNREFUSED 192.168.100.196:9001
-    at Object._errnoException (util.js:1024:11)
-    at _exceptionWithHostPort (util.js:1046:20)
-    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1182:14)
-[2018-01-11 12:04:24.404] [ERROR] log_file - 加载pconst错误：Error: connect ECONNREFUSED 192.168.100.196:9001
-    at Object._errnoException (util.js:1024:11)
-    at _exceptionWithHostPort (util.js:1046:20)
-    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1182:14)
-[2018-01-11 12:04:24.406] [ERROR] log_file - 加载String错误：Error: connect ECONNREFUSED 192.168.100.196:9001
-    at Object._errnoException (util.js:1024:11)
-    at _exceptionWithHostPort (util.js:1046:20)
-    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1182:14)
-[2018-01-11 12:04:24.407] [ERROR] log_file - 加载ptool错误：Error: connect ECONNREFUSED 192.168.100.196:9001
-    at Object._errnoException (util.js:1024:11)
-    at _exceptionWithHostPort (util.js:1046:20)
-    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1182:14)
-[2018-01-11 12:06:43.511] [ERROR] log_file - 加载Date错误：Error: connect ECONNREFUSED 192.168.100.196:9001
-    at Object._errnoException (util.js:1024:11)
-    at _exceptionWithHostPort (util.js:1046:20)
-    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1182:14)
-[2018-01-11 12:06:43.517] [ERROR] log_file - 加载Array错误：Error: connect ECONNREFUSED 192.168.100.196:9001
-    at Object._errnoException (util.js:1024:11)
-    at _exceptionWithHostPort (util.js:1046:20)
-    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1182:14)
-[2018-01-11 12:06:43.519] [ERROR] log_file - 加载Math错误：Error: connect ECONNREFUSED 192.168.100.196:9001
-    at Object._errnoException (util.js:1024:11)
-    at _exceptionWithHostPort (util.js:1046:20)
-    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1182:14)
-[2018-01-11 12:06:43.521] [ERROR] log_file - 加载pconst错误：Error: connect ECONNREFUSED 192.168.100.196:9001
-    at Object._errnoException (util.js:1024:11)
-    at _exceptionWithHostPort (util.js:1046:20)
-    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1182:14)
-[2018-01-11 12:06:43.524] [ERROR] log_file - 加载Number错误：Error: connect ECONNREFUSED 192.168.100.196:9001
-    at Object._errnoException (util.js:1024:11)
-    at _exceptionWithHostPort (util.js:1046:20)
-    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1182:14)
-[2018-01-11 12:06:43.525] [ERROR] log_file - 加载String错误：Error: connect ECONNREFUSED 192.168.100.196:9001
-    at Object._errnoException (util.js:1024:11)
-    at _exceptionWithHostPort (util.js:1046:20)
-    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1182:14)
-[2018-01-11 12:06:43.527] [ERROR] log_file - 加载ptool错误：Error: connect ECONNREFUSED 192.168.100.196:9001
-    at Object._errnoException (util.js:1024:11)
-    at _exceptionWithHostPort (util.js:1046:20)
-    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1182:14)
-[2018-01-11 12:06:43.529] [ERROR] log_file - 加载psecret错误：Error: connect ECONNREFUSED 192.168.100.196:9001
-    at Object._errnoException (util.js:1024:11)
-    at _exceptionWithHostPort (util.js:1046:20)
-    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1182:14)
-[2018-01-11 12:07:10.802] [ERROR] log_file - 加载Array错误：Error: connect ECONNREFUSED 192.168.100.196:9001
-    at Object._errnoException (util.js:1024:11)
-    at _exceptionWithHostPort (util.js:1046:20)
-    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1182:14)
-[2018-01-11 12:07:10.808] [ERROR] log_file - 加载Date错误：Error: connect ECONNREFUSED 192.168.100.196:9001
-    at Object._errnoException (util.js:1024:11)
-    at _exceptionWithHostPort (util.js:1046:20)
-    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1182:14)
-[2018-01-11 12:07:10.810] [ERROR] log_file - 加载Number错误：Error: connect ECONNREFUSED 192.168.100.196:9001
-    at Object._errnoException (util.js:1024:11)
-    at _exceptionWithHostPort (util.js:1046:20)
-    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1182:14)
-[2018-01-11 12:07:10.813] [ERROR] log_file - 加载ptool错误：Error: connect ECONNREFUSED 192.168.100.196:9001
-    at Object._errnoException (util.js:1024:11)
-    at _exceptionWithHostPort (util.js:1046:20)
-    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1182:14)
-[2018-01-11 12:07:10.815] [ERROR] log_file - 加载psecret错误：Error: connect ECONNREFUSED 192.168.100.196:9001
-    at Object._errnoException (util.js:1024:11)
-    at _exceptionWithHostPort (util.js:1046:20)
-    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1182:14)
-[2018-01-11 12:07:10.817] [ERROR] log_file - 加载Math错误：Error: connect ECONNREFUSED 192.168.100.196:9001
-    at Object._errnoException (util.js:1024:11)
-    at _exceptionWithHostPort (util.js:1046:20)
-    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1182:14)
-[2018-01-11 12:07:10.819] [ERROR] log_file - 加载String错误：Error: connect ECONNREFUSED 192.168.100.196:9001
-    at Object._errnoException (util.js:1024:11)
-    at _exceptionWithHostPort (util.js:1046:20)
-    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1182:14)
-[2018-01-11 12:07:10.822] [ERROR] log_file - 加载pconst错误：Error: connect ECONNREFUSED 192.168.100.196:9001
-    at Object._errnoException (util.js:1024:11)
-    at _exceptionWithHostPort (util.js:1046:20)
-    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1182:14)
-[2018-01-11 12:10:02.427] [ERROR] log_file - 加载Array错误：Error: connect ECONNREFUSED 192.168.100.196:9001
-    at Object._errnoException (util.js:1024:11)
-    at _exceptionWithHostPort (util.js:1046:20)
-    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1182:14)
-[2018-01-11 12:10:02.433] [ERROR] log_file - 加载Date错误：Error: connect ECONNREFUSED 192.168.100.196:9001
-    at Object._errnoException (util.js:1024:11)
-    at _exceptionWithHostPort (util.js:1046:20)
-    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1182:14)
-[2018-01-11 12:10:02.435] [ERROR] log_file - 加载ptool错误：Error: connect ECONNREFUSED 192.168.100.196:9001
-    at Object._errnoException (util.js:1024:11)
-    at _exceptionWithHostPort (util.js:1046:20)
-    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1182:14)
-[2018-01-11 12:10:02.438] [ERROR] log_file - 加载psecret错误：Error: connect ECONNREFUSED 192.168.100.196:9001
-    at Object._errnoException (util.js:1024:11)
-    at _exceptionWithHostPort (util.js:1046:20)
-    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1182:14)
-[2018-01-11 12:10:02.440] [ERROR] log_file - 加载Math错误：Error: connect ECONNREFUSED 192.168.100.196:9001
-    at Object._errnoException (util.js:1024:11)
-    at _exceptionWithHostPort (util.js:1046:20)
-    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1182:14)
-[2018-01-11 12:10:02.442] [ERROR] log_file - 加载String错误：Error: connect ECONNREFUSED 192.168.100.196:9001
-    at Object._errnoException (util.js:1024:11)
-    at _exceptionWithHostPort (util.js:1046:20)
-    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1182:14)
-[2018-01-11 12:10:02.444] [ERROR] log_file - 加载Number错误：Error: connect ECONNREFUSED 192.168.100.196:9001
-    at Object._errnoException (util.js:1024:11)
-    at _exceptionWithHostPort (util.js:1046:20)
-    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1182:14)
-[2018-01-11 12:10:02.445] [ERROR] log_file - 加载pconst错误：Error: connect ECONNREFUSED 192.168.100.196:9001
-    at Object._errnoException (util.js:1024:11)
-    at _exceptionWithHostPort (util.js:1046:20)
-    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1182:14)
-[2018-01-11 12:13:55.223] [ERROR] log_file - 加载Date错误：Error: connect ECONNREFUSED 192.168.100.196:9001
-    at Object._errnoException (util.js:1024:11)
-    at _exceptionWithHostPort (util.js:1046:20)
-    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1182:14)
-[2018-01-11 12:13:55.228] [ERROR] log_file - 加载Array错误：Error: connect ECONNREFUSED 192.168.100.196:9001
-    at Object._errnoException (util.js:1024:11)
-    at _exceptionWithHostPort (util.js:1046:20)
-    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1182:14)
-[2018-01-11 12:13:55.231] [ERROR] log_file - 加载pconst错误：Error: connect ECONNREFUSED 192.168.100.196:9001
-    at Object._errnoException (util.js:1024:11)
-    at _exceptionWithHostPort (util.js:1046:20)
-    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1182:14)
-[2018-01-11 12:13:55.233] [ERROR] log_file - 加载Number错误：Error: connect ECONNREFUSED 192.168.100.196:9001
-    at Object._errnoException (util.js:1024:11)
-    at _exceptionWithHostPort (util.js:1046:20)
-    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1182:14)
-[2018-01-11 12:13:55.235] [ERROR] log_file - 加载Math错误：Error: connect ECONNREFUSED 192.168.100.196:9001
-    at Object._errnoException (util.js:1024:11)
-    at _exceptionWithHostPort (util.js:1046:20)
-    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1182:14)
-[2018-01-11 12:13:55.238] [ERROR] log_file - 加载ptool错误：Error: connect ECONNREFUSED 192.168.100.196:9001
-    at Object._errnoException (util.js:1024:11)
-    at _exceptionWithHostPort (util.js:1046:20)
-    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1182:14)
-[2018-01-11 12:13:55.240] [ERROR] log_file - 加载String错误：Error: connect ECONNREFUSED 192.168.100.196:9001
-    at Object._errnoException (util.js:1024:11)
-    at _exceptionWithHostPort (util.js:1046:20)
-    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1182:14)
-[2018-01-11 12:13:55.241] [ERROR] log_file - 加载psecret错误：Error: connect ECONNREFUSED 192.168.100.196:9001
-    at Object._errnoException (util.js:1024:11)
-    at _exceptionWithHostPort (util.js:1046:20)
-    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1182:14)
-[2018-01-11 15:28:00.917] [ERROR] log_file - Error: ENOENT: no such file or directory, open 'e:\Web_EMS\pweb_productList\pweb_energy\views\energycenter\header.html'
-    at Object.fs.openSync (fs.js:646:18)
-    at fs.readFileSync (fs.js:551:33)
-    at Object.exports.parse (e:\Web_EMS\node_modules\public_nodejs\ejs\lib\ejs.js:159:19)
-    at exports.compile (e:\Web_EMS\node_modules\public_nodejs\ejs\lib\ejs.js:223:15)
-    at Object.exports.render (e:\Web_EMS\node_modules\public_nodejs\ejs\lib\ejs.js:283:10)
-    at View.exports.renderFile [as engine] (e:\Web_EMS\node_modules\public_nodejs\ejs\lib\ejs.js:317:20)
-    at View.render (e:\Web_EMS\node_modules\public_nodejs\express\lib\view.js:76:8)
-    at Function.app.render (e:\Web_EMS\node_modules\public_nodejs\express\lib\application.js:506:10)
-    at ServerResponse.res.render (e:\Web_EMS\node_modules\public_nodejs\express\lib\response.js:759:7)
-    at e:\Web_EMS\pweb_productList\pweb_energy\controller\controller.js:24:13
-[2018-01-11 15:28:01.749] [ERROR] log_file - Error: ENOENT: no such file or directory, open 'e:\Web_EMS\pweb_productList\pweb_energy\views\energycenter\header.html'
-    at Object.fs.openSync (fs.js:646:18)
-    at fs.readFileSync (fs.js:551:33)
-    at Object.exports.parse (e:\Web_EMS\node_modules\public_nodejs\ejs\lib\ejs.js:159:19)
-    at exports.compile (e:\Web_EMS\node_modules\public_nodejs\ejs\lib\ejs.js:223:15)
-    at Object.exports.render (e:\Web_EMS\node_modules\public_nodejs\ejs\lib\ejs.js:283:10)
-    at View.exports.renderFile [as engine] (e:\Web_EMS\node_modules\public_nodejs\ejs\lib\ejs.js:317:20)
-    at View.render (e:\Web_EMS\node_modules\public_nodejs\express\lib\view.js:76:8)
-    at Function.app.render (e:\Web_EMS\node_modules\public_nodejs\express\lib\application.js:506:10)
-    at ServerResponse.res.render (e:\Web_EMS\node_modules\public_nodejs\express\lib\response.js:759:7)
-    at e:\Web_EMS\pweb_productList\pweb_energy\controller\controller.js:24:13
-[2018-01-16 10:00:08.695] [ERROR] log_file - Error: ENOENT: no such file or directory, open 'E:\Web_EMS\pweb_productList\pweb_energy\views\energyterm\header.html'
-    at Object.fs.openSync (fs.js:646:18)
-    at fs.readFileSync (fs.js:551:33)
-    at Object.exports.parse (E:\Web_EMS\node_modules\public_nodejs\ejs\lib\ejs.js:159:19)
-    at exports.compile (E:\Web_EMS\node_modules\public_nodejs\ejs\lib\ejs.js:223:15)
-    at Object.exports.render (E:\Web_EMS\node_modules\public_nodejs\ejs\lib\ejs.js:283:10)
-    at View.exports.renderFile [as engine] (E:\Web_EMS\node_modules\public_nodejs\ejs\lib\ejs.js:317:20)
-    at View.render (E:\Web_EMS\node_modules\public_nodejs\express\lib\view.js:76:8)
-    at Function.app.render (E:\Web_EMS\node_modules\public_nodejs\express\lib\application.js:506:10)
-    at ServerResponse.res.render (E:\Web_EMS\node_modules\public_nodejs\express\lib\response.js:759:7)
-    at E:\Web_EMS\pweb_productList\pweb_energy\controller\controller.js:37:13

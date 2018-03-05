@@ -34,8 +34,62 @@ controller.prototype.energyterm = function () {
 
     return function (req, res) {
 
-        res.render('energyterm/nodeManage/index', {
+        res.render('energyterm/index', {
             host: commonLibUrl,
+        })
+    }
+}
+
+// 能耗项目版
+controller.prototype.lookPlan = function () {
+
+    var _that = this;
+
+    return function (req, res) {
+
+        res.render('energycenter/lookPlan', {
+            host: commonLibUrl,
+            query: req.query.query,
+        })
+    }
+}
+
+// 下载日分享
+controller.prototype.dayterm = function () {
+
+    var _that = this;
+
+    return function (req, res) {
+
+        res.render('energyterm/download/dayterm', {
+            host: commonLibUrl,
+            query: req.query.query,
+        })
+    }
+}
+// 下载日总
+controller.prototype.daytotal = function () {
+
+    var _that = this;
+
+    return function (req, res) {
+
+        res.render('energyterm/download/daytotal', {
+            host: commonLibUrl,
+            query: req.query.query,
+        })
+    }
+}
+//  下载月总
+controller.prototype.monthtotal = function () {
+
+    var _that = this;
+
+    return function (req, res) {
+
+        res.render('energyterm/download/monthtotal', {
+            host: commonLibUrl,
+            query: req.query.query,
         })
     }
 }

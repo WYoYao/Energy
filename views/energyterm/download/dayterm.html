@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <script type="text/javascript" src="<%=host%>scripts/lib/jquery-2.0.0.min.js"></script>
+    <script type="text/javascript" src="<%=host%>scripts/lib/vue-2.2.0.min.js"></script>
+    <script type="text/javascript" src="<%=host%>scripts/extend/Array.js"></script>
+    <script type="text/javascript" src="<%=host%>scripts/extend/Date.js"></script>
+    <script type="text/javascript" src="<%=host%>scripts/extend/jQueryDom.js"></script>
+    <script type="text/javascript" src="<%=host%>scripts/extend/Math.js"></script>
+    <script type="text/javascript" src="<%=host%>scripts/extend/Number.js"></script>
+    <script type="text/javascript" src="<%=host%>scripts/extend/String.js"></script>
+    <script type="text/javascript" src="<%=host%>scripts/tool/ptool.js"></script>
+    <script type="text/javascript" src="<%=host%>scripts/tool/pconst.js"></script>
+    <script type="text/javascript" src="<%=host%>scripts/tool/pcolor.js"></script>
+    <script type="text/javascript" src="<%=host%>scripts/tool/pajax.js"></script>
+    <script type="text/javascript" src="<%=host%>scripts/tool/psecret.js"></script>
+    <script type="text/javascript" src="<%=host%>pcontrol/flatBlueSeries_src_2.0.js"></script>
+
+    <script src="http://192.168.100.25:9091/js/public/lodash.min.js"></script>
+
+    <!-- highcharts Start -->
+    <script src="https://img.hcharts.cn/highcharts/highcharts.js"></script>
+    <script src="https://img.hcharts.cn/highcharts/highcharts-more.js"></script>
+    <script src="https://img.hcharts.cn/highcharts/modules/solid-gauge.js"></script>
+    <!-- highcharts End -->
+
+    <script>
+        var query = '<%=query%>';
+        query = JSON.parse(psecret.parser(query));
+
+    </script>
+    <script type="text/javascript" src="/js/public/promise.min.js"></script>
+    <script src="/js/energyterm/download/dayterm/model.js"></script>
+    <script src="/js/energyterm/download/monthtotal/controller.js"></script>
+
+    <link rel="stylesheet" href="/css/energyterm/download/monthtotal.css">
+
+
+</head>
+
+<body>
+
+    <div id="monthtotal" class="monthtotal">
+        <div id="part1" class="part">
+            <div class="tip">
+                能耗预算管理
+            </div>
+            <div class="title">
+                {{buildingName}}建筑{{ eDate.y }}年{{ eDate.m }}月{{ eDate.d }}日{{energyItemName}}能耗分析报告
+            </div>
+
+            <div class="item budget">
+                <div class="describe">
+                    能耗预算概述
+                </div>
+
+                <div class="contenter">
+
+                    <!-- 文字显示 Start  -->
+                    <div class="numtitle">
+                        <div class="itemer">
+                            <div class="box">日能耗</div>
+                            <div class="box">
+                                <div class="blacknumber">
+                                    {{DayEnergyDataInfo.energyData | toThousands}}
+                                </div>
+                                <div class="company">
+                                    kWh
+                                </div>
+                            </div>
+                        </div>
+                        <div class="itemer1">
+                            <div class="box">日计划</div>
+                            <div class="box">
+                                <div class="blacknumber">
+                                    {{DayEnergyDataInfo.energyPlan | toThousands}}
+                                </div>
+                                <div class="company">
+                                    kWh
+                                </div>
+                            </div>
+                        </div>
+                        <div class="itemer1">
+                            <div class="box">日能耗占计划比</div>
+                            <div class="box">
+                                <template v-if="DayEnergyDataInfo.energyData && DayEnergyDataInfo.energyPlan">
+                                    <div class="blacknumber">
+                                        {{Math.floor(DayEnergyDataInfo.energyData/DayEnergyDataInfo.energyPlan*100)}}%
+                                    </div>
+                                </template>
+                                <template v-if="!(DayEnergyDataInfo.energyData && DayEnergyDataInfo.energyPlan)">
+                                    <div class="blacknumber">
+                                        --
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                        <div style="width:23%" class="itemer2">
+                            <div class="box">
+
+                                <div class="font">
+                                    同比
+                                </div>
+
+                                <div class="text">
+                                    同比能耗
+                                </div>
+
+                                <div class="number">
+                                    {{DayEnergyDataInfo.sameRatioData | toThousands}} kWh
+                                </div>
+
+                            </div>
+                            <div class="box">
+                                <div class="block_proportion" :class="{red:DayEnergyDataInfo.sameRatio>0,green:DayEnergyDataInfo.sameRatio<0}">
+                                    {{DayEnergyDataInfo.sameRatio | convertPercentage}} &nbsp;%
+                                </div>
+                            </div>
+                        </div>
+                        <div style="width:23%" class="itemer3">
+                            <div class="box">
+
+                                <div class="font">
+                                    环比
+                                </div>
+
+                                <div class="text">
+                                    环比能耗
+                                </div>
+
+                                <div class="number">
+                                    {{DayEnergyDataInfo.circleRatioData | toThousands}} kWh
+                                </div>
+
+                            </div>
+                            <div class="box">
+                                <div class="block_proportion" :class="{red:DayEnergyDataInfo.circleRatio>0,green:DayEnergyDataInfo.circleRatio<0}">
+                                    {{DayEnergyDataInfo.circleRatio | convertPercentage}} &nbsp;%
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--  文字显示 End   -->
+
+                </div>
+
+            </div>
+
+            <div class="item budget">
+                <div class="describe">
+                    逐时能耗统计
+                </div>
+
+                <div class="contenter">
+                    <!-- 表头信息 Start -->
+                    <div class="chart_title">
+                        <a href="#part3">逐日能耗详情见附件1></a>
+
+                        <div class="font">单位：kWh</div>
+                        <div class="font">实际能耗</div>
+                        <div class="blockicon energy_block"></div>
+                    </div>
+                    <!-- 表头信息 End -->
+
+                    <!--  柱状图 Start -->
+                    <div id="tio" class="chart_chart">
+
+                    </div>
+                    <!--  柱状图 End -->
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div id="part3" class="part">
+            <div class="tip">
+                能耗预算管理
+            </div>
+            <div class="describe">
+                附件2：逐时能耗详情
+            </div>
+            <div class="ttble">
+
+                <div class="th">
+                    <div class="bitems" style="width:50%">时间</div>
+                    <!-- <div class="bitems">能耗计划（kWh）</div> -->
+                    <div class="bitems" style="width:50%">实际能耗（kWh）</div>
+                    <!-- <div class="bitems">实际能耗占计划</div> -->
+                </div>
+
+                <div class="tr" v-for="item in DayEnergyDataInfo.hourData">
+                    <div class="bitems" style="width:50%">{{new Date(item.time).format('hh:mm')}}</div>
+                    <!-- <div class="bitems">{{item.planData?item.planData.toFixed(2):item.planData}}</div> -->
+                    <div class="bitems" style="width:50%">{{item.energyData?item.energyData.toFixed(2):'--'}}</div>
+                    <!-- <div class="bitems">{{(item.energyData && item.planData)?((item.energyData/item.planData*100).toFixed(2)+'%'):''}}</div> -->
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
+<% include ../../footer.html %>

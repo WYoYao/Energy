@@ -1,37 +1,231 @@
+
+;
+(function () {
+
+    var _constAssignArr = ['beforeMount', 'data', 'methods', 'computed', 'watch', 'filters'];
+
+    var VueReady = function (el) {
+        // 挂载的DOM
+        this.el = el;
+
+        var _that = this;
+
+        /**
+         * 创建对应的存储集合
+         */
+        _constAssignArr.reduce(function (con, key) {
+
+            con[key] = {};
+            return con;
+        }, _that)
+
+        // 保存初始化使用的值
+        this.init = {};
+
+        // 控制显示隐藏的dom集合
+        this.navigators = {};
+
+        // 用于保存生成后面的Vue 实例
+        this._instance = null;
+
+        // 只读获取Vue 
+        Object.defineProperty(this, "instance", {
+            get: function () {
+
+                if (_that._instance) return _that._instance;
+
+                _that._instance = new Vue({
+                    el: _that.el,
+                    data: _that.data,
+                    methods: _that.methods,
+                });
+
+                return _that._instance;
+            }
+        });
+    }
+
+    // 创建Vue 实例
+    VueReady.prototype.createVue = function () {
+
+        this._instance = new Vue({
+            el: this.el,
+            data: JSON.parse(JSON.stringify(this.data)),
+            methods: this.methods,
+            computed: this.computed,
+            watch: this.watch,
+            filters: this.filters,
+        });
+
+        return this._instance;
+    }
+
+    // 将需要添加的实例属性合并
+    VueReady.prototype.pushComponent = function (option) {
+
+        /**
+         * name:'当前模块名称'
+         * data:'当前模块需要绑定的状态树'
+         * methods:'当前模块需要绑定的方法'
+         */
+
+        var _that = this,
+            name,
+            assignArr = _constAssignArr, // 需要验正重复合并内容
+            el = option.el || void 0;
+
+        name = option.name || void 0;
+
+        // 挂载对应的 beforeMount 事件
+        if (name && el) {
+
+            // 綁定 方法中this 为 Vue 实例 
+            _that.navigators[name] = el;
+        }
+
+
+        // 挂载对应的 beforeMount 事件
+        if (name && _.isFunction(option.beforeMount)) {
+
+            // 綁定 方法中this 为 Vue 实例 
+            _that.beforeMount[name] = option.beforeMount;
+        }
+
+        // 循环执行两种类型的验证合并
+        assignArr.map(function (key) {
+
+            // 获对应的data methods 值
+            return {
+                key: key,
+                value: _.isPlainObject(option[key]) ? option[key] : {},
+            }
+        }).forEach(function (item) {
+
+            var key = item.key, // 区别   'data', 'methods'
+                value = item.value, // 传入的 'data', 'methods' 对应的值
+                keys = Object.keys(_that[key]), // 已有的值
+                err; // 冲突的方法名称集合
+
+            // 记录每个name 对应的初始化状态
+            if (key == 'data' && name != void 0) {
+
+                if (Object.keys(_that.init).includes(name)) throw new Error('当前namespace:' + name + '已经被使用');
+
+                _that.init[name] = value;
+            }
+
+            // 记录冲突
+            err = Object.keys(value).reduce(function (err, info) {
+
+                // 冲突记录
+                if (keys.includes(info)) err.push(info);
+                return err;
+            }, []);
+
+            // 合并
+            _that[key] = _.assign({}, _that[key], value);
+
+            // 冲突的打印出来
+            if (err.length) throw new Error(name + '下' + key + '中' + err.join(',') + '与已有内容发生冲突');
+
+        });
+
+    }
+
+    // 初始化对应页面内容
+    VueReady.prototype.initPage = function (name, argu) {
+
+        // 获取对应的状态值
+        var data = this.init[name],
+            beforeMount = this.beforeMount[name] || function () { };
+
+        if (argu) data = Object.assign(data, argu);
+
+        // onPage 切换到当前页面
+        data.onPage = name;
+
+        // 循环修改Vue 实例中的内容
+        Object.keys(data).reduce(function (con, key, index) {
+
+            con[key] = JSON.parse(JSON.stringify(data[key]));
+            return con;
+        }, this._instance);
+
+        // beforeMount 方法执行
+        beforeMount.call(this._instance);
+    }
+
+    window.VueReady = VueReady;
+
+})();
+
+var v = new VueReady('#app');;
+
 v.pushComponent({
-    name:"lookplan",
-    el:"#lookPlan",
-    data:{
-        planGridData:[]
+    name: "lookplan",
+    data: {
+        planGridData: {},
+        onPage: "lookplan",
+        Planlast: 0,
+        witdthNeed: "100%",
+        witdthNeedWrap: "100%",
+        projectName: "",
+        projectTime: ""
     },
-    methods:{
-        //     "projectId":"Pj1101010003",                //类型：String  必有字段  备注：无
-        //     "buildingId":"Bd1101010003001",                //类型：String  必有字段  备注：建筑id
-        //     "budgetItemId":"VOEi11010100020008",                //类型：String  必有字段  备注：预算管理节点
-        //     "planItems": - [                //类型：Array  可有字段  备注：无
-        //         "VOEi1101010003000S",                //类型：String  必有字段  备注：无
-        //         "VOEi1101010003000T"                //类型：String  必有字段  备注：无
-        //     ],
-        //     "operateType":"query",                //类型：String  必有字段  备注：操作类型
-        //     "planType":2,                //类型：Number  必有字段  备注：计划类型: 0-日总,1-月分项,2-日分项
-        //     "startDate":"2017-10-01 00:00:00",                //类型：String  必有字段  备注：开始时间
-        //     "endDate":"2017-11-01 00:00:00",                //类型：String  可有字段  备注：结束时间 当planType=1时不填写
-        //     "isDownload":false                //类型：Boolean  可有字段  备注：是否下载excel 选填 默认为false
-        InitPage : function(paramObj){
-            paramObj = JSON.stringify(paramObj);
+    methods: {
+        InitPage: function () {
             var _this = this;
-            planController.getProjectDataByDay(paramObj,function(data){
+            this.projectName = query.projectName;
+            this.projectTime = (new Date(TC(query.startDate))).format("yyyy-M");
+            var paramObj = {
+                buildingId : query.buildingId,
+                startDate : query.startDate,
+                download:false
+            }
+            planController.getProjectDataByDay(paramObj).then(function (data) {
                 data = JSON.parse(JSON.stringify(data));
-                _this.planGridData = data.content;
-                _this.$nextTick(function(){
-                    // $(".lookPlan_grid .lookPlan_grid_head").eq(0).css("width",data.content.length*140+58)
-                    $(".lookPlan_grid_body").css("width",data.content.length*140+58)
+                data.items.forEach(function(item){
+                    item.data.forEach(function(model,index){
+                        item.data[index] = Math.toFixed({value:model,fixNum:1});
+                    })
                 })
+                data.sumdata.forEach(function(item,index){
+                    data.sumdata[index] = Math.toFixed({value:item,fixNum:1});
+                })
+                _this.planGridData = data;
+                _this.Planlast = data.time.length;
+                _this.$nextTick(function () {
+                    var widthHas = $("#lookPlan_grid").width();
+                    var witdthNeed = (data.items.length + 1)*141 + 53;
+                    _this.witdthNeed = witdthNeed + "px";
+                    _this.witdthNeedWrap = witdthNeed + 20 + "px"
+                })
+            })
+        },
+        ceil: function (value) {
+            return Math.ceil(value);
+        },
+        EnergyPlanDownload : function(){
+            var paramObj = {
+                buildingId:query.buildingId,
+                startDate:query.startDate,
+                download:true,
+                excelName:this.projectName + this.projectTime + "能耗计划"
+            }
+            planController.getProjectDataByDay(paramObj).then(function(data){
+                pajax.download(data)
             })
         }
     },
-    beforeMount:function(){
-        // this.InitPage(this.lookPlanParamObj);
+    beforeMount: function () {
         this.InitPage({});
     }
+});
+
+function TC(date){
+    return (typeof date) ==  'string' ? date.replace(new RegExp(/-/gm) ,"/") : date;
+}  
+$(function () {
+    v.createVue();
+    v.initPage('lookplan');
 })

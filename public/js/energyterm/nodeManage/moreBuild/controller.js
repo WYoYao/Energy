@@ -2,7 +2,14 @@ var more_build_controller = {
     //获取项目下建筑列表
     FNPJ_GetBuildingsOfProject(timeFrom, timeTo) {
 
-        console.log(timeFrom, timeTo);
+        // 造假数据
+        return mock((item, index) => {
+            return {
+                "buildingId": "Bd1101010003001",               //类型：String  必有字段  备注：建筑id
+                "buildingName": mock.string('建筑名称', 3) + index,             //类型：String  必有字段  备注：建筑名称
+                "isMain": +(index == 0)                        //类型：Number  必有字段  备注：是否主建筑1-主建筑，0-子建筑
+            };
+        })
 
         // 造假数据
         return mock((item, index) => {

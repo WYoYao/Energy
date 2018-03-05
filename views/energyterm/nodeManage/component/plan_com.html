@@ -11,15 +11,18 @@
             }">
                 <div class="code">
                     <div class="border"></div>
-                    <div class="title" :title="item.energyItemName">
-                        {{item.energyItemName}}
-                        <div class="icon">
-                            {{index%2?'J':'-'}}
-                        </div>
+                    <div class="title" @click="handler(item)" :class="{on:item.isplanNode,disabled:item.childs.length}" :title="item.energyItemName">
+                            <img v-show="item.isCenterPlanNode" class="tree_icon" src="/images/energyterm/nodeManage/black.png">
+                            <em v-text="item.energyItemName"></em>
+                            
+                            <div class="icon" v-if="item.childs.length">
+                                {{item.isplanNode?'J':'-'}}
+                            </div>
+                             
                     </div>
-                    <div class="border" :class="{noborder:!item.childs.length}"></div>
+                    <div class="border" :class="{noborder:(item.isplanNode || !item.childs.length)}"></div>
                 </div>
-                <plannode :node_tree="item.childs"/>
+                <plannode :handler="handler" v-if="!item.isplanNode && item.childs.length" :node_tree="item.childs"/>
             </div>
         </div>
 
@@ -29,7 +32,7 @@
 
     Vue.component('plannode', {
         template: "#plannode",
-        props: ["node_tree"],
+        props: ["node_tree", "handler"],
     })
 </script>
 
@@ -39,21 +42,24 @@
 <script type="text/html" id="plan_com">
 
             <!-- 竖线 Start  -->
-            <div class="box">
+            <div class="box" :style="suboptiontop">
                     <div class="block">
                         <div class="view">
                             <div class="code">
                                 <div class="border noborder"></div>
-                                <div class="title" :class="{on:plan_tree.isplanNode}" :title="plan_tree.energyItemName">
-                                    <i></i>
-                                    {{plan_tree.energyItemName}}
-                                <div class="icon">
-                                    {{'J'}}
+                                <!-- <div class="title" @click="handler(plan_tree)" :class="{on:plan_tree.isplanNode}" :title="plan_tree.energyItemName"> -->
+                                    <div class="title" :class="{on:plan_tree.isplanNode}" :title="plan_tree.energyItemName">
+                                        <i :title="'该分项为建筑的预算管理节点'"></i>
+                                        <em style="width:80px;" v-text="plan_tree.energyItemName"></em>
+                                    
+                                        <!-- <div class="icon" v-if="plan_tree.childs.length">
+                                            {{'J'}}
+                                        </div> -->
+                                   
                                 </div>
-                                </div>
-                                <div class="border"></div>
+                                <div class="border" :class="{noborder:plan_tree.isplanNode}"></div>
                             </div>
-                            <plannode :node_tree="plan_tree.childs"/>
+                            <plannode :handler="handler" v-if="!plan_tree.isplanNode && plan_tree.childs.length" :node_tree="plan_tree.childs"/>
                         </div>
                     </div>
             </div>
@@ -65,6 +71,6 @@
 
     Vue.component('myplannode', {
         template: "#plan_com",
-        props: ["plan_tree"],
+        props: ["plan_tree", "suboptiontop", "handler"],
     })
 </script>

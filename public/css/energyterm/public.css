@@ -26,3 +26,33 @@ html,body{
     height: 0;
     clear: both;
 } 
+.tTM{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap; 
+    word-wrap: break-word;
+}
+
+.redFont{
+    color: #F87C7C !important;
+}
+.greenFont{
+    color: #68C5B3 !important;
+}
+.grayFont{
+    color: #6D6D6D !important;
+}
+.moreblackFont{
+    color: #151515 !important;
+    font-weight: 500;
+}
+.blackFont{
+    color: #151515;
+}
+[v-cloak]{
+    display: none !important;
+}
+.wordAuto{
+    word-wrap:break-word;
+    overflow:hidden;
+}

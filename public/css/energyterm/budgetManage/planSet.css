@@ -6,6 +6,7 @@
     right: 10px;
     bottom: 0px;
     background: #ffffff;
+    z-index: 2;
 }
 
 .budgetMangeWrap .energyPlanWrap {
@@ -26,7 +27,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    display: none;
+    z-index: 4;
 }
 
     .energyPlanWrap .countMachine .machineHead {
@@ -54,24 +55,37 @@
             width: 124px;
         }
 
-    .energyPlanWrap .countMachine .inputBox {
+    .energyPlanWrap .countMachine .inputWrap {
         margin-top: 20px;
-        overflow: hidden;
         padding: 0 10px;
     }
 
-        .energyPlanWrap .countMachine .inputBox .symbol {
+        .energyPlanWrap .countMachine .inputWrap:after {
+            content: '';
+            display: block;
+            height: 0;
+            clear: both;
+            visibility: hidden;
+        }
+
+        .energyPlanWrap .countMachine .inputWrap .symbol {
             font-size: 14px;
             color: #7A94AD;
             line-height: 30px;
             float: left;
+            width: 10px;
+            text-align: center;
         }
 
-        .energyPlanWrap .countMachine .inputBox .text {
+        .energyPlanWrap .countMachine .inputWrap .countText {
             float: left;
             margin-left: 8px;
             width: 216px;
         }
+
+            .energyPlanWrap .countMachine .inputWrap .countText .bInput {
+                padding: 0 50px 0 8px;
+            }
 
     .energyPlanWrap .countMachine .sureButton {
         margin-top: 30px;
@@ -122,14 +136,27 @@
         border-left: 20px solid transparent;
     }
 
-
-
-.energyPlanWrap .planHead {
-    height: 150px;
-    padding: 36px 20px 0 20px;
-    box-sizing: border-box;
+.energyPlanWrap .headWrap {
     border-left: 1px solid #EDF1F4;
     border-right: 1px solid #EDF1F4;
+}
+
+.energyPlanWrap .planWarn {
+    color: #FF7B7B;
+    font-size: 12px;
+    background: #FFF1F1;
+    line-height: 30px;
+    height: 30px;
+    text-indent: 20px;
+    visibility: hidden;
+    border-left: 1px solid #EDF1F4;
+    border-right: 1px solid #EDF1F4;
+}
+
+.energyPlanWrap .planHead {
+    height: 120px;
+    padding: 6px 20px 0 20px;
+    box-sizing: border-box;
 }
 
     .energyPlanWrap .planHead .energyBlock {
@@ -177,6 +204,7 @@
     height: 50px;
     padding: 10px 20px 0 20px;
     background: #EAEEF0;
+    box-sizing: border-box;
 }
 
     .energyPlanWrap .planPanelMenu .menuButton {
@@ -210,177 +238,192 @@
     left: 0;
 }
 
-.energyPlanWrap .itemPlan {
-    /*height: calc(100% - 252px);
-        height: -moz-calc(100% - 252px );
-        height: -webkit-calc(100% - 252px);*/
+.energyPlanWrap .itemDayPlan {
     position: absolute;
-    top: 210px;
+    top: 200px;
     bottom: 42px;
     left: 0;
     width: 100%;
-    padding-top: 36px;
+}
+
+    .energyPlanWrap .itemDayPlan .itemPlan {
+        /*height: calc(100% - 252px);
+        height: -moz-calc(100% - 252px );
+        height: -webkit-calc(100% - 252px);*/
+        position: relative;
+        padding-top: 36px;
+        box-sizing: border-box;
+        height: 100%;
+        user-select: none;
+    }
+
+.energyPlanWrap .itemPlan .tableHead {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    border: 1px solid #EDF1F4;
+    border-top: none;
+    height: 36px;
     box-sizing: border-box;
 }
 
-    .energyPlanWrap .itemPlan .tableHead {
-        position: absolute;
-        top: 0px;
-        left: 0px;
-        width: 100%;
-        border-bottom: 1px solid #eeeeee;
-        height: 36px;
-        box-sizing: border-box;
-    }
-
-        .energyPlanWrap .itemPlan .tableHead > div {
-            height: 35px;
-            line-height: 35px;
-            color: #000000;
-            font-size: 12px;
-        }
-
-    .energyPlanWrap .itemPlan .planTable {
-        overflow-y: auto;
-        max-height: 100%;
-        border-bottom: 1px solid #EDF1F4;
-        box-sizing: border-box;
-    }
-
-    .energyPlanWrap .itemPlan .tableLine > div {
-        height: 38px;
-        line-height: 38px;
+    .energyPlanWrap .itemPlan .tableHead > div {
+        height: 35px;
+        line-height: 35px;
+        color: #000000;
         font-size: 12px;
     }
 
-    .energyPlanWrap .itemPlan .tableUl > div {
-        padding-left: 22px;
+.energyPlanWrap .itemPlan .planTable {
+    overflow-y: auto;
+    max-height: 100%;
+    border: 1px solid #EDF1F4;
+    border-top: none;
+    box-sizing: border-box;
+}
+
+.energyPlanWrap .itemPlan .tableLine > div {
+    height: 38px;
+    line-height: 38px;
+    font-size: 12px;
+}
+
+.energyPlanWrap .itemPlan .tableUl > div {
+    padding-left: 22px;
+    float: left;
+    box-sizing: border-box;
+}
+
+    .energyPlanWrap .itemPlan .tableUl > div:nth-child(1) {
+        width: 18%;
+    }
+
+    .energyPlanWrap .itemPlan .tableUl > div:nth-child(2) {
+        width: 16%;
+    }
+
+    .energyPlanWrap .itemPlan .tableUl > div:nth-child(3) {
+        width: 16%;
+    }
+
+    .energyPlanWrap .itemPlan .tableUl > div:nth-child(4) {
+        width: 24%;
+    }
+
+    .energyPlanWrap .itemPlan .tableUl > div:nth-child(5) {
+        width: 15%;
+    }
+
+.energyPlanWrap .itemPlan .tableLine:nth-child(2n+1) {
+    background: #f8f8f8;
+}
+
+.energyPlanWrap .itemPlan .tableLine:nth-child(2n) {
+    background: #ffffff;
+}
+
+.energyPlanWrap .itemPlan .tableUl:after {
+    content: '';
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.energyPlanWrap .itemPlan .tableUl .Percent {
+    padding-left: 0;
+    padding-right: 22px;
+    text-align: right;
+}
+
+.energyPlanWrap .itemPlan .tableUl .editPlan {
+    padding-top: 4px;
+}
+
+.energyPlanWrap .itemPlan .tableLine .showChart {
+    color: #7A94AD;
+    padding-left: 0;
+    padding-right: 22px;
+    float: right;
+    display: none;
+    cursor: pointer;
+}
+
+.energyPlanWrap .itemPlan .tableLine:hover .showChart {
+    display: block;
+}
+
+.energyPlanWrap .itemPlan .tableLine .editPlan .bInputBox {
+    width: 120px;
+    float: left;
+}
+
+    .energyPlanWrap .itemPlan .tableLine .editPlan .bInputBox .bInput {
+        padding: 0 48px 0 8px;
+    }
+
+    .energyPlanWrap .itemPlan .tableLine .editPlan .bInputBox .error-tip {
+        bottom: 4px;
+        left: 250px;
+    }
+
+.energyPlanWrap .itemPlan .tableLine .editPlan .connect {
+    float: left;
+    width: 20px;
+    background: url(/images/energyterm/budgetManage/cline.png) no-repeat center center;
+    height: 30px;
+}
+
+.energyPlanWrap .itemPlan .tableLine .countPic {
+    float: left;
+    height: 30px;
+    width: 14px;
+    margin-left: 16px;
+    background: url(/images/energyterm/budgetManage/count.png) no-repeat center center;
+    cursor: pointer;
+}
+
+.energyPlanWrap .itemPlan .tableLine .adjustNum {
+    float: left;
+}
+
+    .energyPlanWrap .itemPlan .tableLine .adjustNum .text {
         float: left;
+        width: 48px;
+        height: 30px;
         box-sizing: border-box;
-    }
-
-        .energyPlanWrap .itemPlan .tableUl > div:nth-child(1) {
-            width: 18%;
-        }
-
-        .energyPlanWrap .itemPlan .tableUl > div:nth-child(2) {
-            width: 16%;
-        }
-
-        .energyPlanWrap .itemPlan .tableUl > div:nth-child(3) {
-            width: 16%;
-        }
-
-        .energyPlanWrap .itemPlan .tableUl > div:nth-child(4) {
-            width: 24%;
-        }
-
-        .energyPlanWrap .itemPlan .tableUl > div:nth-child(5) {
-            width: 15%;
-        }
-
-    .energyPlanWrap .itemPlan .tableLine:nth-child(2n+1) {
-        background: #f8f8f8;
-    }
-
-    .energyPlanWrap .itemPlan .tableLine:nth-child(2n) {
-        background: #ffffff;
-    }
-
-    .energyPlanWrap .itemPlan .tableUl:after {
-        content: '';
-        display: block;
-        height: 0;
-        clear: both;
-        visibility: hidden;
-    }
-
-    .energyPlanWrap .itemPlan .tableUl .Percent {
-        padding-left: 0;
-        padding-right: 22px;
-        text-align: right;
-    }
-
-    .energyPlanWrap .itemPlan .tableUl .editPlan {
-        padding-top: 4px;
-    }
-
-    .energyPlanWrap .itemPlan .tableLine .showChart {
-        color: #7A94AD;
-        padding-left: 0;
-        padding-right: 22px;
-        float: right;
-        display: none;
-        cursor: pointer;
-    }
-
-    .energyPlanWrap .itemPlan .tableLine:hover .showChart {
-        display: block;
-    }
-
-    .energyPlanWrap .itemPlan .tableLine .editPlan .eInput {
-        width: 120px;
-        float: left;
+        border: 1px solid #CACACA;
         line-height: 30px;
+        padding-left: 10px;
+        overflow: hidden;
     }
 
-    .energyPlanWrap .itemPlan .tableLine .editPlan .connect {
-        float: left;
+    .energyPlanWrap .itemPlan .tableLine .adjustNum .arrow {
+        border: 1px solid #CACACA;
+        border-left: none;
         width: 20px;
-        background: url(/images/energyterm/budgetManage/cline.png) no-repeat center center;
         height: 30px;
+        box-sizing: border-box;
+        float: left;
     }
 
-    .energyPlanWrap .itemPlan .tableLine .countPic {
-        float: left;
-        height: 30px;
-        width: 14px;
-        margin-left: 16px;
-        background: url(/images/energyterm/budgetManage/count.png) no-repeat center center;
+    .energyPlanWrap .itemPlan .tableLine .adjustNum .upArrow {
+        display: block;
+        height: 14px;
+        color: #7A94AD;
+        line-height: 15px;
+        font-family: 'perficon';
+        font-size: 14px;
         cursor: pointer;
+        text-align: center;
     }
-
-    .energyPlanWrap .itemPlan .tableLine .adjustNum {
-        float: left;
-    }
-
-        .energyPlanWrap .itemPlan .tableLine .adjustNum .text {
-            float: left;
-            width: 48px;
-            height: 30px;
-            box-sizing: border-box;
-            border: 1px solid #CACACA;
-            line-height: 30px;
-            padding-left: 12px;
-        }
-
-        .energyPlanWrap .itemPlan .tableLine .adjustNum .arrow {
-            border: 1px solid #CACACA;
-            border-left: none;
-            width: 20px;
-            height: 30px;
-            box-sizing: border-box;
-            float: left;
-        }
-
-        .energyPlanWrap .itemPlan .tableLine .adjustNum .upArrow {
-            display: block;
-            height: 14px;
-            color: #7A94AD;
-            line-height: 15px;
-            font-family: 'perficon';
-            font-size: 14px;
-            cursor: pointer;
-            text-align: center;
-        }
 
 .energyPlanWrap .dayPlan {
-    height: calc(100% - 252px);
-    height: -moz-calc(100% - 252px );
-    height: -webkit-calc(100% - 252px);
     padding-top: 32px;
     box-sizing: border-box;
     position: relative;
+    height: 100%;
 }
 
     .energyPlanWrap .dayPlan .tableHead {
@@ -413,6 +456,8 @@
         box-sizing: border-box;
         border-left: 1px solid #eeeeee;
         border-bottom: 1px solid #eeeeee;
+        border-right: 1px solid #eeeeee;
+        position: relative;
     }
 
         .energyPlanWrap .dayPlan .planTable .dayCell {
@@ -429,13 +474,17 @@
                 color: #cacaca;
             }
 
-            .energyPlanWrap .dayPlan .planTable .dayCell.now {
+            .energyPlanWrap .dayPlan .planTable .dayCell.thisMonth {
                 color: #151515;
             }
 
-                .energyPlanWrap .dayPlan .planTable .dayCell.now:hover {
-                    background: #f8f8f8;
-                }
+            .energyPlanWrap .dayPlan .planTable .dayCell.editDay:hover {
+                background: #f8f8f8;
+            }
+
+            .energyPlanWrap .dayPlan .planTable .dayCell:nth-child(7n) {
+                border-right: none;
+            }
 
     .energyPlanWrap .dayPlan .dayCell .date {
         font-size: 12px;
@@ -451,7 +500,7 @@
         display: none;
     }
 
-    .energyPlanWrap .dayPlan .planTable .dayCell.now:hover .showChart {
+    .energyPlanWrap .dayPlan .planTable .dayCell.editDay:hover .showChart {
         display: inline-block;
     }
 
@@ -465,14 +514,18 @@
         font-size: 12px;
     }
 
-    .energyPlanWrap .dayPlan .dayCell .inputBox {
+    .energyPlanWrap .dayPlan .dayCell .inputWrap {
         margin-top: 12px;
     }
 
-        .energyPlanWrap .dayPlan .dayCell .inputBox .input {
+        .energyPlanWrap .dayPlan .dayCell .inputWrap .bInputBox {
             float: left;
             width: 120px;
         }
+
+            .energyPlanWrap .dayPlan .dayCell .inputWrap .bInputBox .bInput {
+                padding: 0 48px 0 8px;
+            }
 
     .energyPlanWrap .dayPlan .countPic {
         float: left;

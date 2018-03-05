@@ -11,12 +11,12 @@
             }">
                 <div class="code">
                     <div class="border"></div>
-                    <div class="title" :title="item.energyItemName" v-text="item.energyItemName">
+                    <div class="title" @click="handler_click(item)" :class="{on:item.isBudgetNode}" :title="item.energyItemName" v-text="item.energyItemName">
 
                     </div>
                     <div class="border" :class="{noborder:!item.childs.length}"></div>
                 </div>
-                <budgetnode :node_tree="item.childs"/>
+                <budgetnode :handler_click="handler_click" :node_tree="item.childs"/>
             </div>
         </div>
 
@@ -26,11 +26,7 @@
 
     Vue.component('budgetnode', {
         template: "#budgetnode",
-        props: ["node_tree"],
-        beforeMount: function () {
-
-            console.log(this.node_tree);
-        }
+        props: ["node_tree", "handler_click"],
     })
 </script>
 
@@ -45,12 +41,12 @@
                         <div class="view">
                             <div class="code">
                                 <div class="border noborder"></div>
-                                <div class="title" :class="{on:budget_tree.isBudgetNode}" :title="budget_tree.energyItemName">
+                                <div class="title" @click="handler_click(budget_tree)" :class="{on:budget_tree.isBudgetNode}" :title="budget_tree.energyItemName">
                                     <i></i>{{budget_tree.energyItemName}}
                                 </div>
                                 <div class="border"></div>
                             </div>
-                            <budgetnode :node_tree="budget_tree.childs"/>
+                            <budgetnode :handler_click="handler_click" :node_tree="budget_tree.childs"/>
                         </div>
                     </div>
             </div>
@@ -62,6 +58,6 @@
 
     Vue.component('mybudgetnode', {
         template: "#budget_com",
-        props: ["budget_tree"],
+        props: ["budget_tree", "handler_click"],
     })
 </script>

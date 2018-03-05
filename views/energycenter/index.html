@@ -8,17 +8,69 @@
     <script src="/js/energycenter/index.js"></script>
     <!-- 准备创建Vue End    -->
 
-    <!-- 挂载DOM -->
-    <div id="app">
-        <div class="body">
+    <!-- 计划管理节点 Start -->
+    <link rel="stylesheet" href="/css/energyterm/nodeManage/plan.css">
+    <link rel="stylesheet" href="/css/energyterm/budgetManage/index.css" />
+    <link rel="stylesheet" href="/css/energyterm/budgetManage/planSet.css" />
+    
 
-            <% include ./centerIndex.html %>
+    <!-- <script src="/js/energyterm/budgetManage/controller.js"></script>
+    <script src="/js/energyterm/budgetManage/model.js"></script>
+    <script src="/js/energyterm/budgetManage/event.js"></script> -->
+    <script src="/js/energyterm/nodeManage/subOption/controller.js"></script>
+    <% include ../energyterm/nodeManage/component/plan_com.html %>
+        <!-- 中心版预算管理侧弹窗 -->
+        <% include ../energyterm/budgetManage/floattemplate.html %>  
+        
+            <% include ../energyterm/budgetManage/widgetTemplate.html %>
+                <!-- 计划管理节点 End -->
 
-            <% include ./lookPlan.html %>
+                <!-- 侧弹窗 -->
+                <ploading-global id="globaloadng"></ploading-global>
+                <!-- 成功失败提示 -->
+                <pnotice-message id="globalnotice"></pnotice-message>
+                <!-- 挂载DOM -->
+                <div id="app">
+                    <div class="body">
 
-            <% include ./energyByDayHead.html %>
+                        <% include ./centerIndex.html %>
 
-        </div>
-    </div>
+                        <% include ./energyByProject/energyByProjectHead.html %>
 
-    <% include ../footer.html %>
+                        <% include ./energyByDay/energyByDayHead.html %>
+
+                        <% include ../energyterm/budgetManage/index.html %>
+
+                        <% include ../energyterm/nodeManage/plan.html %>
+
+
+
+
+                        <!-- 项目筛选侧弹窗 -->
+                        <pwindow-float id="I_filterWindow" isshade="true" title="筛选项目" templateid="I_filterWindow_tem">
+                            <animate maxpx="0" minpx="-600" orientation="right"> </animate>
+                        </pwindow-float>
+
+                        <!-- 项目预算侧弹窗 -->
+                        <pwindow-float bind="true" id="'I_budgetWindow'" isshade="true" title="projectSel.projectInfoReady.projectName + ' - ' + projectUserSel.timeDayShow" templateid="I_budgetWindow_tem">
+                            <animate maxpx="0" minpx="-830" orientation="right"> </animate>
+                        </pwindow-float>
+                        
+                        <div id="I_shadow" @click.stop=""></div>
+                        
+                        <!-- 二次确认弹窗 -->
+                        <div id="BudgetWindowTS" @click.stop="">
+                            <div class="BudgetWindowTS_t1" v-show="NotSelFutureMonth">确定要保存本月能耗预算吗？</div>
+                            <div class="BudgetWindowTS_t1" v-show="!NotSelFutureMonth">确定要保存{{(new Date(TC(projectSel.projectInfo.planDate))).format('yyyy')+'年'+(new Date(TC(projectSel.projectInfo.planDate))).format('M')+'月'}}能耗预算吗？</div>
+                            <div class="BudgetWindowTS_t2" v-show="NotSelFutureMonth">本月能耗预算创建后立刻生效，生效后将无法编辑！</div>
+                            <div class="BudgetWindowTS_t2" v-show="!NotSelFutureMonth">预算到该月立刻生效，生效后将无法编辑！</div>
+                            <div class="BudgetWindowTS_but">
+                                <div><pbutton-white text="确定" @click.stop="BudgetWindowTSS"></pbutton-white></div>
+                                <div><pbutton-white text="取消" @click.stop="BudgetWindowTSN"></pbutton-white></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <% include ../footer.html %>

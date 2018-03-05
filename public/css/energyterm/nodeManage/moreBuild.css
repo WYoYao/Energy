@@ -35,6 +35,10 @@
     margin:9px 10px 0 0;
 }
 
+.more_box .header .build_pre>div{
+    width: 143px;
+}
+
 .more_box .header .build_sett{
     float: right;
     margin:9px 20px 0 0;
@@ -208,4 +212,6 @@
 .more_box .content .item .warning_color{
     color: #F89054;
 }
+
+
 

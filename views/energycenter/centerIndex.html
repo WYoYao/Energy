@@ -3,385 +3,207 @@
 <script src="/js/energycenter/centerindex/controller.js"></script>
 <script src="/js/energycenter/centerindex/model.js"></script>
 <script src="/js/energycenter/centerindex/event.js"></script>
+<script src="/js/public/cityData.js"></script>
 
 
-<div id="index" v-if='onPage=="centerindex"'>
-
-    <pnotice-message id="index_message"></pnotice-message>
-
+<div id="index" v-cloak  v-if='onPage=="centerindex"'>
     <!-- 头部 -->
-    <div id="index_head">
-        <div class="index_head_time">
-            <ptime-calendar id="index_head_ptime" orientation="down" sel="indexTimeSel">
+    <div id="I_head">
+        <div class="I_head_time">
+            <ptime-calendar id="I_head_ptime" orientation="down" sel="indexTimeSel">
                 <panel timetype="M" align="left" double="false" iscommontime="false"></panel>
             </ptime-calendar>
         </div>
-        <div class="index_head_combo">
-            <pcombobox-normal id="'index_head_pcombo'" sel="indexItemSel" bind="true">
-                <header placeholder="切换分项：总能耗" prefix="切换分项："></header>
+        <div class="I_head_combo">
+            <pcombobox-normal id="'I_head_pcombo'" sel="indexItemSel" bind="true">
+                <header placeholder="切换分项：建筑总能耗" prefix="切换分项："></header>
                 <item datasource="AllProjectItems" text="name" id="logicId"></item>
             </pcombobox-normal>
         </div>
-        <div class="index_head_button" v-show="indexPage.energy">
+        <!-- <div class="I_head_button" v-show="indexPage.energy">
             <pbutton-blue text="能耗"></pbutton-blue>
         </div>
-        <div class="index_head_button" v-show="indexPage.energy">
-            <pbutton-white text="单平米能耗" @click="indexPage.energy = !indexPage.energy"></pbutton-white>
+        <div class="I_head_button" v-show="indexPage.energy">
+            <pbutton-white text="单平米能耗" @click="indexPageChange"></pbutton-white>
         </div>
-        <div class="index_head_button" v-show="!indexPage.energy">
-            <pbutton-white text="能耗" @click="indexPage.energy = !indexPage.energy"></pbutton-white>
+        <div class="I_head_button" v-show="!indexPage.energy">
+            <pbutton-white text="能耗" @click="indexPageChange"></pbutton-white>
         </div>
-        <div class="index_head_button" v-show="!indexPage.energy">
+        <div class="I_head_button" v-show="!indexPage.energy">
             <pbutton-blue text="单平米能耗"></pbutton-blue>
-        </div>
-        <div class="index_head_buttonR1">
-            <pbutton-menuminor sel="indexDownloadSel" id="'index_head_pbutcom'" icon="D" bind="true">
+        </div> -->
+        <ptab-button bind="true" id="'I_head_ptab'" datasource="ItabArr" text="name" sel="indexPageC" text="name"></ptab-button>
+        <div class="I_head_buttonR1">
+            <pbutton-menuminor sel="indexDownload" id="'I_head_pbutcom'" icon="D" bind="true">
                 <header placeholder="下载"></header>
                 <item datasource="indexDownloadSel" text="name"></item>
             </pbutton-menuminor>
         </div>
-        <div class="index_head_buttonR2" @click.stop="projectFilter">
-            <i class="iconfont icon-shaixuan"></i>筛选项目（<a>{{projectInfo.totalScreening}}</a>/{{projectInfo.totalProjects}}）
+        <div class="I_head_buttonR2" @click.stop="projectFilter">
+            <i class="iconfont icon-shaixuan"></i>筛选项目（
+            <a>{{projectInfo.totalScreening}}</a>/{{projectInfo.totalProjects}}）
         </div>
     </div>
 
     <!-- 图表 -->
-    <div id="index_body">
-        <div id="index_chart"></div>
-        <div id="index_chart_Avg">
-            <span class="index_chart_AvgText2 index_chart_AvgText" @click="indexChartPlot(1)"><a>项目能耗平均值 : </a><a>{{projectInfo.energyRealAvgShow}}</a></span>
-            <span class="index_chart_AvgLine2 index_chart_AvgLine" @click="indexChartPlot(1)"></span>
-            <span class="index_chart_AvgText1 index_chart_AvgText" @click="indexChartPlot(0)"><a>项目预算平均值 : </a><a>{{projectInfo.energyBudgetAvgShow}}</a></span>
-            <span class="index_chart_AvgLine1 index_chart_AvgLine" @click="indexChartPlot(0)"></span>
+    <div id="I_body">
+        <ploading-part id="ICpartloading" text="努力加载中..."></ploading-part>
+        <div id="I_chart_shadow" v-show="Iloading == 1"><div></div></div> 
+        <div id="I_chart" v-show="Iloading == 0"></div>
+        <div id="I_chart_Avg" v-show="Iloading == 0">
+            <span class="I_chart_AvgText2 I_chart_AvgText" @click="indexChartPlot(1)"><a :class="indexChartAvgLine.energyReal ? 'avgly' : 'avgh'">项目能耗平均值 : </a><a :class="indexChartAvgLine.energyReal ? 'avgly' : 'avgh'" class="ABM">{{projectInfo.avgEnergyDataShow}}</a></span>
+            <span class="I_chart_AvgLine2 I_chart_AvgLine" @click="indexChartPlot(1)"></span>
+            <span class="I_chart_AvgText1 I_chart_AvgText" @click="indexChartPlot(0)"><a :class="indexChartAvgLine.energyBudget ? 'avglr' : 'avgh'">项目预算平均值 : </a><a :class="indexChartAvgLine.energyBudget ? 'avglr' : 'avgh'" class="ABM">{{projectInfo.avgBudgetDataShow}}</a></span>
+            <span class="I_chart_AvgLine1 I_chart_AvgLine" @click="indexChartPlot(0)"></span>
         </div>
     </div>
-    
+
     <!-- 表格 -->
-    <div id="index_foot">
-        <div class="index_foot_head">
-            <span class="index_grid_span1 index_grid_span01">
+    <div id="I_foot">
+
+        <div class="I_foot_head" :style="{width:noscW}">
+            <span class="I_g_h1 I_g_h01">
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;项目名称</span>
-                <div class="index_grid_pic" @click="indexGridSord(0)">
+                <span class="I_grid_pic" @click="indexGridSord(0)">
                     <i class="per-bIcon">t</i>
                     <i class="per-bIcon">b</i>
-                </div>
+                </span>
             </span>
-            <span class="index_grid_span2">
+            <!-- <span class="I_g_h2"> -->
+            <span :class="NotSelFutureMonth ? 'I_g_h2' : 'I_g_h20'">
                 <span>项目类型</span>
-                <div class="index_grid_pic" @click="indexGridSord(1)">
+                <span class="I_grid_pic" @click="indexGridSord(1)">
                     <i class="per-bIcon">t</i>
                     <i class="per-bIcon">b</i>
-                </div>
+                </span>
             </span>
-            <span class="index_grid_span3">
+            <!-- <span class="I_g_h3"> -->
+            <span :class="NotSelFutureMonth ? 'I_g_h3' : 'I_g_h21'">
                 <span>所属气候带</span>
-                <div class="index_grid_pic" @click="indexGridSord(2)">
+                <span class="I_grid_pic" @click="indexGridSord(2)">
                     <i class="per-bIcon">t</i>
                     <i class="per-bIcon">b</i>
-                </div>
+                </span>
             </span>
-            <span class="index_grid_span4">
-                <span>项目面积(m²)</span>
-                <div class="index_grid_pic" @click="indexGridSord(3)">
+            <!-- <span class="I_g_h4"> -->
+            <span :class="NotSelFutureMonth ? 'I_g_h4' : 'I_g_h22'">
+                <span>项目面积( m² )</span>
+                <span class="I_grid_pic" @click="indexGridSord(3)">
                     <i class="per-bIcon">t</i>
                     <i class="per-bIcon">b</i>
-                </div>
+                </span>
             </span>
-            <span class="index_grid_span5">
-                <span class="index_foot_littlegray index_foot_little"></span>
+            <span class="I_g_h5">
+                <span class="I_foot_littlegray I_foot_little"></span>
                 <span v-show="indexPage.energy">预算能耗 ( kWh )</span>
-                <span v-show="!indexPage.energy">单平米预算能耗 ( kWh )</span>
-                <div :class="indexPage.energy ? 'index_grid_pic' : 'index_grid_pic2'" @click="indexGridSord(4)">
+                <span v-show="!indexPage.energy">单平米预算能耗 ( kWh/m² )</span>
+                <span class="I_grid_pic" @click="indexGridSord(4)">
                     <i class="per-bIcon">t</i>
                     <i class="per-bIcon">b</i>
-                </div>
+                </span>
             </span>
-            <span class="index_grid_span6">
+            <!-- <span class="I_g_h6"> -->
+            <span :class="NotSelFutureMonth ? 'I_g_h6' : 'I_g_h23'">
                 <span>预算同比</span>
-                <div class="index_grid_pic" @click="indexGridSord(5)">
+                <span class="I_grid_pic" @click="indexGridSord(5)">
                     <i class="per-bIcon">t</i>
                     <i class="per-bIcon">b</i>
-                </div>
+                </span>
             </span>
-            <span class="index_grid_span7">
+            <!-- <span class="I_g_h7"> -->
+            <span :class="NotSelFutureMonth ? 'I_g_h7' : 'I_g_h24'">
                 <span>预算环比</span>
-                <div class="index_grid_pic" @click="indexGridSord(6)">
+                <span class="I_grid_pic" @click="indexGridSord(6)">
                     <i class="per-bIcon">t</i>
                     <i class="per-bIcon">b</i>
-                </div>
+                </span>
             </span>
-            <span class="index_grid_span8" >
-                <span class="index_foot_littleblue index_foot_little" v-show="NotSelFutureMonth"></span>
-                <span v-show="indexPage.energy" v-if="NotSelFutureMonth">实际能耗 ( kWh )</span>
-                <span v-show="!indexPage.energy" v-if="NotSelFutureMonth">实际单平米能耗 ( kWh )</span>
-                <div v-show="NotSelFutureMonth" :class="indexPage.energy ? 'index_grid_pic' : 'index_grid_pic2'" @click="indexGridSord(7)">
+            <span v-if="NotSelFutureMonth" class="I_g_h5">
+                <span class="I_foot_littleblue I_foot_little"></span>
+                <span v-show="indexPage.energy">实际能耗 ( kWh )</span>
+                <span v-show="!indexPage.energy">实际单平米能耗 ( kWh/m² )</span>
+                <span class="I_grid_pic" @click="indexGridSord(7)">
                     <i class="per-bIcon">t</i>
                     <i class="per-bIcon">b</i>
-                </div>
+                </span>
             </span>
-            <span class="index_grid_span9">
-                <span v-show="NotSelFutureMonth"><img src=""></span>
-                <span v-show="NotSelFutureMonth">能耗预算比</span>
-                <div v-show="NotSelFutureMonth" class="index_grid_pic" @click="indexGridSord(8)">
+            <span v-if="NotSelFutureMonth" class="I_g_h9">
+                <span>
+                    <div style="width:5px;height:5px;border-bottom:1px solid black;float:left;margin-top:9px;"></div>
+                    <div style="width:6px;height:6px;border:1px solid black;border-radius:50%;margin-top:10px;float:left;"></div>
+                    <div style="width:5px;height:5px;border-bottom:1px solid black;float:left;margin-top:9px;margin-right:3px;"></div>
+                </span>
+                <span>能耗预算比</span>
+                <span class="I_grid_pic" @click="indexGridSord(8)">
                     <i class="per-bIcon">t</i>
                     <i class="per-bIcon">b</i>
-                </div>
+                </span>
             </span>
-            <span class="index_grid_span10">
+            <span class="I_g_h10">
                 <span>能耗计划</span>
             </span>
-            <span class="index_grid_span11"></span>
         </div>
-        <div class="index_foot_neck">
-            <span class="index_grid_span1 index_grid_span01">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;项目总和</span>
-            <span class="index_grid_span2"></span>
-            <span class="index_grid_span3"></span>
-            <span class="index_grid_span4">{{projectInfo.totalAreaShow}}</span>
-            <span class="index_grid_span5" v-if="indexPage.energy">{{projectInfo.totalEnergyBudgetShow}}</span>
-            <span class="index_grid_span5" v-if="!indexPage.energy"></span>
-            <span class="index_grid_span6"></span>
-            <span class="index_grid_span7"></span>
-            <span class="index_grid_span8" v-show="NotSelFutureMonth" v-if="indexPage.energy">{{projectInfo.totalEnergyRealShow}}</span>
-            <span class="index_grid_span8" v-show="NotSelFutureMonth" v-if="!indexPage.energy"></span>
-            <span class="index_grid_span9" v-show="NotSelFutureMonth" v-if="projectInfo.totalEnengyOccupyBudegetPercent==null">-</span>
-            <span class="index_grid_span9" v-show="NotSelFutureMonth" v-if="projectInfo.totalEnengyOccupyBudegetPercent!=null" :class="projectInfo.totalEnengyOccupyBudegetPercent >= 100 ? 'redFont' : 'greenFont'">{{projectInfo.totalEnengyOccupyBudegetPercent+"%"}}</span>
-            <span class="index_grid_span10"></span>
-            <span class="index_grid_span11"></span>
+
+        <div class="I_foot_neck" :style="{width:noscW}">
+            <span class="I_g_h1 MSYB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;项目总和</span>
+            <span :class="NotSelFutureMonth ? 'I_g_h2' : 'I_g_h20'"></span>
+            <span :class="NotSelFutureMonth ? 'I_g_h3' : 'I_g_h21'"></span>
+            <span :class="NotSelFutureMonth ? 'I_g_h4' : 'I_g_h22'" class="ABM">{{projectInfo.areaSumShowShow}}</span>
+            <span class="I_g_h5 I_g_hti ABM">{{projectInfo.budgetDataSumShow}}</span>
+            <span :class="NotSelFutureMonth ? 'I_g_h6' : 'I_g_h23'"></span>
+            <span :class="NotSelFutureMonth ? 'I_g_h7' : 'I_g_h24'"></span>
+            <span class="I_g_h5 I_g_hti ABM" v-show="NotSelFutureMonth">{{projectInfo.energyDataSumShow}}</span>
+            <span class="I_g_h9 ABM" v-show="NotSelFutureMonth" :class="projectInfo.realBudgetRatioShow !=noData ?  projectInfo.realBudgetRatioSum > 1 ? 'redFont' : 'greenFont' : void 0">{{projectInfo.realBudgetRatioShow}}</span>
+            <span class="I_g_h10"></span>
+            <span class="I_g_h11"></span>
         </div>
-        <div class="index_foot_ul_wrap">
-            <ul id="index_foot_ul">
-                <li class="index_foot_li" v-for="(item,index) in projectInfo.projectInfo" @click.stop="item.dataStatus != 1 ? IndexBudgetWindowOpen(item) : void 0" @mouseenter="indexGridHover(index)">
-                    <span class="index_grid_span0">{{index+1}}</span>
-                    <span class="index_grid_span1">{{item.projectName}}</span>
-                    <span class="index_grid_span2">{{item.buildingTypeName}}</span>
-                    <span class="index_grid_span3">{{item.climateZoneName}}</span>
-                    <span class="index_grid_span4">{{item.areaShow}}</span>
-                    <span class="index_grid_span5" v-show="item.dataStatus == 0" v-if="indexPage.energy">{{item.energyBudgetShow}}</span>
-                    <span class="index_grid_span5" v-show="item.dataStatus == 0" v-if="!indexPage.energy">{{item.enengyBudegetPerSquareShow}}</span>
-                    <span class="index_grid_span6" v-show="item.dataStatus == 0" v-if="indexPage.energy" :class="item.sameRatio > 0 ? 'redFont' : 'greenFont'">{{item.sameRatio}}</span>
-                    <span class="index_grid_span6" v-show="item.dataStatus == 0" v-if="!indexPage.energy" :class="item.sameRatioPerSquare > 0 ? 'redFont' : 'greenFont'">{{item.sameRatioPerSquare}}</span>
-                    <span class="index_grid_span7" v-show="item.dataStatus == 0" v-if="indexPage.energy" :class="item.circleRatio > 0 ? 'redFont' : 'greenFont'">{{item.circleRatio}}</span>
-                    <span class="index_grid_span7" v-show="item.dataStatus == 0" v-if="!indexPage.energy" :class="item.circleRatioPerSquare > 0 ? 'redFont' : 'greenFont'">{{item.circleRatioPerSquare}}</span>
-                    <span class="index_grid_span8" v-show="item.dataStatus == 0" v-if="indexPage.energy"><span v-show="NotSelFutureMonth">{{item.energyRealShow}}</span></span>
-                    <span class="index_grid_span8" v-show="item.dataStatus == 0" v-if="!indexPage.energy"><span v-show="NotSelFutureMonth">{{item.energyRealPerSquareShow}}</span></span>
-                    <span class="index_grid_span9" v-show="item.dataStatus == 0">
-                        <span v-show="NotSelFutureMonth" v-if="item.enengyOccupyBudegetPercent != null" :class="item.enengyOccupyBudegetPercent > 100 ? 'redFont' : 'greenFont'">{{item.enengyOccupyBudegetPercent}}%</span>
-                        <span v-show="NotSelFutureMonth" v-if="item.enengyOccupyBudegetPercent == null">-</span>
+
+        <div class="I_foot_ul_wrap">
+            <ploading-part id="IGpartloading" text="努力加载中..."></ploading-part>
+            <ul id="I_foot_ul" @mouseleave="indexGridLeave" v-show="Iloading == 0" v-show="Iloading == 0">
+                <li class="I_foot_li" :style="{width:noscW}" v-for="(item,index) in projectInfo.projectInfo" @click.stop="item.noneDataType != -1 ? IndexBudgetWindowOpenReady(item) : void 0"
+                    @mouseenter="indexGridHover(index)">
+                    <span class="I_g_s0" :title="index+1">{{index+1}}</span>
+                    <span class="I_g_s1 tTM" :title="item.projectName">{{item.projectName}}</span>
+                    <span class="tTM" :class="NotSelFutureMonth ? 'I_g_s2' : 'I_g_s20'" :title="item.projectTypeName">{{item.projectTypeName}}</span>
+                    <span class="tTM" :class="NotSelFutureMonth ? 'I_g_s3' : 'I_g_s30'" :title="item.climateName">{{item.climateName}}</span>
+                    <span class="tTM AMT" :class="NotSelFutureMonth ? 'I_g_s4' : 'I_g_s40'" :title="item.area">{{item.area}}</span>
+                    <span class="I_g_s5 tTM AMT" :title="item.budgetDataShow" v-if="item.noneDataType==0">{{item.budgetDataShow}}</span>
+                    <span class="tTM AMT" :class="[{'redFont':item.budgetRatioSameShow != noData && item.budgetRatioSame > 0},{'greenFont':item.budgetRatioSameShow != noData && 0 > item.budgetRatioSame},{'I_g_s6' : NotSelFutureMonth },{'I_g_s60': !NotSelFutureMonth}]" :title="item.budgetRatioSameShow" v-if="item.noneDataType==0" ><a v-show="item.budgetRatioSameShow != noData && item.budgetRatioSame > 0">+</a>{{item.budgetRatioSameShow}}</span>
+                    <span class="tTM AMT" :class="[{'redFont':item.budgetRatioCircleShow != noData && item.budgetRatioCircle > 0},{'greenFont':item.budgetRatioCircleShow != noData && 0 > item.budgetRatioCircle},{'I_g_s7' : NotSelFutureMonth },{'I_g_s70': !NotSelFutureMonth}]" :title="item.budgetRatioCircleShow" v-if="item.noneDataType==0" ><a v-show="item.budgetRatioCircleShow != noData && item.budgetRatioCircle > 0">+</a>{{item.budgetRatioCircleShow}}</span>
+                    <span class="I_g_s5 tTM AMT" :title="item.energyDataShow" v-if="item.noneDataType==0">
+                        <span v-show="NotSelFutureMonth">{{item.energyDataShow}}</span>
                     </span>
-                    <span class="index_grid_span10" v-show="item.dataStatus == 0">
-                        <div v-show="item.ifHasPlan"><pbutton-blue isborder="false" icon="M" text="查看计划" @click.stop=""></pbutton-blue></div>
-                        <div v-show="!item.ifHasPlan">无</div>
+                    <span class="I_g_s9 tTM AMT" v-if="item.noneDataType==0"  :title="item.realBudgetRatioShow">
+                        <span v-show="NotSelFutureMonth" :class="item.realBudgetRatioShow !=noData ? item.realBudgetRatio > 1 ? 'redFont' : 'greenFont' : void 0 ">{{item.realBudgetRatioShow}}</span>
                     </span>
-                    <span class="index_grid_span12" v-show="item.dataStatus == 1">项目该月未上线,无数据……</span>
-                    <span class="index_grid_span12" v-show="item.dataStatus == 2">{{item.remark}}</span>
-                    <span class="index_grid_span11">
-                        <div><pbutton-blue isborder="false" text="'查看能耗详情'" bind="true" disabled="item.dataStatus == 1 || !NotSelFutureMonth" @click.stop=""></pbutton-blue></div>
+                    <span class="I_g_s10 tTM" v-if="item.noneDataType==0">
+                        <div v-show="item.ifSetPlan">
+                            <pbutton-blue isborder="false"  text="查看计划" @click.stop="EnergyPlanOpen(item)"></pbutton-blue>
+                        </div>
+                        <div v-show="!item.ifSetPlan">无</div>
+                    </span>
+                    <span :class="NotSelFutureMonth ? 'I_g_s12' : 'I_g_s120'" v-if="item.noneDataType==-1">项目该月未上线,无数据……</span>
+                    <span :class="NotSelFutureMonth ? 'I_g_s12' : 'I_g_s120'" v-if="item.noneDataType==1">项目该月数据质量不合格</span>
+                    <span class="I_g_s11">
+                        <div v-show="NotSelFutureMonth">
+                            <pbutton-blue isborder="false" text="'查看能耗详情'" bind="true" disabled="item.noneDataType== -1"
+                                @click.stop="openEnergyByProject(item)"></pbutton-blue>
+                        </div>
                     </span>
                 </li>
             </ul>
         </div>
     </div>
 
-    <!-- 侧弹窗 -->
-    <!-- 项目筛选侧弹窗 -->
-    <pwindow-float id="index_filterWindow" isshade="true" title="筛选项目" templateid="index_filterWindow_tem">
-            <animate maxpx="0" minpx="-600"  orientation="right"> </animate>
-    </pwindow-float>
-    <script type="text/html" id="index_filterWindow_tem">
-        <div class="index_filterWindow_box">
-            <div class="index_filterWindow_title">预算及计划完整性</div>
-            <div class="index_filterWindow_bigBox">
-                <div class="index_filterWindow_littleBox1" v-for="model in projectSelectParam.BudgetAndPlanIntegrity" @click="projectSelectParamSel(model,'integrity')" :class="model.sel ? 'index_filterWindow_littleBoxSel' : 'index_filterWindow_littleBoxSelNot'">{{model.name}}</div>
-            </div>
-            <div class="index_filterWindow_title">所属气候带</div>
-            <div class="index_filterWindow_bigBox">
-                <div class="index_filterWindow_littleBox1" v-for="model in projectSelectParam.projectClimate" @click="projectSelectParamSel(model,'climate')" :class="model.sel ? 'index_filterWindow_littleBoxSel' : 'index_filterWindow_littleBoxSelNot'">{{model.name}}</div>
-            </div>
-            <div class="index_filterWindow_title">项目类型</div>
-            <div class="index_filterWindow_bigBox">
-                <div class="index_filterWindow_littleBox1" v-for="model in projectSelectParam.projectType" @click="projectSelectParamSel(model,'type')" :class="model.sel ? 'index_filterWindow_littleBoxSel' : 'index_filterWindow_littleBoxSelNot'">{{model.name}}</div>
-            </div>
-            <div class="index_filterWindow_title">项目面积（单位：万m²）</div>
-            <div class="index_filterWindow_bigBox">
-                <div class="index_filterWindow_littleBox2" v-for="model in projectSelectParam.projectArea" @click="projectSelectParamSel(model,'area')" :class="model.sel ? 'index_filterWindow_littleBoxSel' : 'index_filterWindow_littleBoxSelNot'">{{model.name}}</div>
-            </div>
-            <div class="index_filterWindow_title">所属区域</div>
-            <div class="index_filterWindow_bigBox">
-                <div class="index_filterWindow_littleBox1" v-for="model in projectSelectParam.projectRegion" @click="projectSelectParamSel(model,'region')" :class="model.sel ? 'index_filterWindow_littleBoxSel' : 'index_filterWindow_littleBoxSelNot'">{{model.name}}</div>
-            </div>
-            <div class="index_filterWindow_button">
-                <pbutton-blue text="确定" click="projectFilterEnd"></pbutton-blue>
-            </div>
-        </div>
-    </script>
-
-    <!-- 项目预算侧弹窗 -->
-    <pwindow-float bind="true" id="'index_budgetWindow'" isshade="true" title="projectSel.projectInfo.projectName + ' - ' + new Date($('#index_head_ptime').psel().startTime).format('yyyy.M')" templateid="index_budgetWindow_tem">
-            <animate maxpx="0" minpx="-830"  orientation="right"> </animate>
-    </pwindow-float>
-    <script type="text/html" id="index_budgetWindow_tem">
-        <div class="index_budgetWindow_box">
-            <div class="index_budgetWindow_budget">
-                <div class="index_budgetWindow_budget_head">
-                    <div class="index_budgetWindow_budget_head_button1" v-show="!indexRemark&&!indexBudget" v-if="!NotSelFutureMonth&&projectSel.projectInfo.energyBudget != null">
-                        <pbutton-blue text="编辑预算" icon="e" isborder="false" @click="indexBudgetEdit"></pbutton-blue>
-                    </div>
-                    <div class="index_budgetWindow_budget_head_button1" v-show="!indexRemark&&!indexBudget" >
-                        <pbutton-blue text="填写批注" icon="N" isborder="false" @click="indexRemark = true"></pbutton-blue>
-                    </div>
-                    <div class="index_budgetWindow_budget_head_button1" v-show="!indexRemark&&!indexBudget" v-if="!NotSelFutureMonth">
-                        <pbutton-blue text="锁定预算" isborder="false" @click=""></pbutton-blue>
-                    </div>
-                    <div class="index_budgetWindow_budget_head_button2" v-show="indexRemark || indexBudget">
-                        <pbutton-white text="保存" @click="SaveBudgetOrRemark"></pbutton-white>
-                    </div>
-                    <div class="index_budgetWindow_budget_head_button2" v-show="indexRemark || indexBudget">
-                        <pbutton-white text="取消" @click="clearAllBudgetCache"></pbutton-white>
-                    </div>
-                </div>
-                <div class="index_budgetWindow_budget_foot">
-
-                    <!-- 有预算或者历史月显示本DIV -->
-                    <div class="index_budgetWindow_budget_foot_box" v-if="projectSel.projectInfo.energyBudget != null || !NotSelHistoryMonth" v-show="!indexBudget">
-                        <span>能耗预算</span>
-                        <span>
-                            <span v-if="projectSel.projectInfo.energyBudget != null"> kWh</span>
-                            <span>{{projectSel.projectInfo.energyBudgetShow}}&nbsp;</span>
-                        </span>
-                    </div>
-
-                    <!-- 本月且本月无预算才显示该创建能耗预算按钮 -->
-                    <div class="index_budgetWindow_budget_foot_create" v-if="NotSelHistoryMonth&&NotSelFutureMonth&&projectSel.projectInfo.energyBudget == null" v-show="!indexBudget">
-                        <span>能耗预算</span>
-                        <span>
-                            <pbutton-blue text="点击创建能耗预算" isborder="false" icon="J" @click="createEnergyBudget"></pbutton-blue>
-                        </span>
-                    </div>
-
-                    <!-- 只有未来月且无能耗预算才显示该创建能耗预算按钮 -->
-                    <div class="index_budgetWindow_budget_foot_create" v-if="!NotSelFutureMonth&&projectSel.projectInfo.energyBudget == null" v-show="!indexBudget">
-                        <div class="index_budgetWindow_budget_foot_create_future">
-                            <pbutton-blue text="点击创建能耗预算" isborder="false" icon="J" @click="createEnergyBudget"></pbutton-blue>
-                        </div>   
-                    </div>
-
-                    <div class="index_budgetWindow_budget_foot_box" v-if="NotSelFutureMonth" v-show="!indexBudget">
-                        <span>实际能耗</span>
-                        <span>
-                            <span> kWh</span>
-                            <span>{{projectSel.projectInfo.energyRealShow}}&nbsp;</span>
-                        </span>
-                    </div>
-
-                    <div class="index_budgetWindow_budget_foot_box" v-if="NotSelFutureMonth" v-show="!indexBudget">
-                        <span>实际能耗占计划比</span>
-                        <span :class="projectSel.projectInfo.enengyOccupyBudegetPercent > 100 ? 'redFont' : 'greenFont'" v-if="projectSel.projectInfo.enengyOccupyBudegetPercent != null">{{projectSel.projectInfo.enengyOccupyBudegetPercent}}%</span>
-                        <span v-if="projectSel.projectInfo.enengyOccupyBudegetPercent == null">-</span>
-                    </div>
-
-                    <div v-show="!indexRemark && !indexBudget" class="index_budgetWindow_budget_foot_button" v-if="projectSel.projectInfo.ifHasPlan">
-                        <div><pbutton-blue icon="j" text="查看能耗计划" isborder="false"></pbutton-blue></div>
-                    </div>
-                    <div v-if="indexBudget" v-show="projectSel.projectInfo.ifHasPlan" class="index_budgetWindow_budget_warn">
-                        提示：该项目已创建能耗计划，若编辑预算，会删除已创建的能耗计划！
-                    </div>
-                    <div v-show="indexBudget" class="index_budgetWindow_budget_text">
-                        <span>总预算</span>
-                        <span>
-                            <ptext-text id="'TotalBudgetFill'" bind="true"  placeholder="" text="'kWh'" value="projectBudgetEditCache.total">
-                                <verify errtip="不可为空"  verifytype="space"></verify>
-                                <verify errtip="请输入正整数"  verifytype="positiveint"></verify>
-                            </ptext-text>
-                        </span>
-                    </div>
-
-                    <div v-show="indexBudget" class="index_budgetWindow_budget_text">
-                        <span>单平米预算</span>
-                        <span>
-                            <ptext-text id="'squareBudgetFill'" bind="true" placeholder="" text="'kWh/㎡'" value="projectBudgetEditCache.square">
-                                <verify errtip="不可为空"  verifytype="space"></verify>
-                                <verify errtip="请输入正整数"  verifytype="positiveint"></verify>
-                            </ptext-text>
-                        </span>
-                    </div>
-
-                    <div v-show="indexRemark" class="index_budgetWindow_budget_foot_text">
-                        <span>批注</span>
-                        <span>
-                            <ptext-text id="'indexBudgetRemark'" bind="true" placeholder="'可填写预算相关说明，100字以内'" value="remarkCache">
-                                <verify errtip="不可超过100个字"  verifytype="length" length="100"></verify>
-                                <verify errtip="不可为空"  verifytype="space"></verify>
-                            </ptext-text>
-                        </span>
-                    </div>
-
-                    <div v-show="indexBudget" class="index_budgetWindow_budget_foot_text">
-                        <span>批注</span>
-                        <span>
-                            <ptext-text id="'indexBudgetEditRemark'" bind="true" placeholder="'可填写预算相关说明，100字以内'" value="projectBudgetEditCache.remark">
-                                <verify errtip="不可超过100个字"  verifytype="length" length="100"></verify>
-                            </ptext-text>
-                        </span>
-                    </div>
-
-                </div>
-            </div>
-            <div class="index_budgetWindow_scroll">
-                <div class="index_budgetWindow_title">预算修改记录</div>
-                <div class="index_budgetWindow_budgetOperate">
-                    <ul>
-                        <li class="index_budgetWindow_budgetOperate_lh">
-                            <span>修改时间</span>
-                            <span>操作人</span>
-                            <span>操作</span>
-                            <span>能耗预算(kWh)</span>
-                            <span>批注</span>
-                        </li>
-                        <li class="index_budgetWindow_budgetOperate_li" v-for="model in projectSel.projectRemark"> 
-                            <span class="index_budgetWindow_budgetOperate_li_spanAutoHeight">{{model.updateTime}}</span>
-                            <span class="index_budgetWindow_budgetOperate_li_spanAutoHeight">{{model.operateUser}}</span>
-                            <span class="index_budgetWindow_budgetOperate_li_spanAutoHeight">{{model.operate}}</span>
-                            <span class="index_budgetWindow_budgetOperate_li_spanAutoHeight">{{model.energyDataBudget}}</span>
-                            <span>{{model.remark}}</span>
-                        </li>
-                    </ul>
-                </div>
-                <div class="index_budgetWindow_title index_budgetWindow_title_history">
-                    历史能耗参考值
-                    <span>单位：kWh</span>
-                    <span class="index_budgetWindow_title_text1">计划能耗</span>
-                    <span class="index_budgetWindow_littleColor littlegray"></span>
-                    <span class="index_budgetWindow_title_text1">实际能耗</span>
-                    <span class="index_budgetWindow_littleColor littleBlue"></span>
-                </div>
-                <div class="index_budgetWindow_history">
-                    <div class="index_budgetWindow_history_one" v-for="model in projectSel.projectHistoryBudget">
-                        <div class="index_budgetWindow_history_time">
-                            <div :class="model.HN ? 'index_budgetWindow_history_timeHN' : 'index_budgetWindow_history_timeH'">{{model.timeUsed}}</div>
-                            <div v-if="model.HN" class="index_budgetWindow_history_timeHN">历史同月</div>
-                        </div>
-                        <div class="index_budgetWindow_history_bar">
-                            <div class="index_budgetWindow_history_bar1"></div>
-                            <div class="index_budgetWindow_history_bar2"></div>
-                        </div>
-                        <div class="index_budgetWindow_history_data">
-                            <span>
-                                <div>计划能耗</div>
-                                <div>{{model.energyDataBudgetShow}}</div>
-                            </span>
-                            <span>
-                                <div>实际能耗</div>
-                                <div>{{model.energyDataRealShow}}</div>
-                            </span>
-                            <span>
-                                <div>能耗百分比</div>
-                                <div :class="model.energyPercent > 100 ? 'redFont' : 'greenFont'">{{model.energyPercent}}%</div>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </script>
-
+    <div id="Chartwrap">
+        <div id="ChartF"></div>
+    </div>
+    
+    <div id="I_chart_Avg_F">
+        <span class="I_chart_AvgText2 I_chart_AvgText" @click="indexChartPlot(1)"><a class="avgly">项目能耗平均值 : </a><a class="ABM avgly">{{projectInfo.avgEnergyDataShow}}</a></span>
+        <span class="I_chart_AvgLine2 I_chart_AvgLine" @click="indexChartPlot(1)"></span>
+        <span class="I_chart_AvgText1 I_chart_AvgText" @click="indexChartPlot(0)"><a class="avglr">项目预算平均值 : </a><a class="ABM avglr">{{projectInfo.avgBudgetDataShow}}</a></span>
+        <span class="I_chart_AvgLine1 I_chart_AvgLine" @click="indexChartPlot(0)"></span>
+    </div>
 </div>

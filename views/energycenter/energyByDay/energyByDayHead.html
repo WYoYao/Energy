@@ -1,0 +1,40 @@
+<link rel="stylesheet" href="/css/energycenter/energyByDay/energyByDayHead.css">
+<script src="/js/energycenter/energyByDay/energyByDayHead/controller.js"></script>
+<script src="/js/energycenter/energyByDay/energyByDayHead/model.js"></script>
+<script src="/js/energycenter/energyByDay/energyByDayHead/event.js"></script>
+
+<!-- <link rel="stylesheet" href="/css/energycenter/energyByDay/energyByDayBody.css">
+<script src="/js/energycenter/energyByDay/energyByDayBody/controller.js"></script>
+<script src="/js/energycenter/energyByDay/energyByDayBody/model.js"></script>
+<script src="/js/energycenter/energyByDay/energyByDayBody/event.js"></script> -->
+
+
+<div v-if="onPage == 'energybyday'" id="energyByDay" v-cloak>
+    
+    <div id="energyByDayHead">
+        <div class="energyByDayHead_back" @click="backEnergyByproject">
+            <i class="per-bIcon">I</i>
+        </div>
+        <div class="energyByDayHead_backtext">
+            <span @click="v.initPage('centerindex')">首页 /</span>
+            <span @click="backEnergyByproject">{{projectUserSel.projectName}}&nbsp;&nbsp;{{projectUserSel.timeDayShow}}能耗详情 /</span>
+            <span>日能耗详情</span>
+        </div>
+        <div class="energyByDayHead_download">
+            <pbutton-white icon="D" @click="DEnergyDayDownload" text="下载日能耗报告"></pbutton-white>
+        </div>
+        <div class="energyByDayHead_time">
+            <ptime-calendar id="energyByDayHead_ptime" orientation="down" sel="DTimeSel">
+                <panel timetype="d" align="left" double="false" iscommontime="false"></panel>
+            </ptime-calendar>
+        </div>
+    </div>
+
+    <div id="energyByDayWrap">
+        <% include ./energyByDayBody.html %>
+    </div>
+    
+</div>
+
+
+

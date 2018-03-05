@@ -1,128 +1,189 @@
-<link rel="stylesheet" href="/css/energyterm/budgetManage/planSet.css" />
-<div class="planAllocate" v-show="planAllocateShow" id="planset">
+<!--<link rel="stylesheet" href="/css/energyterm/budgetManage/planSet.css" />-->
+<script src="/js/energyterm/planManage/controller.js"></script>
+<script src="/js/energyterm/planManage/model.js"></script>
+<script src="/js/energyterm/planManage/event.js"></script>
+
+<div class="planAllocate" id="planset">
     <div class="budManHeader">
         <div class="leftTitle">
-            <div class="backButton" @click="backMainClick()">
+            <div class="backButton" @click="planGoBack()">
                 <pbutton-white icon="I"></pbutton-white>
             </div>
-            首页<em class="line">/</em>预算管理<em class="line">/</em><span class="boldColor">设置博瑞尚格大厦<em class="line">-</em>2017.12能耗计划</span>
+            <em class="clickTitle" @click.capture="budgetGoBackMain()">首页</em>
+            <em class="line">/</em>
+            <em v-show="planBackPage=='budget_page'" class="clickTitle" @click.capture="v.initPage('budget_manage', v.instance.budgetBuildSel.buildingId);">预算管理</em>
+            <em class="line" v-show="planBackPage=='budget_page'">/</em>
+            <span class="boldColor">{{planBackPage=='budget_page'?budgetBuildSel.buildingName:currentBuild.buildingName}}{{monthPlanInfo.pdateStr}}能耗计划</span>
         </div>
+        <div class="helpIcon" onclick="showPlanHelp(event)"></div>
     </div>
-    <div class="energyPlanWrap">
-        <div class="planHead">
-            <div class="energyBlock">
-                <div class="dateInfo">月能耗预算<span class="date">(12.01~12.31)</span></div>
-                <div class="energyData">8,5656<span class="unit">kWh</span></div>
-            </div>
-            <div class="operateSymbol">-</div>
-            <div class="energyBlock">
-                <div class="dateInfo">已发生能耗<span class="date">(12.01~12.31)</span></div>
-                <div class="energyData">8,5656<span class="unit">kWh</span></div>
-            </div>
-            <div class="operateSymbol">=</div>
-            <div class="energyBlock">
-                <div class="dateInfo">剩余预算<span class="date">(12.01~12.31)</span></div>
-                <div class="energyData">8,5656<span class="unit">kWh</span></div>
-            </div>
-            <div class="autoButton">
-                <pbutton-white icon="I" text="自动分配"></pbutton-white>
+    <div class="energyPlanWrap" id="energyPlanWrap">
+        <div class="headWrap">
+            <div class="planWarn" v-bind:style="{'visibility':monthPlanInfo.allotOverData>0?'visible':'hidden'}">提示：您所设置的计划能耗和已超出预算，计划生效后可能导致预警状态不准</div>
+            <div class="planHead">
+                <div class="energyBlock">
+                    <div class="dateInfo">月能耗预算
+                        <span class="date">({{monthPlanInfo.monthStr}})</span>
+                    </div>
+                    <div class="energyData">{{monthPlanInfo.monthBudgetData!==null?toThousands(monthPlanInfo.monthBudgetData):'--'}}
+                        <span class="unit">kWh</span>
+                    </div>
+                </div>
+                <div class="operateSymbol">-</div>
+                <div class="energyBlock">
+                    <div class="dateInfo">已发生能耗
+                        <span class="date" v-show="monthPlanInfo.passMonthStr">({{monthPlanInfo.passMonthStr}})</span>
+                    </div>
+                    <div class="energyData">{{monthPlanInfo.monthRealData!==null?toThousands(monthPlanInfo.monthRealData):'--'}}
+                        <span class="unit">kWh</span>
+                    </div>
+                </div>
+                <div class="operateSymbol">=</div>
+                <div class="energyBlock">
+                    <div class="dateInfo">剩余预算
+                        <span class="date">({{monthPlanInfo.afterMonthStr}})</span>
+                    </div>
+                    <div class="energyData">{{monthPlanInfo.monthRemainData!==null?toThousands(monthPlanInfo.monthRemainData):'--'}}
+                        <span class="unit">kWh</span>
+                    </div>
+                </div>
+                <div class="autoButton">
+                    <pbutton-white icon="I" text="自动分配" @click="autoAllocate()" v-show="monthPlanInfo.monthRemainData>0"></pbutton-white>
+                </div>
             </div>
         </div>
         <div class="planPanelMenu">
             <div class="menuButton">
                 <ptab-button id="choosePlanButton" datasource="dataArr" text="name" sel="chooseAllocate"></ptab-button>
             </div>
-            <div class="info">计划能耗汇总：<span>856,562</span><em class="unit">kWh</em>低于剩余预算：41,000,00<em class="unit">kWh</em></div>
-            <div class="showChart">
-                <pbutton-white icon="L" text="计划能耗"></pbutton-white>
+            <div class="info" v-bind:class="{'redFont':monthPlanInfo.allotOverData>0}">计划能耗汇总：
+                <span>{{monthPlanInfo.totalPlanData}}</span>
+                <em class="unit">kWh</em>{{monthPlanInfo.allotOverData>0?'超出':'低于'}}剩余预算：
+                <span v-show='Math.abs(monthPlanInfo.allotOverData)'>{{Math.abs(monthPlanInfo.allotOverData)}}</span>
+                <em class="unit">kWh</em>
             </div>
-            <div class="showChart">
-                <pbutton-white icon="$" text="计划能耗"></pbutton-white>
+            <div class="showChart" v-show="allocatePlanType==1">
+                <pbutton-white icon="¨" text="计划能耗" @click="showPlanTotalChart($event)"></pbutton-white>
+            </div>
+            <div class="showChart" v-show="allocatePlanType==0">
+                <pbutton-white icon="$" text="计划能耗" @click="showPlanTotalChart($event)"></pbutton-white>
             </div>
         </div>
-        <div class="countMachine">
+        <div class="countMachine" id="countMachine" onclick="eventStop(event)" v-show="countMachineShow">
             <div class="machineHead">
-                <span class="add normal">增加计划能耗</span>
-                <span class="cut sel">减少计划能耗</span>
+                <span class="add" v-bind:class="{'normal':!planCountPlus,'sel':planCountPlus}" @click="plusPlanChoose()">增加计划能耗</span>
+                <span class="cut" v-bind:class="{'normal':planCountPlus,'sel':!planCountPlus}" @click="minusPlanChoose()">减少计划能耗</span>
             </div>
-            <div class="inputBox">
-                <span class="symbol">+</span>
-                <div class="text">
-                    <ptext-text placeholder="" text="kWh">
-                                </ptext-text>
+            <div class="inputWrap">
+                <span class="symbol" v-show="planCountPlus">+</span>
+                <span class="symbol" v-show="!planCountPlus">-</span>
+                <div class="countText" v-show="planCountPlus">
+                    <!--               <ptext-text placeholder="" text="kWh" id="countPlanInput">                       
+                        <verify errtip="请输入非负整数!" verifytype="positiveint"></verify>
+                    </ptext-text>-->
+                    <div class="bInputBox">
+                        <input class="bInput" id="plusPlanInput" oninput="verifyInput(event)" onfocus="focusInput(event)" />
+                        <div class="error-tip">请输入非负整数</div>
+                        <div class="inputUnit">kWh</div>
+                    </div>
+                </div>
+                <div class="countText" v-show="!planCountPlus">
+                    <div class="bInputBox">
+                        <input class="bInput" id="minusPlanInput" oninput="verifyInput(event)" onfocus="focusInput(event)" />
+                        <div class="error-tip">请输入非负整数</div>
+                        <div class="inputUnit">kWh</div>
+                    </div>
                 </div>
             </div>
             <div class="sureButton">
-                <pbutton-blue text="确定" style="width: 100%"></pbutton-blue>
+                <pbutton-blue text="确定" style="width: 100%" @click="sureCountResult()"></pbutton-blue>
             </div>
         </div>
-        <div class="itemPlan" v-show="itemPlanShow">
-            <div class="tableHead tableUl">
-                <div>分项名称</div>
-                <div>同比能耗</div>
-                <div>环比能耗</div>
-                <div>计划能耗</div>
-                <div class="Percent">本月已发生能耗比例</div>
-            </div>
-            <div class="planTable">
-                <div class="tableUl tableLine">
-                    <div>送排风机</div>
-                    <div>58<span>kWh</span></div>
-                    <div>58<span>kWh</span></div>
-                    <div class="editPlan">
-                        <div class="eInput">
-                            <ptext-text placeholder="" text="kWh">
-                                </ptext-text>
+        <div class="itemDayPlan">
+            <ploading-part id="planContLoading" text="拼命加载中..."></ploading-part>
+            <div class="itemPlan" v-if="allocatePlanType==1">
+                <div class="tableHead tableUl">
+                    <div>分项名称</div>
+                    <div>同比能耗</div>
+                    <div>环比能耗</div>
+                    <div>计划能耗</div>
+                    <div class="Percent">本月已发生能耗比例</div>
+                </div>
+                <div class="planTable" onscroll="tableScroll()">
+                    <div class="tableUl tableLine" v-for="(item,index) in monthPlanInfo.itemPlan">
+                        <div>{{item.planItemName}}</div>
+                        <div>{{item.energyDataLastYear!==null?Math.round(item.energyDataLastYear):'--'}}
+                            <span>kWh</span>
                         </div>
-                        <div class="connect"></div>
-                        <div class="adjustNum">
-                            <span class="text">5.5%</span>
-                            <div class="arrow">
-                                <span class="upArrow">t</span>
-                                <span class="upArrow">b</span>
+                        <div>{{item.energyDataLastMonth!==null?Math.round(item.energyDataLastMonth):'--'}}
+                            <span>kWh</span>
+                        </div>
+                        <div class="editPlan">
+                            <div class="bInputBox">
+                                <input class="bInput" v-bind:class="{'select':countMachineShow&&countItemPlan&&countItemPlan.planItemId==item.planItemId}"
+                                    v-bind:id="'itemPInput'+index" v-bind:value="item.energyDataPlan" @input="planEnergyChange(item,$event)"
+                                />
+                                <div class="error-tip">请输入非负整数</div>
+                                <div class="inputUnit">kWh</div>
                             </div>
+                            <div class="connect" v-show="monthPlanInfo.monthRemainData>0"></div>
+                            <div class="adjustNum" v-show="monthPlanInfo.monthRemainData>0">
+                                <span class="text">{{item.energyPlanRatio}}%</span>
+                                <div class="arrow">
+                                    <span class="upArrow" @click="planEnergyUpDown(item,'up')" @mousedown="downCountNumber(item,'up')" @mouseup="removeCount()"
+                                        @mouseleave="removeCount()">t</span>
+                                    <span class="upArrow" @click="planEnergyUpDown(item,'down')" @mousedown="downCountNumber(item,'down')" @mouseup="removeCount()"
+                                        @mouseleave="removeCount()" :class="{'disabled':item.energyPlanRatio<=0}">b</span>
+                                </div>
+                            </div>
+                            <div class="countPic" title="一个计算工具，帮助您在当前计划能耗上，&#10;做加减运算，并将结果赋予当前计划能耗" @click="showCountMachine(item,$event,index)"></div>
                         </div>
-                        <div class="countPic"></div>
-
-                    </div>
-                    <div class="Percent">12.2%<span></span></div>
-                    <div class="showChart"><em class="picEm">$</em>逐日计划</div>
-                </div>
-            </div>
-        </div>
-        <div class="dayPlan" v-show="!itemPlanShow">
-            <div class="tableHead">
-                <span>日</span> <span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span>
-            </div>
-            <div class="planTable">
-                <div class="dayCell past">
-                    <div class="date"><span>1</span><span class="showChart"><em class="picEm">L</em>分项计划</span></div>
-                    <div class="realValue">420<span class="unit">kWh</span></div>
-                    <div class="inputBox" style="display: none;">
-                        <div class="input">
-                            <ptext-text placeholder="" text="kWh">
-                                </ptext-text>
+                        <div class="Percent">{{item.energyOccurredRatio!==null?(item.energyOccurredRatio+'%'):'--'}}
+                            <span></span>
                         </div>
-                        <div class="countPic"></div>
+                        <div class="showChart">
+                            <span v-on:click="showItemDayChart(item,$event)">
+                                <em class="picEm">$</em>逐日计划</span>
+                        </div>
                     </div>
                 </div>
-                <div class="dayCell now">
-                    <div class="date">
-                        <span>2</span><span class="showChart"><em class="picEm">L</em>分项计划</span>
-                    </div>
-                    <div class="realValue" style="display: none;">420<span class="unit">kWh</span></div>
-                    <div class="inputBox">
-                        <div class="input">
-                            <ptext-text placeholder="" text="kWh">
-                                </ptext-text>
+            </div>
+            <div class="dayPlan" v-if="allocatePlanType==0">
+                <div class="tableHead">
+                    <span>日</span>
+                    <span>一</span>
+                    <span>二</span>
+                    <span>三</span>
+                    <span>四</span>
+                    <span>五</span>
+                    <span>六</span>
+                </div>
+                <div class="planTable" onscroll="tableScroll()">
+                    <div class="dayCell past" v-for="(item,index) in monthPlanInfo.dayPlan" v-bind:class="{'past':item.isLastMonth,'thisMonth':item.isThisMonth,'editDay':item.isThisMonth&&!item.isPassDay}"
+                        v-bind:style="{height:item.height+'%'}">
+                        <div class="date">
+                            <span>{{item.showDate}}</span>
+                            <span class="showChart" v-on:click="showDayItemChart(item,$event)">
+                                <em class="picEm">¨</em>分项计划</span>
                         </div>
-                        <div class="countPic"></div>
+                        <div class="realValue" v-show="item.isPassDay||item.isLastMonth">{{item.energyDataReal!==null?Math.round(item.energyDataReal):'--'}}
+                            <span class="unit">kWh</span>
+                        </div>
+                        <div class="inputWrap" v-show="item.isThisMonth&&!item.isPassDay">
+                            <div class="bInputBox">
+                                <input class="bInput" v-bind:class="{'select':countMachineShow&&countItemPlan&&countItemPlan.time==item.time}" v-bind:value="item.energyDataPlan"
+                                    v-bind:id="'dayPInput'+index" @input="planEnergyChange(item,$event)" />
+                                <div class="error-tip">请输入非负整数</div>
+                                <div class="inputUnit">kWh</div>
+                            </div>
+                            <div class="countPic" title="一个计算工具，帮助您在当前计划能耗上，&#10;做加减运算，并将结果赋予当前计划能耗" @click="showCountMachine(item,$event,index)"></div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="bottomButton">
-            <pbutton-blue text="保存"></pbutton-blue>
+            <pbutton-blue text="保存" @click="saveAllocatePlan()"></pbutton-blue>
         </div>
     </div>
 </div>

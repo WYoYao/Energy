@@ -1,0 +1,386 @@
+
+
+.monthtotal{
+    background: #FFFFFF;
+    /* width: 100%; */
+    width: 1280px;
+    height: 100%;
+    overflow: hidden;
+}
+
+.monthtotal .part{
+    height: 1845px;
+}
+
+
+.tip{
+    height: 16px;
+    line-height: 16px;
+    margin: 30px 30px 0;
+    color: #637E99;
+    font-size: 12px;
+}
+
+.title{
+    font-size: 24px;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    color: #333333;
+}
+
+.item{
+    position: relative;
+    border: 1px solid #DCDCDC;
+    border-radius: 4px;
+    margin: 0 51px;
+}
+
+.item .describe{
+    position: absolute;
+    top: -7px;
+    left: 20px;
+    font-size: 14px;
+    color: #333333;
+    line-height: 14px;
+    background: #FFFFFF;
+    padding-left: 6px;
+    border-left: 5px solid #959595;
+}
+
+.item .contenter{
+    margin: 18px 20px;
+}
+/*  能耗预算概述 */
+.item.budget{
+    margin-top: 48px;
+}
+
+.budget .numtitle{
+    height: 72px;
+    width: 100%;
+    margin-bottom: 28px;
+}
+
+.budget .numtitle .itemer,
+.budget .numtitle .itemer1,
+.budget .numtitle .itemer2,
+.budget .numtitle .itemer3{
+    float: left;
+    height: 100%;
+}
+
+.budget .numtitle .box{
+     height: 36px;
+     line-height: 36px;
+     width: 100%;
+     color: #333333;
+     font-size: 12px;
+}
+
+.budget .numtitle .itemer{
+    width: 18%;
+}
+
+.budget .numtitle .itemer1{
+    width: 18%;
+}
+
+.budget .numtitle .itemer2{
+    width: 28%;
+}
+.numtitle .font{
+    float: left;
+}
+
+.numtitle .text{
+    float: left;
+    font-size: 12px;
+    color: #6D6D6D;
+    margin-left: 12px;
+}
+
+.numtitle .number{
+    float: left;
+    margin-left: 12px;
+    font-family: ArialMT;
+    font-size: 14px;
+    color: #333333;
+}
+
+.budget .numtitle .itemer3{
+    width: 36%;
+}
+
+.blacknumber{
+    float: left;
+    line-height: 36px;
+    font-size: 16px;
+    color: #151515;
+    font-family: ArialMT;
+    font-weight: bold;
+}
+
+.company{
+    float: left;
+    line-height: 36px;
+    font-size: 12px;
+    color: #151515;
+    font-family: ArialMT;
+}
+
+.block_proportion{
+    float: left;
+    font-family: Arial;
+    font-size: 16px;
+    color: #000000;
+    font-weight: bold;
+}
+
+.green{
+    color: lightgreen;
+}
+
+.red{
+    color:lightpink;
+}
+
+.boxer{
+    height: 128px;
+    width: 100%;
+}
+
+
+.boxer .lines{
+    float: left;
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+}
+
+/*  表盘定位 */
+.boxer .lines .clock{
+    position: relative;
+    width: 184px;
+    height: 100px;
+    margin-top: 0px;
+    margin-right: 72px;
+    /* margin-bottom: -9px; */
+    float:right;
+}
+
+.boxer .lines .clock .view{
+    position: absolute;
+    width: 244px;
+    height: 244px;
+    top: -50px;
+    left: -30px;
+}
+
+.boxer .lines .clock .ctitle{
+    position: absolute;
+    bottom: -40px;
+    left: 22px;
+    width: 144px;
+    color: #333333;
+    font-size: 12px;
+    line-height: 36px;
+    height: 36px;
+}
+
+.boxer .lines .clock .vtitle{
+    position: absolute;
+    bottom: -17px;
+    left: 22px;
+    width: 144px;
+    color: #00A8D3;
+    font-size: 20px;
+    line-height: 20px;
+    height: 20px;
+    text-align: center;
+}
+
+
+.boxer .lines .line{
+    height: 34px;
+    width: 100%;
+    padding-top: 30px;
+}
+
+.boxer .lines .line .word{
+    height: 16px;
+    line-height: 16px;
+    font-size: 12px;
+    color: #333333;
+}
+
+.boxer .lines .line .progress{
+    height: 8px;
+    width: 100%;
+    margin-top: 8px;
+}
+
+.boxer .lines .line .progress .state{
+    float: left;
+    width: 1%;
+    height: 100%;
+    background: #F0F3F6;
+}
+
+.boxer .lines .line .progress .state:nth-child(10n){
+    /* margin-right: 2px; */
+    border-right: 2px solid #ffffff;
+    box-sizing: border-box;
+}
+
+.chart_title{
+    margin-top: 26px;
+    height: 16px;
+    line-height: 16px;
+}
+
+.chart_title .font{
+    float: right;
+    font-size: 12px;
+    color: #6D6D6D;
+}
+
+.chart_title .blockicon{
+    height: 10px;
+    width: 10px;
+    float: right;
+    margin: 3px 10px;
+}
+
+.plan_block{
+    background: #D6DDE5;
+}
+
+.energy_block{
+    background: #02A9D1!important;
+}
+
+.real_block.energy_block{
+    background: #FF7B7B !important;
+}
+
+.point{
+    position: absolute;
+    /* font-size: 4px; */
+    bottom: 8px;
+    left: 50%;
+    margin-left: -5px;
+    height: 50px;
+    width: 50px;
+    transform: rotate(0deg);
+    transform-origin:bottom left;
+}
+
+.chart_chart{
+    height: 360px;
+    width: 100%;
+}
+
+.chart_table{
+    margin-top: 10px;
+    width: 100%;
+}
+
+.chart_table .head{
+    height: 24px;
+    width: 100%;
+    background: #F4F6F9;
+    color: #000000;
+    font-size: 12px;
+    line-height: 24px;
+}
+
+.chart_table .hitem{
+    float: left;
+    width: 25%;
+    text-indent: 20px;
+    /* border-bottom: 1px solid #DCDCDC; */
+}
+
+.chart_table .body:nth-child(1){
+    border-top: none;
+}
+
+.chart_table .body{
+    box-sizing: border-box;
+    border-top: 1px solid  #DCDCDC;
+    font-size: 14px;
+    color: #333333;
+    /* height: 30px; */
+    line-height: 30px;
+}
+
+.chart_table .body .hrow:last-child{
+    border-bottom: none;
+}
+
+.chart_table .body .hrow{
+    height: 62px;
+    line-height: 62px;
+    border-bottom: 1px solid #DCDCDC;
+}
+
+.chart_table .hitem .progress{
+    display: inline-block;
+    height: 9px;
+    background: #02A9D1;
+}
+
+.describe{
+    height: 14px;
+    line-height: 14px;
+    color: #333333;
+    margin-left: 30px;
+}
+
+.ttble{
+    height: 1785px;
+    margin: 20px 60px;
+}
+
+.ttble .th{
+    background: #8B9599;
+    height: 30px;
+    line-height: 30px;
+    width: 100%;
+    color: #FFFFFF;
+}
+
+.ttble .tr:nth-child(2n){
+    background: #FFFFFF;
+}
+
+.ttble .tr{
+    background: #F7F7F7;
+    height: 30px;
+    line-height: 30px;
+    width: 100%;
+    color: #333333;
+}
+
+.ttble .bitems{
+    text-indent: 20px;
+    float: left;
+    font-size: 14px;
+    height: 30px;
+    width: 25%;
+}
+
+.ttble .tr .bitems{
+    box-sizing: border-box;
+    border-left: 1px solid #CCCCCC;
+    border-bottom: 1px solid #CCCCCC;
+}
+
+.ttble .tr .bitems:last-child{
+    border-right: 1px solid #CCCCCC;
+}
+
+.over_color{
+    color: #FF7B7B !important;
+}

@@ -1,9 +1,9 @@
-
-
 v.pushComponent({
     name: 'subOption',
     data: {
         NodeManage: [], //预算管理列表
+        subOptionTop: 0,
+        checkboxModel: true,
     },
     methods: {
         // 跳转预算管理节点管理页面
@@ -12,10 +12,28 @@ v.pushComponent({
             v.initPage('budget', { NodeManageModel: NodeManageModel });
         },
         // 跳转计划管理节点页面
-        redirectToPlan: function (item) {
+        redirectToPlan: function (NodeManageModel) {
 
             v.initPage('plan', { NodeManageModel: NodeManageModel });
         },
+        // 记录用户点击时间
+        localStorage: function () {
+
+            this.hover = false;
+            if (window.localStorage.getItem("cooky") !== 'true') v.instance.hover = true;
+        },
+        setStorage: function () {
+
+            var _that = this;
+
+            try {
+                window.localStorage.setItem('cooky', _that.checkboxModel);
+            } catch (error) {
+
+            } finally {
+                _that.hover = false;
+            }
+        }
     },
     computed: {
         // 管理分享列表
@@ -26,7 +44,13 @@ v.pushComponent({
 
                 return _that.Buildings.map(function (item, index) {
 
-                    return Object.assign({}, item, { nodes: _that.NodeManage[index] });;
+                    _that.NodeManage[index].plan = _that.NodeManage[index].plan || _that.NodeManage[index].plan.sort(function (item) {
+                        return item.id
+                    });
+
+                    return Object.assign({}, item, {
+                        nodes: _that.NodeManage[index]
+                    });;
                 });
 
             } else {
@@ -35,15 +59,15 @@ v.pushComponent({
             }
         }
     },
-    beforeMount() {
+    beforeMount: function () {
 
         var _that = this;
 
         //  默认查询完所有的建筑
-        _that.queryBuildingsOfProject().then(function (res) {
+        return _that.queryBuildingsOfProject().then(function (res) {
 
             // 并行查询每个建筑的预算管理节点 和 计划管理节点
-            PromiseConcurrent(
+            return PromiseConcurrent(
                 res.map(function (item) {
 
                     return subOption_controller.NodeManagementService.bind(subOption_controller, {
@@ -53,7 +77,19 @@ v.pushComponent({
                 })
             ).then(function (arr) {
 
+                loadding.remove('FNPJ_GetBuildingsOfProject');
                 _that.NodeManage = arr;
+
+                return new Promise(function (resolve) {
+
+                    // 执行完接口之后的 判断是否弹窗显示
+                    _that.$nextTick(function () {
+
+                        _that.localStorage();
+
+                        resolve(arr);
+                    })
+                });
             })
         });
     }

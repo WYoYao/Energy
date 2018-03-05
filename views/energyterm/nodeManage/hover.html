@@ -1,0 +1,41 @@
+<div class="alert" v-if="hover" @click="hover=false">
+    <div class="window" @click.stop="void 0">
+        <div class="wboxer">
+            <div class="wtitle">
+                欢迎设置管理分项节点，管理分项节点的设置是预算管理的前提！
+            </div>
+            <div class="wtit">
+                为什么要设置管理分项节点
+            </div>
+            <div class="wbody">
+                我们在管理建筑的能耗预算和计划时，实际上是管理建筑对应的能耗模型上某一个分项节点及它部分子集的能耗。 设置管理分项节点能够帮助管理者灵活的管理预算。
+            </div>
+            <div class="wtit">
+                预算管理节点
+            </div>
+            <div class="wbody">
+                <em class="pointer"></em> 我们在建筑对应的能耗模型中选择唯一的一个分项节点，设为预算管理节点。在管理建筑能耗预算时，就是设置该节点的预算。
+                <br>
+                <em class="pointer"></em>项目建筑的的预算管理节点与集团保持统一，无法修改，其他的建筑的预算管理节点可根据需求修改。
+            </div>
+            <div class="wtit">
+                计划管理节点
+            </div>
+            <div class="wbody">
+                <em class="pointer"></em>计划管理节点是从预算管理节点的所有子集中，主动选出的一些分项节点，这些节点能耗之和等于预算管理节点的能耗。
+                <br>
+                <em class="pointer"></em>在给建筑预算创建计划的过程就是将预算能耗拆分到分项-日能耗，而其中的“分项”就是计划管理节点。
+                <br>
+                <em class="pointer"></em>在选择计划管理节点时建议选择认识且能够实际管控的分项节点。
+            </div>
+            <img class="img" src="/images/energyterm/nodeManage/Group 4@4x.png" alt="">
+            <div class="footer">
+                <input class="left checkbox" type="checkbox" v-model='checkboxModel'>
+                <span class="left ctitle" @click="checkboxModel=true">下次不再需要提示</span>
+                <span class="btn" @click.capture="setStorage()">
+                    <pbutton-white text="关闭帮助"></pbutton-white>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

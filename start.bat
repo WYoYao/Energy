@@ -1,5 +1,5 @@
 @echo off
-title 新城中心版 8001
+title 能源预算管理 9090
 echo 当前目录是：%cd%
 node %cd%\app.js
 pause

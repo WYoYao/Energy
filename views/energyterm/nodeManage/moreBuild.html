@@ -1,5 +1,3 @@
-<link rel="stylesheet" href="/css/energyterm/nodeManage/moreBuild.css">
-
 <script src="/js/energyterm/nodeManage/moreBuild/controller.js"></script>
 <script src="/js/energyterm/nodeManage/moreBuild/event.js"></script>
 <script src="/js/energyterm/nodeManage/moreBuild/model.js"></script>
@@ -19,17 +17,16 @@
 
         <!-- 基础设置Start -->
         <div class="build_sett">
-            <pcombobox-normal id="'build_select'" bind="true">
-                <header placeholder="2号"></header>
-                <item datasource="[{name:'leo'}]" text="name"></item>
-                <verify errtip="不可超过5个字" verifytype="length" length="5"></verify>
+            <pcombobox-normal style="width:143px;" id="'build_select'" sel="build_select_sel" bind="true">
+                <header placeholder="基础设置"></header>
+                <item datasource="[{name:'预警、报警设置',index:0},{name:'管理分项节点',index:1}]" text="name"></item>
             </pcombobox-normal>
         </div>
         <!-- 基础设置End -->
 
         <!-- 预算管理Start -->
         <div class="build_pre">
-            <pbutton-white text="预算管理" icon="D"></pbutton-white>
+            <pbutton-white text="预算管理" icon="G"></pbutton-white>
         </div>
         <!-- 预算管理End -->
 
@@ -125,5 +122,14 @@
         <!-- 单个建筑End -->
 
     </div>
+
+
+
+    <!-- 确实很二  -->
+    <!-- 111 -->
+    <% include ../../../11energycenter/energyByProject/energyByProjectBody.html %>
+    <% include ../../../11energycenter/energyByDay/energyByDayBody.html %>
+    <!-- 111 -->
+
 </div>
 <!-- 多建筑列表End   -->

@@ -4,31 +4,41 @@
             填写批注
         </div>
         <div class="remarkText">
-            <ptext-textarea length="100" placeholder="'请填写预算相关说明，100字以内'" id="newRemarkText">
-                 </ptext-textarea>
+            <ptext-textarea  placeholder="请填写批注，100字以内" id="newRemarkText"  onkeyup="newRemarkInput()">
+                  <verify errtip="不可超过100字" verifytype="length" length="100"></verify> 
+                </ptext-textarea>
         </div>
         <div class="remarkSave">
-            <pbutton-blue text="保存" @click="budgetRemarkSave()"></pbutton-blue>
+            <pbutton-blue text="保存" @click="budgetRemarkSave()" id="remarkSaveButton"></pbutton-blue>
         </div>
         <div class="reportTitle">预算修改记录</div>
         <div class="reportTable">
-            <ul class="tableHead tableUl">
-                <li>修改时间</li>
-                <li>操作人</li>
-                <li>操作</li>
-                <li>能耗预算</li>
-                <li>批注</li>
-            </ul>
+            <div class="tableHead tableUl">
+                <div class="tableLi">修改时间</div>
+                <div class="tableLi">操作人</div>
+                <div class="tableLi">操作</div>
+                <div class="tableLi">能耗预算(kWh)</div>
+                <div class="tableLi">批注</div>
+            </div>
             <div class="tableCont">
-                <ul class="tableLine tableUl" v-for="item in selEnergyBudget.historyList">
-                    <li v-text="item.updateTime"></li>
-                    <li v-text="item.operateUser"></li>
-                    <li v-text="item.operate"></li>
-                    <li v-text="item.energyDataBudget"></li>
-                    <li class="remarkTd">
-                        <span class="cell" v-text="item.remark"></span></li>
-
-                </ul>
+                <table class="remarkTable">       
+                    <tr class="tableLine tableUl" v-for="item in selEnergyBudget.historyList">
+                    <td class="tableLi">
+                        <span class="cell" v-text="item.updateTime"></span>
+                    </td>
+                    <td class="tableLi">
+                        <span class="cell" v-text="item.operateUser"></span>
+                    </td>
+                    <td class="tableLi">
+                        <span class="cell" v-text="item.operate"></span>
+                    </td>
+                    <td class="tableLi">
+                        <span class="cell" v-text="item.energyDataBudget"></span>
+                    </td>
+                    <td class="tableLi">
+                        <span class="cell" v-text="item.remark"></span></td>
+                    </tr>
+               </table>
             </div>
         </div>
     </div>
@@ -37,10 +47,10 @@
     <div class="itemPlanFloat">
         <div class="pieChart" id="dayItemChart"></div>
         <div class="chartInfo">
-            <ul class="infoUl">
-                <li class="circle"><span></span></li>
-                <li class="name">消防栓</li>
-                <li class="value">215<em class="unit">kwh</em></li>
+            <ul class="infoUl" v-for="item in itemChartData">
+                <li class="circle"><span v-bind:style="{'background':item.color}"></span></li>
+                <li class="name" v-text="item.name"></li>
+                <li class="value"><span  v-text="item.y"></span><em class="unit">kWh</em></li>
             </ul>
         </div>
     </div>
@@ -58,15 +68,18 @@
             <li><span class="num">3</span>将拆分后的结果，自动计算日-分项计划</li>
         </ul>
         <div class="imgExplain"></div>
-        <div class="chooseButton">
+        <div class="chooseButton" v-show="planHelpType==='enter'">
             <div class="leftCheck">
-                <pswitch-checkbox text="下次不再提示" change="eventCall"></pswitch-checkbox>
+                <pswitch-checkbox text="下次不再提示" id="nextHintCheck"></pswitch-checkbox>
             </div>
             <div class="rigthButton">
                 <span class="btitle">设置能耗计划</span>
                 <pbutton-blue icon=":" text="按分项拆分" style="margin-right: 20px;" @click="itemAllocateShow()"></pbutton-blue>
                 <pbutton-blue icon="﹂" text="按日期拆分" @click="dayAllocateShow()"></pbutton-blue>
             </div>
+        </div>
+        <div class="closeButton" v-show="planHelpType!=='enter'">
+                <pbutton-white  text="关闭帮助" onclick="closePlanHelp()"></pbutton-white>
         </div>
     </div>
 </script>

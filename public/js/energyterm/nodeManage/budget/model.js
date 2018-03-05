@@ -6,42 +6,68 @@ v.pushComponent({
         BudgetNodeEditTree: [], //预算管理列表
     },
     methods: {
+        handler_selected: function (item) {
+            var _that = this;
 
+            _that.BudgetNodeEditTree.forEach(function (element) {
+                if (item == element)
+                    element.isBudgetNode = true;
+                else
+                    element.isBudgetNode = false;
+            });
+        },
+        BudgetNodeEditSubmit: function () {
+            var _that = this,
+                res;
+
+            res = _that.BudgetNodeEditTree.filter(function (item) {
+                return item.isBudgetNode;
+            })[0];
+
+            //深Copy
+            // res = JSON.parse(JSON.stringify(res));
+
+            // 后台提交修改
+            return budget_controller.saveNodeManagementService({
+                buildingId: _that.NodeManageModel.buildingId,
+                operation: "save",
+                budgetItemId: res.energyItemId,
+            }).then(function () {
+
+                $("#globalnotice").pshow({ text: "保存成功！", state: "success" });
+
+                return new Promise(function (resolve) {
+
+                    resolve();
+                })
+
+            }).catch(function () {
+                $("#globalnotice").pshow({ text: "保存失败！", state: "failure" });
+            })
+        }
     },
     computed: {
         // 带装填的预算管理节点树
         BudgetNodeTree: function () {
 
-            // 唯一的 预算管理节点总数
-            var MAX_number = _.random(10, 20);
+            var _that = this;
 
-            function energyItem(index) {
+            if (!_that.BudgetNodeEditTree.length) return {
+                childs: []
+            };
 
-                var item = {
-                    "energyItemId": "mock",                //类型：String  必有字段  备注：无
-                    "energyItemCode": "mock",                //类型：String  必有字段  备注：无
-                    "energyItemName": "mock" + index,                //类型：String  必有字段  备注：无
-                    "parentId": "mock",                //类型：String  必有字段  备注：无
-                    "isBudgetNode": index == MAX_number ? true : false,                //类型：Boolean  必有字段  备注：无
-                };
-
-                item.childs = _.range(index - 1).map(function (item, index) {
-
-                    return energyItem(index);
-                });
-
-                return item;
-            }
-
-            return energyItem(MAX_number);
-
+            return _that.arr2tree(_that.BudgetNodeEditTree, 'energyItemId', 'parentId', 'childs');
         }
     },
-    beforeMount() {
+    beforeMount:function() {
 
         var _that = this;
 
-        subOption_controller.NodeManagementService({ buildingId: _that.NodeManageModel.buildingId })
+        // 查询结构树数组
+        budget_controller.queryBudgetNodeEditTree({ buildingId: _that.NodeManageModel.buildingId })
+            .then(function (res) {
+                _that.BudgetNodeEditTree = res;
+            })
 
     }
 })

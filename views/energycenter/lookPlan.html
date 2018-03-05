@@ -1,29 +1,62 @@
-<link rel="stylesheet" href="/css/energycenter/lookPlan.css">
+<% include ../header.html %>
 
-<script src="/js/energycenter/lookPlan/controller.js"></script>
-<script src="/js/energycenter/lookPlan/event.js"></script>
-<script src="/js/energycenter/lookPlan/model.js"></script>
+    <link rel="stylesheet" href="/css/energycenter/lookPlan.css">
 
-<div id="lookPlan" v-if='onPage=="lookplan"'>
-    <div class="lookPlan_head">
-        {{"能耗计划"}}
-        <div>
-            <pbutton-white icon="D" text="下载能耗计划" click=""></pbutton-white>
+    <script>
+        var query = '<%=query%>';
+        query = JSON.parse(psecret.parser(query));
+
+    </script>
+
+    <script src="/js/energycenter/lookPlan/controller.js"></script>
+    <script src="/js/energycenter/lookPlan/event.js"></script>
+    <script src="/js/energycenter/lookPlan/model.js"></script>
+
+    <!-- 挂载DOM -->
+    <div id="app">
+        <div class="body">
+            <div id="lookPlan" v-cloak v-if='onPage=="lookplan"'>
+                <div class="lookPlan_head">
+                    {{projectName}}&nbsp;&nbsp;{{projectTime + "能耗计划"}}(kWh)
+                    <div>
+                        <pbutton-white icon="D" text="下载能耗计划" @click="EnergyPlanDownload"></pbutton-white>
+                    </div>
+                </div>
+                <div id="lookPlan_grid" :style="{width:witdthNeed}">
+                    <div class="LGW" :style="{width:witdthNeed}">
+                        <div class="lookPlan_grid_head" :style="{width:witdthNeed}">
+                            <span></span>
+                            <span v-for="item in planGridData.items" :title="item.name + 'kWh'" v-text="item.name"></span>
+                            <span>汇总</span>
+                        </div>
+
+                        <div class="LGBW" :style="{width:witdthNeedWrap}">
+
+                            <ul class="lookPlan_grid_body clear" :style="{width:witdthNeed}">
+                                <li class="lookPlan_grid_tr" v-for="(model,index) in planGridData.time">
+                                    <span>{{model}}</span>
+                                    <span class="lookPlan_grid_tr_span2" v-for="(data,index1) in planGridData.items" :title="data.data[index] + 'kWh'" v-text="data.data[index]"></span>
+                                    <span class="lookPlan_grid_tr_span2" :title="planGridData.sumdata[index] + 'kWh'" v-text="planGridData.sumdata[index]"></span>
+                                </li>
+
+                                <li class="lookPlan_grid_tr">
+                                    <span>汇总</span>
+                                    <span class="lookPlan_grid_tr_span2" v-for="item1 in planGridData.items" v-if="planGridData.items" :title="item1.data[Planlast] + 'kWh'"
+                                        v-text="item1.data[Planlast]"></span>
+                                    <span class="lookPlan_grid_tr_span2" v-if="planGridData.sumdata" :title="planGridData.sumdata[Planlast] + 'kWh'" v-text="planGridData.sumdata[Planlast]"></span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                        
+                        
+
+                </div>
+            </div>
+
         </div>
     </div>
-    <div class="lookPlan_grid">
-        <div class="lookPlan_grid_head">
-            <span v-for="item in planGridData">{{item.itemName}}</span>
-        </div>
-        <ul class="lookPlan_grid_body">
-            <li class="lookPlan_grid_tr" v-for="model,index in planGridData[0].itemData">
-                <span class="lookPlan_grid_tr_span1">{{index+1}}</span>
-                <span class="lookPlan_grid_tr_span2" v-for="data in planGridData">{{Math.ceil(data.itemData[index].planData)}}</span>
-            </li>
-            <li class="lookPlan_grid_tr">
-                <span class="lookPlan_grid_tr_span1">汇总</span>
-                <span class="lookPlan_grid_tr_span2" v-for="ex in planGridData">{{Math.ceil(ex.totalData)}}</span>
-            </li>
-        </ul>
-    </div>
-</div>
+
+
+    <% include ../footer.html %>

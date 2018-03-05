@@ -1,78 +1,59 @@
-function PromiseFollow(arr) {
 
-    var result = [];
 
-    return new Promise(function (resolve) {
-
-        arr.reduce(function (a, b, i) {
-
-            return function () {
-
-                return b().then(function (one) {
-
-                    result.push(one);
-
-                    return new Promise(function (re) {
-
-                        re(i == 0 ? result.reverse() : one)
-                    })
-                }).then(a);
-            }
-        }, resolve)()
-    })
+// 路径枚举
+var enum_path = {
+    monthtotal: 'monthtotal',   // 月总
+    daytotal: 'daytotal',       // 日总
+    dayterm: 'dayterm',         // 日分项
 }
 
+//  日总 日分享 参数
+var argu = {
+    buildingName: "日总日分享建筑名",
+    buildingId: "Bd1101010001001",
+    timeFrom: "2018-02-01 00:00:00",
+    energyItemId: "VOEi11010100010002",
+    isBudgetNode: 0,
+}
 
+//  月总参数
+var argu1 = {
+    buildingName: "月总建筑名",
+    buildingId: "VOBd11010100050001",
+    timeFrom: "2018-02-01 00:00:00",
+    timeTo: "2018-02-02 00:00:00",
+}
 
+downLoadPdf('daytotal', {
+    buildingName: "日总日分享建筑名",
+    buildingId: "Bd1101010001001",
+    timeFrom: "2018-02-01 00:00:00",
+    energyItemId: "VOEi11010100010002",
+    isBudgetNode: 0,
+});
 
+// /**
+//  * 下载PDF 
+//  */
+function downLoadPdf(type, argu) {
 
+    // 需要跳转的路径参数
+    var url = '/' + type + '?query=' + psecret.create(JSON.stringify(argu));
 
-var arr = [1, 2, 3, 4, 5].map(function (item, index) {
+    if ($("#iframeDownload").length) {
 
-    return function () {
+        // 有的情况直接的跳转链接
+        $("#iframeDownload").attr("src", url);
+    } else {
 
-        return new Promise(function (resolve) {
-
-
-
-            setTimeout(() => {
-
-                resolve(item)
-            }, 1000 + (index * 100));
-        });
+        $('<iframe id="iframeDownload" src="' + url + '" style="display:none" frameborder="0"></iframe>').appendTo("body");
     }
-});
 
-function PromiseConcurrent(arr) {
-
-    var result = [];
-
-    return new Promise(function (resolve) {
-
-        // 全部执行发送请求
-        arr.map(function (item) {
-
-            return item();
-        }).reduce(function (a, b, i) {
-
-            return function () {
-
-                b.then(function (one) {
-
-                    result.push(one);
-
-                    return new Promise(function (re) {
-
-                        re(i == 0 ? result.reverse() : one)
-                    })
-
-                }).then(a)
-            }
-        }, resolve)();
-    })
 }
 
-PromiseConcurrent(arr).then(function (res) {
+fn(enum_path.monthtotal, argu1);
 
-    console.log(res);
-});
+v.instance.BuildingEnergyOutlinesCed.map(item => {
+    item.width = '' + item.proportionNumber > 100 ? 100 : item.proportionNumber + '%';
+    return item;
+})

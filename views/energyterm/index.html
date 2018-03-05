@@ -8,13 +8,162 @@
     <script src="/js/energyterm/index.js"></script>
     <!-- 准备创建Vue End    -->
 
-    <!-- 挂载DOM -->
-    <div id="app">
-        <div class="body">
+    <% include ./budgetManage/widgetTemplate.html %>
 
-            <% include ./moreBuild.html %>
-                <!-- <% include ./subOption.html %> -->
-        </div>
-    </div>
+        <!-- 单个F的公共样式 Start  -->
+        <link rel="stylesheet" href="/css/energyterm/nodeManage/public.css">
+        <!-- 单个F的公共样式 Start  -->
 
-    <% include ../footer.html %>
+
+        <!--  加载对应的CSS Start -->
+        <link rel="stylesheet" href="/css/energyterm/moreBuild.css">
+        <link rel="stylesheet" href="/css/energyterm/nodeManage/subOption.css">
+        <link rel="stylesheet" href="/css/energyterm/nodeManage/budget.css">
+        <link rel="stylesheet" href="/css/energyterm/nodeManage/plan.css">
+        <link rel="stylesheet" href="/css/energycenter/energyByProject/energyByProjectBody.css">
+        <link rel="stylesheet" href="/css/energyterm/budgetManage/index.css" />
+        <link rel="stylesheet" href="/css/energyterm/budgetManage/planSet.css" />
+
+        <!--  加载对应的CSS End   -->
+
+
+
+        <!--  对应的组件 Start -->
+        <% include ./nodeManage/component/budget_com.html %>
+            <% include ./nodeManage/component/plan_com.html %>
+                <% include ./budgetManage/floattemplate.html %>
+                    <!--  对应的组件 End   -->
+
+                    <!-- 节点管理 End   -->
+
+                    <!-- 公共的提示插件 Start -->
+
+                    <!-- 成功失败提示 -->
+                    <pnotice-message id="globalnotice"></pnotice-message>
+
+                    <!-- 全局加载 -->
+                    <ploading-global id="globaloadng"></ploading-global>
+                    <!-- 公共的提示插件 End   -->
+
+                    <!-- 编辑节点确认弹窗 Start  -->
+                    <pwindow-confirm id="confirmWindow">
+                        <button>
+                            <pbutton-white text="取消" click="$('#confirmWindow').phide()"></pbutton-white>
+                            <pbutton-white text="保存" click="BudgetNodeEditSubmit"></pbutton-white>
+                            <pbutton-white text="保存，并设置计划管理节点" click="BudgetNodeEditSubmitAndPlan"></pbutton-white>
+                        </button>
+                    </pwindow-confirm>
+                    <!-- 编辑节点确认弹窗 End    -->
+
+
+                    <!-- 报警预警 Start  -->
+                    <script type="text/html" id="alarmModel">
+                        <div class="alarmbox" v-if="AlarmAndWarning.length">
+                           <div class="window">
+                               <div class="aitem">
+                                   <div class="aheader">
+                                       <em class="aicon">V</em>
+                                       预警设置
+                                       <div class="switch" @click.capture="handle_change_alarm(AlarmAndWarning[0].alarm)">
+                                            <div class="per-switch-slide">
+                                                <span class="per-slide-Bg" :class="{'per-slide-checked':+AlarmAndWarning[0].alarm.switch}"></span>
+                                                <span class="per-switch_round"></span>
+                                            </div>
+                                            <!-- <pswitch-slide state="AlarmAndWarning[0].alarm.switch" sel="void 0" bind="true"></pswitch-slide> -->
+                                       </div>
+                                   </div>
+                                   <div class="textblock" v-show="!+AlarmAndWarning[0].alarm.switch">
+                                        不会产生风险率预警（月实际总能耗超过能耗预算的概率的报警）。
+                                   </div>
+                                   <div class="views" v-show="+AlarmAndWarning[0].alarm.switch">
+                                       <div class="describe">
+                                            您对预警的敏感程度
+                                       </div>
+                                       <div class="progressblock">
+                                           <div class="title">不敏感</div>
+                                           <div class="progress">
+                                                <span v-for="(item,index) in _.range(5)" :class="{lightblue:AlarmAndWarning[0].alarm.sensitive.SELECTED==index}" @click="handle_change_level(index,AlarmAndWarning[0].alarm.sensitive)"></span>
+                                           </div>
+                                           <div class="title">极敏感</div>
+                                       </div>
+                                       <div class="text" v-if="AlarmAndWarning.length && AlarmAndWarning[0].alarm.sensitive.SELECTED!=null">
+                                            <div class="colorbox lightblue">
+                                            </div>
+                                            "风险率"（月实际总能耗超过能耗预算的概率）高于
+                                            {{AlarmAndWarning[0].alarm.sensitive[+(+AlarmAndWarning[0].alarm.sensitive.SELECTED+1)] * 100}}
+                                            %时预警
+                                        </div>
+                                   </div>
+                    
+                               </div>
+                               <div class="aitem">
+                                    <div class="aheader">
+                                            <em class="aicon">Q</em>
+                                            报警设置
+                                            <div class="switch" @click.capture="handle_change_alarm(AlarmAndWarning[0].warning)">
+                                            
+                                                <div class="per-switch-slide">
+                                                    <span class="per-slide-Bg" :class="{'per-slide-checked':+AlarmAndWarning[0].warning.switch}"></span>
+                                                    <span class="per-switch_round"></span>
+                                                </div>
+                    
+                                                    <!-- <pswitch-slide state="AlarmAndWarning[0].warning.switch" bind="true"></pswitch-slide> -->
+                                               </div>
+                                        </div>
+                                        <div class="textblock" v-show="!+AlarmAndWarning[0].warning.switch">
+                                                不会产生超标率报警（月实际总能耗超过能耗预算的比例的报警）。
+                                            </div>
+                                            <div class="views" v-show="+AlarmAndWarning[0].warning.switch">
+                                                    <div class="describe">
+                                                            您对报警的敏感程度
+                                                    </div>
+                                                    <div class="progressblock">
+                                                            <div class="title">不敏感</div>
+                                                            <div class="progress">
+                                                                <span v-for="(item,index) in _.range(5)" :class="{blue:AlarmAndWarning[0].warning.sensitive.SELECTED==index}" @click="handle_change_level(index,AlarmAndWarning[0].warning.sensitive)"></span>
+                                                            </div>
+                                                            <div class="title">极敏感</div>
+                                                        </div>
+                                                        <div class="text" v-if="AlarmAndWarning.length && AlarmAndWarning[0].warning.sensitive.SELECTED!=null">
+                                                                <div class="colorbox blue">
+                                        
+                                                                </div>
+                                                                “超标率”（月实际总能耗超过能耗预算的比例）高于
+                                                                {{AlarmAndWarning[0].warning.sensitive[+(+AlarmAndWarning[0].warning.sensitive.SELECTED+1)] * 100}}
+                                                                %时报警
+                                                            </div>
+                                                </div>
+                               </div>
+                               <div class="footer">
+                                   <div class="btn" :alt="disabled" @click.capture="!disabled?saveAlarm():void 0">
+                                       <pbutton-blue id="alarm" text="确定"></pbutton-blue>
+                                    </div>
+                                   <div class="btn" @click.capture="alarmwindow=false,$('#build_setting').precover('基础设置')">
+                                       <pbutton-white text="取消"></pbutton-white>
+                                    </div>
+                               </div>
+                           </div>
+                        </div>
+                    </script>
+                    <!-- 报警预警 End    -->
+
+                    <!-- 挂载DOM -->
+                    <div id="app">
+                        <div class="body">
+                            <!-- 多楼首页 Start1  -->
+                            <% include ./moreBuild.html %>
+
+                                <% include ./budgetManage/index.html %>
+                                    <!-- 多楼首页 End    -->
+
+                                    <!-- 管理分项节点 Start  -->
+                                    <% include ./nodeManage/subOption.html %>
+
+                                        <% include ./nodeManage/budget.html %>
+
+                                            <% include ./nodeManage/plan.html %>
+                                                <!-- 管理分项节点 End  -->
+                        </div>
+                    </div>
+
+                    <% include ../footer.html %>

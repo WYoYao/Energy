@@ -1,5 +1,3 @@
-<link rel="stylesheet" href="/css/energyterm/nodeManage/subOption.css">
-
 <script src="/js/energyterm/nodeManage/subOption/controller.js"></script>
 <script src="/js/energyterm/nodeManage/subOption/event.js"></script>
 <script src="/js/energyterm/nodeManage/subOption/model.js"></script>
@@ -7,221 +5,87 @@
 <!-- 管理分享节点Start -->
 <div class="sub_content" v-cloak v-if='onPage=="subOption"'>
 
-    <!-- 头部 Start -->
-    <div class="sitemap">
+    <% include ./hover.html %>
 
-        <!-- 返回按钮Start -->
-        <div class="backbtn" @click='alert("返回")'>
-            I
-        </div>
-        <!-- 返回按钮End -->
+        <!-- 头部 Start -->
+        <div class="sitemap">
 
-        <!-- 面包屑文字Start -->
-        <div class="map_index">
-            首页&nbsp;/&nbsp;
-            <span class="map_name">
-                管理分项节点
-            </span>
-        </div>
-        <!-- 面包屑文字End -->
-
-        <!-- 疑问 Start -->
-        <p class="issures">
-            ?
-        </p>
-        <!-- 疑问 End -->
-
-
-    </div>
-    <!-- 头部 End -->
-
-    <!--  内容部分Start -->
-    <div class="contenter">
-
-        <div class="item clear" v-for='item in NodeManages'>
-
-            <div class="head">
-                {{item.buildingName}}
-                <!-- icon Start -->
-                <span class="icon" v-if="item.isMain">
-                    主建筑
-                </span>
-                <!-- icon　End -->
+            <!-- 返回按钮Start -->
+            <div class="backbtn" @click='v.goBack("more_build",true)'>
+                I
             </div>
+            <!-- 返回按钮End -->
 
-            <!-- 主建筑 预算管理节点标题 Start -->
-            <div class="des" v-if="item.isMain">
-                预算管理总结点
-                <span class="node" v-for="info in item.nodes.budget" v-text="info.name">
-
+            <!-- 面包屑文字Start -->
+            <div class="map_index">
+                <em style="cursor: pointer;" @click="v.initPage('more_build')">首页&nbsp;/&nbsp;</em>
+                <span class="map_name">
+                    管理分项节点
                 </span>
             </div>
-            <!-- 主建筑 预算管理节点标题 End -->
+            <!-- 面包屑文字End -->
 
-            <!-- 非主建筑 预算管理节点标题 Start -->
-            <div class="ide mt" v-if="!item.isMain" v-for="info in item.nodes.budget" :title="info.name" @click="redirectTobudget(item)">
-                预算管理总节点：{{info.name}}
-                <span class="icon">
-                    `
-                </span>
-            </div>
-            <!-- 非主建筑 预算管理节点标题 End -->
-
-            <!-- 编辑节点按钮 Start  -->
-            <div class="ide" @click="redirectToPlan(item)">
-                已选计划管理节点：{{item.nodes.plan.length}}个
-                <span class="icon">
-                    `
-                </span>
-            </div>
-            <!-- 编辑节点按钮 End  -->
-
-            <!--   节点集合 Start   -->
-            <div class="nodes">
-                <span class="child" v-for="node in item.nodes.plan" :title="node.name" v-text="node.name"></span>
-            </div>
-            <!--   节点集合 End   -->
-
+            <!-- 疑问 Start -->
+            <p class="issures" @click="hover=true">
+                ?
+            </p>
+            <!-- 疑问 End -->
 
 
         </div>
+        <!-- 头部 End -->
 
-        <!-- <div class="item clear">
+        <!--  内容部分Start -->
+        <div class="contenter">
 
-            <div class="head"> -->
-        <!-- 博锐尚格大厦 -->
-        <!-- icon Start -->
-        <!-- <span class="icon">
-                    主建筑
-                </span> -->
-        <!-- icon　End -->
-        <!-- </div> -->
+            <div class="item clear" v-for='item in NodeManages'>
 
-        <!-- 节点标题 Start -->
-        <!-- <div class="ide mt">
-                已选计划管理节点：23个
-                <span class="icon">
-                    `
-                </span>
-            </div> -->
-        <!-- 节点标题 End -->
+                <div class="head">
+                    {{item.buildingName}}
+                    <!-- icon Start -->
+                    <span class="icon" v-if="item.isMain">
+                        主建筑
+                    </span>
+                    <!-- icon　End -->
+                </div>
 
-        <!-- 编辑节点按钮 Start  -->
-        <!-- <div class="ide">
-                已选计划管理节点：23个
-                <span class="icon">
-                    `
-                </span>
-            </div> -->
-        <!-- 编辑节点按钮 End  -->
+                <!-- 主建筑 预算管理节点标题 Start -->
+                <div class="des" v-if="item.isMain">
+                    预算管理节点
+                    <span class="node" v-for="info in item.nodes.budget" v-text="info.name">
 
-        <!--   节点集合 Start   -->
-        <!-- <div class="nodes">
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-                <span class="child">电锅炉</span>
-            </div> -->
-        <!--   节点集合 End   -->
+                    </span>
+                </div>
+                <!-- 主建筑 预算管理节点标题 End -->
 
+                <!-- 非主建筑 预算管理节点标题 Start -->
+                <div class="ide mt" v-if="!item.isMain" v-for="info in item.nodes.budget" :title="info.name" @click="redirectTobudget(item)">
+                    预算管理节点：{{info.name}}
+                    <span class="icon">
+                        `
+                    </span>
+                </div>
+                <!-- 非主建筑 预算管理节点标题 End -->
 
+                <!-- 编辑节点按钮 Start  -->
+                <div class="ide" @click="redirectToPlan(item)">
+                    已选计划管理节点：{{item.nodes.plan.length}}个
+                    <span class="icon">
+                        `
+                    </span>
+                </div>
+                <!-- 编辑节点按钮 End  -->
 
-        <!-- </div> -->
+                <!--   节点集合 Start   -->
+                <div class="nodes">
+                    <span class="child" v-for="node in item.nodes.plan" :title="node.name" v-text="node.name"></span>
+                </div>
+                <!--   节点集合 End     -->
 
-    </div>
-    <!-- 内容部分End -->
+            </div>
+
+        </div>
+        <!-- 内容部分End -->
 
 </div>
 <!-- 管理分享节点End -->

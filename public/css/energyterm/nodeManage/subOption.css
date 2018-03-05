@@ -160,11 +160,130 @@
 }
 
 .sub_content .contenter .nodes .child{
-    flex-grow:1;
+    /* flex-grow:1; */
     background: #F0F3F6;
     padding: 8px 10px;
     color: #6D6D6D;
     margin: 1px;
     text-align: center;
+    /* cursor: pointer; */
+}
+
+.alert{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    /* opacity: 0.1; */
+    background: rgba(0,0,0,0.1);
+    z-index: 1;
+}
+
+.alert .window{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 1060px;
+    height: 680px;
+    margin-top: -340px;
+    margin-left: -530px;
+    box-shadow: 0 2px 6px #888888;
+    background: #FFFFFF;
+    z-index: 6;
+}
+
+.alert .window .wboxer{
+    height: calc(100% - 50px);
+    width: calc(100% - 120px);
+    margin: 50px 60px 26px;
+}
+
+.wboxer .pointer{
+    display: inline-block;
+    height: 18px;
+    width: 18px;
+}
+
+.wboxer .pointer::after{
+    margin:8px  5px 5px;
+    width: 4px;
+    height: 4px;
+    display: block;
+    content: " ";
+    background: #02A9D1;
+}
+
+.wboxer .wtitle{
+    height: 32px;
+    width: 100%;
+    line-height: 32px;
+    font-weight: bold;
+    font-size: 24px;
+    color: #333333;
+    margin-bottom: 40px;
+}
+
+.wboxer .wtit{
+    font-size: 16px;
+    color: #333333;
+    font-weight: bold;
+    line-height: 20px;
+
+}
+
+.wboxer .wbody{
+    line-height: 14px;
+    font-family: MicrosoftYaHei;
+    font-size: 14px;
+    color: #333333;
+    margin-top: 6px;
+    margin-bottom: 30px;
+}
+
+.wboxer .img{
+    margin-top: -24px;
+    width: 878px;
+    height: 196px;
+}
+
+.wboxer .left{
+    float: left;
+    font-size: 14px;
+    color: #7A94AD;
+}
+
+.wboxer .checkbox{
+    border: 1px solid #7A94AD;
+    height: 16px;
+    width: 16px;
+    margin-top: 24px;
+}
+
+.wboxer .ctitle{
+    height: 18px;
+    line-height: 18px;
+    color: #7A94AD;
+    margin-top: 23px;
     cursor: pointer;
+}
+
+.wboxer .footer{
+    width: 100%;
+    margin-top: 8px;
+    height: 84px;
+    line-height: 84px;
+    text-align: center;
+}
+
+.wboxer .footer .btn{
+    display: inline-block;
+    height: 30px;
+    line-height: 30px;
+    width: 128px;
+    margin-left: -64px;
+}
+
+.wboxer .footer .btn>div{
+    width: 100%;
 }

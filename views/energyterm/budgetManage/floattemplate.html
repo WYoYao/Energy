@@ -1,0 +1,233 @@
+<script type="text/html" id="I_filterWindow_tem">
+    <div class="I_filterWindow_box">
+        <div class="I_filterWindow_title">预算及计划完整性</div>
+        <div class="I_filterWindow_bigBox">
+            <div class="I_filterWindow_littleBox1" v-for="model in projectSelectParam.BudgetAndPlanIntegrity" @click="projectSelectParamSel(model,'BudgetAndPlanIntegrity')" :class="model.sel ? 'I_filterWindow_littleBoxSel' : 'I_filterWindow_littleBoxSelNot'">{{model.name}}</div>
+        </div>
+        <div class="I_filterWindow_title">所属气候带</div>
+        <div class="I_filterWindow_bigBox">
+            <div class="I_filterWindow_littleBox1" v-for="model in projectSelectParam.projectClimate" @click="projectSelectParamSel(model,'projectClimate')" :class="model.sel ? 'I_filterWindow_littleBoxSel' : 'I_filterWindow_littleBoxSelNot'">{{model.name}}</div>
+        </div>
+        <div class="I_filterWindow_title">项目类型</div>
+        <div class="I_filterWindow_bigBox">
+            <div class="I_filterWindow_littleBox1" v-for="model in projectSelectParam.projectType" @click="projectSelectParamSel(model,'projectType')" :class="model.sel ? 'I_filterWindow_littleBoxSel' : 'I_filterWindow_littleBoxSelNot'">{{model.name}}</div>
+        </div>
+        <div class="I_filterWindow_title">项目面积（单位：万m²）</div>
+        <div class="I_filterWindow_bigBox">
+            <div class="I_filterWindow_littleBox2" v-for="model in projectSelectParam.projectArea" @click="projectSelectParamSel(model,'projectArea')" :class="model.sel ? 'I_filterWindow_littleBoxSel' : 'I_filterWindow_littleBoxSelNot'">{{model.name}}</div>
+        </div>
+        <div class="I_filterWindow_title">所属区域</div>
+        <div class="I_filterWindow_bigBox">
+            <div class="I_filterWindow_littleBox1" v-for="model in projectSelectParam.projectRegion" @click="projectSelectParamSel(model,'projectRegion')" :class="model.sel ? 'I_filterWindow_littleBoxSel' : 'I_filterWindow_littleBoxSelNot'">{{model.name}}</div>
+        </div>
+        <div class="I_filterWindow_button">
+            <pbutton-blue text="确定" click="projectFilterEnd"></pbutton-blue>
+        </div>
+    </div>
+</script>
+
+<script type="text/html" id="I_budgetWindow_tem">
+    <div class="I_budgetWindow_box">
+        
+
+        <div class="I_BW_B">
+
+            <pnotice-nodata text="暂无数据" subtitle="正在获取数据" v-show="!projectSel.projectInfoState"></pnotice-nodata>
+
+            <div class="I_BW_BH" v-show="projectSel.projectInfoState">
+                <!-- 用户仅在未来月且项目有预算时可以编辑预算，项目冻结时该按钮不可用 -->
+                <div class="I_BW_BH_button1" v-show="!indexRemark&&!indexBudget" v-if="!NotSelFutureMonth&&projectSel.projectInfo.ifHasBudget&&projectSel.projectInfo.state !=0">
+                    <pbutton-blue text="编辑预算" icon="e" isborder="false" disabled="projectSel.projectInfo.state == 0" @click="BudgetEdit"></pbutton-blue>
+                </div>
+                <div class="I_BW_BH_button1" v-show="!indexRemark&&!indexBudget" >
+                    <pbutton-blue text="填写批注" icon="N" isborder="false" @click="indexRemark = true"></pbutton-blue>
+                </div>
+                <div class="I_BW_BH_button2" v-show="indexRemark || indexBudget">
+                    <pbutton-white text="'保存'" bind="true" disabled="!indexPage.budgetCanSave" @click="SaveBudgetOrRemark"></pbutton-white>
+                </div>
+                <div class="I_BW_BH_button2" v-show="indexRemark || indexBudget">
+                    <pbutton-white text="取消" @click="clearAllBudgetCache"></pbutton-white>
+                </div>
+                <!-- 仅有未来月可以锁定或者解锁预算 -->
+                <div class="I_BW_BH_button1" v-if="(!NotSelFutureMonth)&&(projectSel.projectInfo.state == 1 || projectSel.projectInfo.state == null)" v-show="!indexRemark&&!indexBudget">
+                    <pbutton-blue text="锁定预算" isborder="false" @click="projectBudgetLock(true)"></pbutton-blue>
+                </div>
+                <div class="I_BW_BH_button1" v-if="(!NotSelFutureMonth)&&(projectSel.projectInfo.state == 0)" v-show="!indexRemark&&!indexBudget">
+                    <pbutton-blue text="解锁预算" isborder="false" @click="projectBudgetLock(false)"></pbutton-blue>
+                </div>
+                <div class="I_BW_BH_icon1" v-if="!NotSelFutureMonth&&projectSel.projectInfo.state == 0" v-show="!indexRemark&&!indexBudget">
+                    <i class="per-bIcon" @mouseenter="$('#I_ht1').css('display','block')" @mouseleave="$('#I_ht1').css('display','none')">s</i>
+                    <div class="lockicon_hover_title" id="I_ht1">预算已被锁定</div>
+                </div>
+            </div>
+
+            <div class="I_BW_B_foot" v-show="projectSel.projectInfoState">
+
+                <!-- 有预算或者历史月显示本DIV -->
+                <div class="I_BW_B_foot_box" v-if="projectSel.projectInfo.ifHasBudget || !NotSelHistoryMonth" v-show="!indexBudget">
+                    <span>能耗预算</span>
+                    <span>
+                        <span v-if="projectSel.projectInfo.ifHasBudget"> kWh</span>
+                        <span class="MSYB">{{projectSel.projectInfo.budgetDataShow}}&nbsp;</span>
+                    </span>
+                </div>
+
+                <!-- 本月且本月无预算才显示该创建能耗预算按钮 -->
+                <div class="I_BW_B_foot_create" v-if="NotSelHistoryMonth&&NotSelFutureMonth&&!projectSel.projectInfo.ifHasBudget&&(projectSel.projectInfo.state != 0)" v-show="!indexBudget">
+                    <span>能耗预算</span>
+                    <span>
+                        <pbutton-blue text="点击创建能耗预算" isborder="false" icon="J" @click="createEnergyBudget"></pbutton-blue>
+                    </span>
+                </div>
+
+                <!-- 只有未来月且无能耗预算才显示该创建能耗预算按钮 -->
+                <div class="I_BW_B_foot_create" v-if="!NotSelFutureMonth&&!projectSel.projectInfo.ifHasBudget&&(projectSel.projectInfo.state != 0)" v-show="!indexBudget">
+                    <div class="I_BW_B_foot_create_future">
+                        <pbutton-blue text="点击创建能耗预算" isborder="false" icon="J" @click="createEnergyBudget"></pbutton-blue>
+                    </div>   
+                </div>
+
+                <div class="I_BW_B_foot_box" v-if="NotSelFutureMonth" v-show="!indexBudget">
+                    <span>实际能耗</span>
+                    <span>
+                        <span v-if="projectSel.projectInfo.energyDataShow != noData"> kWh</span>
+                        <span class="MSYB">{{projectSel.projectInfo.energyDataShow}}&nbsp;</span>
+                    </span>
+                </div>
+
+                <div class="I_BW_B_foot_box" v-if="NotSelFutureMonth" v-show="!indexBudget">
+                    <span>实际能耗占预算比</span>
+                    <span  class="MSYB" :class="(projectSel.projectInfo.realBudgetRatioShow != noData) ?  (projectSel.projectInfo.realOccupyBudgetRatio >= 100) ? 'redFont' : 'greenFont' : void 0">{{projectSel.projectInfo.realBudgetRatioShow}}&nbsp;</span>
+                </div>
+
+                <div v-show="!indexRemark && !indexBudget" class="I_BW_B_foot_button" v-if="projectSel.projectInfo.ifHasPlan">
+                    <div><pbutton-blue icon="j" text="查看能耗计划" isborder="false" @click="EnergyPlanOpen(projectSel.projectInfoReady)"></pbutton-blue></div>
+                </div>
+                <div v-if="indexBudget&&projectSel.projectInfo.ifHasPlan" class="I_BW_B_warn">
+                    提示：该项目已创建能耗计划，若编辑预算，会删除已创建的能耗计划！
+                </div>
+                <div v-show="indexBudget" class="I_BW_B_text">
+                    <span>总预算</span>
+                    <span>
+                        <ptext-text id="'TotalBudgetFill'" bind="true"  placeholder="" text="'kWh'" value="projectBudgetEditCache.total">
+                            <!-- <verify errtip="请输入非负整数"  verifytype="space"></verify> -->
+                            <!-- <verify errtip="请输入非负整数"  verifytype="positiveint"></verify> -->
+                        </ptext-text>
+                    </span>
+                    <div class="indexRemarkWarn" id="IRW2" v-show="indexBudgerWarn.total">请输入正整数</div>
+                </div>
+
+                <div v-show="indexBudget" class="I_BW_B_text">
+                    <span>单平米预算</span>
+                    <span>
+                        <ptext-text id="'squareBudgetFill'" bind="true" placeholder="" text="'kWh/㎡'" value="projectBudgetEditCache.square">
+                            <!-- <verify errtip="请输入非负整数"  verifytype="space"></verify> -->
+                            <!-- <verify errtip="请输入非负整数"  verifytype="positiveint"></verify> -->
+                        </ptext-text>
+                    </span>
+                    <div class="indexRemarkWarn" id="IRW3" v-show="indexBudgerWarn.square">请输入正整数</div>
+                </div>
+
+                <div v-show="indexRemark" class="I_BW_B_foot_text">
+                    <span>批注</span>
+                    <span>
+                        <ptext-text id="'indexBudgetRemark'" bind="true" placeholder="'可填写预算相关说明，100字以内'" value="remarkCache">
+                        </ptext-text>
+                    </span>
+                    <div class="indexRemarkWarn" id="IRW1" v-show="indexBudgerWarn.pizhu"></div>
+                </div>
+
+                <div v-show="indexBudget" class="I_BW_B_foot_text">
+                    <span>批注</span>
+                    <span>
+                        <ptext-text id="'indexBudgetEditRemark'" bind="true" placeholder="'可填写预算相关说明，100字以内'" value="projectBudgetEditCache.remark">
+                        </ptext-text>
+                    </span>
+                    <div class="indexRemarkWarn" id="IRW4" v-show="indexBudgerWarn.pizhu2">不可超过100个字</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="I_budgetWindow_scroll">
+
+            <div class="I_budgetWindow_scroll_wrap">
+                <div class="I_budgetWindow_scroll_box">
+                    <div class="I_budgetWindow_title">预算修改记录</div>
+
+                    <div class="I_BW_BO">
+
+                        <ul v-if="projectSel.projectRemark.length!=0">
+                            <li class="I_BW_BO_lh">
+                                <span>修改时间</span>
+                                <span>操作人</span>
+                                <span>操作</span>
+                                <span>能耗预算(kWh)</span>
+                                <span>批注</span>
+                            </li>
+                            <li class="I_BW_BO_li" v-for="model in projectSel.projectRemark"> 
+                                <span class="I_BW_BO_SAH AMT" :title="model.updateTime">{{model.updateTime}}</span>
+                                <span class="I_BW_BO_SAH" :title="model.operateUserShow">{{model.operateUserShow}}</span>
+                                <span class="I_BW_BO_SAH" :title="model.operate">{{model.operate}}</span>
+                                <span class="I_BW_BO_SAH PFR" :title="model.energyDataBudgetShow + 'kWh'">{{model.energyDataBudgetShow}}&nbsp;&nbsp;<span class="I_BW_BO_St1" v-show="model.energyDataBudgetShow != noData">kWh</span></span>
+                                <span class="wordAuto" :title="model.remark">{{model.remark}}</span>
+                            </li>
+                        </ul>
+                        <div class="I_BW_BO_nodata" v-if="projectSel.projectRemark.length==0">
+                            <pnotice-nodata text="暂无数据" subtitle="该月还没有预算修改记录哦" v-if="projectSel.projectRemark.length==0"></pnotice-nodata>
+                        </div>
+                        
+                    
+                    </div>
+
+                    
+                    <div class="I_budgetWindow_title I_budgetWindow_title_history">
+                        历史能耗参考值
+                        <span>单位：kWh</span>
+                        <span class="I_budgetWindow_title_text1">能耗预算</span>
+                        <span class="I_budgetWindow_littleColor littlegray"></span>
+                        <span class="I_budgetWindow_title_text1">实际能耗</span>
+                        <span class="I_budgetWindow_littleColor littleBlue"></span>
+                    </div>
+
+                    <div class="I_BW_BO_nodata" v-if="projectSel.projectHistoryBudget.length==0">
+                        <pnotice-nodata text="暂无数据" subtitle="该建筑没有历史能耗参考值" v-if="projectSel.projectHistoryBudget.length==0"></pnotice-nodata>
+                    </div>
+
+                    <div class="I_BW_H" @mouseleave="pmouseleaveHistoryEnergy" v-if="projectSel.projectHistoryBudget.length!=0">
+                        <div class="I_BW_H_one" @mouseenter="pmouseenterHistoryEnergy(model)" v-for="model in projectSel.projectHistoryBudget" :class="model.hovered ? 'I_BW_H_hover' : void 0">
+                            <div class="I_BW_H_time">
+                                <div :class="model.HN ? 'I_BW_H_timeHN' : 'I_BW_H_timeH'">{{model.timeUsed}}</div>
+                                <div v-if="model.HN" class="I_BW_H_timeHN">同期</div>
+                            </div>
+                            <div class="I_BW_H_bar">
+                                <div class="I_BW_H_bar1"></div>
+                                <div class="I_BW_H_bar2"></div>
+                            </div>
+                            <div class="I_BW_H_data">
+                                <span :title="model.energyDataBudgetShow">
+                                    <div>能耗预算</div>
+                                    <div class="AMT">{{model.energyDataBudgetShow}}</div>
+                                </span>
+                                <span :title="model.energyDataRealShow">
+                                    <div>实际能耗</div>
+                                    <div class="AMT">{{model.energyDataRealShow}}</div>
+                                </span>
+                                <span :title="model.energyPercent">
+                                    <div>能耗预算比</div>
+                                    <div class="MSYB" :class="model.energyPercent > 100 ? 'redFont' : 'greenFont'">{{model.energyPercent}}<a v-show="model.energyPercent != noData">%</a></div>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            
+        </div>
+
+    </div>
+</script>
+
+
+
