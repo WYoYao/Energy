@@ -52,7 +52,7 @@
                     <div class="blockTitle">
                         <span v-text="item.planDateStr">2017.02</span>
                         <span class="now" v-show="item.isNowMonth">本月</span>
-                        <em class="picEm" title="预算已被锁定" v-show="item.state==0">s</em>
+                        <em class="picEm" title="预算已被锁定" v-show="item.state==0 && !item.isNowMonth">s</em>
                         <div class="remark" @click.stop="showModifyRecord(item)" v-show="item.ifHasBudget">
                             <em class="picEm">﹁</em>批注</div>
                     </div>
