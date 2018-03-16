@@ -32,36 +32,36 @@ var indexController = {
     },
     //获取用户项目信息
     getList : function(paramObj,success,err,complete){ 
-        console.log(JSON.stringify(paramObj));
+        // console.log(JSON.stringify(paramObj));
         this.POSTAJAX('FNCT_GetProjectBasicInfo',paramObj,success,err,complete)
     },
     //获取项目预算信息
     getProjectSelInfo :  function(paramObj,success,err,complete){
-        console.log(JSON.stringify(paramObj));
+        // console.log(JSON.stringify(paramObj));
         this.POSTAJAX('FNPJ_GetEnergyBudgetList',paramObj,success,err,complete);
     },
     // 获取项目历史能耗信息
     getProjectHistoryBudget : function(paramObj,success,err,complete){
-        console.log(JSON.stringify(paramObj));
+        // console.log(JSON.stringify(paramObj));
         this.POSTAJAX('FNPJ_GetMonthEnergyRealAndBudget',paramObj,success,err,complete);
     },
     //获取项目面积
     getProjectArea : function(paramObj,success,err,complete){
-        console.log(JSON.stringify(paramObj));
+        // console.log(JSON.stringify(paramObj));
         this.POSTAJAX('FNPJ_GetBuildingItemArea',paramObj,success,err,complete);
     },
     // 获取项目预算批注信息
     getProjectBudgetRemark : function(paramObj,success,err,complete){
-        console.log(JSON.stringify(paramObj));
+        // console.log(JSON.stringify(paramObj));
         this.POSTAJAX('FNPJ_GetEnergyBudgetHistory',paramObj,success,err,complete);
     },
     //用户预算信息更改
     projectBudgetMessageEdit : function(paramObj,success,err,complete){
-        console.log(JSON.stringify(paramObj));
+        // console.log(JSON.stringify(paramObj));
         this.POSTAJAX('FNPJ_EnergyBudgetSave',paramObj,success,err,complete);
     },
     download : function(paramObj,success,err,complete){
-        console.log(JSON.stringify(paramObj));
+        // console.log(JSON.stringify(paramObj));
         this.POSTAJAX('download',paramObj,success,err,complete);
     }
 }

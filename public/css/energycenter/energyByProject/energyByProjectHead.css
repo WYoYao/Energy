@@ -34,7 +34,7 @@
 }
 .energyProHead_text>span:nth-of-type(2){
     color: #151515;
-    font-weight: 700;
+    font-family: MicrosoftYaHei-Bold;
 }
 .energyProHead_text>span:nth-of-type(1){
     color: #637E99;

@@ -22,12 +22,17 @@
     <script type="text/javascript" src="<%=host%>scripts/tool/psecret.js"></script>
     <script type="text/javascript" src="<%=host%>pcontrol/flatBlueSeries_src_2.0.js"></script>
 
-    <script src="http://192.168.100.25:9091/js/public/lodash.min.js"></script>
+    <script src="/js/public/lodash.min.js"></script>
     <!-- highcharts Start -->
-    <script src="https://img.hcharts.cn/highcharts/highcharts.js"></script>
+    <!-- <script src="https://img.hcharts.cn/highcharts/highcharts.js"></script>
     <script src="https://img.hcharts.cn/highcharts/highcharts-more.js"></script>
-    <script src="https://img.hcharts.cn/highcharts/modules/solid-gauge.js"></script>
+    <script src="https://img.hcharts.cn/highcharts/modules/solid-gauge.js"></script> -->
     <!-- highcharts End -->
+
+    <script type="text/javascript" src="/js/public/highcharts.js"></script>
+    <script type="text/javascript" src="/js/public/highcharts-more.js"></script>
+    <script type="text/javascript" src="/js/public/solid-gauge.js"></script>
+
     <script type="text/javascript" src="/js/public/promise.min.js"></script>
 
     <script>
@@ -45,176 +50,202 @@
 <body>
 
     <div id="monthtotal" class="monthtotal">
-        <div id="part1" class="part">
-            <div class="tip">
-                能耗预算管理
-            </div>
-            <div class="title">{{buildingName}} 建筑 {{ eDate.y }} 年 {{ eDate.m }} 月能耗分析报告</div>
+        <div id="part1" class="part" v-for="(mo,th) in  createSkip(96, 62, 1845, 850)(sort(EnergyDataForDayAndItem.items,'energyItemId'))">
+
+            <!--  第一部分内容 Start -->
+            <template v-if="th==0">
+
+                <div class="tip">
+                    能耗预算管理
+                </div>
+                <div class="title">{{buildingName}} 建筑 {{ eDate.y }} 年 {{ eDate.m }} 月能耗分析报告</div>
+
+                <div class="item budget">
+                    <div class="describe">
+                        能耗预算概述
+                    </div>
+
+                    <div class="contenter">
+
+                        <!-- 文字显示 Start  -->
+                        <div class="numtitle">
+                            <div class="itemer">
+                                <div class="box">月能耗</div>
+                                <div class="box">
+                                    <div class="blacknumber" v-if="MonthEnergyDataInfo.monthEnergyData">
+                                        {{MonthEnergyDataInfo.monthEnergyData | toThousands}}
+                                    </div>
+                                    <div class="company" v-if="MonthEnergyDataInfo.monthEnergyData">
+                                        kWh
+                                    </div>
+                                    <div class="blacknumber" v-if="!MonthEnergyDataInfo.monthEnergyData">
+                                        --
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="itemer1">
+                                <div class="box">月预算</div>
+                                <div class="box">
+                                    <div class="blacknumber" v-if="MonthEnergyDataInfo.monthBudgetData">
+                                        {{MonthEnergyDataInfo.monthBudgetData | toThousands}}
+                                    </div>
+                                    <div class="company" v-if="MonthEnergyDataInfo.monthBudgetData">
+                                        kWh
+                                    </div>
+                                    <div class="blacknumber" v-if="!MonthEnergyDataInfo.monthBudgetData">
+                                        --
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="itemer2">
+                                <div class="box">
+
+                                    <div class="font">
+                                        同比
+                                    </div>
+
+                                    <div class="text">
+                                        同比能耗
+                                    </div>
+
+                                    <div class="number" v-if="MonthEnergyDataInfo.sameRatioData">
+                                        {{MonthEnergyDataInfo.sameRatioData | toThousands}} kWh
+                                    </div>
+                                    <div class="number" v-if="!MonthEnergyDataInfo.sameRatioData">
+                                        --
+                                    </div>
+
+                                </div>
+                                <div class="box">
+                                    <div class="block_proportion" v-if="MonthEnergyDataInfo.sameRatio" :class="{red:MonthEnergyDataInfo.sameRatio>0,green:MonthEnergyDataInfo.sameRatio<0}">
+                                        {{MonthEnergyDataInfo.sameRatio | convertPercentage}} &nbsp;%
+                                    </div>
+
+                                    <div class="block_proportion" v-if="!MonthEnergyDataInfo.sameRatio" :class="{red:MonthEnergyDataInfo.sameRatio>0,green:MonthEnergyDataInfo.sameRatio<0}">
+                                        --
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="itemer3">
+                                <div class="box">
+
+                                    <div class="font">
+                                        环比
+                                    </div>
+
+                                    <div class="text">
+                                        环比能耗
+                                    </div>
+
+                                    <div class="number" v-if="MonthEnergyDataInfo.circleRatioData">
+                                        {{MonthEnergyDataInfo.circleRatioData | toThousands}} kWh
+                                    </div>
+                                    <div class="number" v-if="!MonthEnergyDataInfo.circleRatioData">
+                                        --
+                                    </div>
+
+                                </div>
+                                <div class="box">
+                                    <div class="block_proportion" v-if="MonthEnergyDataInfo.circleRatio" :class="{red:MonthEnergyDataInfo.circleRatio>0,green:MonthEnergyDataInfo.circleRatio<0}">
+                                        {{MonthEnergyDataInfo.circleRatio | convertPercentage}} &nbsp;%
+                                    </div>
+
+                                    <div class="block_proportion" v-if="!MonthEnergyDataInfo.circleRatio" :class="{red:MonthEnergyDataInfo.circleRatio>0,green:MonthEnergyDataInfo.circleRatio<0}">
+                                        --
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--  文字显示 End   -->
+
+                        <!--  进度表盘部分 Start  -->
+                        <div class="boxer">
+                            <div class="lines">
+                                <div class="line">
+                                    <div class="word">
+                                        已过时间占比 {{MonthEnergyDataInfo.passedTimeRatio | convertPercentage}} %
+                                    </div>
+                                    <div class="progress">
+                                        <div v-for="(item,index) in _.range(100)" :class="{energy_block:index<(+convertPercentageFn(MonthEnergyDataInfo.passedTimeRatio)>>>0),real_block:MonthEnergyDataInfo.passedTimeRatio>1}"
+                                            class="state"></div>
+                                    </div>
+                                </div>
+                                <div class="line">
+                                    <div class="word">
+                                        当前累计能耗占月预算比 {{MonthEnergyDataInfo.energyOccupyBudgetRatio | convertPercentage}} %
+                                    </div>
+                                    <div class="progress">
+
+                                        <div v-for="(item,index) in _.range(100)" :class="{energy_block:index<(+convertPercentageFn(MonthEnergyDataInfo.energyOccupyBudgetRatio)>>>0),real_block:MonthEnergyDataInfo.energyOccupyBudgetRatio>1}"
+                                            class="state"></div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="lines">
+
+                                <div class="clock">
+                                    <div class="view" id="parent"></div>
+                                    <div class="view" id="child"></div>
+                                    <div class="ctitle">月累计能耗占当前总计划比</div>
+                                    <div class="vtitle" :style="{color:MonthEnergyDataInfo.energyOccupyPlanRatio>1?'#FF7B7B':'#02A9D1'}">
+                                        {{MonthEnergyDataInfo.energyOccupyPlanRatio | convertPercentage}}
+                                        <span class="vt" :style="{color:MonthEnergyDataInfo.energyOccupyPlanRatio>1?'#FF7B7B':'#02A9D1'}">%</span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!--  进度表盘部分 End  -->
+
+                    </div>
+
+                </div>
+
+                <div class="item budget">
+                    <div class="describe">
+                        逐日能耗分布
+                    </div>
+
+                    <div class="contenter">
+                        <!-- 表头信息 Start -->
+                        <div class="chart_title">
+                            <a href="#part3">逐日能耗详情见附件1></a>
+
+                            <div class="font">单位：kWh</div>
+                            <div class="font">实际能耗高于计划　</div>
+                            <div class="blockicon real_block"></div>
+                            <div class="font">实际能耗低于计划</div>
+                            <div class="blockicon energy_block"></div>
+                            <div class="font">计划能耗</div>
+                            <div class="blockicon plan_block"></div>
+
+                        </div>
+                        <!-- 表头信息 End -->
+
+                        <!--  柱状图 Start -->
+                        <div id="tio" class="chart_chart">
+
+                        </div>
+                        <!--  柱状图 End -->
+
+                    </div>
+
+                </div>
+            </template>
+            <!--  第一部分内容 End -->
 
             <div class="item budget">
                 <div class="describe">
-                    能耗预算概述
+                    分项能耗分布
                 </div>
 
                 <div class="contenter">
 
-                    <!-- 文字显示 Start  -->
-                    <div class="numtitle">
-                        <div class="itemer">
-                            <div class="box">月能耗</div>
-                            <div class="box">
-                                <div class="blacknumber">
-                                    {{MonthEnergyDataInfo.monthEnergyData | toThousands}}
-                                </div>
-                                <div class="company">
-                                    kWh
-                                </div>
-                            </div>
-                        </div>
-                        <div class="itemer1">
-                            <div class="box">月计划</div>
-                            <div class="box">
-                                <div class="blacknumber">
-                                    {{MonthEnergyDataInfo.monthBudgetData | toThousands}}
-                                </div>
-                                <div class="company">
-                                    kWh
-                                </div>
-                            </div>
-                        </div>
-                        <div class="itemer2">
-                            <div class="box">
-
-                                <div class="font">
-                                    同比
-                                </div>
-
-                                <div class="text">
-                                    同比能耗
-                                </div>
-
-                                <div class="number">
-                                    {{MonthEnergyDataInfo.sameRatioData | toThousands}} kWh
-                                </div>
-
-                            </div>
-                            <div class="box">
-                                <div class="block_proportion" :class="{red:MonthEnergyDataInfo.sameRatio>0,green:MonthEnergyDataInfo.sameRatio<0}">
-                                    {{MonthEnergyDataInfo.sameRatio | convertPercentage}} &nbsp;%
-                                </div>
-                            </div>
-                        </div>
-                        <div class="itemer3">
-                            <div class="box">
-
-                                <div class="font">
-                                    环比
-                                </div>
-
-                                <div class="text">
-                                    环比能耗
-                                </div>
-
-                                <div class="number">
-                                    {{MonthEnergyDataInfo.circleRatioData | toThousands}} kWh
-                                </div>
-
-                            </div>
-                            <div class="box">
-                                <div class="block_proportion" :class="{red:MonthEnergyDataInfo.circleRatio>0,green:MonthEnergyDataInfo.circleRatio<0}">
-                                    {{MonthEnergyDataInfo.circleRatio | convertPercentage}} &nbsp;%
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--  文字显示 End   -->
-
-                    <!--  进度表盘部分 Start  -->
-                    <div class="boxer">
-                        <div class="lines">
-                            <div class="line">
-                                <div class="word">
-                                    已过时间占比 {{MonthEnergyDataInfo.passedTimeRatio | convertPercentage}} %
-                                </div>
-                                <div class="progress">
-                                    <div v-for="(item,index) in _.range(100)" :class="{energy_block:index<(+convertPercentageFn(MonthEnergyDataInfo.passedTimeRatio)>>>0),real_block:MonthEnergyDataInfo.passedTimeRatio>1}"
-                                        class="state"></div>
-                                </div>
-                            </div>
-                            <div class="line">
-                                <div class="word">
-                                    当前累计能耗占月预算比 {{MonthEnergyDataInfo.energyOccupyBudgetRatio | convertPercentage}} %
-                                </div>
-                                <div class="progress">
-
-                                    <div v-for="(item,index) in _.range(100)" :class="{energy_block:index<(+convertPercentageFn(MonthEnergyDataInfo.energyOccupyBudgetRatio)>>>0),real_block:MonthEnergyDataInfo.energyOccupyBudgetRatio>1}"
-                                        class="state"></div>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="lines">
-
-                            <div class="clock">
-                                <div class="view" id="parent"></div>
-                                <div class="view" id="child"></div>
-                                <img class="point" :style="rotated" :src="src('/images/energyterm/nodeManage/point.png')">
-                                <div class="ctitle">月累计能耗占当前总计划比</div>
-                                <div class="vtitle">
-                                    {{MonthEnergyDataInfo.energyOccupyPlanRatio | convertPercentage}} %
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                    <!--  进度表盘部分 End  -->
-
-                </div>
-
-            </div>
-
-            <div class="item budget">
-                <div class="describe">
-                    逐日能耗统计
-                </div>
-
-                <div class="contenter">
                     <!-- 表头信息 Start -->
                     <div class="chart_title">
-                        <a href="#part3">逐日能耗详情见附件1></a>
-
-                        <div class="font">单位：kWh</div>
-                        <div class="font">实际能耗高于计划</div>
-                        <div class="blockicon real_block"></div>
-                        <div class="font">实际能耗低于计划</div>
-                        <div class="blockicon energy_block"></div>
-                        <div class="font">计划能耗</div>
-                        <div class="blockicon plan_block"></div>
-
-                    </div>
-                    <!-- 表头信息 End -->
-
-                    <!--  柱状图 Start -->
-                    <div id="tio" class="chart_chart">
-
-                    </div>
-                    <!--  柱状图 End -->
-
-                </div>
-
-            </div>
-
-            <div class="item budget">
-                <div class="describe">
-                    分项能耗统计
-                </div>
-
-                <div class="contenter">
-
-                    <!-- 表头信息 Start -->
-                    <div class="chart_title">
-                        <a href="#part2">分项能耗与计划详情见附件2></a>
+                        <a href="#part2">月分项能耗详情见附件2></a>
                     </div>
                     <!-- 表头信息 End -->
 
@@ -223,24 +254,24 @@
                         <div class="head">
                             <div class="hitem">分项</div>
                             <div class="hitem">实际能耗</div>
-                            <div class="hitem">日计划</div>
+                            <div class="hitem">月计划</div>
                             <div class="hitem">实际能耗占计划比</div>
                         </div>
 
                         <div class="body">
 
-                            <div v-for="(item,index) in sort(EnergyDataForDayAndItem.items,'energyItemId')" class="hrow">
+                            <div v-for="(item,index) in mo" class="hrow">
                                 <div class="hitem" v-text="item.energyItemName">
 
                                 </div>
                                 <div class="hitem">
                                     <template v-if="item.energyData">{{item.energyData | toThousands}}　kWh</template>
                                     <template v-if="!item.energyData">--</template>
-                                    <div v-if="item.monthEnergyPlan" class="progress" :style="width(item.energyData,item.monthEnergyPlan)"></div>
+                                    <div v-if="item.monthEnergyPlan" class="progress" :style="width(item)"></div>
                                 </div>
                                 <div class="hitem">
-                                    <template v-if="item.monthTodayEnergyPlan">{{item.monthTodayEnergyPlan | toThousands}}　kWh</template>
-                                    <template v-if="!item.monthTodayEnergyPlan">--</template>
+                                    <template v-if="item.monthEnergyPlan">{{item.monthEnergyPlan | toThousands}}　kWh</template>
+                                    <template v-if="!item.monthEnergyPlan">--</template>
                                 </div>
                                 <div class="hitem">
                                     {{item.planRatio?((item.planRatio*100).toFixed(2)+"%"):"--"}}
@@ -257,42 +288,16 @@
             </div>
 
         </div>
-        <div id="part2" class="part">
-            <div class="tip">
-                能耗预算管理
-            </div>
-            <div class="describe">
-                附件1：分项能耗与计划详情
-            </div>
-            <div class="ttble">
-                <div class="th">
-                    <div class="bitems">分项名称</div>
-                    <div class="bitems">实际能耗（kWh）</div>
-                    <div class="bitems">日计划（kWh）</div>
-                    <div class="bitems">实际能耗占计划比</div>
-                </div>
 
-                <div v-for="(item,index) in sort(EnergyDataForDayAndItem.items,'energyItemId')" class="tr">
-                    <div class="bitems" v-text="item.energyItemName"></div>
 
-                    <div class="bitems" v-if="item.energyData">{{item.energyData | toThousands}}</div>
-                    <div class="bitems" v-if="!item.energyData">--</div>
 
-                    <div class="bitems" v-if="item.monthTodayEnergyPlan">{{item.monthTodayEnergyPlan | toThousands}}</div>
-                    <div class="bitems" v-if="!item.monthTodayEnergyPlan">--</div>
 
-                    <div class="bitems" v-if="item.planRatio">{{item.planRatio?((item.planRatio*100).toFixed(2)+"%"):"--"}}</div>
-                    <div class="bitems" v-if="!item.planRatio">--</div>
-                </div>
-
-            </div>
-        </div>
         <div id="part3" class="part">
             <div class="tip">
                 能耗预算管理
             </div>
             <div class="describe">
-                附件2：逐时能耗详情
+                附件1：逐日能耗详情
             </div>
             <div class="ttble">
 
@@ -300,7 +305,7 @@
                     <div class="bitems">时间</div>
                     <div class="bitems">能耗计划（kWh）</div>
                     <div class="bitems">实际能耗（kWh）</div>
-                    <div class="bitems">实际能耗占计划</div>
+                    <div class="bitems">实际能耗占计划比</div>
                 </div>
 
                 <div class="tr" v-for="item in EnergyDataForDayAndItem.day">
@@ -314,6 +319,36 @@
 
                     <div class="bitems" v-if="item.energyData">{{(item.energyData && item.planData)?((item.energyData/item.planData*100).toFixed(2)+'%'):''}}</div>
                     <div class="bitems" v-if="!item.energyData">--</div>
+                </div>
+
+            </div>
+        </div>
+        <div id="part2" class="part" v-for="(mo,th) in createSkip(80, 30, 1845, 0)(sort(EnergyDataForDayAndItem.items,'energyItemId'))">
+            <div class="tip">
+                能耗预算管理
+            </div>
+            <div class="describe">
+                附件2：分项能耗与计划详情
+            </div>
+            <div class="ttble">
+                <div class="th">
+                    <div class="bitems">分项名称</div>
+                    <div class="bitems">实际能耗（kWh）</div>
+                    <div class="bitems">日计划（kWh）</div>
+                    <div class="bitems">实际能耗占计划比</div>
+                </div>
+
+                <div v-for="(item,index) in mo" class="tr">
+                    <div class="bitems" v-text="item.energyItemName"></div>
+
+                    <div class="bitems" v-if="item.energyData">{{item.energyData | toThousands}}</div>
+                    <div class="bitems" v-if="!item.energyData">--</div>
+
+                    <div class="bitems" v-if="item.monthEnergyPlan">{{item.monthEnergyPlan | toThousands}}</div>
+                    <div class="bitems" v-if="!item.monthEnergyPlan">--</div>
+
+                    <div class="bitems" v-if="item.planRatio">{{item.planRatio?((item.planRatio*100).toFixed(2)+"%"):"--"}}</div>
+                    <div class="bitems" v-if="!item.planRatio">--</div>
                 </div>
 
             </div>

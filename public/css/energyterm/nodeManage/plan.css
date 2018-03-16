@@ -1,167 +1,164 @@
-.plan_content{
-    margin: 14px 10px 0;
-    height: calc(100% - 14px);
-    border:1px solid #D9E2E8;
-    background: #FFFFFF;
-    box-shadow: 0 1px 2px 0 rgba(0,0,0,0.12);
-    border-radius: 3px 3px 0 0;
+.plan_content {
+  margin: 14px 10px 0;
+  height: calc(100% - 14px);
+  border: 1px solid #d9e2e8;
+  background: #ffffff;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.12);
+  border-radius: 3px 3px 0 0;
 }
 
-.plan_content .sitemap{
-    height: 50px;
-    padding: 0 20px;
-    line-height: 50px;
-    border-bottom: 1px solid #D9E2E8;
+.plan_content .sitemap {
+  height: 50px;
+  padding: 0 20px;
+  line-height: 50px;
+  border-bottom: 1px solid #d9e2e8;
 }
 
-.plan_content .sitemap .backbtn{
-    float: left;
-    margin-top: 10px;
-    width: 30px;
-    height: 30px;
-    line-height: 30px;
-    text-align: center;
-    color: #637E99;
-    font-family: perficon;
-    border: 1px solid #CACACA;
-    border-radius: 1px;
-    cursor: pointer;
+.plan_content .sitemap .backbtn {
+  float: left;
+  margin-top: 10px;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  color: #637e99;
+  font-family: perficon;
+  border: 1px solid #cacaca;
+  border-radius: 1px;
+  cursor: pointer;
 }
 
-.plan_content .sitemap .map_index{
-    float: left;
-    margin: 10px 0 0 8px;
-    height: 30px;
-    line-height: 30px;
-    font-family: MicrosoftYaHei;
-    font-size: 14px;
-    color: #637E99;
+.plan_content .sitemap .map_index {
+  float: left;
+  margin: 10px 0 0 8px;
+  height: 30px;
+  line-height: 30px;
+  font-family: MicrosoftYaHei;
+  font-size: 14px;
+  color: #637e99;
 }
 
-.plan_content .sitemap .map_index .map_name{
-    font-family: MicrosoftYaHei-Bold;
-    font-size: 14px;
-    color: #151515;
-    font-weight: bold;
+.plan_content .sitemap .map_index .map_name {
+  font-family: MicrosoftYaHei-Bold;
+  font-size: 14px;
+  color: #151515;
+  font-weight: bold;
 }
 
-.plan_content .contenter{
-    position: absolute;
-    top: 66px;
-    bottom: 70px;
-    left: 30px;
-    right: 30px;
+.plan_content .contenter {
+  position: absolute;
+  top: 66px;
+  bottom: 70px;
+  left: 30px;
+  right: 30px;
 }
 
-.plan_content .contenter .title{
-    color: #333333;
-    font-size: 14px;
-    height: 60px;
-    line-height: 60px;
-    width: 100%;
+.plan_content .contenter .title {
+  color: #333333;
+  font-size: 14px;
+  height: 60px;
+  line-height: 60px;
+  width: 100%;
 }
 
-.plan_content .contenter .title i{
-    font-weight: bold;
+.plan_content .contenter .title i {
+  font-weight: bold;
 }
 
-.plan_content .contenter .nodes{
-    width: calc(100% - 40px);
-    display: flex;
-    flex-flow: row wrap;
-    justify-content:flex-start;
-    align-content:flex-start;
+.plan_content .contenter .nodes {
+  width: calc(100% - 40px);
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  align-content: flex-start;
 }
 
-.plan_content .contenter .nodes .child{
-    /* flex-grow:1; */
-    background: #02A9D1 100%;
-    padding: 8px 10px;
-    font-size: 12px;
-    color: #FFFFFF;
-    margin: 1px;
-    text-align: center;
-    cursor: pointer;
+.plan_content .contenter .nodes .child {
+  /* flex-grow:1; */
+  background: #02a9d1 100%;
+  padding: 8px 10px;
+  font-size: 12px;
+  color: #ffffff;
+  margin: 1px;
+  text-align: center;
+  cursor: pointer;
 }
 
-.plan_content .contenter .tip{
-    height: 16px;
-    padding: 40px 0 20px;
-    width: calc(100% - 40px);
-    text-align: left;
-    color: #6D6D6D;
-    font-size: 12px;
+.plan_content .contenter .tip {
+  height: 16px;
+  padding: 40px 0 20px;
+  width: calc(100% - 40px);
+  text-align: left;
+  color: #6d6d6d;
+  font-size: 12px;
 }
-.plan_content .contenter .tip .icon{
-    font-family: perficon;
-    height: 14px;
-    width: 14px;
-    display: inline-block;
-    border-radius: 50%;
-    text-align: center;
-    line-height: 14px;
-    margin:1px 2px;
-}
-
-.plan_content .contenter .tip .icon.important{
-    background:#7A94AD;
-    color: #FFFFFF;
+.plan_content .contenter .tip .icon {
+  font-family: perficon;
+  height: 14px;
+  width: 14px;
+  display: inline-block;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 14px;
+  margin: 1px 2px;
 }
 
-.plan_content .contenter .tip .icon.add{
-    background: #CACACA;
-    color: #F0F3F6;
+.plan_content .contenter .tip .icon.important {
+  background: #7a94ad;
+  color: #ffffff;
 }
 
-
-
-
-.plan_content .box{
-    position: absolute;
-    top: 246px;
-    bottom: 0;
-    left: -17px;
-    right: 0;
-    overflow: auto;
+.plan_content .contenter .tip .icon.add {
+  background: #cacaca;
+  color: #f0f3f6;
 }
 
-.plan_content .bottomer{
-    position: absolute;
-    border-top: 1px solid #D9E2E8;
-    bottom: 0;
-    left: 10px;
-    right: 10px;
-    height: 50px;
-    text-align: center;
+.plan_content .box {
+  position: absolute;
+  top: 246px;
+  bottom: 0;
+  left: -17px;
+  right: 0;
+  overflow: auto;
 }
 
-.plan_content .bottomer .save{
-    margin-top: 10px;
-    display: inline-block;
-    /* width: 180px; */
-    height: 30px;
+.plan_content .bottomer {
+  position: absolute;
+  border-top: 1px solid #d9e2e8;
+  bottom: 0;
+  left: 10px;
+  right: 10px;
+  height: 50px;
+  text-align: center;
 }
 
-.plan_content .bottomer .save>div{
-    width: 180px;
+.plan_content .bottomer .save {
+  margin-top: 10px;
+  display: inline-block;
+  /* width: 180px; */
+  height: 30px;
+}
+
+.plan_content .bottomer .save > div {
+  width: 180px;
 }
 
 /*  最外层的内容包含框  */
-.plan_content .box .block{
-    display: flex;
-    flex-flow:column nowrap;
-    justify-content:flex-start;
+.plan_content .box .block {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
 }
 
-.plan_content .box .view{
-    position: relative;
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content:flex-start;
+.plan_content .box .view {
+  position: relative;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
 }
 
-.plan_content .box .view{
-    border-left: 2px solid #F0F3F6;
+.plan_content .box .view {
+  border-left: 2px solid #f0f3f6;
 }
 
 /* .plan_content .box .view:first-child,
@@ -169,88 +166,94 @@
     border-left:none;
 } */
 
-.plan_content .box .view.firsts::before{
-    position: absolute;
-    left: -2px;
-    content: "　";
-    width: 2px;
-    height: 16px;
-    background: #FFFFFF;
-    /* margin-top: 16px; */
+.plan_content .box .view.firsts::before {
+  position: absolute;
+  left: -2px;
+  content: "　";
+  width: 2px;
+  height: 16px;
+  background: #ffffff;
+  /* margin-top: 16px; */
 }
-.plan_content .box .view.lasts{
-    border-left: none;
-}
-
-.plan_content .box .view.lasts::before{
-    /* position: absolute; */
-    /* left: -2px; */
-    content: "　";
-    width: 2px;
-    height: 18px;
-    background: #F0F3F6;
-    margin-bottom: 18px;
+.plan_content .box .view.lasts {
+  border-left: none;
 }
 
-.plan_content .box .view.normal::before{
-    content: "　";
-    width: 2px;
-    height: 2px;
-    background: #F0F3F6;
-    margin-top: 16px;
+.plan_content .box .view.lasts::before {
+  /* position: absolute; */
+  /* left: -2px; */
+  content: "　";
+  width: 2px;
+  height: 18px;
+  background: #f0f3f6;
+  margin-bottom: 18px;
 }
 
-.plan_content .box .code{
-    display: flex;
-    flex-flow: row nowrap;
-    align-items:center;
-    width: 156px;
-    height: 30px;
-    /* margin: 1px 0; */
-    border-top: 4px solid #ffffff;
-    box-sizing: border-box;
+.plan_content .box .view.normal::before {
+  content: "　";
+  width: 2px;
+  height: 2px;
+  background: #f0f3f6;
+  margin-top: 16px;
 }
 
-.plan_content .box .code .border{
-    height: 2px;
-    background: #F0F3F6;
-    width: 20px;
-}
-.plan_content .box .code .title{
-    /* position: relative; */
-    height: 30px;
-    width: 116px;
-    background: #F0F3F6;
-    border-radius: 2px;
-    text-align: left;
-    padding-left: 10px;
-    line-height: 30px;
-    color: #6D6D6D;
-    font-size: 12px;
-}
-.plan_content .box .code .title.disabled{
-    cursor: pointer;
+.plan_content .box .code {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  width: 156px;
+  height: 30px;
+  /* margin: 1px 0; */
+  border-top: 4px solid #ffffff;
+  box-sizing: border-box;
 }
 
-.plan_content .box .code .title .icon{
-    position: relative;
-    float: right;
-    height: 14px;
-    width: 14px;
-    border-radius: 50%;
-    border: 1px solid #F0F3F6;
-    background: #FFFFFF;
-    font-family: perficon;
-    text-align: center;
-    line-height: 14px;
-    margin: 8px -7px 0 0;
-    color: #637E99;
-    z-index: 1;
+.plan_content .box .code .border {
+  height: 2px;
+  background: #f0f3f6;
+  width: 20px;
+}
+.plan_content .box .code .title {
+  /* position: relative; */
+  height: 30px;
+  width: 116px;
+  background: #f0f3f6;
+  border-radius: 2px;
+  text-align: left;
+  padding-left: 10px;
+  line-height: 30px;
+  color: #6d6d6d;
+  font-size: 12px;
+}
+.plan_content .box .code .title.disabled {
+  cursor: pointer;
+}
+
+.plan_content .box .code .title .icon {
+  position: relative;
+  float: right;
+  height: 14px;
+  width: 14px;
+  border-radius: 50%;
+  border: 1px solid #f0f3f6;
+  background: #ffffff;
+  font-family: perficon;
+  text-align: center;
+  line-height: 14px;
+  margin: 8px -7px 0 0;
+  color: #637e99;
+  z-index: 1;
 }
 .plan_content .box .code .title.disabled:hover,
-.plan_content .box .code .title.on{
-    background: #00A8D3;
-    color: #FFFFFF;
+.plan_content .box .code .title.on {
+  background: #00a8d3;
+  color: #ffffff;
+}
+
+.plan_content .box .code .title.disabled:hover .tree_icon,
+.plan_content .box .code .title.on .tree_icon {
+  background: url(/images/energyterm/nodeManage/white.png) no-repeat no-repeat
+    center center;
 }
 
 /* .plan_content .box .code .title.disabled{
@@ -281,73 +284,77 @@
 } */
 
 .plan_content .box .code .title:hover .icon,
-.plan_content .box .code .title.on .icon{
-    border-color: #00A8D3;
-    background: #FFFFFF;
-    color: #00A8D3;
+.plan_content .box .code .title.on .icon {
+  border-color: #00a8d3;
+  background: #ffffff;
+  color: #00a8d3;
 }
 
-.plan_content .box .code .title i{
-    margin-top: 9px;
-    margin-right: 6px;
-    float: left;
-    position: relative;
-    font-family: perficon;
-    background: #CACACA;
-    color: #FFFFFF;
-    width: 12px;
-    height: 12px;
+.plan_content .box .code .title i {
+  margin-top: 9px;
+  margin-right: 6px;
+  float: left;
+  position: relative;
+  font-family: perficon;
+  background: #cacaca;
+  color: #ffffff;
+  width: 12px;
+  height: 12px;
 }
 
-.plan_content .box .code .title em{
-    float: left;
-    max-width: 96px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+.plan_content .box .code .title em {
+  float: left;
+  max-width: 96px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .plan_content .box .code .title.on i::after,
-.plan_content .box .code .title.on i::before{
-    background: #00A8D3 !important;
+.plan_content .box .code .title.on i::before {
+  background: #00a8d3 !important;
 }
 
 .plan_content .box .code .title i::after,
-.plan_content .box .code .title i::before{
-    position: absolute;
-    display: block;
-    background: #F0F3F6;
-    content:"　";
+.plan_content .box .code .title i::before {
+  position: absolute;
+  display: block;
+  background: #f0f3f6;
+  content: "　";
 }
 
-.plan_content .box .code .title i::after{
-    width: 2px;
-    height: 12px;
-    top: 0;
-    left: 5px;
+.plan_content .box .code .title i::after {
+  width: 2px;
+  height: 12px;
+  top: 0;
+  left: 5px;
 }
 
-.plan_content .box .code .title i::before{
-    height: 2px;
-    width: 12px;
-    top: 5px;;
-    left: 0;
+.plan_content .box .code .title i::before {
+  height: 2px;
+  width: 12px;
+  top: 5px;
+  left: 0;
 }
 
-.plan_content .box .noborder{
-    background-color: #FFFFFF !important;
+.plan_content .box .noborder {
+  background-color: #ffffff !important;
 }
 
-.imgicon{
-    vertical-align: middle;
+.imgicon {
+  vertical-align: middle;
 }
 
-.tree_icon{
-    float: left;
-    margin-top: 8px;
-    vertical-align: middle;
+.tree_icon {
+  float: left;
+  margin-top: 8px;
+  vertical-align: middle;
+  height: 16px;
+  width: 16px;
+  background: url(/images/energyterm/nodeManage/black.png) no-repeat no-repeat
+    center center;
 }
 
-#confirmWindow .per-modal-common{
-    width: 500px;
+#confirmWindow .per-modal-common {
+  width: 500px;
 }

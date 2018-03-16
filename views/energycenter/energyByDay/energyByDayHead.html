@@ -1,15 +1,16 @@
-<link rel="stylesheet" href="/css/energycenter/energyByDay/energyByDayHead.css">
-<script src="/js/energycenter/energyByDay/energyByDayHead/controller.js"></script>
-<script src="/js/energycenter/energyByDay/energyByDayHead/model.js"></script>
-<script src="/js/energycenter/energyByDay/energyByDayHead/event.js"></script>
-
-<!-- <link rel="stylesheet" href="/css/energycenter/energyByDay/energyByDayBody.css">
-<script src="/js/energycenter/energyByDay/energyByDayBody/controller.js"></script>
-<script src="/js/energycenter/energyByDay/energyByDayBody/model.js"></script>
-<script src="/js/energycenter/energyByDay/energyByDayBody/event.js"></script> -->
+<!-- <link rel="stylesheet" href="/css/energycenter/energyByDay/energyByDayHead.css"> -->
+<script type="text/javascript" src="/js/energycenter/energyByDay/energyByDayHead/controller.js"></script>
+<script type="text/javascript" src="/js/energycenter/energyByDay/energyByDayHead/model.js"></script>
+<script type="text/javascript" src="/js/energycenter/energyByDay/energyByDayHead/event.js"></script>
 
 
-<div v-if="onPage == 'energybyday'" id="energyByDay" v-cloak>
+<!-- <link rel="stylesheet" href="/css/energycenter/energyByDay/energyByDayBody.css"> -->
+<script type="text/javascript" src="/js/energycenter/energyByDay/energyByDayBody/controller.js"></script>
+<script type="text/javascript" src="/js/energycenter/energyByDay/energyByDayBody/model.js"></script>
+<script type="text/javascript" src="/js/energycenter/energyByDay/energyByDayBody/event.js"></script>
+
+
+<div v-if="onPage == 'energybyday'" id="energyByDay" v-cloak v-show="DFirstLoading == false">
     
     <div id="energyByDayHead">
         <div class="energyByDayHead_back" @click="backEnergyByproject">

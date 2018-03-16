@@ -15,7 +15,7 @@
             <em class="line" v-show="planBackPage=='budget_page'">/</em>
             <span class="boldColor">{{planBackPage=='budget_page'?budgetBuildSel.buildingName:currentBuild.buildingName}}{{monthPlanInfo.pdateStr}}能耗计划</span>
         </div>
-        <div class="helpIcon" onclick="showPlanHelp(event)"></div>
+        <div class="helpIcon" @click.stop="showSetPlanWindow()"></div>
     </div>
     <div class="energyPlanWrap" id="energyPlanWrap">
         <div class="headWrap">
@@ -59,7 +59,7 @@
             <div class="info" v-bind:class="{'redFont':monthPlanInfo.allotOverData>0}">计划能耗汇总：
                 <span>{{monthPlanInfo.totalPlanData}}</span>
                 <em class="unit">kWh</em>{{monthPlanInfo.allotOverData>0?'超出':'低于'}}剩余预算：
-                <span v-show='Math.abs(monthPlanInfo.allotOverData)'>{{Math.abs(monthPlanInfo.allotOverData)}}</span>
+                <span v-show='!_.isNaN(Math.abs(monthPlanInfo.allotOverData))'>{{Math.abs(monthPlanInfo.allotOverData)}}</span>
                 <em class="unit">kWh</em>
             </div>
             <div class="showChart" v-show="allocatePlanType==1">
@@ -107,16 +107,16 @@
                     <div>同比能耗</div>
                     <div>环比能耗</div>
                     <div>计划能耗</div>
-                    <div class="Percent">本月已发生能耗比例</div>
+                    <div class="Percent" v-show="getThisMonth().getTime() == budget_planDate">本月已发生能耗比例</div>
                 </div>
                 <div class="planTable" onscroll="tableScroll()">
                     <div class="tableUl tableLine" v-for="(item,index) in monthPlanInfo.itemPlan">
                         <div>{{item.planItemName}}</div>
-                        <div>{{item.energyDataLastYear!==null?Math.round(item.energyDataLastYear):'--'}}
-                            <span>kWh</span>
+                        <div>{{item.energyDataLastYear!==null?RD(item.energyDataLastYear):noData}}
+                            <span v-show="item.energyDataLastYear != null">kWh</span>
                         </div>
-                        <div>{{item.energyDataLastMonth!==null?Math.round(item.energyDataLastMonth):'--'}}
-                            <span>kWh</span>
+                        <div>{{item.energyDataLastMonth!==null?RD(item.energyDataLastMonth):noData}}
+                            <span v-show="item.energyDataLastMonth != null">kWh</span>
                         </div>
                         <div class="editPlan">
                             <div class="bInputBox">
@@ -138,7 +138,7 @@
                             </div>
                             <div class="countPic" title="一个计算工具，帮助您在当前计划能耗上，&#10;做加减运算，并将结果赋予当前计划能耗" @click="showCountMachine(item,$event,index)"></div>
                         </div>
-                        <div class="Percent">{{item.energyOccurredRatio!==null?(item.energyOccurredRatio+'%'):'--'}}
+                        <div class="Percent">{{getThisMonth().getTime() == budget_planDate ? item.energyOccurredRatio!==null ? item.energyOccurredRatio != 0 ? item.energyOccurredRatio + '%' : 0 : noData : ""}}
                             <span></span>
                         </div>
                         <div class="showChart">

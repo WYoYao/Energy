@@ -1,40 +1,8 @@
-[2018-03-05 18:26:27.551] [ERROR] log_file - 获取/GetUserInfo的数据err：Error: connect ECONNREFUSED 192.168.100.101:8881
+[2018-03-16 09:36:54.463] [ERROR] log_file - 获取/GetUserInfo的数据err：Error: connect ECONNREFUSED 192.168.100.25:9999
     at Object._errnoException (util.js:1024:11)
     at _exceptionWithHostPort (util.js:1046:20)
     at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1182:14)
-[2018-03-05 18:27:26.721] [ERROR] log_file - 加载Array错误：Error: connect ECONNREFUSED 192.168.100.25:9000
-    at Object._errnoException (util.js:1024:11)
-    at _exceptionWithHostPort (util.js:1046:20)
-    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1182:14)
-[2018-03-05 18:27:26.728] [ERROR] log_file - 加载Number错误：Error: connect ECONNREFUSED 192.168.100.25:9000
-    at Object._errnoException (util.js:1024:11)
-    at _exceptionWithHostPort (util.js:1046:20)
-    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1182:14)
-[2018-03-05 18:27:26.729] [ERROR] log_file - 加载Math错误：Error: connect ECONNREFUSED 192.168.100.25:9000
-    at Object._errnoException (util.js:1024:11)
-    at _exceptionWithHostPort (util.js:1046:20)
-    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1182:14)
-[2018-03-05 18:27:26.730] [ERROR] log_file - 加载ptool错误：Error: connect ECONNREFUSED 192.168.100.25:9000
-    at Object._errnoException (util.js:1024:11)
-    at _exceptionWithHostPort (util.js:1046:20)
-    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1182:14)
-[2018-03-05 18:27:26.732] [ERROR] log_file - 加载Date错误：Error: connect ECONNREFUSED 192.168.100.25:9000
-    at Object._errnoException (util.js:1024:11)
-    at _exceptionWithHostPort (util.js:1046:20)
-    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1182:14)
-[2018-03-05 18:27:26.733] [ERROR] log_file - 加载pconst错误：Error: connect ECONNREFUSED 192.168.100.25:9000
-    at Object._errnoException (util.js:1024:11)
-    at _exceptionWithHostPort (util.js:1046:20)
-    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1182:14)
-[2018-03-05 18:27:26.734] [ERROR] log_file - 加载psecret错误：Error: connect ECONNREFUSED 192.168.100.25:9000
-    at Object._errnoException (util.js:1024:11)
-    at _exceptionWithHostPort (util.js:1046:20)
-    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1182:14)
-[2018-03-05 18:27:26.735] [ERROR] log_file - 加载String错误：Error: connect ECONNREFUSED 192.168.100.25:9000
-    at Object._errnoException (util.js:1024:11)
-    at _exceptionWithHostPort (util.js:1046:20)
-    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1182:14)
-[2018-03-05 18:28:09.674] [ERROR] log_file - 获取/GetUserInfo的数据err：Error: connect ECONNREFUSED 192.168.100.101:8881
+[2018-03-16 09:39:41.266] [ERROR] log_file - 获取/GetUserInfo的数据err：Error: connect ETIMEDOUT 52.15.62.13:80
     at Object._errnoException (util.js:1024:11)
     at _exceptionWithHostPort (util.js:1046:20)
     at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1182:14)

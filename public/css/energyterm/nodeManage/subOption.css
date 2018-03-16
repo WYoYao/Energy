@@ -92,7 +92,7 @@
 .sub_content .contenter .item .head .icon{
     width: 34px;
     height: 16px;
-    background: #02A9D1;
+    background: #637e99;
     border-radius: 2px;
     color: #FFFFFF;
     text-align: center;
@@ -115,6 +115,7 @@
     font-family: MicrosoftYaHei-Bold;
     font-size: 14px;
     color: #333333;
+    margin-left: 8px;
 }
 
 .sub_content .contenter .item .ide{
@@ -128,7 +129,7 @@
     /* margin-left: 20px; */
     /* height: 30px; */
     border: 1px solid #CACACA;
-    border-radius: 1px;
+    border-radius: 2px;
     cursor: pointer;
     /* box-sizing: border-box; */
     margin: 10px 0 0 20px;
@@ -145,7 +146,7 @@
     width: 12px;
     height: 14px;
     font-family: perficon;
-    color: #637E99;
+    color: #7A94AD;
     font-size: 16px;
 }
 
@@ -254,9 +255,7 @@
 }
 
 .wboxer .checkbox{
-    border: 1px solid #7A94AD;
-    height: 16px;
-    width: 16px;
+    
     margin-top: 24px;
 }
 
@@ -264,7 +263,8 @@
     height: 18px;
     line-height: 18px;
     color: #7A94AD;
-    margin-top: 23px;
+    margin-top: 24px;
+    margin-left: 8px;
     cursor: pointer;
 }
 

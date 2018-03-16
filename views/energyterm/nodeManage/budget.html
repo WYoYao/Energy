@@ -15,7 +15,7 @@
 
         <!-- 面包屑文字Start -->
         <div class="map_index">
-            首页&nbsp;/&nbsp;
+            <em style="cursor: pointer;" @click="v.initPage('more_build')">首页&nbsp;/&nbsp;</em>
             <span class="map_name">
                 编辑{{NodeManageModel.buildingName}}预算管理节点
             </span>
@@ -45,7 +45,7 @@
 
     <!--  底部内容 Start -->
     <div class="bottomer">
-        <div class="save" @click.capture="$('#confirmWindow').pshow({title:'您修改了预算管理节点',subtitle:'修改预算管理节点后，默认选择新节点下的所有叶子节点为计划管理节点，是否继续保存'})">
+        <div class="save" @click.capture="valiteChange()">
             <!-- <div class="save" @click.capture="BudgetNodeEditSubmit()"> -->
             <pbutton-blue text="保存"></pbutton-blue>
         </div>

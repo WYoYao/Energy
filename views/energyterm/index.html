@@ -8,6 +8,18 @@
     <script src="/js/energyterm/index.js"></script>
     <!-- 准备创建Vue End    -->
 
+    <!-- 引用中心版 Start -->
+    <link rel="stylesheet" href="/css/energycenter/energyByProject/energyByProjectBody.css">
+    <link rel="stylesheet" href="/css/energycenter/energyByDay/energyByDayBody.css">
+    <script src="/js/energycenter/energyByProject/energyByProjectBody/controller.js"></script>
+    <script src="/js/energycenter/energyByProject/energyByProjectBody/model.js"></script>
+    <script src="/js/energycenter/energyByProject/energyByProjectBody/event.js"></script>
+
+    <script src="/js/energycenter/energyByDay/energyByDayBody/controller.js"></script>
+    <script src="/js/energycenter/energyByDay/energyByDayBody/model.js"></script>
+    <script src="/js/energycenter/energyByDay/energyByDayBody/event.js"></script>
+    <!-- 引用中心版 End -->
+
     <% include ./budgetManage/widgetTemplate.html %>
 
         <!-- 单个F的公共样式 Start  -->
@@ -60,80 +72,80 @@
                     <script type="text/html" id="alarmModel">
                         <div class="alarmbox" v-if="AlarmAndWarning.length">
                            <div class="window">
+
                                <div class="aitem">
                                    <div class="aheader">
                                        <em class="aicon">V</em>
                                        预警设置
-                                       <div class="switch" @click.capture="handle_change_alarm(AlarmAndWarning[0].alarm)">
+                                       <div class="switch" @click.capture="handle_change_alarm(AlarmAndWarning[0].warning)">
                                             <div class="per-switch-slide">
-                                                <span class="per-slide-Bg" :class="{'per-slide-checked':+AlarmAndWarning[0].alarm.switch}"></span>
+                                                <span class="per-slide-Bg" :class="{'per-slide-checked':+AlarmAndWarning[0].warning.switch}"></span>
                                                 <span class="per-switch_round"></span>
                                             </div>
-                                            <!-- <pswitch-slide state="AlarmAndWarning[0].alarm.switch" sel="void 0" bind="true"></pswitch-slide> -->
                                        </div>
                                    </div>
-                                   <div class="textblock" v-show="!+AlarmAndWarning[0].alarm.switch">
+                                   <div class="textblock" v-show="!+AlarmAndWarning[0].warning.switch">
                                         不会产生风险率预警（月实际总能耗超过能耗预算的概率的报警）。
                                    </div>
-                                   <div class="views" v-show="+AlarmAndWarning[0].alarm.switch">
+                                   <div class="views" v-show="+AlarmAndWarning[0].warning.switch">
                                        <div class="describe">
                                             您对预警的敏感程度
                                        </div>
                                        <div class="progressblock">
                                            <div class="title">不敏感</div>
                                            <div class="progress">
-                                                <span v-for="(item,index) in _.range(5)" :class="{lightblue:AlarmAndWarning[0].alarm.sensitive.SELECTED==index}" @click="handle_change_level(index,AlarmAndWarning[0].alarm.sensitive)"></span>
+                                                <span v-for="(item,index) in _.range(5)" :class="{blue:AlarmAndWarning[0].warning.sensitive.SELECTED==index+1}" @click="handle_change_level(index+1,AlarmAndWarning[0].warning.sensitive)"></span>
                                            </div>
                                            <div class="title">极敏感</div>
                                        </div>
-                                       <div class="text" v-if="AlarmAndWarning.length && AlarmAndWarning[0].alarm.sensitive.SELECTED!=null">
+                                       <div class="text" v-if="AlarmAndWarning.length && AlarmAndWarning[0].warning.sensitive.SELECTED!=null">
                                             <div class="colorbox lightblue">
                                             </div>
                                             "风险率"（月实际总能耗超过能耗预算的概率）高于
-                                            {{AlarmAndWarning[0].alarm.sensitive[+(+AlarmAndWarning[0].alarm.sensitive.SELECTED+1)] * 100}}
+                                            {{AlarmAndWarning[0].warning.sensitive[+(+AlarmAndWarning[0].warning.sensitive.SELECTED)] * 100}}
                                             %时预警
                                         </div>
                                    </div>
                     
                                </div>
+
                                <div class="aitem">
-                                    <div class="aheader">
+                                    <div class="aheader red_color">
                                             <em class="aicon">Q</em>
                                             报警设置
-                                            <div class="switch" @click.capture="handle_change_alarm(AlarmAndWarning[0].warning)">
+                                            <div class="switch" @click.capture="handle_change_alarm(AlarmAndWarning[0].alarm)">
                                             
                                                 <div class="per-switch-slide">
-                                                    <span class="per-slide-Bg" :class="{'per-slide-checked':+AlarmAndWarning[0].warning.switch}"></span>
+                                                    <span class="per-slide-Bg" :class="{'per-slide-checked':+AlarmAndWarning[0].alarm.switch}"></span>
                                                     <span class="per-switch_round"></span>
                                                 </div>
-                    
-                                                    <!-- <pswitch-slide state="AlarmAndWarning[0].warning.switch" bind="true"></pswitch-slide> -->
                                                </div>
                                         </div>
-                                        <div class="textblock" v-show="!+AlarmAndWarning[0].warning.switch">
+                                        <div class="textblock" v-show="!+AlarmAndWarning[0].alarm.switch">
                                                 不会产生超标率报警（月实际总能耗超过能耗预算的比例的报警）。
                                             </div>
-                                            <div class="views" v-show="+AlarmAndWarning[0].warning.switch">
+                                            <div class="views" v-show="+AlarmAndWarning[0].alarm.switch">
                                                     <div class="describe">
                                                             您对报警的敏感程度
                                                     </div>
                                                     <div class="progressblock">
                                                             <div class="title">不敏感</div>
                                                             <div class="progress">
-                                                                <span v-for="(item,index) in _.range(5)" :class="{blue:AlarmAndWarning[0].warning.sensitive.SELECTED==index}" @click="handle_change_level(index,AlarmAndWarning[0].warning.sensitive)"></span>
+                                                                <span v-for="(item,index) in _.range(5)" :class="{blue:AlarmAndWarning[0].alarm.sensitive.SELECTED==index+1}" @click="handle_change_level(index+1,AlarmAndWarning[0].alarm.sensitive)"></span>
                                                             </div>
                                                             <div class="title">极敏感</div>
                                                         </div>
-                                                        <div class="text" v-if="AlarmAndWarning.length && AlarmAndWarning[0].warning.sensitive.SELECTED!=null">
+                                                        <div class="text" v-if="AlarmAndWarning.length && AlarmAndWarning[0].alarm.sensitive.SELECTED!=null">
                                                                 <div class="colorbox blue">
                                         
                                                                 </div>
-                                                                “超标率”（月实际总能耗超过能耗预算的比例）高于
-                                                                {{AlarmAndWarning[0].warning.sensitive[+(+AlarmAndWarning[0].warning.sensitive.SELECTED+1)] * 100}}
+                                                                "超标率"（月实际总能耗超过能耗预算的比例）高于
+                                                                {{AlarmAndWarning[0].alarm.sensitive[+(+AlarmAndWarning[0].alarm.sensitive.SELECTED)] * 100}}
                                                                 %时报警
                                                             </div>
                                                 </div>
                                </div>
+
                                <div class="footer">
                                    <div class="btn" :alt="disabled" @click.capture="!disabled?saveAlarm():void 0">
                                        <pbutton-blue id="alarm" text="确定"></pbutton-blue>

@@ -1,6 +1,15 @@
 <script src="/js/energyterm/nodeManage/plan/controller.js"></script>
 <script src="/js/energyterm/nodeManage/plan/event.js"></script>
+
+
+
+
+
 <script src="/js/energyterm/nodeManage/plan/model.js"></script>
+
+
+
+
 
 <div class="plan_content" v-cloak v-if="onPage=='plan'">
 
@@ -47,8 +56,10 @@
             <i class="icon important">!</i>通过过点击
             <i class="icon add">J</i>
             <i class="icon add">-</i> 展开/收起分项树，系统自动选择当前分项树所有最末级节点为计划管理节点。
-            其中标记
-            <img class="imgicon" src="/images/energyterm/nodeManage/black.png"> 的节点为中心版的管理节点，建议不要选择这类节点的上级节点为计划管理节点。
+            <template v-if="NodeManageModel.isMain">
+                其中标记
+                <img class="imgicon" src="/images/energyterm/nodeManage/black.png"> 的节点为中心版的管理节点，建议不要选择这类节点的上级节点为计划管理节点。
+            </template>
         </div>
         <!-- 文字提示 End -->
 

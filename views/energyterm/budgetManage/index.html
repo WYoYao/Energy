@@ -3,6 +3,7 @@
 <script src="/js/energyterm/budgetManage/model.js"></script>
 <script src="/js/energyterm/budgetManage/event.js"></script>
 
+<pwindow-global id="setPlanWindow" templateid="set-plan-window"></pwindow-global>
 
 <div class="budgetMangeWrap" id="budgetMange" @click="PopClick()" v-cloak v-if='onPage=="budget_manage"||onPage=="plan_manage"'>
     <pwindow-float id="modifyRecordFloat" templateid="modify-record-float" title="预算修改记录" isshade="false" onclick="eventStop(event)">
@@ -11,7 +12,7 @@
     <pwindow-float id="itemPlanFloat" templateid="day-Item-Plan" title="2017年12月22日分项计划能耗" isshade="false" onclick="eventStop(event)">
         <animate maxpx="0" minpx="-490" orientation="right"></animate>
     </pwindow-float>
-    <pwindow-global id="setPlanWindow" templateid="set-plan-window"></pwindow-global>
+
     <div class="dayPlanFloat" id="dayPlanFloat" onclick="eventStop(event)">
         <div class="floatHead">
             <span class="floatTitle">能耗计划</span>
@@ -20,6 +21,8 @@
         <div class="columnChart" id="itemDayChart"></div>
     </div>
     <div class="budManCont" v-if='onPage=="budget_manage"'>
+
+        <!-- 头部 Start -->
         <div class="budManHeader">
             <div class="leftTitle">
                 <div class="backButton" @click.capture="budgetGoBackMain()">
@@ -35,9 +38,19 @@
                 </pcombobox-normal>
             </div>
         </div>
+        <!-- 头部 End -->
+
+        <!-- 每月的滚动状态 Start -->
         <div class="monthBudgets" v-bind:class="{'notNowMonth':currentPage!==0 }">
+            <!-- 局部loaddding Start -->
             <ploading-part id="budgetLoading" text="拼命加载中..."></ploading-part>
+            <!-- 局部loaddding End -->
+
+            <!--  回到本月Btn Start -->
             <div class="backNowMonth" v-on:click="backNowBudget()">回到本月</div>
+            <!--  回到本月Btn End -->
+
+            <!-- 左右滚动的按钮 Start -->
             <div class="leftButton norButton" v-bind:class="{disabled:!leftArrowActive||arrowLoadState}" v-on:click="leftArrowClick()">
                 <span>
                     < </span>
@@ -47,108 +60,136 @@
                     <xmp>></xmp>
                 </span>
             </div>
+            <!-- 左右滚动的按钮 End -->
+
+            <!-- 每个月的滚动信息 Start -->
             <div class="monthBlocks" id="monthBudgets">
-                <div class="itemBlock" v-for="(item,index) in energyBudgetList" v-bind:style="{width:item.blockWidth+'px'}" @click="ideItem($event,item)">
+
+                <div class="itemBlock" v-for="(item,index) in energyBudgetList" :class="{ide:item.showPage=='editPage'}" :style="{width:item.blockWidth+'px'}"
+                    @click="ideItem($event,item)" @mouseenter="changeOnRemarkInput(item,$event)">
                     <div class="blockTitle">
-                        <span v-text="item.planDateStr">2017.02</span>
+
+                        <span class="date" v-text="item.planDateStr">2017.02</span>
+                        <!-- 本月标识 -->
                         <span class="now" v-show="item.isNowMonth">本月</span>
-                        <em class="picEm" title="预算已被锁定" v-show="item.state==0 && !item.isNowMonth">s</em>
-                        <div class="remark" @click.stop="showModifyRecord(item)" v-show="item.ifHasBudget">
-                            <em class="picEm">﹁</em>批注</div>
+                        <!-- 预算锁定标识 -->
+                        <em class="picEm" title="预算已被锁定" v-show="item.state==0 && !item.isNowMonth && new Date(item.planDate.replace(/-/g,'/'))>new Date()">s</em>
+                        <!-- 批注按钮 -->
+                        <div class="remark" @click.stop="PopClick();showModifyRecord(item)">
+                            <em class="picEm">﹁</em>
+                            批注
+                        </div>
                     </div>
                     <div class="blockLoad" v-show="item.showPage=='blockLoad'">
                         正在加载...
                     </div>
+                    <!-- 已创建预算展示页面 -->
                     <div class="blockInfo" v-show="item.showPage=='dataPage'">
                         <div class="bCont">
                             <div class="lineInfo">
                                 <span>预算管理节点</span>
+                                <!-- 节点有更新操作提醒及操作 Start -->
                                 <div class="newWrap" v-show="item.isBudgetUpdated&&item.isNextMonth&&item.state!=0">
-                                    <span class="hasNew" onclick="showChangeWarn(event)">
-                                        <em class="picEm">y</em>有更新</span>
-                                    <div class="budgetPop" onclick="eventStop(event)">
+                                    <span class="hasNew" @click="hideModifyRecordFloat(),showChangeWarn(event)">
+                                        <em class="picEm">y</em>
+                                        有更新
+                                    </span>
+                                    <div class="budgetPop" @click="hideModifyRecordFloat(),eventStop(event)">
                                         <div class="popTitle">该建筑预算管理节点现已改为"{{item.newBudgetItemName}}"，是否使用新管理节点重新创建预算？</div>
                                         <div class="popSubtitle">使用新节点创建预算会删除原预算及计划</div>
                                         <div class="popButton">
-                                            <pbutton-white text="使用新节点创建" @click="againCreate(item,$event)" style="float: right;"></pbutton-white>
-                                            <pbutton-white text="取消" click="hideChangeWarn" style="float: right; margin-right: 20px;"></pbutton-white>
+                                            <pbutton-white text="使用新节点创建" @click="hideModifyRecordFloat(),againCreate(item,$event)" style="float: right;"></pbutton-white>
+                                            <pbutton-white text="取消" @click="hideModifyRecordFloat()" click="hideChangeWarn" style="float: right; margin-right: 20px;"></pbutton-white>
                                         </div>
                                     </div>
                                 </div>
+                                <!-- 节点有更新操作提醒及操作 End -->
+
+                                <!-- 预算管理节点名称 -->
                                 <span class="infoData smallFont" v-text="item.budgetItemName" v-bind:class="{'redFont':item.isBudgetUpdated&&item.isNextMonth&&item.state!=0}"></span>
                             </div>
+
                             <div class="lineInfo" v-show="item.ifHasBudget">
                                 <span>能耗预算</span>
-                                <span class="infoData">{{toThousands(item.energyDataBudget)}}
+
+                                <span class="infoData" v-if="!item.energyDataBudget">--</span>
+
+                                <span class="infoData" v-if="item.energyDataBudget">{{toThousands(item.energyDataBudget)}}
                                     <em class="unitFont">kWh</em>
                                 </span>
+
+
                             </div>
+
                             <div class="lineInfo" v-show="!item.isNextMonth">
                                 <span>实际能耗</span>
-                                <span class="infoData">{{toThousands(item.energyDataReal)}}
+
+                                <span class="infoData" v-if="!item.energyDataReal">--</span>
+
+                                <span class="infoData" v-if="item.energyDataReal">{{toThousands(item.energyDataReal)}}
                                     <em class="unitFont">kWh</em>
                                 </span>
                             </div>
                             <div class="lineInfo" v-show="item.ifHasBudget&&!item.isNextMonth">
                                 <span>实际能耗占预算比</span>
-                                <span class="infoData" v-bind:class="{'redFont':item.realOccupyBudgetRatio>100}">{{item.realOccupyBudgetRatio!==null?item.realOccupyBudgetRatio+'%':'--'}}</span>
+                                <span class="infoData" v-bind:class="{'redFont':item.realOccupyBudgetRatio>100}">{{ _.isNumber(item.realOccupyBudgetRatio)?to3(item.realOccupyBudgetRatio)+'%':'--'}}</span>
                             </div>
                             <div class="planLine" v-show="item.ifHasPlan">
                                 <span class="checkPlan" v-on:click="planInfoCheck(item)">
                                     <em class="picEm">﹂</em>查看能耗计划</span>
                                 <span class="downPlan" v-on:click="planInfoDown(item)">D</span>
-                                <span class="editPlan" v-show="!item.isPastMonth" v-on:click="showEditPlan(item,$event)">`</span>
+                                <span class="editPlan" v-show="!item.isPastMonth" @click.stop="showEditPlan(item,$event)">`</span>
                             </div>
                             <div class="planLine" v-show="!item.ifHasPlan&&!item.isPastMonth">
-                                <span class="createPlan" v-on:click="showEditPlan(item,$event)" v-bind:class="{'budDisable':item.isBudgetUpdated}" v-bind:title="(item.isBudgetUpdated&&!item.isNowMonth)?'请先更新预算管理节点':item.isNowMonth?'该预算管理节点无对应计划管理节点，无法创建计划':'' ">
-                                    <em class="picEm">J</em>创建能耗计划</span>
+                                <span class="createPlan" @click.stop="hideModifyRecordFloat(),showEditPlan(item,$event)" v-bind:class="{'budDisable':item.isBudgetUpdated && !item.isNowMonth}"
+                                    v-bind:title="item.isNowMonth ? '' : item.isBudgetUpdated ? '请先更新预算管理节点' : !item.ifHasPlanNode ? '该预算管理节点无对应计划管理节点，无法创建计划' : ''">
+                                    <em class="picEm">J</em>
+                                    创建能耗计划</span>
                             </div>
                         </div>
                         <div class="bBottom">
-                            <span class="editBudget" v-bind:title="item.state==0?'预算已被锁定，无法编辑':''" v-bind:class="{'budDisable':item.state==0}" v-on:click="showEditPanel(item)"
+                            <span class="editBudget" v-bind:title="item.state==0?'预算已被锁定，无法编辑':''" v-bind:class="{'budDisable':item.state==0}" v-on:click="hideModifyRecordFloat(),showEditPanel(item)"
                                 v-show="item.isNextMonth&&item.ifHasBudget">
                                 <em class="picEm">`</em>编辑预算</span>
-                            <div class="downBudget" v-show="!item.isNextMonth" v-on:click="downMonthReport(item)">
+                            <div class="downBudget" v-show="!item.isNextMonth" v-on:click="hideModifyRecordFloat(),downMonthReport(item)">
                                 <em class="picEm">D</em>下载报告</div>
                         </div>
                     </div>
+                    <!-- 新创建的预算页面显示 -->
                     <div class="createPanel" v-show="item.showPage=='newCreate'">
-                        <span v-on:click="createNewBudget(item)">
+                        <span v-on:click="hideModifyRecordFloat(),createNewBudget(item)">
                             <em class="picEm">J</em>点击创建预算</span>
                     </div>
+                    <!-- 编辑预算页面显示 -->
                     <div class="blockEdit" v-if="item.showPage=='editPage'">
                         <div class="sign">
                             <span v-show="item.ifHasPlan">若编辑预算，保存后会删除已创建的能耗计划！</span>
                         </div>
-                        <!--                        <my-component :budgetdata="item.energyDataBudget" :perbudget="item.energyDataBudgetPerSquare" :barea="buildArea" @selecttype="changeAllInput"></my-component>
-                        <div class="bInput">
-                                <ptext-text text="'kWh'" placeholder="'请输入总预算'" value="item.energyDataBudget" bind='true' @input="changeAllInput(item)">             
-                                </ptext-text>
-                        </div>
-    -->
+
                         <div class="bInputBox">
-                            <input class="bInput" v-bind:value="item.energyDataBudget" @input="changeAllInput(item,$event)" onfocus="focusInput(event)"
-                                onblur="inputBlur(event)" />
+                            <input class="bInput" v-model:value="item.energyDataBudget" @input="changeAllInput(item,$event)" />
                             <div class="error-tip">请输入正整数</div>
                             <div class="binputTitle">目标能耗：</div>
                             <div class="inputUnit">kWh</div>
                         </div>
                         <div class="bInputBox">
-                            <input class="bInput perInput" v-bind:value="item.energyDataBudgetPerSquare" @input="changePerInput(item,$event)" onblur="inputBlur(event)"
-                                onfocus="focusInput(event)" />
+                            <input class="bInput perInput" v-model:value="item.energyDataBudgetPerSquare" @input="changePerInput(item,$event)" />
                             <div class="error-tip">请输入正整数</div>
                             <div class="binputTitle">单平米能耗：</div>
                             <div class="inputUnit">kWh/㎡</div>
                         </div>
+
                         <div class="bText leo">
                             <ptext-textarea length="100" placeholder="'请填写批注，100字以内'" id="psecret.create(item.planDateStr)" value="item.newRemark" bind='true'>
                                 <verify errtip="不可超过100字" verifytype="length" length="100"></verify>
                             </ptext-textarea>
                         </div>
+
                         <div class="bConnect"></div>
                         <div class="editButton">
                             <div class="editSave">
-                                <pbutton-blue text="保存" :datastr='psecret.create(item.planDateStr)' click="saveSureShow"></pbutton-blue>
+                                <pbutton-blue text="'保存'" :datastr='psecret.create(item.planDateStr)' id="'btn'+item.planDateStr.replace('.','')" click="saveSureShow(event)"
+                                    bind="true" disabled="!item.canSave"></pbutton-blue>
                                 <div class="budgetPop saveSurePop" onclick="eventStop(event)">
                                     <div class="popTitle">确定要保存{{item.isNowMonth?'本月':item.planDateStr.replace('.','年')+'月'}}能耗预算吗？</div>
                                     <div class="popSubtitle" v-show="item.isNowMonth">本月预算创建后立刻生效，生效后将无法编辑！</div>
@@ -159,7 +200,7 @@
                                     </div>
                                 </div>
 
-                                <div class="layer" style="position:fixed;top:0;left:0;right:0;left:0;z-index:2;bottom:0;display:none;">
+                                <div class="layer" style="position:fixed;top:0;left:0;right:0;left:0;z-index:2;bottom:0;display:none;" @click.stop="">
 
                                 </div>
 
@@ -183,14 +224,20 @@
                                 是否使用新的预算管理节点重新创建预算
                             </div>
                         </div>
-                        <div class="changeButton">
+                        <div class="changeButton" @click.capture="hideModifyRecordFloat()">
                             <pbutton-white text="继续编辑" style="margin-right: 10px; width: 114px;" @click="continueEdit(item)"></pbutton-white>
                             <pbutton-white text="使用新节点创建" @click="againCreate(item,$event)"></pbutton-white>
                         </div>
                     </div>
                 </div>
+
             </div>
+            <!-- 每个月的滚动信息 End -->
+
         </div>
+        <!-- 每月的滚动状态 End -->
+
+        <!--  底部的柱状图 Start -->
         <div class="chartWrap">
             <div class="chartTitle">历史能耗参考值</div>
             <div class="chartSubtile">
@@ -206,9 +253,13 @@
             </div>
             <div class="chartCont">
                 <ploading-part id="historyLoading" text="拼命加载中..."></ploading-part>
-                <div class="chartContCont" id="historyEnergyChart" onmouseenter="historyChartEnter(event)" onmouseleave="historyChartLeave(event)"></div>
+                <div class="chartContCont" id="historyEnergyChart" onmouseover="historyChartEnter(event)" onmouseleave="historyChartLeave(event)"></div>
+
             </div>
         </div>
+        <!-- 底部的柱状图 End -->
+
+
     </div>
     <div v-cloak v-if='onPage=="plan_manage"'>
         <% include planSet.html %>

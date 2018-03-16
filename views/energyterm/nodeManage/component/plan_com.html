@@ -12,7 +12,13 @@
                 <div class="code">
                     <div class="border"></div>
                     <div class="title" @click="handler(item)" :class="{on:item.isplanNode,disabled:item.childs.length}" :title="item.energyItemName">
-                            <img v-show="item.isCenterPlanNode" class="tree_icon" src="/images/energyterm/nodeManage/black.png">
+                            <!-- <img v-show="item.isCenterPlanNode" class="tree_icon" src="/images/energyterm/nodeManage/black.png"> -->
+                            <!-- 小旗图标 Start -->
+                            <div class="tree_icon" v-show="item.isCenterPlanNode">
+
+                            </div>
+                            <!-- 小旗图标 End -->
+
                             <em v-text="item.energyItemName"></em>
                             
                             <div class="icon" v-if="item.childs.length">

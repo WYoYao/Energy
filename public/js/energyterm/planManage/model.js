@@ -3,12 +3,13 @@ v.pushComponent({
     data: {
         monthPlanInfo: {},//获取的月计划信息
         firstPlanInfo: false,//给plan赋值
-        allocatePlanType: 1,//计划分配类型
+        allocatePlanType: 1,//计划分配类型 1 分项拆分 2 日期拆分
         countMachineShow: false,
         countParams: { countInterval: null, countClick: false, },
         planCountPlus: true,//计算方式
         countItemPlan: null,//计算的分项计划 或者天计划
         itemChartData: [],//饼图列表数据
+        budget_planDate : ""
     },
     methods: {
         planGoBack: function () {//返回
@@ -28,7 +29,8 @@ v.pushComponent({
             planManController.generateDayPlanByItemSum(planDate, item);
         },
         showDayItemChart: function (item, event) {
-            event.stopPropagation();
+
+            // event.stopPropagation();
             var budgetItemId = this.monthPlanInfo.budgetItemId;
             planManController.generateItemPlanByDaySum(budgetItemId, item);
         },
@@ -68,12 +70,28 @@ v.pushComponent({
             item.energyDataPlan = Math.round(item.energyPlanRatio * v.instance.monthPlanInfo.monthRemainData / 100);//计划
         },
         downCountNumber: function (item, param) {//长按时
-            if (param == 'down' && item.energyPlanRatio <= 0) { return; }
+            if (param == 'down' && item.energyPlanRatio <= 0) { 
+                item.energyPlanRatio = 0;
+                item.energyDataPlan = 0;
+                return; 
+            }
             var _this = this;
 
 
-            // _this.countParams.startTime = +(new Date());
+            
+            _this.countParams.startTime = +(new Date());
             var num = 0;
+
+
+
+            // item.energyPlanRatio == null ? item.energyPlanRatio = 0 : void 0;
+            // var num = Math.round((item.energyPlanRatio - Math.floor(item.energyPlanRatio))*10);
+            
+            // param == 'up' ? num == 0 ? num = 0 : num = 10 - num : void 0;
+            // 若是按上升箭头时为整数则先加10次0.1
+            // param == 'up' ? num == 0 ? num = 10 : void 0 : void 0;
+
+
 
             function addorRemove(count) {
                 _this.countParams.countClick = true;
@@ -81,13 +99,17 @@ v.pushComponent({
                     item.energyPlanRatio = Math.round((item.energyPlanRatio + count) * 10) / 10;//比例
                 } else {
                     item.energyPlanRatio = (item.energyPlanRatio <= 0) ? item.energyPlanRatio : Math.round((item.energyPlanRatio - count) * 10) / 10;
+                    item.energyPlanRatio < 0 ? item.energyPlanRatio = 0 : void 0;
                 }
                 item.energyDataPlan = Math.round(item.energyPlanRatio * v.instance.monthPlanInfo.monthRemainData / 100);//计划
             }
 
+
+
             _this.countParams.countInterval = setInterval(function () {
 
                 var count = (++num > 3) ? 1 : 0.1;
+                // var count = num-- > 0 ? 0.1 : 1;
                 if (count == 1) {
                     clearInterval(_this.countParams.countInterval);
 
@@ -99,9 +121,29 @@ v.pushComponent({
                 } else {
                     addorRemove(0.1);
                 }
-
             }, 500);
         },
+
+
+
+
+
+
+        // downCountNumber : function(item,type){
+        //     if(type == 'down' && item.energyPlanRatio <= 0){
+        //         item.energyPlanRatio = 0;
+        //         item.energyPla
+        //         return
+        //     }
+        //     item.energyDataPlan
+        // },
+
+
+
+
+
+
+
         removeCount: function () {
             var _this = this;
             clearInterval(_this.countParams.countInterval);
@@ -183,7 +225,17 @@ v.pushComponent({
         }
     },
     beforeMount: function () {
+
+        // here初始化切换计划拆分选项时的缓存
+        window.planManageItemsCache = undefined;
+        window.planManageDaysCache = undefined;
+
+
+
+
+
         var argu = arguments[0];
+        this.budget_planDate = new Date(TC(argu.planDate)).getTime();
         this.$nextTick(function () {
             planManController.init(argu);
         });

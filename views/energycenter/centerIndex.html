@@ -1,12 +1,12 @@
-<link rel="stylesheet" href="/css/energycenter/centerindex.css">
+<!-- <link rel="stylesheet" href="/css/energycenter/centerindex.css"> -->
 
-<script src="/js/energycenter/centerindex/controller.js"></script>
-<script src="/js/energycenter/centerindex/model.js"></script>
-<script src="/js/energycenter/centerindex/event.js"></script>
-<script src="/js/public/cityData.js"></script>
+<script type="text/javascript" src="/js/energycenter/centerindex/controller.js"></script>
+<script type="text/javascript" src="/js/energycenter/centerindex/model.js"></script>
+<script type="text/javascript" src="/js/energycenter/centerindex/event.js"></script>
+<script type="text/javascript" src="/js/public/cityData.js"></script>
 
 
-<div id="index" v-cloak  v-if='onPage=="centerindex"'>
+<div id="index" v-cloak  v-if="onPage=='centerindex'" v-show="Iloading != null">
     <!-- 头部 -->
     <div id="I_head">
         <div class="I_head_time">
@@ -16,38 +16,33 @@
         </div>
         <div class="I_head_combo">
             <pcombobox-normal id="'I_head_pcombo'" sel="indexItemSel" bind="true">
-                <header placeholder="切换分项：建筑总能耗" prefix="切换分项："></header>
+                <header placeholder="切换分项：获取分项失败" prefix="切换分项："></header>
                 <item datasource="AllProjectItems" text="name" id="logicId"></item>
             </pcombobox-normal>
         </div>
-        <!-- <div class="I_head_button" v-show="indexPage.energy">
-            <pbutton-blue text="能耗"></pbutton-blue>
-        </div>
-        <div class="I_head_button" v-show="indexPage.energy">
-            <pbutton-white text="单平米能耗" @click="indexPageChange"></pbutton-white>
-        </div>
-        <div class="I_head_button" v-show="!indexPage.energy">
-            <pbutton-white text="能耗" @click="indexPageChange"></pbutton-white>
-        </div>
-        <div class="I_head_button" v-show="!indexPage.energy">
-            <pbutton-blue text="单平米能耗"></pbutton-blue>
-        </div> -->
         <ptab-button bind="true" id="'I_head_ptab'" datasource="ItabArr" text="name" sel="indexPageC" text="name"></ptab-button>
         <div class="I_head_buttonR1">
-            <pbutton-menuminor sel="indexDownload" id="'I_head_pbutcom'" icon="D" bind="true">
+            <a>D</a>
+            <pbutton-menuminor sel="indexDownload" icon="D" id="'I_head_pbutcom'" bind="true" align="right">
                 <header placeholder="下载"></header>
                 <item datasource="indexDownloadSel" text="name"></item>
             </pbutton-menuminor>
         </div>
         <div class="I_head_buttonR2" @click.stop="projectFilter">
-            <i class="iconfont icon-shaixuan"></i>筛选项目（
-            <a>{{projectInfo.totalScreening}}</a>/{{projectInfo.totalProjects}}）
+        <!-- <div class="I_head_buttonR2"> -->
+            <!-- <i class="iconfont icon-shaixuan"></i> -->
+            <img src="/images/energycenter/centerindex/shaixuan.png" alt="">
+            <a>筛选项目</a>
+            （<a class="ABM">{{projectInfo.totalScreening}}</a><a class="AMT">/{{projectInfo.totalProjects}}</a>）
+            <!-- <pbutton-white bind="true" @click.stop="projectFilter" icon="'D'" text="'筛选项目(' + projectInfo.totalScreening + '/' + projectInfo.totalProjects + ')'"></pbutton-white> -->
         </div>
+
+
+
     </div>
 
     <!-- 图表 -->
     <div id="I_body">
-        <ploading-part id="ICpartloading" text="努力加载中..."></ploading-part>
         <div id="I_chart_shadow" v-show="Iloading == 1"><div></div></div> 
         <div id="I_chart" v-show="Iloading == 0"></div>
         <div id="I_chart_Avg" v-show="Iloading == 0">
@@ -57,140 +52,154 @@
             <span class="I_chart_AvgLine1 I_chart_AvgLine" @click="indexChartPlot(0)"></span>
         </div>
     </div>
-
+    
     <!-- 表格 -->
     <div id="I_foot">
 
-        <div class="I_foot_head" :style="{width:noscW}">
-            <span class="I_g_h1 I_g_h01">
-                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;项目名称</span>
-                <span class="I_grid_pic" @click="indexGridSord(0)">
+        <div class="I_foot_head clear" :style="{width:noscW}">
+            <div class="wid0"></div>
+
+            <div :class="!NotSelFutureMonth ? 'wid1' : indexPage.energy ? 'wid31' : 'wid61'">
+                <div>项目名称</div>
+                <div class="I_grid_pic" @click="indexGridSord(0)">
                     <i class="per-bIcon">t</i>
                     <i class="per-bIcon">b</i>
-                </span>
-            </span>
-            <!-- <span class="I_g_h2"> -->
-            <span :class="NotSelFutureMonth ? 'I_g_h2' : 'I_g_h20'">
-                <span>项目类型</span>
-                <span class="I_grid_pic" @click="indexGridSord(1)">
+                </div>
+            </div>
+
+            <div :class="!NotSelFutureMonth ? 'wid2' : indexPage.energy ? 'wid32' : 'wid62'">
+                <div>项目类型</div>
+                <div class="I_grid_pic" @click="indexGridSord(1)">
                     <i class="per-bIcon">t</i>
                     <i class="per-bIcon">b</i>
-                </span>
-            </span>
-            <!-- <span class="I_g_h3"> -->
-            <span :class="NotSelFutureMonth ? 'I_g_h3' : 'I_g_h21'">
-                <span>所属气候带</span>
-                <span class="I_grid_pic" @click="indexGridSord(2)">
+                </div>
+            </div>
+
+            <div :class="!NotSelFutureMonth ? 'wid3' : indexPage.energy ? 'wid33' : 'wid63'">
+                <div>所属气候带</div>
+                <div class="I_grid_pic" @click="indexGridSord(2)">
                     <i class="per-bIcon">t</i>
                     <i class="per-bIcon">b</i>
-                </span>
-            </span>
-            <!-- <span class="I_g_h4"> -->
-            <span :class="NotSelFutureMonth ? 'I_g_h4' : 'I_g_h22'">
-                <span>项目面积( m² )</span>
-                <span class="I_grid_pic" @click="indexGridSord(3)">
+                </div>
+            </div>
+
+            <div :class="!NotSelFutureMonth ? 'wid4' : indexPage.energy ? 'wid34' : 'wid64'">
+                <div>项目面积( m² )</div>
+                <div class="I_grid_pic" @click="indexGridSord(3)">
                     <i class="per-bIcon">t</i>
                     <i class="per-bIcon">b</i>
-                </span>
-            </span>
-            <span class="I_g_h5">
-                <span class="I_foot_littlegray I_foot_little"></span>
-                <span v-show="indexPage.energy">预算能耗 ( kWh )</span>
-                <span v-show="!indexPage.energy">单平米预算能耗 ( kWh/m² )</span>
-                <span class="I_grid_pic" @click="indexGridSord(4)">
+                </div>
+            </div>
+
+            <div :class="!NotSelFutureMonth ? 'wid5' : indexPage.energy ? 'wid35' : 'wid65'">
+                <div class="I_foot_littlegray I_foot_little"></div>
+                <div v-show="indexPage.energy">预算能耗 ( kWh )</div>
+                <div v-show="!indexPage.energy">单平米预算能耗 ( kWh/m² )</div>
+                <div class="I_grid_pic" @click="indexGridSord(4)">
                     <i class="per-bIcon">t</i>
                     <i class="per-bIcon">b</i>
-                </span>
-            </span>
-            <!-- <span class="I_g_h6"> -->
-            <span :class="NotSelFutureMonth ? 'I_g_h6' : 'I_g_h23'">
-                <span>预算同比</span>
-                <span class="I_grid_pic" @click="indexGridSord(5)">
+                </div>
+            </div>
+
+            <div :class="!NotSelFutureMonth ? 'wid6' : indexPage.energy ? 'wid36' : 'wid66'">
+                <div>预算同比</div>
+                <div class="I_grid_pic" @click="indexGridSord(5)">
                     <i class="per-bIcon">t</i>
                     <i class="per-bIcon">b</i>
-                </span>
-            </span>
-            <!-- <span class="I_g_h7"> -->
-            <span :class="NotSelFutureMonth ? 'I_g_h7' : 'I_g_h24'">
-                <span>预算环比</span>
-                <span class="I_grid_pic" @click="indexGridSord(6)">
+                </div>
+            </div>
+
+            <div :class="!NotSelFutureMonth ? 'wid7' : indexPage.energy ? 'wid37' : 'wid67'">
+                <div>预算环比</div>
+                <div class="I_grid_pic" @click="indexGridSord(6)">
                     <i class="per-bIcon">t</i>
                     <i class="per-bIcon">b</i>
-                </span>
-            </span>
-            <span v-if="NotSelFutureMonth" class="I_g_h5">
-                <span class="I_foot_littleblue I_foot_little"></span>
-                <span v-show="indexPage.energy">实际能耗 ( kWh )</span>
-                <span v-show="!indexPage.energy">实际单平米能耗 ( kWh/m² )</span>
-                <span class="I_grid_pic" @click="indexGridSord(7)">
+                </div>
+            </div>
+
+            <div :class="!NotSelFutureMonth ? 'wid8' : indexPage.energy ? 'wid38' : 'wid68'">
+                <div class="I_foot_littleblue I_foot_little"></div>
+                <div v-show="indexPage.energy">实际能耗 ( kWh )</div>
+                <div v-show="!indexPage.energy">实际单平米能耗 ( kWh/m² )</div>
+                <div class="I_grid_pic" @click="indexGridSord(7)">
                     <i class="per-bIcon">t</i>
                     <i class="per-bIcon">b</i>
-                </span>
-            </span>
-            <span v-if="NotSelFutureMonth" class="I_g_h9">
-                <span>
+                </div>
+            </div>
+
+            <div :class="!NotSelFutureMonth ? 'wid9' : indexPage.energy ? 'wid39' : 'wid69'">
+                <div>
                     <div style="width:5px;height:5px;border-bottom:1px solid black;float:left;margin-top:9px;"></div>
                     <div style="width:6px;height:6px;border:1px solid black;border-radius:50%;margin-top:10px;float:left;"></div>
                     <div style="width:5px;height:5px;border-bottom:1px solid black;float:left;margin-top:9px;margin-right:3px;"></div>
-                </span>
-                <span>能耗预算比</span>
-                <span class="I_grid_pic" @click="indexGridSord(8)">
+                </div>
+                <div>能耗预算比</div>
+                <div class="I_grid_pic" @click="indexGridSord(8)">
                     <i class="per-bIcon">t</i>
                     <i class="per-bIcon">b</i>
-                </span>
-            </span>
-            <span class="I_g_h10">
-                <span>能耗计划</span>
-            </span>
+                </div>
+            </div>
+
+            <div :class="!NotSelFutureMonth ? 'wid10' : indexPage.energy ? 'wid40' : 'wid70'">
+                <div>能耗计划</div>
+            </div>
+
         </div>
 
         <div class="I_foot_neck" :style="{width:noscW}">
-            <span class="I_g_h1 MSYB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;项目总和</span>
-            <span :class="NotSelFutureMonth ? 'I_g_h2' : 'I_g_h20'"></span>
-            <span :class="NotSelFutureMonth ? 'I_g_h3' : 'I_g_h21'"></span>
-            <span :class="NotSelFutureMonth ? 'I_g_h4' : 'I_g_h22'" class="ABM">{{projectInfo.areaSumShowShow}}</span>
-            <span class="I_g_h5 I_g_hti ABM">{{projectInfo.budgetDataSumShow}}</span>
-            <span :class="NotSelFutureMonth ? 'I_g_h6' : 'I_g_h23'"></span>
-            <span :class="NotSelFutureMonth ? 'I_g_h7' : 'I_g_h24'"></span>
-            <span class="I_g_h5 I_g_hti ABM" v-show="NotSelFutureMonth">{{projectInfo.energyDataSumShow}}</span>
-            <span class="I_g_h9 ABM" v-show="NotSelFutureMonth" :class="projectInfo.realBudgetRatioShow !=noData ?  projectInfo.realBudgetRatioSum > 1 ? 'redFont' : 'greenFont' : void 0">{{projectInfo.realBudgetRatioShow}}</span>
-            <span class="I_g_h10"></span>
-            <span class="I_g_h11"></span>
+            <div class="wid0"></div>
+            <div class="MSYB" :class="!NotSelFutureMonth ? 'wid1' : indexPage.energy ? 'wid31' : 'wid61'">项目总和</div>
+            <div :class="!NotSelFutureMonth ? 'wid2' : indexPage.energy ? 'wid32' : 'wid62'"></div>
+            <div :class="!NotSelFutureMonth ? 'wid3' : indexPage.energy ? 'wid33' : 'wid63'"></div>
+            <div class="ABM tTM" :class="!NotSelFutureMonth ? 'wid4' : indexPage.energy ? 'wid34' : 'wid64'">{{projectInfo.areaSumShowShow}}</div>
+            <div class="ABM tTM" :class="!NotSelFutureMonth ? 'wid5' : indexPage.energy ? 'wid35' : 'wid65'">{{projectInfo.budgetDataSumShow}}</div>
+            <div :class="!NotSelFutureMonth ? 'wid6' : indexPage.energy ? 'wid36' : 'wid66'"></div>
+            <div :class="!NotSelFutureMonth ? 'wid7' : indexPage.energy ? 'wid37' : 'wid67'"></div>
+            <div class="ABM tTM" :class="!NotSelFutureMonth ? 'wid8' : indexPage.energy ? 'wid38' : 'wid68'">{{projectInfo.energyDataSumShow}}</div>
+            <div class="ABM" :class="!NotSelFutureMonth ? 'wid9' : indexPage.energy ? 'wid39' : 'wid69'">
+                <div class="tTM" :class="projectInfo.realBudgetRatioShow !=noData ?  projectInfo.realBudgetRatioSum > 1 ? 'redFont' : 'greenFont' : void 0">{{projectInfo.realBudgetRatioShow}}</div>
+            </div>
+            <div :class="!NotSelFutureMonth ? 'wid30' : indexPage.energy ? 'wid40' : 'wid70'"></div>
         </div>
 
         <div class="I_foot_ul_wrap">
             <ploading-part id="IGpartloading" text="努力加载中..."></ploading-part>
-            <ul id="I_foot_ul" @mouseleave="indexGridLeave" v-show="Iloading == 0" v-show="Iloading == 0">
+            <ul id="I_foot_ul" @mouseleave="indexGridLeave" v-show="Iloading == 0" :style="{width:noscWW}">
                 <li class="I_foot_li" :style="{width:noscW}" v-for="(item,index) in projectInfo.projectInfo" @click.stop="item.noneDataType != -1 ? IndexBudgetWindowOpenReady(item) : void 0"
                     @mouseenter="indexGridHover(index)">
-                    <span class="I_g_s0" :title="index+1">{{index+1}}</span>
-                    <span class="I_g_s1 tTM" :title="item.projectName">{{item.projectName}}</span>
-                    <span class="tTM" :class="NotSelFutureMonth ? 'I_g_s2' : 'I_g_s20'" :title="item.projectTypeName">{{item.projectTypeName}}</span>
-                    <span class="tTM" :class="NotSelFutureMonth ? 'I_g_s3' : 'I_g_s30'" :title="item.climateName">{{item.climateName}}</span>
-                    <span class="tTM AMT" :class="NotSelFutureMonth ? 'I_g_s4' : 'I_g_s40'" :title="item.area">{{item.area}}</span>
-                    <span class="I_g_s5 tTM AMT" :title="item.budgetDataShow" v-if="item.noneDataType==0">{{item.budgetDataShow}}</span>
-                    <span class="tTM AMT" :class="[{'redFont':item.budgetRatioSameShow != noData && item.budgetRatioSame > 0},{'greenFont':item.budgetRatioSameShow != noData && 0 > item.budgetRatioSame},{'I_g_s6' : NotSelFutureMonth },{'I_g_s60': !NotSelFutureMonth}]" :title="item.budgetRatioSameShow" v-if="item.noneDataType==0" ><a v-show="item.budgetRatioSameShow != noData && item.budgetRatioSame > 0">+</a>{{item.budgetRatioSameShow}}</span>
-                    <span class="tTM AMT" :class="[{'redFont':item.budgetRatioCircleShow != noData && item.budgetRatioCircle > 0},{'greenFont':item.budgetRatioCircleShow != noData && 0 > item.budgetRatioCircle},{'I_g_s7' : NotSelFutureMonth },{'I_g_s70': !NotSelFutureMonth}]" :title="item.budgetRatioCircleShow" v-if="item.noneDataType==0" ><a v-show="item.budgetRatioCircleShow != noData && item.budgetRatioCircle > 0">+</a>{{item.budgetRatioCircleShow}}</span>
-                    <span class="I_g_s5 tTM AMT" :title="item.energyDataShow" v-if="item.noneDataType==0">
-                        <span v-show="NotSelFutureMonth">{{item.energyDataShow}}</span>
-                    </span>
-                    <span class="I_g_s9 tTM AMT" v-if="item.noneDataType==0"  :title="item.realBudgetRatioShow">
-                        <span v-show="NotSelFutureMonth" :class="item.realBudgetRatioShow !=noData ? item.realBudgetRatio > 1 ? 'redFont' : 'greenFont' : void 0 ">{{item.realBudgetRatioShow}}</span>
-                    </span>
-                    <span class="I_g_s10 tTM" v-if="item.noneDataType==0">
-                        <div v-show="item.ifSetPlan">
-                            <pbutton-blue isborder="false"  text="查看计划" @click.stop="EnergyPlanOpen(item)"></pbutton-blue>
+                    <div class="wid0" :title="index+1">{{index+1}}</div>
+                    <div :class="!NotSelFutureMonth ? 'wid1' : indexPage.energy ? 'wid31' : 'wid61'" :title="item.projectName">{{item.projectName}}</div>
+                    <div class="tTM" :class="!NotSelFutureMonth ? 'wid2' : indexPage.energy ? 'wid32' : 'wid62'" :title="item.projectTypeName">{{item.projectTypeName}}</div>
+                    <div class="tTM" :class="!NotSelFutureMonth ? 'wid3' : indexPage.energy ? 'wid33' : 'wid63'" :title="item.climateName">{{item.climateName}}</div>
+                    <div class="tTM AMT" :class="!NotSelFutureMonth ? 'wid4' : indexPage.energy ? 'wid34' : 'wid64'" :title="item.area">{{item.area}}</div>
+                    <div class="tTM AMT" :class="!NotSelFutureMonth ? 'wid5' : indexPage.energy ? 'wid35' : 'wid65'" :title="item.budgetDataShow" v-if="item.noneDataType==0">{{item.budgetDataShow}}</div>
+                    <div class="AMT" :class="!NotSelFutureMonth ? 'wid6' : indexPage.energy ? 'wid36' : 'wid66'" :title="item.budgetRatioSameShow" v-if="item.noneDataType==0" >
+                        <div class="tTM" :class="item.budgetRatioSameShow != noData ? item.budgetRatioSame > 0 ? 'redFont' : 'greenFont' : void 0">
+                            <a v-show="item.budgetRatioSameShow != noData && item.budgetRatioSame > 0">+</a>{{item.budgetRatioSameShow}}
                         </div>
-                        <div v-show="!item.ifSetPlan">无</div>
-                    </span>
-                    <span :class="NotSelFutureMonth ? 'I_g_s12' : 'I_g_s120'" v-if="item.noneDataType==-1">项目该月未上线,无数据……</span>
-                    <span :class="NotSelFutureMonth ? 'I_g_s12' : 'I_g_s120'" v-if="item.noneDataType==1">项目该月数据质量不合格</span>
-                    <span class="I_g_s11">
-                        <div v-show="NotSelFutureMonth">
-                            <pbutton-blue isborder="false" text="'查看能耗详情'" bind="true" disabled="item.noneDataType== -1"
-                                @click.stop="openEnergyByProject(item)"></pbutton-blue>
+                    </div>
+                    <div class="AMT" :class="!NotSelFutureMonth ? 'wid7' : indexPage.energy ? 'wid37' : 'wid67'" :title="item.budgetRatioCircleShow" v-if="item.noneDataType==0" >
+                        <div class="tTM" :class="item.budgetRatioCircleShow != noData ? item.budgetRatioCircle > 0 ? 'redFont' : 'greenFont' : void 0">
+                            <a v-show="item.budgetRatioCircleShow != noData && item.budgetRatioCircle > 0">+</a>{{item.budgetRatioCircleShow}}
                         </div>
-                    </span>
+                    </div>
+                    <div class="tTM AMT" :class="!NotSelFutureMonth ? 'wid8' : indexPage.energy ? 'wid38' : 'wid68'" :title="item.energyDataShow" v-if="item.noneDataType==0">{{item.energyDataShow}}</div>
+                    <div class="tTM AMT" :class="!NotSelFutureMonth ? 'wid9' : indexPage.energy ? 'wid39' : 'wid69'" :title="item.realBudgetRatioShow" v-if="item.noneDataType==0">
+                        <div :class="item.realBudgetRatioShow != noData ? item.realBudgetRatio > 1 ? 'redFont' : 'greenFont' : void 0 ">{{item.realBudgetRatioShow}}</div> 
+                    </div> 
+                    <div class="tTM" :class="!NotSelFutureMonth ? 'wid10' : indexPage.energy ? 'wid40' : 'wid70'" v-if="item.noneDataType==0">
+                        <div class="grayblueFont lookplan" v-show="item.ifSetPlan" @click.stop="EnergyPlanOpen(item)">查看计划</div>
+                        <div class='greyFont lookplan' v-show="!item.ifSetPlan">无</div>
+                    </div>
+                    <div :class="!NotSelFutureMonth ? 'wid12' : indexPage.energy ? 'wid42' : 'wid72'" v-if="item.noneDataType != 0">
+                        <div v-if="item.noneDataType == -1">项目该月未上线,无数据……</div>
+                        <div v-if="item.noneDataType == 1">项目该月数据质量不合格</div>
+                    </div>
+                    <div :class="!NotSelFutureMonth ? 'wid11' : indexPage.energy ? 'wid41' : 'wid71'">
+                        <div>
+                            <pbutton-blue isborder="false" text="'查看能耗详情'" bind="true" disabled="item.noneDataType == -1 || !NotSelFutureMonth" @click.stop="openEnergyByProject(item)"></pbutton-blue>
+                        </div>
+                    </div>
                 </li>
             </ul>
         </div>

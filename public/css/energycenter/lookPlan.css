@@ -19,6 +19,7 @@
     overflow-x: scroll; 
     overflow-y: hidden;
     text-align: center;
+    border: 1px solid #CCCCCC;
 }
 .LGW{
     height: 100%;

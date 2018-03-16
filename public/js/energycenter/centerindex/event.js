@@ -2,7 +2,7 @@ function budgetFillInputBlur(){
     document.getElementById("TotalBudgetFill").getElementsByTagName('input')[0].addEventListener('input',function(){
         var t = v._instance, x = t.projectBudgetEditCache, y = t.indexBudgerWarn;
         var a = $("#TotalBudgetFill input").val() != "" ? Number($("#TotalBudgetFill input").val()) : NaN, b=x.square, c=x.remark;
-        a != NaN && a >= 0 ? x.total = ~~x.total : x.total = null;
+        x.total = a != NaN && a > 0 ? ~~x.total : null;
         if(x.total === null){
             y.total = true;
             $("#IRW2").text("请输入正整数");
@@ -17,7 +17,7 @@ function budgetFillInputBlur(){
     document.getElementById("squareBudgetFill").getElementsByTagName('input')[0].addEventListener('input',function(){
         var t = v._instance, x = t.projectBudgetEditCache, y = t.indexBudgerWarn;
         var a = $("#squareBudgetFill input").val() != "" ? Number($("#squareBudgetFill input").val()) : NaN, b=x.total, c=x.remark;
-        a != NaN && a >= 0 ? x.square = ~~x.square : x.square = null;
+        x.square = a != NaN && a > 0 ? ~~x.square : null;
         if(x.square === null){
             y.square = true;
             $("#IRW3").text("请输入正整数");
@@ -54,12 +54,12 @@ function iThreePve(){
 }
 function indexTimeSel(){
     v._instance.indexIsThisMonth();
-    v._instance.getProjectInfo();
+    v._instance.indexRefreshRender();
 }
 function projectFilterEnd(){
     $("#I_filterWindow").phide();
     v._instance.projectSelCache = JSON.parse(JSON.stringify(v._instance.projectSelectParam));
-    v._instance.getProjectInfo();    
+    v._instance.indexRefreshRender();    
 }
 function chartClick(index){       //图表点击与表格联动
     $(".I_foot_li").css("background","#FFFFFF").eq(index).css("background","#F8F8F8")
@@ -75,7 +75,7 @@ function chartClick(index){       //图表点击与表格联动
     })
 }
 function indexItemSel(){            //首页选择项目分项
-    v._instance.getProjectInfo();
+    v._instance.indexRefreshRender();
 }
 function RGBToHex(rgb){ 
     var regexp = /[0-9]{0,3}/g;  
@@ -132,4 +132,10 @@ function indexGridSortClick(index){
 }
 function indexPageC(){
     v._instance.indexPageChange();
+}
+function allSortRecover(){
+    var $elG = $(".I_grid_pic").find("i");
+    for(var i=0;i<$elG.length;i++){
+        $($elG[i]).css("color","#C3CDD0");
+    }
 }

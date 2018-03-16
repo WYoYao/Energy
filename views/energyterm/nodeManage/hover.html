@@ -30,8 +30,9 @@
             </div>
             <img class="img" src="/images/energyterm/nodeManage/Group 4@4x.png" alt="">
             <div class="footer">
-                <input class="left checkbox" type="checkbox" v-model='checkboxModel'>
-                <span class="left ctitle" @click="checkboxModel=true">下次不再需要提示</span>
+                <!-- <input class="left checkbox" type="checkbox" v-model='checkboxModel'> -->
+                <span class="per-checkbox_input checkbox" :class="{'per-checkbox-checked':checkboxModel}" @click="checkboxModel=!checkboxModel"></span>
+                <span class="left ctitle" @click="checkboxModel=!checkboxModel">下次不再需要提示</span>
                 <span class="btn" @click.capture="setStorage()">
                     <pbutton-white text="关闭帮助"></pbutton-white>
                 </span>

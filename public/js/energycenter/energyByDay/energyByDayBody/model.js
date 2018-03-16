@@ -160,8 +160,8 @@ v.pushComponent({
                         })
                         var energyDataMax = 0;
                         data[0].items.forEach(function(item){
-                            item.energyDataShow = item.energyData == null ? _this.noData : toThousands(Math.toFixed({value:item.energyData,isByInt:true}));
-                            item.energyPlanShow = item.energyPlan == null ? _this.noData : toThousands(Math.ceil(item.energyPlan));
+                            item.energyDataShow = item.energyData == null ? _this.noData : toThousands(RD(item.energyData));
+                            item.energyPlanShow = item.energyPlan == null ? _this.noData : toThousands(BD(item.energyPlan));
                             item.planRatioShow = item.planRatio == null ? _this.noData : Math.toFixed({value:item.planRatio*100,isByInt:true});
                             energyDataMax = item.energyData > energyDataMax ? item.energyData : energyDataMax;
                         })
@@ -180,7 +180,7 @@ v.pushComponent({
                 _this.DItemEnergyData = data[0];
                 //处理图表所用数据,更新图表
                 var ChartEnergyData = data[0].hourData.map(function(item){
-                    return Math.toFixed({value:item.energyData,fixNum:1})
+                    return RD(item.energyData);
                 })
                 var ChartxAxis = data[0].hourData.map(function(item){
                     var c = item.time.split(" ")[1];    
@@ -238,6 +238,7 @@ v.pushComponent({
                 tooltip: {
                     valueSuffix: 'kWh'
                 },
+                groupPadding:0.3
             }
             chart.addSeries(chartEnergyByHour);
         },

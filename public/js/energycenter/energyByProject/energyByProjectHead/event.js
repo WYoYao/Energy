@@ -3,7 +3,6 @@
 function createRatioDiagram(el,top,left,height,color){
     var canvas=document.getElementById(el);
     var ctx=canvas.getContext('2d');
-    console.log(el)
     ctx.fillStyle= color;
     ctx.strokeStyle= color;
     ctx.beginPath();

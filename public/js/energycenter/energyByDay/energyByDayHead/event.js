@@ -16,13 +16,6 @@ function canNotSelectFutureDay(date, el) {
     var _el = $(el).find(".per-squarebutton-grayBorder").eq(1);
     date == getTodayTime() ? _el.attr("pdisabled", "true") : _el.attr("pdisabled", "false");
 }
-function getTodayTime() {
-    var date = new Date();
-    date.setHours(0);
-    date.setMinutes(0);
-    date.setSeconds(0);
-    return date.setMilliseconds(0);
-}
 function isToday(time) {
     var date = new Date();
     date.setHours(0);

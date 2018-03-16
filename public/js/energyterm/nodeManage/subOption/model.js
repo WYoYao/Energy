@@ -33,6 +33,14 @@ v.pushComponent({
             } finally {
                 _that.hover = false;
             }
+        },
+        goPrevPage : function(){
+            var id;
+            this.BuildingsCed.forEach(function(item,index){
+                item.buildingId == v._instance.currentBuild.buildingId ? id = index : void 0;
+            });
+            this.onPage = 'more_build'
+            $(".build_select").psel(id,true);
         }
     },
     computed: {

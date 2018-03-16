@@ -196,7 +196,7 @@ v.pushComponent({
                 _this.Planlast = data.time.length;
                 _this.$nextTick(function () {
                     var widthHas = $("#lookPlan_grid").width();
-                    var witdthNeed = (data.items.length + 1)*141 + 53;
+                    var witdthNeed = (data.items.length + 1)*141 + 52;
                     _this.witdthNeed = witdthNeed + "px";
                     _this.witdthNeedWrap = witdthNeed + 20 + "px"
                 })

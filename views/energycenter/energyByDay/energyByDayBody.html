@@ -1,12 +1,3 @@
-<link rel="stylesheet" href="/css/energycenter/energyByDay/energyByDayBody.css">
-<!-- <link rel="stylesheet" href="/css/energycenter/public.css"> -->
-<script src="/js/energycenter/energyByDay/energyByDayBody/controller.js"></script>
-<script src="/js/energycenter/energyByDay/energyByDayBody/model.js"></script>
-<script src="/js/energycenter/energyByDay/energyByDayBody/event.js"></script>
-
-
-
-
 <div id="DB">
     
     <ploading-part id="DLpartloading" text="努力加载中..."></ploading-part>
@@ -15,87 +6,87 @@
         <div class="DB_items_wrap">
             <div class="DB_items" :class="item.clicked ? 'DB_items_clicked' : void 0"  v-for="(item,index) in DAllItems" @click.stop="DUserSelItem(item)">
                 <span>
-                    <i class="per-bIcon"  :class="item.clicked ? 'DB_items_clicked' : void 0" v-show="item.budgetNode == 1" title="该分项为建筑的预算管理节点">M</i>
+                    <i class="per-bIcon"  :class="item.clicked ? 'DB_items_clicked' : void 0" v-if="item.budgetNode == 1" title="该分项为建筑的预算管理节点">M</i>
                 </span>
                 <span :title="item.name">{{item.name}}</span>
-                <span :title="item.energyDataShow + 'kWh'" class="AMT">{{item.energyDataShow}}&nbsp;&nbsp;<a v-show="item.energyDataShow != noData">kWh</a>&nbsp;&nbsp;</span>
+                <span :title="item.energyDataShow + 'kWh'" class="AMT">{{item.energyDataShow}}<a v-show="item.energyDataShow != noData">&nbsp;&nbsp;kWh</a></span>
             </div>
         </div>
     </div>
 
-    <div class="DB_right">
+    <div class="right">
 
         <ploading-part id="DDR" text="努力加载中..."></ploading-part>
 
-        <div class="DB_right_top">
+        <div class="top">
 
-            <div class="DB_dayenergy">
-                <div class="DB_text0">日能耗</div>
+            <div class="dayenergy">
+                <div class="text124 text14">日能耗</div>
                 <div> 
-                    <span class="DB_text1 tTM DB_text101" v-if="DItemEnergyData.energyData==null">{{noData}}</span>
-                    <span class="DB_text1 tTM DB_text101" v-if="DItemEnergyData.energyData!=null" :title="toThousands(FON(DItemEnergyData.energyData)) + 'kWh'">{{toThousands(FON(DItemEnergyData.energyData))}}</span>
-                    <span class="DB_text0" style="line-height:40px;" v-if="DItemEnergyData.energyData!=null">kWh</span>
+                    <span class="moreblackFont text24" v-if="DItemEnergyData.energyData==null">{{noData}}</span>
+                    <span class="moreblackFont tTM text24 box1 textfl" v-if="DItemEnergyData.energyData!=null" :title="toThousands(RD(DItemEnergyData.energyData)) + 'kWh'">{{toThousands(RD(DItemEnergyData.energyData))}}</span>
+                    <span class="text14 text118 textfl" v-if="DItemEnergyData.energyData!=null">kWh</span>
                 </div>
             </div>
 
 
-            <div class="DB_dayplan">
-                <div class="DB_text0">日计划</div>
+            <div class="dayplan">
+                <div class="text124 text14">日计划</div>
                 <div>
-                    <span class="DB_text1 tTM DB_text101" v-if="DItemEnergyData.energyPlan==null">{{noData}}</span>
-                    <span class="DB_text1 tTM DB_text101" v-if="DItemEnergyData.energyPlan!=null" :title="toThousands(Math.ceil(DItemEnergyData.energyPlan)) + 'kWh'">{{toThousands(Math.ceil(DItemEnergyData.energyPlan))}}</span>
-                    <span class="DB_text0" style="line-height:40px;" v-if="DItemEnergyData.energyPlan!=null">kWh</span>
+                    <span class="moreblackFont text24" v-if="DItemEnergyData.energyPlan==null">{{noData}}</span>
+                    <span class="moreblackFont tTM text24 box1 textfl" v-if="DItemEnergyData.energyPlan!=null" :title="toThousands(Math.ceil(DItemEnergyData.energyPlan)) + 'kWh'">{{toThousands(BD(DItemEnergyData.energyPlan))}}</span>
+                    <span class="text14 text118 textfl" v-if="DItemEnergyData.energyPlan!=null">kWh</span>
                 </div>
             </div>
 
 
-            <div class="DB_daypercent">
-                <div class="DB_text0">日能耗占计划比</div>
+            <div class="daypercent">
+                <div class="text124 text14">日能耗占计划比</div>
                 <div>
-                    <span class="DB_text1" v-if="DItemEnergyData.planRatio==null">{{noData}}</span>
-                    <span class="DB_text1" v-if="DItemEnergyData.planRatio!=null">{{FBI(DItemEnergyData.planRatio*100)}}</span>
-                    <span class="DB_text0" v-if="DItemEnergyData.planRatio!=null">%</span>
+                    <span class="moreblackFont text24" v-if="DItemEnergyData.planRatio==null">{{noData}}</span>
+                    <span class="moreblackFont text24 tTM box1 textfl" v-if="DItemEnergyData.planRatio!=null">{{FBI(DItemEnergyData.planRatio*100)}}</span>
+                    <span class="text14 text118 textfl" v-if="DItemEnergyData.planRatio!=null">%</span>
                 </div>
             </div>
 
 
-            <div class="DB_daytongbi">
+            <div class="daytongbi">
 
                 <div class="clear">
-                    <span class="DB_text0 DB_text102">同比</span>
-                    <span class="DB_text3" :title="DItemEnergyData.sameRatioData!=null ? toThousands(FON(DItemEnergyData.sameRatioData))+'kWh' : noData">
-                        <span class="grayFont DB_text102">同比能耗</span>
-                        <span class="moreblackFont DB_text102 DB_text104" v-if="DItemEnergyData.sameRatioData==null">{{noData}}</span>
-                        <span class="moreblackFont DB_text103 tTM AMT" v-if="DItemEnergyData.sameRatioData!=null">{{toThousands(FON(DItemEnergyData.sameRatioData))}}kWh</span>
+                    <span class="text124 text14 textfl">同比</span>
+                    <span class="box2 textfl clear tTM" :title="DItemEnergyData.sameRatioData!=null ? toThousands(RD(DItemEnergyData.sameRatioData))+'kWh' : noData">
+                        <span class="grayFont">同比能耗</span>
+                        <span class="moreblackFont" v-if="DItemEnergyData.sameRatioData==null">{{noData}}</span>
+                        <span class="moreblackFont text12 AMT box3" v-if="DItemEnergyData.sameRatioData!=null">{{toThousands(RD(DItemEnergyData.sameRatioData))}}kWh</span>
                     </span>
                 </div>
 
                 <div>
-                    <span class="DB_text2" v-if="DItemEnergyData.sameRatio==null">{{noData}}</span>
-                    <span v-if="DItemEnergyData.sameRatio>0" class="DB_text2 ABM" :class="DItemEnergyData.sameRatio>=0 ? 'redFont' : 'greenFont'">+</span>
-                    <span class="DB_text2 ABM" v-if="DItemEnergyData.sameRatio!=null" :class="DItemEnergyData.sameRatio>=0 ? 'text_150' : 'greenFont'">{{FBI(DItemEnergyData.sameRatio*100)}}</span>
-                    <span class="DB_text4 AMT" v-if="DItemEnergyData.sameRatio!=null" :class="DItemEnergyData.sameRatio>=0 ? 'redFont' : 'greenFont'">%</span>
+                    <span class="moreblackFont text24" v-if="DItemEnergyData.sameRatio==null">{{noData}}</span>
+                    <span v-if="DItemEnergyData.sameRatio>0" class="text24 ABM" :class="DItemEnergyData.sameRatio>=0 ? 'redFont' : 'greenFont'">+</span>
+                    <span class="text24 ABM" v-if="DItemEnergyData.sameRatio!=null" :class="DItemEnergyData.sameRatio>=0 ? 'text_150' : 'greenFont'">{{FBI(DItemEnergyData.sameRatio*100)}}</span>
+                    <span class="text14 AMT" v-if="DItemEnergyData.sameRatio!=null" :class="DItemEnergyData.sameRatio>=0 ? 'redFont' : 'greenFont'">%</span>
                 </div>
 
             </div>
 
 
-            <div class="DB_dayhuanbi">
+            <div class="dayhuanbi">
 
                 <div class="clear">
-                    <span class="DB_text0 DB_text102">环比</span>
-                    <span class="DB_text3" :title="DItemEnergyData.circleRatioData!=null ? toThousands(FON(DItemEnergyData.circleRatioData))+'kWh' : noData">
-                        <span class="grayFont DB_text102">环比能耗</span>
-                        <span class="moreblackFont DB_text102 DB_text104" v-if="DItemEnergyData.circleRatioData==null">{{noData}}</span>
-                        <span class="moreblackFont DB_text103 tTM AMT" v-if="DItemEnergyData.circleRatioData!=null">{{toThousands(FON(DItemEnergyData.circleRatioData))}}kWh</span>
+                    <span class="text124 text14 textfl">环比</span>
+                    <span class="box2 textfl tTM clear" :title="DItemEnergyData.circleRatioData!=null ? toThousands(RD(DItemEnergyData.circleRatioData))+'kWh' : noData">
+                        <span class="grayFont">环比能耗</span>
+                        <span class="moreblackFont" v-if="DItemEnergyData.circleRatioData==null">{{noData}}</span>
+                        <span class="moreblackFont text12 AMT box3" v-if="DItemEnergyData.circleRatioData!=null">{{toThousands(RD(DItemEnergyData.circleRatioData))}}kWh</span>
                     </span>
                 </div>
 
                 <div>
-                    <span class="DB_text2" v-if="DItemEnergyData.circleRatio==null">{{noData}}</span>
-                    <span v-if="DItemEnergyData.circleRatio>0" class="DB_text2 ABM" :class="DItemEnergyData.circleRatio>=0 ? 'redFont' : 'greenFont'">+</span>
-                    <span class="DB_text2 ABM" v-if="DItemEnergyData.circleRatio!=null" :class="DItemEnergyData.circleRatio>=0 ? 'text_150' : 'greenFont'">{{FBI(DItemEnergyData.circleRatio*100)}}</span>
-                    <span class="DB_text4 AMT" v-if="DItemEnergyData.circleRatio!=null" :class="DItemEnergyData.circleRatio>=0 ? 'redFont' : 'greenFont'">%</span>
+                    <span class="moreblackFont text24" v-if="DItemEnergyData.circleRatio==null">{{noData}}</span>
+                    <span v-if="DItemEnergyData.circleRatio>0" class="text24 ABM" :class="DItemEnergyData.circleRatio>=0 ? 'redFont' : 'greenFont'">+</span>
+                    <span class="text24 ABM" v-if="DItemEnergyData.circleRatio!=null" :class="DItemEnergyData.circleRatio>=0 ? 'text_150' : 'greenFont'">{{FBI(DItemEnergyData.circleRatio*100)}}</span>
+                    <span class="text14 AMT" v-if="DItemEnergyData.circleRatio!=null" :class="DItemEnergyData.circleRatio>=0 ? 'redFont' : 'greenFont'">%</span>
                 </div>
 
             </div>
@@ -134,6 +125,7 @@
                     <div class="energyByDayChart_Lables">
                         <span></span>&nbsp;&nbsp;实际能耗&nbsp;&nbsp;单位&nbsp;:&nbsp;kWh
                     </div>
+                    <div class="DB_faker"></div>
                 </div>
                 <div :style="{height:DgridHeight}" id="energyByDayChart"></div>
             </div>

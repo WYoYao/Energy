@@ -171,9 +171,6 @@ v.pushComponent({
             buildingId: _that.NodeManageModel.buildingId,
         }).then(function (res) {
 
-
-
-
             _that.PlanNodeEditTree = res.map(function (item) {
                 item.isplanNode = false;
                 return item;

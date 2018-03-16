@@ -68,18 +68,25 @@
             <li><span class="num">3</span>将拆分后的结果，自动计算日-分项计划</li>
         </ul>
         <div class="imgExplain"></div>
-        <div class="chooseButton" v-show="planHelpType==='enter'">
+        <div class="chooseButton" v-if="onPage!='plan_manage'">
             <div class="leftCheck">
-                <pswitch-checkbox text="下次不再提示" id="nextHintCheck"></pswitch-checkbox>
+                <pswitch-checkbox text="'下次不再提示'" start="true" bind="true" id="'nextHintCheck'"></pswitch-checkbox>
             </div>
             <div class="rigthButton">
                 <span class="btitle">设置能耗计划</span>
-                <pbutton-blue icon=":" text="按分项拆分" style="margin-right: 20px;" @click="itemAllocateShow()"></pbutton-blue>
-                <pbutton-blue icon="﹂" text="按日期拆分" @click="dayAllocateShow()"></pbutton-blue>
+                <pbutton-blue icon=":" text="按分项拆分" style="margin-right: 20px;" @click="AllocateShow(1)"></pbutton-blue>
+                <pbutton-blue icon="﹂" text="按日期拆分" @click="AllocateShow(0)"></pbutton-blue>
             </div>
         </div>
-        <div class="closeButton" v-show="planHelpType!=='enter'">
-                <pbutton-white  text="关闭帮助" onclick="closePlanHelp()"></pbutton-white>
+        <div class="closeButton" v-if="onPage!='plan_manage'">
+                <pbutton-white  text="关闭帮助" @click.stop="$('#setPlanWindow').phide(),setStorageOption(!$('#nextHintCheck').psel())"></pbutton-white>
         </div>
+
+        <div class="closeButton" v-if="onPage=='plan_manage'">
+                <div style="float:left">
+                    <pswitch-checkbox text="'下次不再提示'" start="true" bind="true" id="'plan_managenextHintCheck'"></pswitch-checkbox>
+                </div>
+                    <pbutton-white  text="关闭帮助" @click.stop="$('#setPlanWindow').phide(),setStorageOption(!$('#plan_managenextHintCheck').psel())"></pbutton-white>
+            </div>
     </div>
 </script>

@@ -6,7 +6,7 @@
 
 <!-- 多建筑列表Start -->
 <div class="more_box" v-cloak v-show='onPage=="more_build"'>
-    <div class="header" v-show="onBlock!='detail'">
+    <div class="header" v-show="onBlock!='detail'&&(onBlock=='list' ? Ploading == 0 ? true : false : true)">
 
         <!-- 建筑选择Start -->
         <div class="build_select" v-show="Buildings.length>1">
@@ -64,7 +64,7 @@
 
                 <!-- 文本提示 Start -->
                 <span class="title" v-if='item.buildingEnergyStatus' :class='{report_color:item.buildingEnergyStatus==2,warning_color:item.buildingEnergyStatus==1}'
-                    v-text='(item.buildingEnergyStatus==1?"能耗预警 超标率":"能耗报警 超标率")+ (item.buildingEnergyStatus==1?item.warningRatio:item.alarmRatio)'></span>
+                    v-text='(item.buildingEnergyStatus==1?"能耗预警 风险率":"能耗报警 超标率")+ (item.buildingEnergyStatus==1?item.warningRatio:item.alarmRatio)+(item.isToMonth?"":"(已过期)")'></span>
                 <!-- 文本提示 End -->
 
                 <!-- 警告Icon Start -->
@@ -99,9 +99,17 @@
                             月预算
                         </div>
 
-                        <div class="number">
+                        <!--  创建过预算管理节点的情况 -->
+                        <div class="number" v-if="!_.isNull(item.monthBudgetData) || !item.isToMonth">
                             <em v-text='item.monthBudgetData?item.monthBudgetData:"--"' :title="item.monthBudgetData+'kWh'"></em>
                             <span class="company" v-text='item.monthBudgetData==0?"":"kWh"'></span>
+                        </div>
+
+                        <!--  未创建预算管理节点的时候，直接链接跳转创建预算管理节点 -->
+                        <div class="number" v-if="_.isNull(item.monthBudgetData) && item.isToMonth" @click.stop="Settingbudget(item)">
+                            <a href="javascript:void(0)">
+                                <em v-text="'未设置'" :title="'未设置'"></em>
+                            </a>
                         </div>
                         <!-- 目标能耗 End -->
 
@@ -130,16 +138,17 @@
 
     </div>
 
-    <div class="content" v-show="onBlock=='list'">
+    <div class="content" v-show="onBlock=='list'&&Ploading == 0">
         <% include ../energycenter/energyByProject/energyByProjectBody.html %>
     </div>
 
-    <div v-if="onBlock=='detail'" class="border">
+    <!--  日能耗详情页面Start -->
+    <div v-if="onBlock=='detail'" v-show="DFirstLoading == false">
         <!-- 头部 Start -->
         <div class="sitemap">
 
             <!-- 返回按钮Start -->
-            <div class="backbtn" @click='v.initPage("more_build")'>
+            <div class="backbtn" @click='goPrevPage'>
                 I
             </div>
             <!-- 返回按钮End -->
@@ -171,8 +180,9 @@
         </div>
         <!-- 头部 End -->
     </div>
+    <!--  日能耗详情页面 End -->
 
-    <div class="content" v-if="onBlock=='detail'">
+    <div class="content" v-if="onBlock=='detail'" v-show="DFirstLoading == false">
         <% include ../energycenter/energyByDay/energyByDayBody.html %>
     </div>
 

@@ -37,10 +37,10 @@
             <div class="I_BW_BH" v-show="projectSel.projectInfoState">
                 <!-- 用户仅在未来月且项目有预算时可以编辑预算，项目冻结时该按钮不可用 -->
                 <div class="I_BW_BH_button1" v-show="!indexRemark&&!indexBudget" v-if="!NotSelFutureMonth&&projectSel.projectInfo.ifHasBudget&&projectSel.projectInfo.state !=0">
-                    <pbutton-blue text="编辑预算" icon="e" isborder="false" disabled="projectSel.projectInfo.state == 0" @click="BudgetEdit"></pbutton-blue>
+                    <pbutton-blue text="编辑预算" icon="e" isborder="false" @click="BudgetEdit"></pbutton-blue>
                 </div>
                 <div class="I_BW_BH_button1" v-show="!indexRemark&&!indexBudget" >
-                    <pbutton-blue text="填写批注" icon="N" isborder="false" @click="indexRemark = true"></pbutton-blue>
+                    <pbutton-blue text="填写批注" icon="﹁" isborder="false" @click="indexRemark = true"></pbutton-blue>
                 </div>
                 <div class="I_BW_BH_button2" v-show="indexRemark || indexBudget">
                     <pbutton-white text="'保存'" bind="true" disabled="!indexPage.budgetCanSave" @click="SaveBudgetOrRemark"></pbutton-white>
@@ -50,7 +50,7 @@
                 </div>
                 <!-- 仅有未来月可以锁定或者解锁预算 -->
                 <div class="I_BW_BH_button1" v-if="(!NotSelFutureMonth)&&(projectSel.projectInfo.state == 1 || projectSel.projectInfo.state == null)" v-show="!indexRemark&&!indexBudget">
-                    <pbutton-blue text="锁定预算" isborder="false" @click="projectBudgetLock(true)"></pbutton-blue>
+                    <pbutton-blue text="'锁定预算'" isborder="false" @click="projectBudgetLock(true)" disabled="!projectSel.projectInfo.ifHasBudget" bind="true"></pbutton-blue>
                 </div>
                 <div class="I_BW_BH_button1" v-if="(!NotSelFutureMonth)&&(projectSel.projectInfo.state == 0)" v-show="!indexRemark&&!indexBudget">
                     <pbutton-blue text="解锁预算" isborder="false" @click="projectBudgetLock(false)"></pbutton-blue>
@@ -101,7 +101,7 @@
                 </div>
 
                 <div v-show="!indexRemark && !indexBudget" class="I_BW_B_foot_button" v-if="projectSel.projectInfo.ifHasPlan">
-                    <div><pbutton-blue icon="j" text="查看能耗计划" isborder="false" @click="EnergyPlanOpen(projectSel.projectInfoReady)"></pbutton-blue></div>
+                    <div><pbutton-blue icon="﹂" text="查看能耗计划" isborder="false" @click="EnergyPlanOpen(projectSel.projectInfoReady)"></pbutton-blue></div>
                 </div>
                 <div v-if="indexBudget&&projectSel.projectInfo.ifHasPlan" class="I_BW_B_warn">
                     提示：该项目已创建能耗计划，若编辑预算，会删除已创建的能耗计划！
