@@ -91,7 +91,7 @@ var plan_controller = {
     // 保存计划节点
     saveNodeManagementService: function (argu) {
 
-        loadding.set('saveNodeManagementService');
+        // loadding.set('saveNodeManagementService');
         return new Promise(function (resolve) {
 
             pajax.post({
@@ -104,7 +104,7 @@ var plan_controller = {
                     console.error('FNPJ_PlanNodeEditTree Error');
                 },
                 complete: function () {
-                    loadding.remove('saveNodeManagementService');
+                    // loadding.remove('saveNodeManagementService');
                 }
             });
         })

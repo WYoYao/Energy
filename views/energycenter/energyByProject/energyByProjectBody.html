@@ -27,8 +27,8 @@
                 <div class="PB_LT_text1 PB_LT_div1" :class="PprojectInfo.buildingEnergyStatus == 0 ? 'PB_LT_dt0': 'PB_LT_dt1'">月预算</div>
 
                 <!-- 有预算 -->
-                <div class="PB_LT_div2 tTM" v-if="PprojectSomeInfo.ifHasBudget" :title="PprojectInfo.monthBudgetData==null ? noData : toThousands(Math.ceil(PprojectInfo.monthBudgetData))+'kWh'">
-                    <span class="PB_LT_text2 blackFont">{{PprojectInfo.monthBudgetData==null ? noData : toThousands(Math.ceil(PprojectInfo.monthBudgetData))}}</span>
+                <div class="PB_LT_div2 tTM" v-if="PprojectSomeInfo.ifHasBudget" :title="PprojectInfo.monthBudgetData==null ? noData : toThousands(BD(PprojectInfo.monthBudgetData))+'kWh'">
+                    <span class="PB_LT_text2 blackFont">{{PprojectInfo.monthBudgetData==null ? noData : toThousands(BD(PprojectInfo.monthBudgetData))}}</span>
                     <span class="PB_LT_text1" v-show="PprojectInfo.monthBudgetData != null">&nbsp;kWh</span>
                 </div>
                 <!-- 当前月及未来月没有预算 -->
@@ -117,7 +117,7 @@
             </div>
 
             <!-- 圆圈 -->
-            <div class="PB_leftmiddle" v-show="PprojectSomeInfo.ifHasPlan || (PprojectSomeInfo.ifHasBudget&&(PBaseMessage.timeFrom==getThisMonth().format('yyyy-M-d h:m:s'))&&PBaseMessage.NowModel=='term'&&!PprojectSomeInfo.isBudgetUpdated)">
+            <div class="PB_leftmiddle" v-show="PprojectSomeInfo.ifHasPlan || (PprojectSomeInfo.ifHasBudget&&(PBaseMessage.timeFrom==getThisMonth().format('yyyy-M-d h:m:s'))&&PBaseMessage.NowModel=='term')">
                 <div class="PB_LM_canvas_wrap" v-show="PprojectSomeInfo.ifHasPlan">
                     <div id="PB_LM_canvas"></div>
                     <div id="PB_circle_wrap">
@@ -216,7 +216,7 @@
                     <a v-show="PproDayAndItemInfo.day[PChartTooltip.index].energyData != null" class="AMT">kWh</a>
                 </div>
                 <div class="PB_CTooltipt1">计划能耗
-                    <a class="ABM"> : {{PproDayAndItemInfo.day[PChartTooltip.index].planData == null ? noData : toThousands(Math.ceil(PproDayAndItemInfo.day[PChartTooltip.index].planData))}}</a>
+                    <a class="ABM"> : {{PproDayAndItemInfo.day[PChartTooltip.index].planData == null ? noData : toThousands(BD(PproDayAndItemInfo.day[PChartTooltip.index].planData))}}</a>
                     <a v-show="PproDayAndItemInfo.day[PChartTooltip.index].planData != null" class="AMT">kWh</a>
                 </div>
                 <div v-show="PproDayAndItemInfo.day[PChartTooltip.index].time == getToday().format('yyyy-M-d h:m:s')" class="PB_todayC_go"
@@ -249,8 +249,8 @@
                                 <div class="PB_items_bar"></div>
                             </div>
                         </span>
-                        <span class="PB_items_span4 tTM AMT" :title="Math.ceil(model.monthEnergyPlan)" v-show="PprojectGridPage" v-if="PprojectSomeInfo.ifHasPlan">{{model.monthEnergyPlan == null ? noData : toThousands(Math.ceil(model.monthEnergyPlan))}}</span>
-                        <span class="PB_items_span4 tTM AMT" :title="Math.ceil(model.monthTodayEnergyPlan)" v-show="!PprojectGridPage" v-if="PprojectSomeInfo.ifHasPlan">{{model.monthTodayEnergyPlan == null ? noData : toThousands(Math.ceil(model.monthTodayEnergyPlan))}}</span>
+                        <span class="PB_items_span4 tTM AMT" :title="BD(model.monthEnergyPlan)" v-show="PprojectGridPage" v-if="PprojectSomeInfo.ifHasPlan">{{model.monthEnergyPlan == null ? noData : toThousands(BD(model.monthEnergyPlan))}}</span>
+                        <span class="PB_items_span4 tTM AMT" :title="BD(model.monthTodayEnergyPlan)" v-show="!PprojectGridPage" v-if="PprojectSomeInfo.ifHasPlan">{{model.monthTodayEnergyPlan == null ? noData : toThousands(BD(model.monthTodayEnergyPlan))}}</span>
                         <span class="PB_items_span4" v-if="!PprojectSomeInfo.ifHasPlan">{{noData}}</span>
                         <span class="PB_items_span5">
                             <div v-if="PprojectSomeInfo.ifHasPlan" class="PB_LittleCanvas" :id="'PB_sectorCanvas'+index"></div>
@@ -263,7 +263,8 @@
                 </div>
             </ul>
             <div class="PB_noitems" v-show="!PprojectSomeInfo.ifHasPlanItems&&PBaseMessage.NowModel == 'term'">
-                <div @click="PtoPlanItemEdit">建筑未设置计划管理节点,点击设置 ></div>
+                <!-- <div @click="PtoPlanItemEdit">建筑未设置计划管理节点,点击设置 ></div> -->
+                <pnotice-nodata text="暂无数据" subtitle="建筑未设置计划管理节点,点击设置" @click="PtoPlanItemEdit"></pnotice-nodata>
             </div>
             <!-- here -->
             <div class="PB_noitems" v-show="!PprojectSomeInfo.ifHasPlanItems&&PBaseMessage.NowModel == 'center'">

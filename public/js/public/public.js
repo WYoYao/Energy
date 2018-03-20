@@ -1,8 +1,10 @@
 function FON(data) {
-    return Math.toFixed({ value: data, fixNum: 1 })
+    return Math.toFixed({ value: data, fixNum: 1 });
+    
 }
 function FBI(data) {
-    return Math.toFixed({ value: data, isByInt: true })
+    // return Math.toFixed({ value: data, isByInt: true });
+    return RD(data);
 }
 function ceil(data) {
     return Math.ceil(data);
@@ -11,14 +13,16 @@ function TC(date) {
     return (typeof date) == 'string' ? date.replace(new RegExp(/-/gm), "/") : date;
 }
 
+//get BudgetData and PlanData
 function BD(data){
-    return Math.ceil(data);
+    return Math.floor(data);
 }
-function RD(data){
-    return Math.toFixed({ value: data, isByInt: true });
+//get RealDate
+function RD(num){
+    return _.isNumber(num)
+      ? Math.abs(num) < 1 ? _.floor(num, 3) : _.floor(num, 1)
+      : num;
 }
-
-
 
 var chartControl = function () {
     this.options = {
@@ -247,7 +251,7 @@ var sectorChart = function () {
 
 function getNextMonth(date) {
     date.getMonth() == 11 ? date.setFullYear(date.getFullYear() + 1) : void 0;
-    date.getMonth() == 11 ? date.setMonth(1) : date.setMonth(date.getMonth() + 1);
+    date.getMonth() == 11 ? date.setMonth(0) : date.setMonth(date.getMonth() + 1);
     return date;
 }
 function getThisMonth() {

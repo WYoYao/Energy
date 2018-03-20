@@ -326,25 +326,27 @@ budgetController.getMonthEnergyRealAndBudget = function(monparam, cb) {
           monparam
         );
 
-        budgetController.historyEnergyChart = columnComparisonChart(
-          "historyEnergyChart",
-          "month"
-        );
-        // 添加预算节点
-        budgetController.historyEnergyChart.addSeries({
-          color: "#D9E2E8",
-          states: {
-            select: {
-              color: "#C3CDD0",
-              borderColor: "rgba(0,0,0,0)"
-            }
-          },
-          data: chartDataObj.enerBudgetList
-        });
-        // 添加实际节点
-        budgetController.historyEnergyChart.addSeries({
-          data: chartDataObj.enerRealList
-        });
+        if(v.instance.onPage == 'budget_manage'){
+          budgetController.historyEnergyChart = columnComparisonChart(
+            "historyEnergyChart",
+            "month"
+          );
+          // 添加预算节点
+          budgetController.historyEnergyChart.addSeries({
+            color: "#D9E2E8",
+            states: {
+              select: {
+                color: "#C3CDD0",
+                borderColor: "rgba(0,0,0,0)"
+              }
+            },
+            data: chartDataObj.enerBudgetList
+          });
+          // 添加实际节点
+          budgetController.historyEnergyChart.addSeries({
+            data: chartDataObj.enerRealList
+          });
+        }
 
       } else {
         budgetController.historyEnergyChart.yAxis &&
@@ -558,7 +560,7 @@ function columnComparisonChart(itemId, dateType, callback) {
             budgetItemName = void 0;
 
           this.points = this.points.sort(function(a, b) {
-            return a.key - b.key;
+            return a.key < b.key? 1 : -1;
           });
 
           for (var i = 0; i < this.points.length; i++) {
@@ -623,7 +625,7 @@ function columnComparisonChart(itemId, dateType, callback) {
           // pointPlacement: -0.09,
           groupPadding: 0.3125,
           //=================
-          dataLabels: {
+          dataLabels: { 
             shared: true,
             useHTML: true,
             crop: false, //允许溢出

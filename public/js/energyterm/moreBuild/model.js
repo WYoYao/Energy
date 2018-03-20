@@ -131,7 +131,7 @@ v.pushComponent({
         // 恢复成历史信息
         $("#divCalendar").psel(
           {
-            startTime: new Date(Datehistorys.slice(-1)[0]).format(
+            startTime: new Date(TC(Datehistorys.slice(-1)[0])).format(
               "yyyy/MM/dd 00:00:00"
             )
           },

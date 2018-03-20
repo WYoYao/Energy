@@ -307,7 +307,7 @@ $(function(){
         {label:"宜昌Yichang0717",name:"宜昌",pinyin:"Yichang",zip:"0717"},
         {label:"伊春Yichun0458",name:"伊春",pinyin:"Yichun",zip:"0458"},
         {label:"宜春Yichun0795",name:"宜春",pinyin:"Yichun",zip:"0795"},
-        {label:"伊犁哈萨克Yilihasake0999",name:"伊犁哈萨克",pinyin:"Yilihasake",zip:"0999"},
+        {label:"伊犁Yilihasake0999",name:"伊犁",pinyin:"Yilihasake",zip:"0999"},
         {label:"银川Yinchuan0951",name:"银川",pinyin:"Yinchuan",zip:"0951"},
         {label:"营口Yingkou0417",name:"营口",pinyin:"Yingkou",zip:"0417"},
         {label:"鹰潭Yingtan0701",name:"鹰潭",pinyin:"Yingtan",zip:"0701"},
@@ -954,5 +954,6 @@ $(function(){
         {label:"邹平Zouping0543",name:"邹平",pinyin:"Zouping",zip:"0543"},
         {label:"遵化Zunhua0315",name:"遵化",pinyin:"Zunhua",zip:"0315"}
         ];
-    
 })
+
+

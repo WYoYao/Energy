@@ -42,7 +42,7 @@ v.pushComponent({
                 var _budgetNode = {},_index = 0;
                 data.forEach(function(item,index){
                     //处理节点显示数据
-                    item.energyDataShow = item.energyData == null ? _this.noData : toThousands(Math.toFixed({value:item.energyData,fixNum:1}));
+                    item.energyDataShow = item.energyData == null ? _this.noData : toThousands(RD(item.energyData));
                     item.clicked = false;
                     // 提取预算管理节点
                     if(item.budgetNode == 1){
@@ -53,7 +53,7 @@ v.pushComponent({
                 data.splice(_index,1)
                 // 分项排序
                 data.sort(function(a,b){
-                    return a.id > b.id ? 1 : -1
+                    return a.id < b.id ? 1 : -1
                 })
                 //将预算管理节点置于首位
                 data.unshift(_budgetNode);
@@ -156,13 +156,13 @@ v.pushComponent({
                     //处理分项能耗数据
                     if(data[0].items != undefined){
                         data[0].items.sort(function(a,b){
-                            return a.energyItemId>b.energyItemId ? 1 : -1
+                            return a.energyItemId < b.energyItemId ? 1 : -1
                         })
                         var energyDataMax = 0;
                         data[0].items.forEach(function(item){
                             item.energyDataShow = item.energyData == null ? _this.noData : toThousands(RD(item.energyData));
                             item.energyPlanShow = item.energyPlan == null ? _this.noData : toThousands(BD(item.energyPlan));
-                            item.planRatioShow = item.planRatio == null ? _this.noData : Math.toFixed({value:item.planRatio*100,isByInt:true});
+                            item.planRatioShow = item.planRatio == null ? _this.noData : FBI(item.planRatio*100);
                             energyDataMax = item.energyData > energyDataMax ? item.energyData : energyDataMax;
                         })
                         if(energyDataMax != 0){

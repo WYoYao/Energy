@@ -49,6 +49,9 @@ html,body{
 .blackFont{
     color: #151515;
 }
+.blackFont3{
+    color: #333333 !important;
+}
 [v-cloak]{
     display: none !important;
 }

@@ -23,6 +23,7 @@ body{
     border-bottom: none;
     background: #FFFFFF;
     position: relative;
+    box-shadow: 0 2px 8px 0 rgba(0,0,0,0.12)
 }
 .redFont{
     color: #F87C7C !important;
@@ -44,6 +45,9 @@ body{
     display: none !important;
 }
 
+.blackFont3{
+    color: #333333 !important;
+}
 .clear{
     zoom: 1;
 }

@@ -66,9 +66,9 @@
                 <!-- 有预算或者历史月显示本DIV -->
                 <div class="I_BW_B_foot_box" v-if="projectSel.projectInfo.ifHasBudget || !NotSelHistoryMonth" v-show="!indexBudget">
                     <span>能耗预算</span>
-                    <span>
-                        <span v-if="projectSel.projectInfo.ifHasBudget"> kWh</span>
-                        <span class="MSYB">{{projectSel.projectInfo.budgetDataShow}}&nbsp;</span>
+                    <span class="tTM" :title="projectSel.projectInfo.budgetDataShow + (projectSel.projectInfo.budgetDataShow != noData ? 'kWh' : '')">
+                        <a class="MSYB blackFont3">{{projectSel.projectInfo.budgetDataShow}}&nbsp;</a>
+                        <a v-if="projectSel.projectInfo.ifHasBudget">kWh</a>
                     </span>
                 </div>
 
@@ -89,15 +89,16 @@
 
                 <div class="I_BW_B_foot_box" v-if="NotSelFutureMonth" v-show="!indexBudget">
                     <span>实际能耗</span>
-                    <span>
-                        <span v-if="projectSel.projectInfo.energyDataShow != noData"> kWh</span>
-                        <span class="MSYB">{{projectSel.projectInfo.energyDataShow}}&nbsp;</span>
+                    <span class="tTM" :title="projectSel.projectInfo.energyDataShow + (projectSel.projectInfo.energyDataShow != noData ? 'kWh' : '')">
+                        <a class="MSYB">{{projectSel.projectInfo.energyDataShow}}&nbsp;</a>
+                        <a v-if="projectSel.projectInfo.energyDataShow != noData">kWh</a>
                     </span>
                 </div>
 
                 <div class="I_BW_B_foot_box" v-if="NotSelFutureMonth" v-show="!indexBudget">
                     <span>实际能耗占预算比</span>
-                    <span  class="MSYB" :class="(projectSel.projectInfo.realBudgetRatioShow != noData) ?  (projectSel.projectInfo.realOccupyBudgetRatio >= 100) ? 'redFont' : 'greenFont' : void 0">{{projectSel.projectInfo.realBudgetRatioShow}}&nbsp;</span>
+                    <span class="MSYB tTM" :title="projectSel.projectInfo.realBudgetRatioShow"
+                    :class="(projectSel.projectInfo.realBudgetRatioShow != noData) ?  (projectSel.projectInfo.realOccupyBudgetRatio >= 100) ? 'redFont' : 'greenFont' : void 0">{{projectSel.projectInfo.realBudgetRatioShow}}&nbsp;</span>
                 </div>
 
                 <div v-show="!indexRemark && !indexBudget" class="I_BW_B_foot_button" v-if="projectSel.projectInfo.ifHasPlan">

@@ -22,9 +22,8 @@ v.pushComponent({
     },
     showSetPlanWindow: function() {
       var bool = eval(window.localStorage.getItem("hintStore"));
-      $("#nextHintCheck").psel(!bool);
-      $("#plan_managenextHintCheck").psel(!bool);
-
+      $("#nextHintCheck").psel(bool, false);
+      $("#plan_managenextHintCheck").psel(bool, false);
       $("#setPlanWindow").pshow();
     },
     // 点击其他的内容的时候的也需要关闭是否关闭的内容
@@ -50,7 +49,7 @@ v.pushComponent({
       var _that = this;
       if (_.isArray(_that.energyBudgetList)) {
         _that.energyBudgetList.forEach(function(item, index) {
-          if (item.showPage == "editPage") {
+          if (item.showPage == "editPage" || item.showPage == "changeWarn") {
             _that.enerBudgetListCopy[index].showPage =
               _that.enerBudgetListCopy[index].ifHasBudget ||
               _that.enerBudgetListCopy[index].isPastMonth
@@ -134,7 +133,7 @@ v.pushComponent({
       budgetController.getEnergyBudgetList(pageNum);
       chartBackNormal(); //chart恢复默认
     },
-    showEditPanel: function(item) {
+    showEditPanel: function(item, e) {
       //编辑预算显示
       if (item.state == 0) {
         return;
@@ -142,7 +141,9 @@ v.pushComponent({
       if (item.isBudgetUpdated) {
         //如果更新了
         item.showPage = "changeWarn";
-        return;
+        e.stopPropagation();
+        event.preventDefault();
+        return false;
       }
       beforeEditOperate(item);
 
@@ -159,7 +160,7 @@ v.pushComponent({
       //有更新 重新创建预算
       item.showPage = "editPage";
       item.operate = "编辑预算";
-      beforeEditOperate(item);
+      beforeEditOperate(item, true);
 
       var $this = $(event.currentTarget);
       var $budgetPop = $this.parents(".budgetPop");
@@ -237,15 +238,15 @@ v.pushComponent({
       //显示编辑计划
       var _this = this;
       _this.setPlanBudget = item;
-      if (item.isBudgetUpdated && !item.ifHasPlan) {
-        //如果预算节点有更新 且没有计划
-        return;
-      }
+      // if (item.isBudgetUpdated && !item.ifHasPlan) {
+      //   //如果预算节点有更新 且没有计划
+      //   // return;
+      // }
 
       //  根据localStorage 保存值显示隐藏 弹窗
       var hintStore = window.localStorage.getItem("hintStore");
       //   hintStore  true不显示 false null 显示
-      if (hintStore && hintStore == "false") {
+      if (hintStore && hintStore == "true") {
         _this.go_plan_manage(1, _this.setPlanBudget);
       } else {
         _this.showSetPlanWindow();
@@ -259,10 +260,7 @@ v.pushComponent({
     },
     // 提示框  显示按分项拆分 1  显示按日期拆分0
     AllocateShow: function(type) {
-      debugger;
       var _that = this;
-      var nextHint = $("#nextHintCheck").psel();
-      _that.setStorageOption(!!nextHint);
 
       $("#setPlanWindow").phide();
       _that.go_plan_manage(type, _that.setPlanBudget);
@@ -323,7 +321,7 @@ v.pushComponent({
         item.energyDataBudgetPerSquare != NaN &&
         item.energyDataBudgetPerSquare > 0
       ) {
-        item.energyDataBudget = Math.ceil(
+        item.energyDataBudget = Math.floor(
           item.energyDataBudgetPerSquare * this.buildArea
         );
       } else {
@@ -379,7 +377,7 @@ v.pushComponent({
   computed: {}
 });
 
-function beforeEditOperate(item) {
+function beforeEditOperate(item, isNew) {
   //编辑之前的操作
   var editNum = -1; //上一个处于编辑的月
   var month = new Date(item.planDate.replace(/-/g, "/")).getMonth() + 1;
@@ -445,10 +443,14 @@ function beforeEditOperate(item) {
     } catch (error) {}
   });
 
-  budgetController.getBuildingItemArea(item.budgetItemId); //获取面积
+  budgetController.getBuildingItemArea(
+    isNew ? item.newBudgetItemId : item.budgetItemId
+  ); //获取面积
 }
 function chartBackNormal() {
+  // here
   budgetController.historyEnergyChart &&
+    budgetController.historyEnergyChart.yAxis &&
     budgetController.historyEnergyChart.yAxis[0].removePlotLine("averPlotLine");
   //在柱图上去掉标注
   var chartDataObj = getChartDataObj(budgetController.chartDataList, "renew");

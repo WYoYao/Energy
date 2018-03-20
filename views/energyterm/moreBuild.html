@@ -108,10 +108,19 @@
                         <!--  未创建预算管理节点的时候，直接链接跳转创建预算管理节点 -->
                         <div class="number" v-if="_.isNull(item.monthBudgetData) && item.isToMonth" @click.stop="Settingbudget(item)">
                             <a href="javascript:void(0)">
-                                <em v-text="'未设置'" :title="'未设置'"></em>
+                                <em v-text="'设置月预算'" :title="'设置月预算'"></em>
                             </a>
                         </div>
                         <!-- 目标能耗 End -->
+
+                        <!--  未设置预算 Start -->
+                        <div class="number" v-if="_.isNull(item.monthBudgetData) && !item.isToMonth">
+                            
+                                <em v-text="'未设置'" :title="'未设置'"></em>
+                      
+                        </div>
+                        <!--  未设置预算 End -->
+
 
                     </div>
 

@@ -72,7 +72,7 @@
                                 <div class="box">日能耗</div>
                                 <div class="box">
                                     <div class="blacknumber" v-if="DayEnergyDataInfo.energyData">
-                                        {{DayEnergyDataInfo.energyData | toThousands}}
+                                        {{DayEnergyDataInfo.energyData | v3 | toThousands}}
                                     </div>
                                     <div class="company" v-if="DayEnergyDataInfo.energyData">
                                         kWh
@@ -86,7 +86,7 @@
                                 <div class="box">日计划</div>
                                 <div class="box">
                                     <div class="blacknumber" v-if="DayEnergyDataInfo.energyPlan">
-                                        {{DayEnergyDataInfo.energyPlan | toThousands}}
+                                        {{DayEnergyDataInfo.energyPlan | floor | toThousands}}
                                     </div>
                                     <div class="company" v-if="DayEnergyDataInfo.energyPlan">
                                         kWh
@@ -100,7 +100,7 @@
                                 <div class="box">日能耗占计划比</div>
                                 <div class="box">
                                     <div class="blacknumber" v-if="DayEnergyDataInfo.energyData && DayEnergyDataInfo.energyPlan">
-                                        {{(DayEnergyDataInfo.energyData/DayEnergyDataInfo.energyPlan)|to3}}
+                                        {{(DayEnergyDataInfo.energyData/DayEnergyDataInfo.energyPlan)| x100 | v3 }}
                                     </div>
                                     <div class="company" v-if="DayEnergyDataInfo.energyData && DayEnergyDataInfo.energyPlan">
                                         %
@@ -122,7 +122,7 @@
                                     </div>
 
                                     <div class="number" v-if="DayEnergyDataInfo.sameRatioData">
-                                        {{DayEnergyDataInfo.sameRatioData | toThousands}} kWh
+                                        {{DayEnergyDataInfo.sameRatioData | v3 | toThousands}} kWh
                                     </div>
 
                                     <div class="number" v-if="!DayEnergyDataInfo.sameRatioData">
@@ -132,7 +132,7 @@
                                 </div>
                                 <div class="box">
                                     <div class="block_proportion" v-if="DayEnergyDataInfo.sameRatio" :class="{red:DayEnergyDataInfo.sameRatio>0,green:DayEnergyDataInfo.sameRatio<0}">
-                                        {{DayEnergyDataInfo.sameRatio | convertPercentage}} &nbsp;%
+                                        {{DayEnergyDataInfo.sameRatio | x100 | v3}} &nbsp;%
                                     </div>
 
                                     <div class="block_proportion" v-if="!DayEnergyDataInfo.sameRatio" :class="{red:DayEnergyDataInfo.sameRatio>0,green:DayEnergyDataInfo.sameRatio<0}">
@@ -152,7 +152,7 @@
                                     </div>
 
                                     <div class="number" v-if="DayEnergyDataInfo.circleRatioData">
-                                        {{DayEnergyDataInfo.circleRatioData | toThousands}} kWh
+                                        {{DayEnergyDataInfo.circleRatioData | v3 | toThousands}} kWh
                                     </div>
 
                                     <div class="number" v-if="!DayEnergyDataInfo.circleRatioData">
@@ -162,7 +162,7 @@
                                 </div>
                                 <div class="box">
                                     <div class="block_proportion" v-if="DayEnergyDataInfo.circleRatio" :class="{red:DayEnergyDataInfo.circleRatio>0,green:DayEnergyDataInfo.circleRatio<0}">
-                                        {{DayEnergyDataInfo.circleRatio | convertPercentage}} &nbsp;%
+                                        {{DayEnergyDataInfo.circleRatio | x100 | v3}} &nbsp;%
                                     </div>
                                     <div class="block_proportion" v-if="!DayEnergyDataInfo.circleRatio" :class="{red:DayEnergyDataInfo.circleRatio>0,green:DayEnergyDataInfo.circleRatio<0}">
                                         --
@@ -208,7 +208,7 @@
                                 </div>
 
                                 <div class="hitem" v-if="item.energyData">
-                                    {{item.energyData | toThousands}}　kWh
+                                    {{item.energyData | v3 | toThousands}}　kWh
                                     <div v-if="item.monthEnergyPlan" class="progress" :style="width(item.energyData,item.monthEnergyPlan)"></div>
                                 </div>
                                 <div class="hitem" v-if="!item.energyData">
@@ -217,7 +217,7 @@
 
 
                                 <div class="hitem" v-if="item.energyPlan">
-                                    {{item.energyPlan | toThousands}}　kWh
+                                    {{item.energyPlan | floor | toThousands}}　kWh
                                 </div>
 
                                 <div class="hitem" v-if="!item.energyPlan">
@@ -226,7 +226,7 @@
 
 
                                 <div class="hitem" v-if="item.planRatio">
-                                    {{item.planRatio*100 | to3}}%
+                                    {{item.planRatio | x100 | v3}}%
                                 </div>
                                 <div class="hitem" v-if="!item.planRatio">
                                     --
@@ -294,13 +294,13 @@
 
                     <div v-for="(item,index) in mo" class="tr">
                         <div class="bitems" v-text="item.energyItemName"></div>
-                        <div class="bitems" v-if="item.energyData">{{item.energyData | toThousands}}</div>
+                        <div class="bitems" v-if="item.energyData">{{item.energyData | v3 | toThousands}}</div>
                         <div class="bitems" v-if="!item.energyData">--</div>
 
-                        <div class="bitems" v-if="item.energyPlan">{{item.energyPlan | toThousands}}</div>
+                        <div class="bitems" v-if="item.energyPlan">{{item.energyPlan | floor | toThousands}}</div>
                         <div class="bitems" v-if="!item.energyPlan">--</div>
 
-                        <div class="bitems" v-if="item.planRatio">{{item.planRatio*100 | to3}} %</div>
+                        <div class="bitems" v-if="item.planRatio">{{item.planRatio | x100 | v3}} %</div>
                         <div class="bitems" v-if="!item.planRatio">--</div>
                     </div>
 
@@ -327,10 +327,10 @@
 
                 <div class="tr" v-for="item in DayEnergyDataInfo.hourData">
                     <div class="bitems" style="width:50%">{{new Date(item.time).format('hh:mm')}}</div>
-                    <!-- <div class="bitems">{{item.planData?item.planData.toFixed(2):item.planData}}</div> -->
-                    <div class="bitems" style="width:50%" v-if="item.energyData">{{item.energyData?item.energyData.toFixed(0):item.energyData}}</div>
+                    
+                    <div class="bitems" style="width:50%" v-if="item.energyData">{{item.energyData | v3}}</div>
                     <div class="bitems" style="width:50%" v-if="!item.energyData">--</div>
-                    <!-- <div class="bitems">{{(item.energyData && item.planData)?((item.energyData/item.planData*100).toFixed(2)+'%'):''}}</div> -->
+                   
                 </div>
 
             </div>

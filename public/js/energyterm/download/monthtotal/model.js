@@ -406,20 +406,20 @@ $(function() {
               },
               function() {
                 return new Promise(function(resolve) {
-                  var start, end,backgroundColor;
+                  var start, end, backgroundColor;
 
-                  var num = _that.$options.filters["convertPercentage"](
+                  var num = _that.$options.filters["v3"](_that.$options.filters["x100"](
                     _that.MonthEnergyDataInfo.energyOccupyPlanRatio
-                  );
+                  ));
 
                   if (num < 100) {
                     start = num / 2;
                     end = 50;
-                    backgroundColor='#02A9D1';
+                    backgroundColor = "#02A9D1";
                   } else {
                     start = 50;
                     end = num / 2;
-                    backgroundColor='#FF7B7B';
+                    backgroundColor = "#FF7B7B";
                   }
 
                   console.log($("#child").length);
@@ -486,11 +486,9 @@ $(function() {
     },
     watch: {},
     filters: {
-      //转换成为百分比的内容
-      convertPercentage: function(num) {
-        if (!_.isNumber(num)) return 0;
-        return (num * Math.pow(10, 2)).toFixed(2);
-      },
+      x100: x100,
+      floor: floor,
+      v3: v3,
       // 千分位加点
       toThousands: function(num) {
         if (!_.isNumber(num)) return 0;

@@ -186,11 +186,13 @@ v.pushComponent({
                 data = JSON.parse(JSON.stringify(data));
                 data.items.forEach(function(item){
                     item.data.forEach(function(model,index){
-                        item.data[index] = Math.toFixed({value:model,fixNum:1});
+                        // item.data[index] = Math.toFixed({value:model,fixNum:1});
+                        item.data[index] = BD(model);
                     })
                 })
                 data.sumdata.forEach(function(item,index){
-                    data.sumdata[index] = Math.toFixed({value:item,fixNum:1});
+                    // data.sumdata[index] = Math.toFixed({value:item,fixNum:1});
+                    data.sumdata[index] = BD(item);
                 })
                 _this.planGridData = data;
                 _this.Planlast = data.time.length;
@@ -225,6 +227,10 @@ v.pushComponent({
 function TC(date){
     return (typeof date) ==  'string' ? date.replace(new RegExp(/-/gm) ,"/") : date;
 }  
+//get BudgetData and PlanData
+function BD(data){
+    return Math.floor(data);
+}
 $(function () {
     v.createVue();
     v.initPage('lookplan');

@@ -55,7 +55,11 @@ planManController.getEnergyPlanInfo = function(bitem, autoType) {
     },
     success: function(res) {
       var resData = res[0] || {};
-
+      var a = pindex == 1 ? res[0].itemPlan : res[0].dayPlan;
+      a.forEach(function(item){
+        item.energyDataPlanDecimal = item.energyDataPlan != null ? item.energyDataPlan - Math.floor(item.energyDataPlan) : 0;
+        item.energyDataPlan = BD(item.energyDataPlan);
+      })
       var nowday = new Date();
       var yesterday = new Date(
         nowday.getFullYear(),
@@ -210,13 +214,14 @@ planManController.saveEnergyPlan = function(pinfo, pindex) {
     //按分项
     var planArr = pinfo.itemPlan;
     planArr.forEach(function(ele) {
-      planMap[ele.planItemId] = Number(ele.energyDataPlan);
+      // planMap[ele.planItemId] = Number(ele.energyDataPlan);
+      planMap[ele.planItemId] = Number(ele.energyDataPlan + ele.energyDataPlanDecimal);
     });
   } else {
     var planArr = pinfo.dayPlan;
     planArr.forEach(function(ele) {
       if (ele.isThisMonth && !ele.isPassDay) {
-        planMap[ele.time] = Number(ele.energyDataPlan);
+        planMap[ele.time] = Number(ele.energyDataPlan) + Number(ele.energyDataPlanDecimal);
       }
     });
   }

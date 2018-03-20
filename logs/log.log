@@ -6,3 +6,25 @@
     at Object._errnoException (util.js:1024:11)
     at _exceptionWithHostPort (util.js:1046:20)
     at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1182:14)
+[2018-03-16 18:39:44.676] [ERROR] log_file - 获取/GetUserInfo的数据err："\n<!doctype html5>\n<html>\n    <head>\n        <style type=\"text/css\">\n         \n        strong { font-weight: bold; }\n        hr { -moz-box-sizing: content-box; box-sizing: content-box; height: 0; }\n        html { font-family: sans-serif;   -ms-text-size-adjust: 100%;   -webkit-text-size-adjust: 100%;   } body { margin: 0; }\n        a { background-color: transparent; }\n        a:active, a:hover { outline: 0; }\n        </style>\n\n        <style type=\"text/css\">\n            body { background-color: #f5f5f5; }\n            .container { width: 500px; margin: auto; color: #444; padding: 5px; }\n            a, strong { color: purple; text-decoration: none; }\n            a:hover { text-decoration: underline; }\n            h2 { text-align: center; color: #000; }\n            p { line-height: 20px; }\n        </style>\n    </head>\n    <body>\n        <div class=\"container\">\n            \n            \n<h2>Failed to complete tunnel connection</h2>\n<hr />\n<p>\n    The connection to <strong><a href=\"http://f0273b11.ngrok.io\">http://f0273b11.ngrok.io</a></strong>\n    was successfully tunneled to your ngrok client,\n    but the client failed to establish a connection to\n    the local address <strong><a href=\"http://localhost:9999\">localhost:9999</a></strong>.\n</p>\n<p>\n    Make sure that a web service is running on\n    <strong><a href=\"http://localhost:9999\">localhost:9999</a></strong> and that it is a valid address.\n</p>\n<p>\n    The error encountered was: <strong style=\"color: #9E2929\">dial tcp [::1]:9999: connectex: No connection could be made because the target machine actively refused it.</strong>\n</p>\n\n            \n        </div>\n    </body>\n</html>\n"
+[2018-03-16 18:40:07.593] [ERROR] log_file - 获取/GetUserInfo的数据err："\n<!doctype html5>\n<html>\n    <head>\n        <style type=\"text/css\">\n         \n        strong { font-weight: bold; }\n        hr { -moz-box-sizing: content-box; box-sizing: content-box; height: 0; }\n        html { font-family: sans-serif;   -ms-text-size-adjust: 100%;   -webkit-text-size-adjust: 100%;   } body { margin: 0; }\n        a { background-color: transparent; }\n        a:active, a:hover { outline: 0; }\n        </style>\n\n        <style type=\"text/css\">\n            body { background-color: #f5f5f5; }\n            .container { width: 500px; margin: auto; color: #444; padding: 5px; }\n            a, strong { color: purple; text-decoration: none; }\n            a:hover { text-decoration: underline; }\n            h2 { text-align: center; color: #000; }\n            p { line-height: 20px; }\n        </style>\n    </head>\n    <body>\n        <div class=\"container\">\n            \n            \n<h2>Failed to complete tunnel connection</h2>\n<hr />\n<p>\n    The connection to <strong><a href=\"http://f0273b11.ngrok.io\">http://f0273b11.ngrok.io</a></strong>\n    was successfully tunneled to your ngrok client,\n    but the client failed to establish a connection to\n    the local address <strong><a href=\"http://localhost:9999\">localhost:9999</a></strong>.\n</p>\n<p>\n    Make sure that a web service is running on\n    <strong><a href=\"http://localhost:9999\">localhost:9999</a></strong> and that it is a valid address.\n</p>\n<p>\n    The error encountered was: <strong style=\"color: #9E2929\">dial tcp [::1]:9999: connectex: No connection could be made because the target machine actively refused it.</strong>\n</p>\n\n            \n        </div>\n    </body>\n</html>\n"
+[2018-03-16 18:40:31.221] [ERROR] log_file - 获取/GetUserInfo的数据err：Error: connect ECONNREFUSED 192.168.100.25:9999
+    at Object._errnoException (util.js:1024:11)
+    at _exceptionWithHostPort (util.js:1046:20)
+    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1182:14)
+[2018-03-19 14:45:24.300] [ERROR] log_file - 获取/GetUserInfo的数据err：Error: connect ECONNREFUSED 192.168.100.101:8188
+    at Object._errnoException (util.js:1024:11)
+    at _exceptionWithHostPort (util.js:1046:20)
+    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1182:14)
+[2018-03-19 14:45:30.585] [ERROR] log_file - 获取/GetUserInfo的数据err：Error: connect ECONNREFUSED 192.168.100.101:8188
+    at Object._errnoException (util.js:1024:11)
+    at _exceptionWithHostPort (util.js:1046:20)
+    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1182:14)
+[2018-03-19 14:45:34.024] [ERROR] log_file - 获取/GetUserInfo的数据err：Error: connect ECONNREFUSED 192.168.100.101:8188
+    at Object._errnoException (util.js:1024:11)
+    at _exceptionWithHostPort (util.js:1046:20)
+    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1182:14)
+[2018-03-19 14:45:41.217] [ERROR] log_file - 获取/GetUserInfo的数据err：Error: connect ECONNREFUSED 192.168.100.101:8188
+    at Object._errnoException (util.js:1024:11)
+    at _exceptionWithHostPort (util.js:1046:20)
+    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1182:14)

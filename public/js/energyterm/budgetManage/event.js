@@ -175,10 +175,11 @@ function testNumber(val) {
     return false;
   }
 }
-// function focusInput(evnet) {
-//     var $input = $(event.currentTarget);
-//     $input.parent(".bInputBox").removeClass('error');
-// }
+function focusInput(evnet) {
+    var $input = $(event.currentTarget);
+    $input.parent(".bInputBox").removeClass('error');
+}
+var onmouseoverRecord;
 function historyChartEnter(event) {
   //   $("#historyEnergyChart .budgetDataLabel").css({ opacity: 0 });
 
@@ -199,6 +200,11 @@ function historyChartLeave(event) {
   //   $("#historyEnergyChart .budgetDataLabel").css({ opacity: 1 });
   $("#historyEnergyChart .budgetDataLabel").css({ display: "block" });
 }
+// function stopEventBubble(e){
+//   if (!e) var e = window.event;
+//   e.cancelBubble = true;
+//   if (e.stopPropagation) e.stopPropagation();
+// }
 function budgetBuildClick(currItem) {
   //楼层建筑的选择
   v.instance.budgetBuildSel = currItem;

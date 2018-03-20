@@ -88,6 +88,7 @@ v.pushComponent({
             v._instance.onPage == "energybyproject" ||
             v._instance.onBlock == "list"
           ) {
+            v.instance.PSectorDestroy();
             // 如果有计划则画左边的圆弧
             v._instance.PprojectSomeInfo.ifHasPlan ? ProjectDrawCircle() : void 0;
             // 如果有计划节点则画横柱，如果有计划节点并且有计划的话画小扇形
@@ -119,7 +120,7 @@ v.pushComponent({
         energyByProController.GetEnergyDataForDayAndItem(paramObj,function(data) {
             data = JSON.parse(JSON.stringify(data));
             data[0].items.sort(function(a, b) {
-              return b.energyItemId > a.energyItemId ? -1 : 1;
+              return b.energyItemId > a.energyItemId ? 1 : -1;
             });
             _this.PproDayAndItemInfo = data[0];
             _this.PprojectSomeInfo.ifHasPlanItems = data[0].items.length == 0 ? false : true;
@@ -461,6 +462,13 @@ v.pushComponent({
           }, 0);
         }
       });
+    },
+    PSectorDestroy : function(){
+      if(window.sectorGather){
+        window.sectorGather.forEach(function(item){
+          item.chart != null ? item.chart.destroy() : void 0;
+        })
+      }
     },
     chartLeave: function(index) {
       if (index != undefined) {

@@ -132,8 +132,10 @@ $(function() {
         if (_.isArray(arr)) {
           var arr = JSON.parse(JSON.stringify(arr));
 
-          return arr.sort(function(item) {
-            return item.energyItemId;
+          return arr.sort(function(a,b) {
+            
+            return a.energyItemId < b.energyItemId ? 1 : -1;
+            //return item.energyItemId;
           });
         } else {
           return [];
@@ -286,6 +288,9 @@ $(function() {
     },
     watch: {},
     filters: {
+      x100: x100,
+      floor: floor,
+      v3: v3,
       to3: to3,
       //转换成为百分比的内容
       convertPercentage: function(num) {

@@ -55,7 +55,7 @@ v.pushComponent({
             closePlanFloat();
             planManController.getPlanTotalChart(this.monthPlanInfo, this.allocatePlanType);
         },
-
+        // 加减点击事件
         planEnergyUpDown: function (item, param) {//上下箭头 click
             var _this = this;
             if (_this.countParams.countClick) {
@@ -104,8 +104,6 @@ v.pushComponent({
                 item.energyDataPlan = Math.round(item.energyPlanRatio * v.instance.monthPlanInfo.monthRemainData / 100);//计划
             }
 
-
-
             _this.countParams.countInterval = setInterval(function () {
 
                 var count = (++num > 3) ? 1 : 0.1;
@@ -146,6 +144,7 @@ v.pushComponent({
 
         removeCount: function () {
             var _this = this;
+            _this.countParams.countClick = false;
             clearInterval(_this.countParams.countInterval);
         },
 
@@ -205,11 +204,8 @@ v.pushComponent({
             this.planCountPlus = false;
         },
         sureCountResult: function () {//确定计算结果
-            if (this.planCountPlus) {
-                var $input = $("#plusPlanInput");
-            } else {
-                var $input = $("#minusPlanInput");
-            }
+            
+            var $input = $("#plusPlanInput");
 
             var val = $input.val();
             if (this.planCountPlus) {

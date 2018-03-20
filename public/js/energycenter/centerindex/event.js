@@ -2,7 +2,7 @@ function budgetFillInputBlur(){
     document.getElementById("TotalBudgetFill").getElementsByTagName('input')[0].addEventListener('input',function(){
         var t = v._instance, x = t.projectBudgetEditCache, y = t.indexBudgerWarn;
         var a = $("#TotalBudgetFill input").val() != "" ? Number($("#TotalBudgetFill input").val()) : NaN, b=x.square, c=x.remark;
-        x.total = a != NaN && a > 0 ? ~~x.total : null;
+        x.total = a != NaN && a > 0 ? parseInt(x.total) : null;
         if(x.total === null){
             y.total = true;
             $("#IRW2").text("请输入正整数");
@@ -17,14 +17,14 @@ function budgetFillInputBlur(){
     document.getElementById("squareBudgetFill").getElementsByTagName('input')[0].addEventListener('input',function(){
         var t = v._instance, x = t.projectBudgetEditCache, y = t.indexBudgerWarn;
         var a = $("#squareBudgetFill input").val() != "" ? Number($("#squareBudgetFill input").val()) : NaN, b=x.total, c=x.remark;
-        x.square = a != NaN && a > 0 ? ~~x.square : null;
+        x.square = a != NaN && a > 0 ? parseInt(x.square) : null;
         if(x.square === null){
             y.square = true;
             $("#IRW3").text("请输入正整数");
         }else{
             y.total = false;
             y.square = false;
-            x.total =  a > 0 ? t.projectBudgetEditCache.square*t.projectSel.projectInfo.area : 0;
+            x.total =  a > 0 ? Math.multiplication(t.projectBudgetEditCache.square,t.projectSel.projectInfo.area) : 0;
         }
         iThreePve()
     })

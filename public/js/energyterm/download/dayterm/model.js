@@ -228,6 +228,9 @@ $(function() {
     },
     watch: {},
     filters: {
+      x100: x100,
+      floor: floor,
+      v3: v3,
       to3: to3,
       //转换成为百分比的内容
       convertPercentage: function(num) {
@@ -265,7 +268,7 @@ $(function() {
   app.init().then(function() {
     setTimeout(function() {
       var arr = createHtml("#monthtotal");
-  
+
       pajax.post({
         url: "/FNPJ_GetReportResource",
         data: {
@@ -323,6 +326,4 @@ $(function() {
       "\n    </body>\n    \n    </html>"
     );
   };
-
-
 });

@@ -28,7 +28,7 @@
                 <div class="backButton" @click.capture="budgetGoBackMain()">
                     <pbutton-white icon="I"></pbutton-white>
                 </div>
-                <em class="clickTitle" @click.capture="budgetGoBackMain()">首页</em>
+                <em class="clickTitle" @click.capture='v.initPage("more_build")'>首页</em>
                 <em class="line">/</em>
                 <span class="boldColor">预算管理</span>
             </div>
@@ -148,7 +148,7 @@
                             </div>
                         </div>
                         <div class="bBottom">
-                            <span class="editBudget" v-bind:title="item.state==0?'预算已被锁定，无法编辑':''" v-bind:class="{'budDisable':item.state==0}" v-on:click="hideModifyRecordFloat(),showEditPanel(item)"
+                            <span class="editBudget" v-bind:title="item.state==0?'预算已被锁定，无法编辑':''" v-bind:class="{'budDisable':item.state==0}" v-on:click="hideModifyRecordFloat(),showEditPanel(item,$event)"
                                 v-show="item.isNextMonth&&item.ifHasBudget">
                                 <em class="picEm">`</em>编辑预算</span>
                             <div class="downBudget" v-show="!item.isNextMonth" v-on:click="hideModifyRecordFloat(),downMonthReport(item)">

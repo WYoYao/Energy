@@ -56,7 +56,7 @@
     <!-- 表格 -->
     <div id="I_foot">
 
-        <div class="I_foot_head clear" :style="{width:noscW}">
+        <div class="I_foot_head clear">
             <div class="wid0"></div>
 
             <div :class="!NotSelFutureMonth ? 'wid1' : indexPage.energy ? 'wid31' : 'wid61'">
@@ -146,55 +146,87 @@
 
         </div>
 
-        <div class="I_foot_neck" :style="{width:noscW}">
+        <div class="I_foot_neck">
             <div class="wid0"></div>
             <div class="MSYB" :class="!NotSelFutureMonth ? 'wid1' : indexPage.energy ? 'wid31' : 'wid61'">项目总和</div>
             <div :class="!NotSelFutureMonth ? 'wid2' : indexPage.energy ? 'wid32' : 'wid62'"></div>
             <div :class="!NotSelFutureMonth ? 'wid3' : indexPage.energy ? 'wid33' : 'wid63'"></div>
             <div class="ABM tTM" :class="!NotSelFutureMonth ? 'wid4' : indexPage.energy ? 'wid34' : 'wid64'">{{projectInfo.areaSumShowShow}}</div>
-            <div class="ABM tTM" :class="!NotSelFutureMonth ? 'wid5' : indexPage.energy ? 'wid35' : 'wid65'">{{projectInfo.budgetDataSumShow}}</div>
+            <div class="ABM" :class="!NotSelFutureMonth ? 'wid5' : indexPage.energy ? 'wid35' : 'wid65'">
+                <div class="box2 tTM">{{projectInfo.budgetDataSumShow}}</div>
+            </div>
             <div :class="!NotSelFutureMonth ? 'wid6' : indexPage.energy ? 'wid36' : 'wid66'"></div>
             <div :class="!NotSelFutureMonth ? 'wid7' : indexPage.energy ? 'wid37' : 'wid67'"></div>
-            <div class="ABM tTM" :class="!NotSelFutureMonth ? 'wid8' : indexPage.energy ? 'wid38' : 'wid68'">{{projectInfo.energyDataSumShow}}</div>
+            <div class="ABM" :class="!NotSelFutureMonth ? 'wid8' : indexPage.energy ? 'wid38' : 'wid68'">
+                <div class="box2 tTM">{{projectInfo.energyDataSumShow}}</div>
+            </div>
             <div class="ABM" :class="!NotSelFutureMonth ? 'wid9' : indexPage.energy ? 'wid39' : 'wid69'">
-                <div class="tTM" :class="projectInfo.realBudgetRatioShow !=noData ?  projectInfo.realBudgetRatioSum > 1 ? 'redFont' : 'greenFont' : void 0">{{projectInfo.realBudgetRatioShow}}</div>
+                <div class="tTM box5" :class="projectInfo.realBudgetRatioShow !=noData ?  projectInfo.realBudgetRatioSum > 1 ? 'redFont' : 'greenFont' : void 0">{{projectInfo.realBudgetRatioShow}}</div>
             </div>
             <div :class="!NotSelFutureMonth ? 'wid30' : indexPage.energy ? 'wid40' : 'wid70'"></div>
         </div>
 
         <div class="I_foot_ul_wrap">
+
             <ploading-part id="IGpartloading" text="努力加载中..."></ploading-part>
+
             <ul id="I_foot_ul" @mouseleave="indexGridLeave" v-show="Iloading == 0" :style="{width:noscWW}">
-                <li class="I_foot_li" :style="{width:noscW}" v-for="(item,index) in projectInfo.projectInfo" @click.stop="item.noneDataType != -1 ? IndexBudgetWindowOpenReady(item) : void 0"
-                    @mouseenter="indexGridHover(index)">
-                    <div class="wid0" :title="index+1">{{index+1}}</div>
-                    <div :class="!NotSelFutureMonth ? 'wid1' : indexPage.energy ? 'wid31' : 'wid61'" :title="item.projectName">{{item.projectName}}</div>
-                    <div class="tTM" :class="!NotSelFutureMonth ? 'wid2' : indexPage.energy ? 'wid32' : 'wid62'" :title="item.projectTypeName">{{item.projectTypeName}}</div>
-                    <div class="tTM" :class="!NotSelFutureMonth ? 'wid3' : indexPage.energy ? 'wid33' : 'wid63'" :title="item.climateName">{{item.climateName}}</div>
-                    <div class="tTM AMT" :class="!NotSelFutureMonth ? 'wid4' : indexPage.energy ? 'wid34' : 'wid64'" :title="item.area">{{item.area}}</div>
-                    <div class="tTM AMT" :class="!NotSelFutureMonth ? 'wid5' : indexPage.energy ? 'wid35' : 'wid65'" :title="item.budgetDataShow" v-if="item.noneDataType==0">{{item.budgetDataShow}}</div>
+                <li class="I_foot_li" :style="{width:noscW}" v-for="(item,index) in projectInfo.projectInfo" @click.stop="item.noneDataType != -1 ? IndexBudgetWindowOpenReady(item) : void 0" @mouseenter="indexGridHover(index)">
+                    
+                    <div class="wid0 tTM" :title="index+1">
+                        <div class="box tTM">{{index+1}}</div>
+                    </div>
+
+                    <div :class="!NotSelFutureMonth ? 'wid1' : indexPage.energy ? 'wid31' : 'wid61'" :title="item.projectName">
+                        <div class="box tTM">{{item.projectName}}</div>
+                    </div>
+
+                    <div :class="!NotSelFutureMonth ? 'wid2' : indexPage.energy ? 'wid32' : 'wid62'" :title="item.projectTypeName">
+                        <div class="box tTM">{{item.projectTypeName}}</div>
+                    </div>
+
+                    <div :class="!NotSelFutureMonth ? 'wid3' : indexPage.energy ? 'wid33' : 'wid63'" :title="item.climateName">
+                        <div class="box tTM">{{item.climateName}}</div>
+                    </div>
+
+                    <div class="AMT" :class="!NotSelFutureMonth ? 'wid4' : indexPage.energy ? 'wid34' : 'wid64'" :title="item.area">
+                        <div class="box tTM">{{item.area}}</div>
+                    </div>
+
+                    <div class="AMT" :class="!NotSelFutureMonth ? 'wid5' : indexPage.energy ? 'wid35' : 'wid65'" :title="item.budgetDataShow" v-if="item.noneDataType==0">
+                        <div class="box box3 tTM">{{item.budgetDataShow}}</div>
+                    </div>
+
                     <div class="AMT" :class="!NotSelFutureMonth ? 'wid6' : indexPage.energy ? 'wid36' : 'wid66'" :title="item.budgetRatioSameShow" v-if="item.noneDataType==0" >
-                        <div class="tTM" :class="item.budgetRatioSameShow != noData ? item.budgetRatioSame > 0 ? 'redFont' : 'greenFont' : void 0">
+                        <div class="tTM box" :class="item.budgetRatioSameShow != noData ? item.budgetRatioSame > 0 ? 'redFont' : 'greenFont' : void 0">
                             <a v-show="item.budgetRatioSameShow != noData && item.budgetRatioSame > 0">+</a>{{item.budgetRatioSameShow}}
                         </div>
                     </div>
+
                     <div class="AMT" :class="!NotSelFutureMonth ? 'wid7' : indexPage.energy ? 'wid37' : 'wid67'" :title="item.budgetRatioCircleShow" v-if="item.noneDataType==0" >
-                        <div class="tTM" :class="item.budgetRatioCircleShow != noData ? item.budgetRatioCircle > 0 ? 'redFont' : 'greenFont' : void 0">
+                        <div class="tTM box" :class="item.budgetRatioCircleShow != noData ? item.budgetRatioCircle > 0 ? 'redFont' : 'greenFont' : void 0">
                             <a v-show="item.budgetRatioCircleShow != noData && item.budgetRatioCircle > 0">+</a>{{item.budgetRatioCircleShow}}
                         </div>
                     </div>
-                    <div class="tTM AMT" :class="!NotSelFutureMonth ? 'wid8' : indexPage.energy ? 'wid38' : 'wid68'" :title="item.energyDataShow" v-if="item.noneDataType==0">{{item.energyDataShow}}</div>
+
+                    <div class="AMT" :class="!NotSelFutureMonth ? 'wid8' : indexPage.energy ? 'wid38' : 'wid68'" :title="item.energyDataShow" v-if="item.noneDataType==0">
+                        <div class="box tTM box3">{{item.energyDataShow}}</div>
+                    </div>
+
                     <div class="tTM AMT" :class="!NotSelFutureMonth ? 'wid9' : indexPage.energy ? 'wid39' : 'wid69'" :title="item.realBudgetRatioShow" v-if="item.noneDataType==0">
-                        <div :class="item.realBudgetRatioShow != noData ? item.realBudgetRatio > 1 ? 'redFont' : 'greenFont' : void 0 ">{{item.realBudgetRatioShow}}</div> 
+                        <div class="box box4" :class="item.realBudgetRatioShow != noData ? item.realBudgetRatio > 1 ? 'redFont' : 'greenFont' : void 0 ">{{item.realBudgetRatioShow}}</div> 
                     </div> 
+
                     <div class="tTM" :class="!NotSelFutureMonth ? 'wid10' : indexPage.energy ? 'wid40' : 'wid70'" v-if="item.noneDataType==0">
                         <div class="grayblueFont lookplan" v-show="item.ifSetPlan" @click.stop="EnergyPlanOpen(item)">查看计划</div>
                         <div class='greyFont lookplan' v-show="!item.ifSetPlan">无</div>
                     </div>
+
                     <div :class="!NotSelFutureMonth ? 'wid12' : indexPage.energy ? 'wid42' : 'wid72'" v-if="item.noneDataType != 0">
                         <div v-if="item.noneDataType == -1">项目该月未上线,无数据……</div>
                         <div v-if="item.noneDataType == 1">项目该月数据质量不合格</div>
                     </div>
+
                     <div :class="!NotSelFutureMonth ? 'wid11' : indexPage.energy ? 'wid41' : 'wid71'">
                         <div>
                             <pbutton-blue isborder="false" text="'查看能耗详情'" bind="true" disabled="item.noneDataType == -1 || !NotSelFutureMonth" @click.stop="openEnergyByProject(item)"></pbutton-blue>
@@ -203,6 +235,7 @@
                 </li>
             </ul>
         </div>
+
     </div>
 
     <div id="Chartwrap">

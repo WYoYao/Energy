@@ -38,7 +38,7 @@ v.pushComponent({
             pizhu2:false
         },
         noscW:'100%',
-        noscWW:'100%',
+        noscWW:'calc(100% + 17px)',
         ItabArr:[{name:"  能耗  "},{name:"单平米能耗"}]
     },
     methods:{
@@ -371,26 +371,34 @@ v.pushComponent({
         },
         // 汉字城市拼音排序
         indexChineseSort : function(data){
-            var cacheHZ = [],cachePY = [];
-            data.forEach(function(item){
-                var a = 0;
-                cityGather.forEach(function(model){
-                    if(item.projectName.indexOf(model.name) != -1){
-                        item.PY = model.pinyin;
-                        cachePY.push(item);
-                        a++;
-                    }
-                })
-                a == 0 ? cacheHZ.push(item) : a = 0;
+            data.sort(function(a,b){
+                var PA = a.projectName.split("")[0] == '长' ? '常' + a.projectName.split("")[1] : a.projectName;
+                var PB = b.projectName.split("")[0] == '长' ? '常' + b.projectName.split("")[1] : b.projectName;
+                return PA.localeCompare(PB, 'zh-Hans-CN', {sensitivity: 'accent'});
             })
-            cachePY.sort(function(a,b){
-                return a.PY > b.PY ? 1 : -1
-            })
-            cacheHZ.sort(function(a,b){
-                return a.projectName.localeCompare(b.projectName, 'zh-Hans-CN', {sensitivity: 'accent'})
-            })
-            return cachePY.concat(cacheHZ);
+            return data;
         },
+        // indexChineseSort : function(data){
+        //     var cacheHZ = [],cachePY = [];
+        //     data.forEach(function(item){
+        //         var a = 0;
+        //         cityGather.forEach(function(model){
+        //             if(item.projectName.indexOf(model.name) != -1){
+        //                 item.PY = model.pinyin;
+        //                 cachePY.push(item);
+        //                 a++;
+        //             }
+        //         })
+        //         a == 0 ? cacheHZ.push(item) : a = 0;
+        //     })
+        //     cachePY.sort(function(a,b){
+        //         return a.PY > b.PY ? 1 : -1
+        //     })
+        //     cacheHZ.sort(function(a,b){
+        //         return a.projectName.localeCompare(b.projectName, 'zh-Hans-CN', {sensitivity: 'accent'})
+        //     })
+        //     return cachePY.concat(cacheHZ);
+        // },
         indexGridHover : function(index){
             chart.chart.xAxis[0].removePlotBand('thisProject');
             chart.chart.xAxis[0].addPlotBand({
@@ -643,6 +651,8 @@ v.pushComponent({
                     PDFChart.update('energyPercent',chartdata[2]);
                 }
             }
+            var DOM = $("#I_foot_ul")[0];
+            DOM.style.overflowY = "hidden";
             this.noscW = "100%";
             setTimeout(function(){
                 var param = {
@@ -650,6 +660,7 @@ v.pushComponent({
                     "fileName":"能耗预算项目列表"
                 }
                 v._instance.noscW = $(".I_foot_ul_wrap")[0].clientWidth + 'px';
+                DOM.style.overflowY = "scroll";
                 $("#I_shadow").hide();
                 pajax.post({
                     url: '/FNPJ_GetReportResource',
@@ -663,13 +674,14 @@ v.pushComponent({
             },1000)
         },
         //页面跳转
-        //切换到项目能耗详情页面，将当前所选项目以及时间传递给index.js存储
+        //切换到项目能耗详情页面，将当前所选项目以及时间传递给实例根组件存储
         openEnergyByProject : function(model){
             this.projectUserSel = model;
             var time = new Date($("#I_head_ptime").psel().startTime);
             this.projectUserSel.timeDay = time.format("yyyy-M-d h:m:s");
             this.projectUserSel.timeDayShow = time.format("yyyy.M");
             this.projectUserSel.time = $("#I_head_ptime").psel();
+            // 销毁highchart图表
             window.chart.chart.destroy();
             //跳到月能耗页面时将本页面筛选参数存到vue根实例中
             this.indexUserSelParam = this.createGetListParam();
@@ -754,7 +766,7 @@ v.pushComponent({
                 data = JSON.parse(JSON.stringify(data));
                 _this.projectSel.projectRemark = data.map(function(item){
                     item.operateUserShow = item.operateUser == null ? _this.noData : item.operateUser;
-                    item.energyDataBudgetShow = item.energyDataBudget == null ? _this.noData : toThousands(Math.ceil(item.energyDataBudget));
+                    item.energyDataBudgetShow = item.energyDataBudget == null ? _this.noData : toThousands(BD(item.energyDataBudget));
                     return item
                 })
             },function(){
@@ -765,6 +777,8 @@ v.pushComponent({
         getProjectHistoryBudget : function(){                        
             var date = getThisMonth();
             var _Month = getThisMonth().format("M");
+            var __Month = TC(this.projectSel.projectInfoReady.timeFrom);
+            __Month = new Date(__Month).format("M");
             var paramObj = {
                 buildingId:this.projectSel.projectInfoReady.buildingId,
                 startDate:(new Date(date.setFullYear(date.getFullYear() - 1))).format('yyyy-M-d h:m:s'),
@@ -777,8 +791,8 @@ v.pushComponent({
                 _this.projectSel.projectHistoryBudget = data[0].dataList.map(function(item){
                     var time = item.time.split("-");
                     item.timeUsed = time[0]+"."+time[1];
-                    item.HN = time[1] == _Month ? true : false;                                     //HN 是否为历史月
-                    item.hovered = time[1] == _Month ? true : false;
+                    item.HN = time[1] == __Month ? true : false;                                     //HN 是否为历史月
+                    item.hovered = time[1] == __Month ? true : false;
                     item.energyDataBudgetShow = item.energyDataBudget == null ? _this.noData : toThousands(BD(item.energyDataBudget));                           
                     item.energyDataRealShow = item.energyDataReal == null ? _this.noData : toThousands(RD(item.energyDataReal));
                     item.energyPercent = item.energyDataBudget != null && item.energyDataReal != null && item.energyDataBudget != 0 ? FBI(item.energyDataReal/item.energyDataBudget*100) : _this.noData;
@@ -970,19 +984,15 @@ v.pushComponent({
             //清除预算管理缓存                    
             // this.clearAllBudgetCache();           
         },
-        indexGetNowBudgetItemId(){
-            var budgetItemId;
+        indexGetNowBudgetItemId : function(){
+            var budgetItemId="";
             // 若改月预算管理节点进行了更新
             if(this.projectSel.projectInfo.isBudgetUpdated){
-                // 若该月为未来月
-                if(this.projectSel.projectInfo.planDate > getThisMonth().format('yyyy-M-d h:m:s')){
-                    budgetItemId = this.projectSel.projectInfo.newBudgetItemId;
-                // 若该月为当前月
-                }else if(this.projectSel.projectInfo.planDate == getThisMonth().format('yyyy-M-d h:m:s')){
-                    budgetItemId = this.projectSel.projectInfo.ifHasBudget ? this.projectSel.projectInfo.budgetItemId : this.projectSel.projectInfo.newBudgetItemId;
-                // 若该月为历史月
-                }else{
+                // 如果旧节点有预算就返回旧节点ID，否则返回新节点ID
+                if(this.projectSel.projectInfo.ifHasBudget){
                     budgetItemId = this.projectSel.projectInfo.budgetItemId;
+                }else{
+                    budgetItemId = this.projectSel.projectInfo.newBudgetItemId;
                 }
             }else{
                 budgetItemId = this.projectSel.projectInfo.budgetItemId;

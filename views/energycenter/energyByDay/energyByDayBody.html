@@ -34,7 +34,7 @@
                 <div class="text124 text14">日计划</div>
                 <div>
                     <span class="moreblackFont text24" v-if="DItemEnergyData.energyPlan==null">{{noData}}</span>
-                    <span class="moreblackFont tTM text24 box1 textfl" v-if="DItemEnergyData.energyPlan!=null" :title="toThousands(Math.ceil(DItemEnergyData.energyPlan)) + 'kWh'">{{toThousands(BD(DItemEnergyData.energyPlan))}}</span>
+                    <span class="moreblackFont tTM text24 box1 textfl" v-if="DItemEnergyData.energyPlan!=null" :title="toThousands(BD(DItemEnergyData.energyPlan)) + 'kWh'">{{toThousands(BD(DItemEnergyData.energyPlan))}}</span>
                     <span class="text14 text118 textfl" v-if="DItemEnergyData.energyPlan!=null">kWh</span>
                 </div>
             </div>
