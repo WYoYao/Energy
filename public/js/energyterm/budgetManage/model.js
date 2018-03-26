@@ -17,7 +17,8 @@ v.pushComponent({
     budgetBuildSel: null
   },
   methods: {
-    hideModifyRecordFloat: function() {
+    hideModifyRecordFloat: function(bool) {
+      if (bool !== true) $(".budgetPop").hide();
       $("#modifyRecordFloat").phide();
     },
     showSetPlanWindow: function() {
@@ -30,18 +31,21 @@ v.pushComponent({
     ideItem: function(event, item) {
       var _that = this;
 
-      if (
-        !(
-          _.isArray(_that.energyBudgetList) &&
-          _that.energyBudgetList.filter(function(info) {
-            return info == item && item.showPage == "editPage";
-          }).length
-        )
-      ) {
-        _that.PopClick();
-      } else {
+      var filter = _that.energyBudgetList.filter(function(info) {
+        return (
+          info == item &&
+          (item.showPage == "editPage" || item.showPage == "changeWarn")
+        );
+      })[0];
+
+      // 点击事件是从当前窗口传出的不做任何的操作
+      if (item == filter) {
         event.stopPropagation();
         event.preventDefault();
+        return false;
+      } else {
+        // 点击其他的窗口直接关闭内容
+        _that.PopClick();
       }
     },
     // 冒泡到最低层,如果用户在编辑状态下点击其他功能关闭编辑状态
@@ -50,25 +54,15 @@ v.pushComponent({
       if (_.isArray(_that.energyBudgetList)) {
         _that.energyBudgetList.forEach(function(item, index) {
           if (item.showPage == "editPage" || item.showPage == "changeWarn") {
-            _that.enerBudgetListCopy[index].showPage =
-              _that.enerBudgetListCopy[index].ifHasBudget ||
-              _that.enerBudgetListCopy[index].isPastMonth
-                ? "dataPage"
-                : "newCreate";
-
+            _that.enerBudgetListCopy[index].showPage = getPageType(
+              _that.enerBudgetListCopy[index]
+            );
             v.instance.closeEditPanel(item, index);
-
-            // _that.energyBudgetList[index]
-            // _that.energyBudgetList[index].showPage = (_that.energyBudgetList[index].ifHasBudget || _that.energyBudgetList[index].isPastMonth) ? 'dataPage' : 'newCreate';
-            // var copyObj = JSON.parse(JSON.stringify(v.instance.enerBudgetListCopy[index]));
-
-            // item.showPage = (item.ifHasBudget || item.isPastMonth) ? 'dataPage' : 'newCreate';
           }
 
           return item;
         });
       }
-
       chartBackNormal();
     },
     downMonthReport: function(item) {
@@ -134,27 +128,45 @@ v.pushComponent({
       chartBackNormal(); //chart恢复默认
     },
     showEditPanel: function(item, e) {
+      var _that = this;
+
       //编辑预算显示
       if (item.state == 0) {
         return;
       }
-      if (item.isBudgetUpdated) {
-        //如果更新了
-        item.showPage = "changeWarn";
-        e.stopPropagation();
-        event.preventDefault();
-        return false;
-      }
-      beforeEditOperate(item);
-
-      item.showPage = "editPage";
-      item.operate = "编辑预算";
+      // 找到相对的项关闭对应的窗口
+      _that.energyBudgetList.forEach(function(info) {
+        if (info == item) {
+          // 判断节点是否更新
+          if (!info.isBudgetUpdated) {
+            // 编辑预算
+            beforeEditOperate(info);
+            info.showPage = "editPage";
+            info.operate = "编辑预算";
+          } else {
+            //判断是否更新节点
+            info.showPage = "changeWarn";
+          }
+        } else {
+          // 不是相关的全部的修改的
+          info.showPage = getPageType(info);
+        }
+      });
     },
-    createNewBudget: function(item) {
+    createNewBudget: function(item, event) {
+      var _that = this;
+
       //创建预算显示
       item.showPage = "editPage";
       item.operate = "创建预算";
       beforeEditOperate(item);
+
+      // 20180326  leo 修改新建预算弹窗不添加验证事件
+      _that.$nextTick(function() {
+        _that.changeOnRemarkInput(item, {
+          currentTarget: $(event.currentTarget).parents(".itemBlock")
+        });
+      });
     },
     againCreate: function(item, event) {
       //有更新 重新创建预算
@@ -172,6 +184,14 @@ v.pushComponent({
       item.ifHasPlan = false; //不显示提示
 
       item.againCreateBudget = true; //是重新创建预算
+
+      // 20180326  leo 修改新建预算弹窗不添加验证事件
+      var _that = this;
+      _that.$nextTick(function() {
+        _that.changeOnRemarkInput(item, {
+          currentTarget: $(event.currentTarget).parents(".itemBlock")
+        });
+      });
     },
     continueEdit: function(item) {
       //不更新 继续编辑
@@ -209,6 +229,7 @@ v.pushComponent({
       budgetController.saveEditBudget(item, callback); //保存预算
     },
     showModifyRecord: function(item) {
+      bodyClick();
       //备注信息 todo  名字
       var month = item.planDateStr.replace(".", "年") + "月";
       var titleStr =
@@ -235,6 +256,8 @@ v.pushComponent({
       budgetController.saveEditBudget(this.selEnergyBudget, callback, "remark"); //保存备注
     },
     showEditPlan: function(item, event) {
+      //  未来月没有更新节点的时候点击无效
+      if (item.isBudgetUpdated && !item.isNowMonth && !item.ifHasPlan) return;
       //显示编辑计划
       var _this = this;
       _this.setPlanBudget = item;
@@ -449,13 +472,21 @@ function beforeEditOperate(item, isNew) {
 }
 function chartBackNormal() {
   // here
-  budgetController.historyEnergyChart &&
+  if (
+    budgetController.historyEnergyChart &&
     budgetController.historyEnergyChart.yAxis &&
+    budgetController.historyEnergyChart.yAxis[0].plotLinesAndBands[0]
+  ) {
     budgetController.historyEnergyChart.yAxis[0].removePlotLine("averPlotLine");
+  }
+
   //在柱图上去掉标注
   var chartDataObj = getChartDataObj(budgetController.chartDataList, "renew");
 
   try {
+    window.testArr
+      ? window.testArr.push("填充数据" + new Date().getTime())
+      : (window.testArr = []);
     budgetController.historyEnergyChart.series[0] &&
       budgetController.historyEnergyChart.series[0].setData(
         chartDataObj.enerBudgetList

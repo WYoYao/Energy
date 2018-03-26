@@ -233,36 +233,6 @@ if (typeof Date.prototype.isToMonth != "function") {
   };
 }
 
-//console.log(new Date().isToMonth());
-
-//  转换成为地方特色的数字单位
-function toThousands(num) {
-  if (!_.isNumber(num)) return 0;
-
-  if (_.isNaN(num)) return 0;
-
-  if (!num) return 0;
-
-  num = _.floor(num);
-
-  if (Object.prototype.toString.call(num).slice(8, -1) != "Number")
-    throw new TypeError("arguments must be Number");
-
-  // 转换为字符
-  num = num.toString();
-
-  // 正常函数直接返回本地的方法
-  if (!/\./.test(num)) return (+num).toLocaleString();
-
-  // 小数点分割
-  num = num.split(/\./);
-
-  return (+num[0]).toLocaleString() + "." + num[1];
-}
-
-// console.log(toThousands(11111111111111))
-// console.log(toThousands(11111.111111))
-
 // 转换成为百分比的内容
 function convertPercentage(num) {
   return num * Math.pow(10, 2);
@@ -505,22 +475,6 @@ var loadding = new SetLoading(
 
 var v = new VueReady("#app");
 
-// 小于 1 显示三位小数
-var to3 = function(num) {
-  // 验证对应的参数
-  if (!_.isNumber(num)) num = 0;
-
-  return num < 1 ? _.floor(num, 3) : _.floor(num, 1);
-};
-
-// 地板除
-var toCom = function(num) {
-  // 验证对应的参数
-  if (!_.isNumber(num)) num = 0;
-
-  return _.floor(num);
-};
-
 //  全局全局公用的方法的和属性
 v.pushComponent({
   name: "global",
@@ -529,9 +483,11 @@ v.pushComponent({
     onPage: "",
     noData: "--",
     NodeManageModel: {}, // 编辑的预算节点 和计划管理节点时候需要查询的节点信息
-    projectId: ""
+    projectId: "",
+    checkboxModel: window.localStorage.getItem("cooky") == "true"
   },
   methods: {
+    bodyClick: bodyClick,
     toThousands: toThousands,
     convertPercentage: convertPercentage,
     arr2tree: arr2tree,
@@ -540,12 +496,15 @@ v.pushComponent({
     selThisMonth: selThisMonth,
     getToday: getToday,
     getMonthLastDay: getMonthLastDay,
-    to3: to3,
-    toCom: toCom
+    x100: x100,
+    v3: v3,
+    floor: floor
   },
   filters: {
-    to3: to3,
-    toCom: toCom
+    x100: x100,
+    v3: v3,
+    floor: floor,
+    toThousands: toThousands
   }
   // watch: {
   //     onPage: function () {
@@ -620,7 +579,7 @@ function canNotSelectFutureDay(date, el, isMonth) {
   if (isMonth)
     var toMonth = +new Date(new Date().format("yyyy/MM") + "/01 00:00:00");
 
-  date >= (isMonth ? toMonth : getTodayTime())
+  date == (isMonth ? toMonth : getTodayTime())
     ? _el.attr("pdisabled", "true")
     : _el.attr("pdisabled", "false");
 }

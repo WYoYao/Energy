@@ -1,20 +1,15 @@
 function DTimeSel() {
-
-    var _date = $("#energyByDayHead_ptime").psel().startTime;
+    // var el = v._instance.onPage == 'energybyday' ? $("#energyByDayHead_ptime") : $("#daterightdate");
+    var el = $("#energyByDayHead_ptime");
+    var _date = el.psel().startTime;
     var TDate = v._instance.getToday().getTime();
     if (_date <= TDate) {
         v._instance.DTimeSel();
-        canNotSelectFutureDay(_date, 'energyByDayHead_ptime');
     } else {
         $("#globalnotice").pshow({ text: "该日未发生能耗", state: "failure" });
-        $("#energyByDayHead_ptime").psel({ startTime: TDate });
+        el.psel({ startTime: TC(v._instance.DbaseMessage.timeFrom)},false);
     }
-
-}
-function canNotSelectFutureDay(date, el) {
-    el = window.document.getElementById(el);
-    var _el = $(el).find(".per-squarebutton-grayBorder").eq(1);
-    date == getTodayTime() ? _el.attr("pdisabled", "true") : _el.attr("pdisabled", "false");
+    cantSelectFutureDay(el.psel().startTime,'energyByDayHead_ptime');
 }
 function isToday(time) {
     var date = new Date();

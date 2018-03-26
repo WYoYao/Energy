@@ -1,4 +1,4 @@
-var Datehistorys = [new Date().format("yyyy-MM-dd hh:mm:ss")];
+var Datehistorys = [getThisMonth().format("yyyy-MM-dd hh:mm:ss")];
 
 v.pushComponent({
   name: "more_build",
@@ -18,6 +18,15 @@ v.pushComponent({
     isSettingbudget: ""
   },
   methods: {
+    //根据SELECTED 值来返回对应的背景颜色
+    getBlueColor: function(SELECTED) {
+      return {
+        background:
+          "rgba(2, 169, 209, " +
+          [0.4, 0.55, 0.7, 0.85, 1][SELECTED] +
+          ") !important"
+      };
+    },
     //  设置预算管理节点
     Settingbudget: function(item) {
       var _that = this,
@@ -124,7 +133,7 @@ v.pushComponent({
 
       if (+new Date() < +new Date(TC(start))) {
         $("#globalnotice").pshow({
-          text: "请选择当前及历史月份",
+          text: "该月未发生能耗",
           state: "failure"
         });
 
@@ -147,10 +156,10 @@ v.pushComponent({
       _el.attr(
         "pdisabled",
         +new Date(new Date().format("yyyy/MM/") + "01 00:00:00") ==
-          +new Date(start)
+          +new Date(TC(start))
       );
 
-      Datehistorys.push(+new Date(start));
+      Datehistorys.push(+new Date(TC(start)));
 
       if (_that.onBlock == "more") {
         _that.currentBuild = _that.BuildingsCed[0];
@@ -244,7 +253,8 @@ v.pushComponent({
           _that.alarmwindow = false;
 
           //  如果当前在列表页面重新获取数据
-          if (_that.onBlock == "list") _that.createGetProjectEnergyParam();
+          if (_that.onBlock == "list") _that.ebpRenderControl();
+          if (_that.onBlock == "more") _that.queryBuildingEnergy();
         })
         .catch(function() {
           $("#globalnotice").pshow({ text: "保存失败！", state: "failure" });
@@ -305,13 +315,13 @@ v.pushComponent({
           : 0;
 
         // 实际能耗 和 目标能耗的 千位转换
-        item.monthEnergyData = item.monthEnergyData
-          ? _that.toThousands(item.monthEnergyData)
-          : item.monthEnergyData;
+        // item.monthEnergyData = item.monthEnergyData
+        //   ? _that.toThousands(item.monthEnergyData)
+        //   : item.monthEnergyData;
 
-        item.monthBudgetData = item.monthBudgetData
-          ? _that.toThousands(item.monthBudgetData)
-          : item.monthBudgetData;
+        // item.monthBudgetData = item.monthBudgetData
+        //   ? _that.toThousands(item.monthBudgetData)
+        //   : item.monthBudgetData;
 
         // 百分比数字
         item.proportionNumber =

@@ -53,6 +53,7 @@ function iThreePve(){
     v._instance.indexPage.budgetCanSave =  t.total != null && t.square != null && (t.remark != null ? t.remark.toString().length < 101 ? true : false : true) ? true : false;
 }
 function indexTimeSel(){
+    bodyClick();
     v._instance.indexIsThisMonth();
     v._instance.indexRefreshRender();
 }
@@ -131,6 +132,7 @@ function indexGridSortClick(index){
         $(".I_grid_pic").eq(index).find("i").eq(1).css("color","#C3CDD0"); }
 }
 function indexPageC(){
+    bodyClick();
     v._instance.indexPageChange();
 }
 function allSortRecover(){
@@ -138,4 +140,11 @@ function allSortRecover(){
     for(var i=0;i<$elG.length;i++){
         $($elG[i]).css("color","#C3CDD0");
     }
+}
+
+
+function ifTimeWasShow(){
+    var DOM = $("#I_head_ptime .per-calendar-con")[0];
+    var isShow = DOM.style.display;
+    isShow == 'none' ? void 0 : DOM.style.display = 'none';
 }

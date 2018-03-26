@@ -3,7 +3,6 @@ v.pushComponent({
   data: {
     NodeManage: [], //预算管理列表
     subOptionTop: 0,
-    checkboxModel: true
   },
   methods: {
     // 跳转预算管理节点管理页面
@@ -17,14 +16,21 @@ v.pushComponent({
     // 记录用户点击时间
     localStorage: function() {
       this.hover = false;
-      if (window.localStorage.getItem("cooky") !== "true")
+
+      var cooky = window.localStorage.getItem("cooky") == "true";
+
+      if (cooky) {
+        this.checkboxModel = true;
+      } else {
+        this.checkboxModel = false;
         v.instance.hover = true;
+      }
     },
     setStorage: function() {
       var _that = this;
 
       try {
-        window.localStorage.setItem("cooky", _that.checkboxModel);
+        // window.localStorage.setItem("cooky", _that.checkboxModel);
       } catch (error) {
       } finally {
         _that.hover = false;
@@ -50,7 +56,7 @@ v.pushComponent({
         return _that.Buildings.map(function(item, index) {
           _that.NodeManage[index].plan = _that.NodeManage[index].plan.sort(
             function(a, b) {
-              return a.id < b.id ? 1 : -1;
+              return a.id > b.id ? 1 : -1;
             }
           );
 
@@ -61,6 +67,11 @@ v.pushComponent({
       } else {
         return [];
       }
+    }
+  },
+  watch: {
+    checkboxModel: function(bool) {
+      window.localStorage.setItem("cooky", bool);
     }
   },
   beforeMount: function() {

@@ -9,7 +9,7 @@
     <div class="header" v-show="onBlock!='detail'&&(onBlock=='list' ? Ploading == 0 ? true : false : true)">
 
         <!-- 建筑选择Start -->
-        <div class="build_select" v-show="Buildings.length>1">
+        <div class="build_select" v-show="Buildings.length>1" @click.capture="bodyClick()">
             <pcombobox-normal id="'build_select'" sel='handler_build_select' bind="true">
                 <header placeholder="建筑：全部"></header>
                 <item datasource="BuildingsCed" text="buildingName"></item>
@@ -18,7 +18,7 @@
         <!-- 建筑选择End -->
 
         <!-- 基础设置Start -->
-        <div class="build_sett">
+        <div class="build_sett" @click.capture="bodyClick()">
             <pcombobox-normal style="width:143px;" id="'build_setting'" sel="build_select_sel" bind="true">
                 <header placeholder="基础设置"></header>
                 <item datasource="[{name:'预警、报警设置',index:0},{name:'管理分项节点',index:1}]" text="name"></item>
@@ -64,7 +64,8 @@
 
                 <!-- 文本提示 Start -->
                 <span class="title" v-if='item.buildingEnergyStatus' :class='{report_color:item.buildingEnergyStatus==2,warning_color:item.buildingEnergyStatus==1}'
-                    v-text='(item.buildingEnergyStatus==1?"能耗预警 风险率":"能耗报警 超标率")+ (item.buildingEnergyStatus==1?item.warningRatio:item.alarmRatio)+(item.isToMonth?"":"(已过期)")'></span>
+                    v-text='(item.buildingEnergyStatus==1?"能耗预警 风险率":"能耗报警 超标率")+ (item.buildingEnergyStatus==1?item.warningRatio:item.alarmRatio)+(item.isToMonth?"":"(已过期)")'
+                    :title='(item.buildingEnergyStatus==1?"能耗预警 风险率":"能耗报警 超标率")+ (item.buildingEnergyStatus==1?item.warningRatio:item.alarmRatio)+(item.isToMonth?"":"(已过期)")'></span>
                 <!-- 文本提示 End -->
 
                 <!-- 警告Icon Start -->
@@ -85,8 +86,10 @@
                         </div>
 
                         <div class="number">
-                            <em v-text='item.monthEnergyData==0?"--":item.monthEnergyData' :title="item.monthEnergyData+'kWh'"></em>
-                            <span class="company" v-text='item.monthEnergyData==0?"":"kWh"'></span>
+                            <em v-if="item.monthEnergyData" :title="v3(item.monthEnergyData)+'kWh'">{{item.monthEnergyData | v3 | toThousands}}</em>
+                            <span class="company" v-if="item.monthEnergyData">kWh</span>
+
+                            <em v-if="!item.monthEnergyData">--</em>
                         </div>
                         <!-- 实际能耗 End -->
 
@@ -100,8 +103,8 @@
                         </div>
 
                         <!--  创建过预算管理节点的情况 -->
-                        <div class="number" v-if="!_.isNull(item.monthBudgetData) || !item.isToMonth">
-                            <em v-text='item.monthBudgetData?item.monthBudgetData:"--"' :title="item.monthBudgetData+'kWh'"></em>
+                        <div class="number" v-if="item.monthBudgetData">
+                            <em v-text='item.monthBudgetData?toThousands(item.monthBudgetData):"--"' :title="item.monthBudgetData+'kWh'"></em>
                             <span class="company" v-text='item.monthBudgetData==0?"":"kWh"'></span>
                         </div>
 
@@ -115,9 +118,9 @@
 
                         <!--  未设置预算 Start -->
                         <div class="number" v-if="_.isNull(item.monthBudgetData) && !item.isToMonth">
-                            
-                                <em v-text="'未设置'" :title="'未设置'"></em>
-                      
+
+                            <em v-text="'未设置'" :title="'未设置'"></em>
+
                         </div>
                         <!--  未设置预算 End -->
 
@@ -180,7 +183,7 @@
             <!-- 日历选择Start -->
             <div class="daterightdate">
                 <ptime-calendar id="daterightdate" orientation="down" sel="DTimeSel">
-                    <panel commontime="['d','pd']" timetype="d" align="right" double="false"></panel>
+                    <panel iscommontime="false" timetype="d" align="right" double="false"></panel>
                 </ptime-calendar>
             </div>
             <!-- 日历选择End -->

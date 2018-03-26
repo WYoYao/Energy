@@ -15,23 +15,18 @@ var build_select_sel = function(item) {
 var DTimeSelhistorys = [new Date().format("yyyy-MM-dd hh:mm:ss")];
 
 window.DTimeSel = function() {
-  // 判断
-  canNotSelectFutureDay(
-    +new Date($("#daterightdate").psel().startTime),
-    "daterightdate"
-  );
-
-  (val = $("#daterightdate").psel()),
-    (start = new Date(val.startTime).format("yyyy-MM-dd hh:mm:ss")),
-    (end = new Date(val.realEndTime).format("yyyy-MM-dd hh:mm:ss"));
+  
+  var val = $("#daterightdate").psel(),
+    start = new Date(val.startTime).format("yyyy-MM-dd hh:mm:ss"),
+    end = new Date(val.realEndTime).format("yyyy-MM-dd hh:mm:ss");
 
   if (+new Date() < +new Date(TC(start))) {
     $("#globalnotice").pshow({
-      text: "请选择当前及历史月份",
+      text: "该日未发生能耗",
       state: "failure"
     });
 
-    var date = new Date(TC(DTimeSelhistorys.slice(-1)[0]));
+    var date = new Date(TC(v.instance.DbaseMessage.timeFrom));
     // 恢复成历史信息
     $("#daterightdate").psel(
       {
@@ -43,5 +38,12 @@ window.DTimeSel = function() {
     return;
   }
 
+  DTimeSelhistorys.push(TC(start));
+
+  // 判断
+  canNotSelectFutureDay(
+    +new Date($("#daterightdate").psel().startTime),
+    "daterightdate"
+  );
   v.instance.DTimeSel();
 };

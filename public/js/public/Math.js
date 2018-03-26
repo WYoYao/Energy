@@ -143,26 +143,6 @@ if (typeof Date.prototype.isThisMonth != 'function') {
     };
 }
 
-//console.log(new Date().isToMonth());
-
-//  转换成为地方特色的数字单位
-// function toThousands(num) {
-
-//     // 转换为数字
-//     num = +num;
-//     if (Object.prototype.toString.call(num).slice(8, -1) != 'Number') throw new TypeError('arguments must be Number');
-
-//     // 转换为字符
-//     num = num.toString();
-
-//     // 正常函数直接返回本地的方法
-//     if (!/\./.test(num)) return (+num).toLocaleString();
-
-//     // 小数点分割
-//     num = num.split(/\./);
-//     return (+num[0]).toLocaleString() + '.' + num[1];
-// }
-
 
 // 转换成为百分比的内容
 function convertPercentage(num) {

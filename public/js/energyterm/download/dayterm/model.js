@@ -1,35 +1,4 @@
 $(function() {
-  // 小于 1 显示三位小数
-  var to3 = function(num) {
-    // 验证对应的参数
-    if (!_.isNumber(num)) num = 0;
-
-    return num < 1 ? _.floor(num, 3) : _.floor(num, 1);
-  }; //  转换成为地方特色的数字单位
-  function toThousands(num) {
-    if (!_.isNumber(num)) return 0;
-
-    if (_.isNaN(num)) return 0;
-
-    if (!num) return 0;
-
-    num = num.toFixed(1);
-    // 转换为数字
-    num = +num;
-    if (Object.prototype.toString.call(num).slice(8, -1) != "Number")
-      throw new TypeError("arguments must be Number");
-
-    // 转换为字符
-    num = num.toString();
-
-    // 正常函数直接返回本地的方法
-    if (!/\./.test(num)) return (+num).toLocaleString();
-
-    // 小数点分割
-    num = num.split(/\./);
-    return (+num[0]).toLocaleString() + "." + num[1];
-  }
-
   /**
    * 依次执行多个会返回Promise的方法,并行执行
    * @param {一个数组 数组里面每一项都是一个方法,每个方法可以返回一个Promise 对象 } arr
@@ -175,7 +144,7 @@ $(function() {
                       ) {
                         return {
                           id: index,
-                          y: item.energyData ? +item.energyData.toFixed(2) : 0,
+                          y: item.energyData ? v3(+item.energyData) : 0,
                           color: "#02A9D1"
                         };
                       }),
@@ -231,37 +200,13 @@ $(function() {
       x100: x100,
       floor: floor,
       v3: v3,
-      to3: to3,
       //转换成为百分比的内容
       convertPercentage: function(num) {
         if (!_.isNumber(num)) return 0;
         return (num * Math.pow(10, 2)).toFixed(2);
       },
       // 千分位加点
-      toThousands: function(num) {
-        if (!_.isNumber(num)) return 0;
-
-        if (_.isNaN(num)) return 0;
-
-        if (!num) return 0;
-
-        num = num.toFixed(1);
-        // 转换为数字
-        num = +num;
-        if (Object.prototype.toString.call(num).slice(8, -1) != "Number")
-          throw new TypeError("arguments must be Number");
-
-        // 转换为字符
-        num = num.toString();
-
-        // 正常函数直接返回本地的方法
-        if (!/\./.test(num)) return (+num).toLocaleString();
-
-        // 小数点分割
-        num = num.split(/\./);
-
-        return (+num[0]).toLocaleString() + "." + num[1];
-      }
+      toThousands: toThousands
     }
   });
 

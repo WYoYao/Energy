@@ -90,7 +90,7 @@ v.pushComponent({
       return this.PlanNodeEditTree.filter(function(item) {
         return item.isplanNode;
       }).sort(function(a, b) {
-        return a.id < b.id ? 1 : -1;
+        return a.energyItemId > b.energyItemId ? 1 : -1;
       });
     },
     // 带选中装填的数组集合

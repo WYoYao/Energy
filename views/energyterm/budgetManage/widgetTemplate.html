@@ -78,15 +78,14 @@
                 <pbutton-blue icon="﹂" text="按日期拆分" @click="AllocateShow(0)"></pbutton-blue>
             </div>
         </div>
-        <div class="closeButton" v-if="onPage!='plan_manage'">
-                <pbutton-white  text="关闭帮助" @click.stop="$('#setPlanWindow').phide()"></pbutton-white>
-        </div>
-
-        <div class="closeButton" v-if="onPage=='plan_manage'">
-                <div style="float:left" @click.capture="setStorageOption(!$('#plan_managenextHintCheck').psel())">
-                    <pswitch-checkbox text="'下次不再提示'" start="true" bind="true" id="'plan_managenextHintCheck'"></pswitch-checkbox>
+        <div class="chooseButton" v-show="onPage=='plan_manage'">
+                <div class="leftCheck" @click.capture="setStorageOption(!$('#nextHintCheck').psel())">
+                    <pswitch-checkbox text="'下次不再提示'" start="true" bind="true" id="'nextHintCheck'"></pswitch-checkbox>
                 </div>
-                    <pbutton-white  text="关闭帮助" @click.stop="$('#setPlanWindow').phide()"></pbutton-white>
+                <div class="closeButton">
+                        <pbutton-white  text="关闭帮助" @click.stop="$('#setPlanWindow').phide()"></pbutton-white>
+                </div>
             </div>
+
     </div>
 </script>

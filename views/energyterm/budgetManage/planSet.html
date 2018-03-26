@@ -138,7 +138,8 @@
                             </div>
                             <div class="countPic" title="一个计算工具，帮助您在当前计划能耗上，&#10;做加减运算，并将结果赋予当前计划能耗" @click="showCountMachine(item,$event,index)"></div>
                         </div>
-                        <div class="Percent">{{getThisMonth().getTime() == budget_planDate ? item.energyOccurredRatio!==null ? item.energyOccurredRatio != 0 ? item.energyOccurredRatio + '%' : 0 : noData : ""}}
+                        <div class="Percent">{{getThisMonth().getTime() == budget_planDate ? item.energyOccurredRatio!==null ? item.energyOccurredRatio
+                            != 0 ? item.energyOccurredRatio + '%' : 0 : noData : ""}}
                             <span></span>
                         </div>
                         <div class="showChart">
@@ -166,8 +167,9 @@
                             <span class="showChart" v-on:click="showDayItemChart(item,$event)">
                                 <em class="picEm">¨</em>分项计划</span>
                         </div>
-                        <div class="realValue" v-show="item.isPassDay||item.isLastMonth">{{item.energyDataReal!==null?Math.round(item.energyDataReal):'--'}}
-                            <span class="unit">kWh</span>
+                        <div class="realValue" v-show="item.isPassDay||item.isLastMonth">
+                            {{item.energyDataPlan != null ? item.energyDataPlan : item.energyDataReal != null ? BD(item.energyDataReal) : noData}}
+                            <span class="unit" v-show="item.energyDataPlan != null || item.energyDataPlan != null">kWh</span>
                         </div>
                         <div class="inputWrap" v-show="item.isThisMonth&&!item.isPassDay">
                             <div class="bInputBox">

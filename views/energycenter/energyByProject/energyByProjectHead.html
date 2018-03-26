@@ -11,7 +11,9 @@
 <div v-if="onPage == 'energybyproject'" v-show="Ploading == 0"  id="energyByProject" v-cloak>
 
     <div id="energyByProjectHead">
-        <div class="energyProHead_back" @click="v.initPage('centerindex')">
+        <!-- here -->
+        <!-- <div class="energyProHead_back" @click="v.initPage('centerindex')"> -->
+        <div class="energyProHead_back" @click="goLastPage()">
             <i class="per-bIcon">I</i>
         </div>
         <div class="energyProHead_text">

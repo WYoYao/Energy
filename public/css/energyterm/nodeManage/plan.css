@@ -104,8 +104,13 @@
 }
 
 .plan_content .contenter .tip .icon.important {
+  height: 28px;
+  width: 28px;
+  line-height: 28px;
+  font-size: 16px;
   background: #7a94ad;
   color: #ffffff;
+  transform: scale(0.5);
 }
 
 .plan_content .contenter .tip .icon.add {

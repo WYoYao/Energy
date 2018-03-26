@@ -83,11 +83,15 @@ v.pushComponent({
         _this.Ploading = 0;
         window.PChartHoverNum = undefined;
         setTimeout(function() {
+          // 将分项列表滚动进度初始化
+          $(".PB_items_ul_box").scrollTop(0);
+          $(".PB_leftWrap").scrollTop(0);
           window.PChartHoverNum = undefined;
           if (
             v._instance.onPage == "energybyproject" ||
             v._instance.onBlock == "list"
           ) {
+            // 清除小扇形，重置对象为空
             v.instance.PSectorDestroy();
             // 如果有计划则画左边的圆弧
             v._instance.PprojectSomeInfo.ifHasPlan ? ProjectDrawCircle() : void 0;
@@ -120,7 +124,7 @@ v.pushComponent({
         energyByProController.GetEnergyDataForDayAndItem(paramObj,function(data) {
             data = JSON.parse(JSON.stringify(data));
             data[0].items.sort(function(a, b) {
-              return b.energyItemId > a.energyItemId ? 1 : -1;
+              return a.energyItemId > b.energyItemId ? 1 : -1;
             });
             _this.PproDayAndItemInfo = data[0];
             _this.PprojectSomeInfo.ifHasPlanItems = data[0].items.length == 0 ? false : true;
@@ -173,7 +177,7 @@ v.pushComponent({
         energyReal.push(
           item.energyData == null
             ? [0, "energyreal" + index, "#02A9D1"]
-            : RD(item.energyData) > BD(item.planData) && item.planData != null
+            : (RD(item.energyData) > BD(item.planData)) && (item.planData != null)
               ? [RD(item.energyData), "energyreal" + index, "#F89054"]
               : [RD(item.energyData), "energyreal" + index, "#02A9D1"]
         );
@@ -203,7 +207,7 @@ v.pushComponent({
         _this.PsectorData.energyPlanPercent.push(item.planRatio);
         _this.PsectorData.energyTodayPlanPercent.push(item.planRatioToday);
       });
-      window.sectorGather = [];
+      // window.sectorGather = [];
       //填充小扇形
       this.PItemsPageSel(0);
     },
@@ -229,6 +233,7 @@ v.pushComponent({
       chart.options.xAxis.visible = true;
       chart.options.xAxis.tickWidth = 0;
       chart.options.yAxis[0].gridLineDashStyle = "Dash";
+      chart.options.yAxis[0].gridLineColor = "#EEEEEE";
       chart.options.chart.plotBackgroundColor = "#fff";
       chart.options.tooltip.useHTML = true;
       chart.options.tooltip.style = { opacity: 0 };
@@ -335,6 +340,7 @@ v.pushComponent({
     },
     //跳转至日能耗详情页面
     PproToDayEnergy: function(model) {
+      bodyClick();
       this.projectItemIdUserSel =
         model == undefined ? undefined : model.energyItemId;
       window.chart.chart ? window.chart.chart.destroy() : void 0;
@@ -422,9 +428,7 @@ v.pushComponent({
     },
     //绘制小扇形图表
     PsectorDraw: function(type) {
-      var data = type
-        ? this.PsectorData.energyPlanPercent
-        : this.PsectorData.energyTodayPlanPercent;
+      var data = type ? this.PsectorData.energyPlanPercent : this.PsectorData.energyTodayPlanPercent;
       data.forEach(function(item, index) {
         window.sectorGather[index] = new sectorChart();
         item = typeof item == "number" ? (item < 0 ? null : item) : null;
@@ -446,29 +450,24 @@ v.pushComponent({
             ];
           }
           setTimeout(function() {
-            if (
-              v._instance.onPage == "energybyproject" ||
-              v._instance.onBlock == "list"
-            ) {
+            if ( v._instance.onPage == "energybyproject" || v._instance.onBlock == "list") {
               var name = "PB_sectorCanvas" + index;
-              window.sectorGather[index].chart != null
-                ? window.sectorGather[index].chart.destroy()
-                : void 0;
-              window.sectorGather[index].chart = Highcharts.chart(
-                name,
-                window.sectorGather[index].options
-              );
+              window.sectorGather[index].chart = Highcharts.chart(name,window.sectorGather[index].options);
             }
           }, 0);
         }
       });
     },
     PSectorDestroy : function(){
-      if(window.sectorGather){
+      if(window.sectorGather && window.sectorGather.length > 0){
         window.sectorGather.forEach(function(item){
-          item.chart != null ? item.chart.destroy() : void 0;
+          if(item.chart != null){
+            item.chart.destroy();
+            item.chart = null;
+          }
         })
       }
+      window.sectorGather = [];
     },
     chartLeave: function(index) {
       if (index != undefined) {

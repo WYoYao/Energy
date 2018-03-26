@@ -1,1005 +1,1014 @@
 .budgetMangeWrap .highcharts-container {
-    overflow: visible !important;
-  }
-  
-  .budgetMangeWrap .highcharts-tooltip > span {
-    border: 1px solid #cdcdcd;
-    border-radius: 3px;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-    background: #fff;
-  }
-  
-  .budgetMangeWrap .highcharts-tooltip > span > span:first-child {
-    color: #666;
-    line-height: 29px;
-    /*border-bottom: 1px solid #d2d2d2;*/
-    font-size: 12px;
-  }
-  
-  .budgetMangeWrap .highcharts-tooltip > span > span {
-    display: block;
-    height: 26px;
-    line-height: 26px;
-    padding: 0 8px;
-    font-size: 12px;
-    color: #333;
-  }
-  
-  .budgetMangeWrap .budgetDataLabel {
-    border: 1px solid #cdcdcd;
-    border-radius: 3px;
-    background: #fff;
-  }
-  
-  .budgetMangeWrap .budgetDataLabel > div {
-    height: 26px;
-    line-height: 26px;
-    padding: 0 8px;
-    font-size: 12px;
-    color: #333;
-    font-weight: 500;
-  }
-  
-  .budgetMangeWrap .budgetDataLabel > div:first-child {
-    color: #666;
-    line-height: 29px;
-    font-size: 12px;
-  }
-  
-  .budgetMangeWrap {
-    height: 100%;
-    background: #f0f3f6;
-    padding: 14px 10px 0px;
-    box-sizing: border-box;
-    overflow: hidden;
-    position: relative;
-  }
-  
-  .budgetMangeWrap .bInputBox {
-    height: 30px;
-    position: relative;
-    line-height: 30px;
-  }
-  
-  .budgetMangeWrap .bInputBox .bInput {
-    border: 1px solid #cacaca;
-    padding: 0 50px 0 68px;
-    width: 100%;
-    height: 100%;
-    font-size: 14px;
-    box-sizing: border-box;
-    line-height: 30px;
-    background: #fff;
-  }
-  
-  .budgetMangeWrap .bInputBox .bInput.select {
-    border-color: #02aad1;
-  }
-  
-  .budgetMangeWrap .bInputBox .perInput {
-    padding: 0 70px 0 80px;
-  }
-  
-  .budgetMangeWrap .bInputBox .bInput:focus {
-    border-color: #02aad1;
-  }
-  
-  .budgetMangeWrap .bInputBox.error .bInput {
-    border-color: #f97c7c;
-  }
-  
-  .budgetMangeWrap .bInputBox .error-tip {
-    font-size: 12px;
-    height: 22px;
-    line-height: 20px;
-    white-space: nowrap;
-    position: absolute;
-    bottom: -22px;
-    left: 0px;
-    display: none;
-    color: #f97c7c;
-  }
-  
-  .budgetMangeWrap .bInputBox.error .error-tip {
-    display: block;
-    color: #f97c7c;
-  }
-  
-  .budgetMangeWrap .bInputBox .binputTitle {
-    position: absolute;
-    top: 1px;
-    bottom: 1px;
-    left: 1px;
-    color: #648098;
-    padding-left: 8px;
-    z-index: 1;
-    display: flex;
-    align-items: center;
-    font-size: 12px;
-    background: #ffffff;
-  }
-  
-  .budgetMangeWrap .bInputBox .inputUnit {
-    position: absolute;
-    top: 1px;
-    bottom: 1px;
-    right: 1px;
-    float: right;
-    color: #648098;
-    padding: 0 10px;
-    z-index: 1;
-    align-items: center;
-    display: flex;
-    background: #ffffff;
-  }
-  
-  .budgetMangeWrap .bInputBox .inputUnit:before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    border-left: 1px solid #ccc;
-    height: 16px;
-    left: 0;
-    margin-top: -8px;
-  }
-  
-  .budgetMangeWrap .redFont {
-    color: #ff7b7b !important;
-  }
-  
-  .budgetMangeWrap .picEm {
-    color: #7a94ad;
-    font-family: "perficon";
-    margin-right: 6px;
-    vertical-align: baseline;
-    font-size: 16px;
-  }
-  
-  .budgetMangeWrap .budgetPop {
-    width: 300px;
-    box-shadow: 0 0 7px rgba(0, 0, 0, 0.2);
-    background: #fff;
-    overflow: hidden;
-    border-radius: 2px;
-    padding: 10px 20px;
-    /*padding: 10px 16px 10px 20px;*/
-    box-sizing: border-box;
-    position: absolute;
-    top: 18px;
-    left: -6px;
-    display: none;
-    z-index: 3;
-  }
-  
-  .budgetMangeWrap .monthBudgets .itemBlock:last-child .budgetPop {
-    left: auto;
-    right: -6px;
-  }
-  
-  .budgetMangeWrap .budgetPop .popTitle {
-    font-size: 14px;
-    line-height: 20px;
-  }
-  
-  .budgetMangeWrap .budgetPop .popSubtitle {
-    font-size: 12px;
-    color: #6d6d6d;
-    margin-top: 8px;
-  }
-  
-  .budgetMangeWrap .budgetPop .popButton {
-    margin-top: 14px;
-    overflow: hidden;
-  }
-  
-  .budgetMangeWrap .disabled {
-    cursor: default !important;
-    opacity: 0.3;
-    pointer-events: none;
-  }
-  
-  .budgetMangeWrap .budManCont {
-    height: 100%;
-    background: #ffffff;
-    box-sizing: border-box;
-    position: relative;
-    box-shadow: 0 -1px 5px 0 rgba(0, 0, 0, 0.05);
-    border-radius: 6px 6px 0 0;
-  }
-  
-  .budgetMangeWrap .budManHeader {
-    height: 50px;
-    line-height: 50px;
-    border-bottom: 1px solid #d9e2e8;
-    padding: 0 20px;
-    box-sizing: border-box;
-  }
-  
-  .budgetMangeWrap .budManHeader:after {
-    content: "";
-    display: block;
-    height: 0;
-    clear: both;
-    visibility: hidden;
-  }
-  
-  .budgetMangeWrap .budManHeader .leftTitle {
-    float: left;
-    font-size: 14px;
-  }
-  
-  .budgetMangeWrap .budManHeader .leftTitle .clickTitle {
-    color: #637e99;
-    cursor: pointer;
-  }
-  
-  .budgetMangeWrap .budManHeader .line {
-    margin: 0 3px;
-  }
-  
-  .budgetMangeWrap .budManHeader .boldColor {
-    color: #151515;
-  }
-  
-  .budgetMangeWrap .budManHeader .backButton {
-    vertical-align: middle;
-    margin-right: 4px;
-    display: inline-block;
-    height: 30px;
-    line-height: 0;
-  }
-  
-  .budgetMangeWrap .budManHeader .helpIcon {
-    width: 30px;
-    height: 30px;
-    float: right;
-    cursor: pointer;
-    background: url(/images/energyterm/budgetManage/help.png) no-repeat center
-      center;
-    margin-top: 10px;
-  }
-  
-  .budgetMangeWrap .budManHeader .rightBuildSel {
-    float: right;
-    margin-top: 10px;
-    width: 150px;
-  }
-  
-  .budgetMangeWrap .monthBudgets {
-    background: #f8f8f8;
-    padding: 10px 8px;
-    position: relative;
-    height: 300px;
-    box-sizing: border-box;
-  }
-  
-  .budgetMangeWrap .monthBudgets .backNowMonth {
-    position: absolute;
-    top: 0;
-    left: 0;
-    color: #02a9d1;
-    text-align: center;
-    line-height: 30px;
-    height: 30px;
-    width: 74px;
-    background: rgba(2, 169, 209, 0.3);
-    border-radius: 2px;
-    z-index: 1;
-    cursor: pointer;
-    display: none;
-  }
-  
-  .budgetMangeWrap .monthBudgets.notNowMonth:hover .backNowMonth {
-    display: block;
-  }
-  
-  .budgetMangeWrap .monthBudgets:after {
-    content: "";
-    display: block;
-    height: 0;
-    clear: both;
-    visibility: hidden;
-  }
-  
-  .budgetMangeWrap .monthBudgets .leftButton {
-    float: left;
-  }
-  
-  .budgetMangeWrap .monthBudgets .rightButton {
-    float: right;
-  }
-  
-  .budgetMangeWrap .monthBudgets .norButton {
-    width: 30px;
-    height: 280px;
-    border: 1px solid #d9e2e8;
-    box-sizing: border-box;
-    text-align: center;
-    line-height: 280px;
-    cursor: pointer;
-  }
-  
-  .budgetMangeWrap .monthBudgets .norButton:hover {
-    background: #ffffff;
-  }
-  
-  .budgetMangeWrap .monthBudgets .norButton span {
-    font-family: "perficon";
-    font-size: 18px;
-    color: #7a94ad;
-  }
-  
-  .budgetMangeWrap .monthBudgets .norButton xmp {
-    font-family: "perficon";
-  }
-  
-  .budgetMangeWrap .monthBudgets .monthBlocks {
-    float: left;
-    position: absolute;
-    left: 46px;
-    right: 46px;
-    top: 10px;
-  }
-  
-  .budgetMangeWrap .monthBudgets .itemBlock {
-    float: left;
-    width: 280px;
-    height: 280px;
-    box-sizing: border-box;
-    border: 1px solid #d9e2e8;
-    background: #ffffff;
-    margin-right: 8px;
-    position: relative;
-  }
-  
-  .budgetMangeWrap .monthBudgets .itemBlock.ide{
-      box-shadow: 0 0 6px #d9e2e8; 
-  }
-  
-  .budgetMangeWrap .monthBudgets .itemBlock:last-child {
-    margin-right: 0px;
-  }
-  
-  .budgetMangeWrap .monthBudgets .itemBlock .blockTitle {
-    height: 48px;
-    line-height: 48px;
-    border-bottom: 1px solid #d9e2e8;
-    padding: 0 16px;
-    font-size: 14px;
-    color: #333333;
-  }
-  
-  .budgetMangeWrap .monthBudgets .itemBlock .blockTitle .date {
-    font-size: 18px;
-    vertical-align: middle;
-  }
-  
-  .budgetMangeWrap .monthBudgets .itemBlock .blockTitle .now {
-    background: #02a9d1;
-    font-size: 12px;
-    color: #ffffff;
-    width: 30px;
-    height: 14px;
-    text-align: center;
-    line-height: 14px;
-    border-radius: 2px;
-    vertical-align: middle;
-    display: inline-block;
-  }
-  
-  .budgetMangeWrap .monthBudgets .itemBlock .remark {
-    float: right;
-    color: #637e99;
-    line-height: 1;
-    margin-top: 16px;
-    cursor: pointer;
-    font-size: 12px;
-  }
-  
-  .budgetMangeWrap .monthBudgets .itemBlock .lineInfo {
-    line-height: 1;
-    font-size: 12px;
-    color: #6d6d6d;
-    margin-top: 18px;
-    padding: 0 20px;
-    clear: both;
-  }
-  
-  .budgetMangeWrap .monthBudgets .itemBlock .lineInfo .newWrap {
-    display: inline-block;
-    position: relative;
-  }
-  
-  .budgetMangeWrap .monthBudgets .itemBlock .lineInfo .hasNew {
-    background: #7a94ad;
-    color: #ffffff;
-    border-radius: 3px;
-    padding: 2px 7px;
-    cursor: pointer;
-  }
-  
-  .budgetMangeWrap .monthBudgets .itemBlock .lineInfo .hasNew:hover {
-    background: #637e99;
-  }
-  
-  .budgetMangeWrap .monthBudgets .itemBlock .lineInfo .hasNew em {
-    color: #ffffff;
-    margin-right: 4px;
-  }
-  
-  .budgetMangeWrap .monthBudgets .itemBlock .newWrap .budgetPop {
-    width: 330px;
-  }
-  
-  .budgetMangeWrap .monthBudgets .itemBlock .infoData {
-    float: right;
-    font-size: 14px;
-    color: #333333;
-  }
-  
-  .budgetMangeWrap .monthBudgets .itemBlock .smallFont {
-    font-size: 12px;
-  }
-  
-  .budgetMangeWrap .monthBudgets .itemBlock .blackFont {
-    color: #333333;
-  }
-  
-  .budgetMangeWrap .monthBudgets .itemBlock .unitFont {
-    font-size: 12px;
-    margin-left: 4px;
-  }
-  
-  .budgetMangeWrap .monthBudgets .itemBlock .bCont {
-    padding-top: 2px;
-    height: 180px;
-    box-sizing: border-box;
-  }
-  
-  .budgetMangeWrap .monthBudgets .itemBlock .planLine {
-    line-height: 1;
-    margin-top: 16px;
-    padding: 0 20px;
-    clear: both;
-  }
-  
-  .budgetMangeWrap .monthBudgets .itemBlock .checkPlan {
-    color: #637e99;
-    font-size: 12px;
-    cursor: pointer;
-  }
-  
-  .budgetMangeWrap .monthBudgets .itemBlock .editPlan {
-    color: #7a94ad;
-    font-family: "perficon";
-    font-size: 14px;
-    float: right;
-    cursor: pointer;
-  }
-  
-  .budgetMangeWrap .monthBudgets .itemBlock .downPlan {
-    color: #7a94ad;
-    font-family: "perficon";
-    font-size: 14px;
-    float: right;
-    margin-left: 20px;
-    cursor: pointer;
-  }
-  
-  .budgetMangeWrap .monthBudgets .itemBlock .createPlan {
-    color: #637e99;
-    font-size: 12px;
-    cursor: pointer;
-  }
-  
-  .budgetMangeWrap .monthBudgets .itemBlock .bBottom {
-    height: 48px;
-    line-height: 46px;
-    border-top: 1px solid #d9e2e8;
-    padding: 0 16px;
-    color: #637e99;
-    font-size: 14px;
-  }
-  
-  .budgetMangeWrap .monthBudgets .itemBlock .editBudget {
-    cursor: pointer;
-  }
-  
-  .budgetMangeWrap .monthBudgets .itemBlock .budDisable {
-    cursor: default !important;
-    opacity: 0.3;
-  }
-  
-  .budgetMangeWrap .monthBudgets .itemBlock .downBudget {
-    float: right;
-    line-height: 1;
-    margin-top: 15px;
-    cursor: pointer;
-  }
-  
-  .budgetMangeWrap .monthBudgets .itemBlock .blockEdit {
-    /*padding: 0px 30px 0 20px;*/
-    position: relative;
-  }
-  
-  .budgetMangeWrap .monthBudgets .itemBlock .blockEdit .sign {
-    color: #fd7b3d;
-    font-size: 12px;
-    padding-left: 20px;
-    line-height: 16px;
-    height: 16px;
-  }
-  
-  .budgetMangeWrap .monthBudgets .itemBlock .blockEdit .sign span {
-    background: #f8f8f8;
-  }
-  
-  .budgetMangeWrap .monthBudgets .itemBlock .blockEdit .bInputBox {
-    margin: 0px 30px 20px 20px;
-  }
-  
-  .budgetMangeWrap .monthBudgets .itemBlock .blockEdit .bText {
-    height: 56px;
-    margin-bottom: 16px;
-    padding: 0px 30px 0 20px;
-  }
-  
-  .budgetMangeWrap .monthBudgets .itemBlock .editButton {
-    padding: 0 30px;
-  }
-  
-  .budgetMangeWrap .monthBudgets .itemBlock .editButton:after {
-    content: "";
-    display: block;
-    height: 0;
-    clear: both;
-    visibility: hidden;
-  }
-  
-  .budgetMangeWrap .monthBudgets .itemBlock .editCancel {
-    float: right;
-    height: 30px;
-    line-height: 30px;
-    margin-right: 20px;
-  }
-  
-  .budgetMangeWrap .monthBudgets .itemBlock .editSave {
-    float: right;
-    position: relative;
-    height: 30px;
-  }
-  
-  .budgetMangeWrap .monthBudgets .itemBlock .editSave .budgetPop {
-    top: 34px;
-  }
-  
-  .budgetMangeWrap .monthBudgets .itemBlock .blockEdit .bConnect {
-    position: absolute;
-    top: 29px;
-    right: 19px;
-    width: 12px;
-    height: 52px;
-    background: url(/images/energyterm/budgetManage/connect.png) no-repeat center
-      center;
-  }
-  
-  .budgetMangeWrap .monthBudgets .itemBlock .changeButton {
-    text-align: center;
-  }
-  
-  .budgetMangeWrap .monthBudgets .itemBlock .createPanel {
-    height: 230px;
-    line-height: 230px;
-    text-align: center;
-    color: #637e99;
-    cursor: pointer;
-  }
-  
-  .budgetMangeWrap .monthBudgets .itemBlock .blockLoad {
-    height: 230px;
-    line-height: 230px;
-    text-align: center;
-    color: #cacaca;
-    font-size: 12px;
-  }
-  
-  .budgetMangeWrap .budgetFloat {
-    width: 800px;
-    padding: 20px 20px 0;
-    box-sizing: border-box;
-    position: relative;
-    height: 100%;
-  }
-  
-  /*.budgetMangeWrap .budgetFloat .remarkTitle {
-              height: 48px;
-              background: #F0F3F6;
-              border: 1px solid #D9E2E8;
-              padding-left: 18px;
-              color: #637E99;
-              line-height: 48px;
-          }*/
-  .budgetMangeWrap .budgetFloat .remarkTitle {
-    margin-bottom: 14px;
-  }
-  
-  .budgetMangeWrap .budgetFloat .remarkText {
-    height: 50px;
-  }
-  
-  .budgetMangeWrap .budgetFloat .remarkSave {
-    float: right;
-    margin-top: 18px;
-    height: 30px;
-  }
-  
-  .budgetMangeWrap .budgetFloat .reportTitle {
-    clear: both;
-    margin-bottom: 14px;
-    padding-top: 10px;
-  }
-  
-  .budgetMangeWrap .budgetFloat .reportTable {
-    position: absolute;
-    top: 194px;
-    left: 20px;
-    right: 20px;
-    bottom: 20px;
-    box-sizing: border-box;
-    padding-top: 31px;
-  }
-  
-  .budgetMangeWrap .budgetFloat .tableHead {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background: #eaeef0;
-    color: #000000;
-    font-size: 12px;
-    overflow: hidden;
-    border: 1px solid #d9e2e8;
-    box-sizing: border-box;
-    height: 31px;
-  }
-  
-  .budgetMangeWrap .budgetFloat .tableCont {
-    overflow-x: hidden;
-    overflow-y: auto;
-    max-height: 100%;
-    border: 1px solid #edf1f4;
-    border-top: none;
-    box-sizing: border-box;
-  }
-  
-  .remarkTable {
-    table-layout: fixed;
-    border-collapse: collapse;
-  }
-  
-  .budgetMangeWrap .budgetFloat .tableLine {
-    border-bottom: 1px solid #edf1f4;
-    height: 40px;
-  }
-  
-  .budgetMangeWrap .budgetFloat .tableLine:last-child {
-    border-bottom: none;
-  }
-  
-  .budgetMangeWrap .budgetFloat .tableHead > .tableLi {
-    line-height: 30px;
-    float: left;
-    box-sizing: border-box;
-  }
-  
-  .budgetMangeWrap .budgetFloat .tableLine > .tableLi {
-    color: #151515;
-    font-size: 12px;
-  }
-  
-  .budgetMangeWrap .budgetFloat .tableUl > .tableLi {
-    padding-left: 20px;
-    box-sizing: border-box;
-  }
-  
-  .budgetMangeWrap .budgetFloat .tableUl > .tableLi:nth-child(1) {
-    width: 138px;
-    min-width: 138px;
-    max-width: 138px;
-  }
-  
-  .budgetMangeWrap .budgetFloat .tableUl > .tableLi:nth-child(2) {
-    width: 88px;
-    min-width: 88px;
-    max-width: 88px;
-  }
-  
-  .budgetMangeWrap .budgetFloat .tableUl > .tableLi:nth-child(3) {
-    width: 80px;
-    min-width: 80px;
-    max-width: 80px;
-  }
-  
-  .budgetMangeWrap .budgetFloat .tableUl > .tableLi:nth-child(4) {
-    text-align: right;
-    padding-right: 20px;
-    width: 120px;
-    min-width: 120px;
-    max-width: 120px;
-  }
-  
-  .budgetMangeWrap .budgetFloat .tableUl > .tableLi:nth-child(5) {
-    width: 326px;
-    min-width: 326px;
-    max-width: 326px;
-    padding-right: 10px;
-  }
-  
-  .budgetMangeWrap .budgetFloat .tableUl .cell {
-    line-height: 16px;
-    word-break: break-all;
-  }
-  
-  .budgetMangeWrap .budManCont .chartWrap {
-    height: calc(100% - 350px);
-    height: -moz-calc(100% - 350px);
-    height: -webkit-calc(100% - 350px);
-  }
-  
-  .budgetMangeWrap .budManCont .chartWrap .chartTitle {
-    padding-left: 20px;
-    color: #141f2a;
-    font-size: 16px;
-    height: 50px;
-    line-height: 60px;
-  }
-  
-  .budgetMangeWrap .budManCont .chartWrap .chartSubtile {
-    padding-top: 14px;
-    font-size: 12px;
-    color: #6d6d6d;
-    text-align: right;
-    padding-right: 30px;
-    height: 30px;
-    box-sizing: border-box;
-  }
-  
-  .budgetMangeWrap .budManCont .chartWrap .chartSubtile .label {
-    margin-right: 12px;
-  }
-  
-  .budgetMangeWrap .budManCont .chartWrap .chartSubtile .label em {
-    height: 10px;
-    width: 10px;
-    display: inline-block;
-    margin-right: 4px;
-  }
-  
-  .budgetMangeWrap .budManCont .chartWrap .chartSubtile .plan em {
-    background: #d9e2e8;
-  }
-  
-  .budgetMangeWrap .budManCont .chartWrap .chartSubtile .real em {
-    background: #02a9d1;
-  }
-  
-  .budgetMangeWrap .budManCont .chartWrap .chartSubtile .over em {
-    background: #f89054;
-  }
-  
-  .budgetMangeWrap .budManCont .chartWrap .chartCont {
-    height: calc(100% - 90px);
-    height: -moz-calc(100% - 90px);
-    height: -webkit-calc(100% - 90px);
-    position: relative;
-  }
-  
-  .budgetMangeWrap .budManCont .chartWrap .chartCont .chartContCont {
-    margin: 0 12px;
-    /* width: 100%; */
-    height: 100%;
-  }
-  
-  .budgetMangeWrap .itemPlanFloat {
-    width: 480px;
-    height: 100%;
-    padding-top: 38px;
-    box-sizing: border-box;
-    position: relative;
-  }
-  
-  .budgetMangeWrap .itemPlanFloat .pieChart {
-    width: 240px;
-    height: 260px;
-    margin: 0 auto 20px;
-  }
-  
-  .budgetMangeWrap .itemPlanFloat .chartInfo {
-    position: absolute;
-    top: 318px;
-    left: 0;
-    width: 100%;
-    border-top: 1px solid #eeeeee;
-    bottom: 20px;
-    overflow-y: auto;
-    padding: 28px 0 0 72px;
-    box-sizing: border-box;
-  }
-  
-  .budgetMangeWrap .itemPlanFloat .chartInfo .infoUl {
-    margin-bottom: 28px;
-    height: 14px;
-  }
-  
-  .budgetMangeWrap .itemPlanFloat .chartInfo .infoUl:last-child {
-    margin-bottom: 0;
-  }
-  
-  .budgetMangeWrap .itemPlanFloat .chartInfo .infoUl > li {
-    float: left;
-    line-height: 14px;
-  }
-  
-  .budgetMangeWrap .itemPlanFloat .chartInfo .infoUl .circle {
-    width: 30px;
-  }
-  
-  .budgetMangeWrap .itemPlanFloat .chartInfo .infoUl .circle > span {
-    width: 12px;
-    height: 12px;
-    background: #02a9d1;
-    border-radius: 50%;
-    display: inline-block;
-  }
-  
-  .budgetMangeWrap .itemPlanFloat .chartInfo .infoUl .name {
-    width: 160px;
-  }
-  
-  .budgetMangeWrap .itemPlanFloat .chartInfo .infoUl .value {
-    width: 170px;
-  }
-  
-  .budgetMangeWrap .itemPlanFloat .chartInfo .infoUl .unit {
-    margin-left: 3px;
-  }
-  
-  .budgetMangeWrap .dayPlanFloat {
-    position: absolute;
-    width: 100%;
-    height: 400px;
-    left: 0;
-    bottom: -400px;
-    box-shadow: 10px 0 30px rgba(0, 0, 0, 0.2);
-    background: #fff;
-    transition: 0.5s;
-    z-index: 20;
-  }
-  
-  .budgetMangeWrap .dayPlanFloat .floatHead {
-    height: 56px;
-    font-size: 16px;
-    line-height: 64px;
-    padding: 0 30px;
-  }
-  
-  .budgetMangeWrap .dayPlanFloat .floatHead .close {
-    float: right;
-    color: #7a94ad;
-    font-family: "perficon";
-    cursor: pointer;
-  }
-  
-  .budgetMangeWrap .dayPlanFloat .columnChart {
-    height: 342px;
-  }
-  
-  .planSetWindow {
-    width: 1180px;
-    padding: 50px 0 0 60px;
-    box-sizing: border-box;
-  }
-  
-  .per-modal-global {
-    /*undo*/
-    width: auto;
-    height: auto;
-  }
-  
-  .planSetWindow .explainHead {
-    font-size: 24px;
-    margin-bottom: 40px;
-    font-weight: bold;
-  }
-  
-  .planSetWindow .stitle {
-    font-size: 16px;
-    margin-bottom: 6px;
-    font-weight: bold;
-  }
-  
-  .planSetWindow .scont {
-    font-size: 14px;
-  }
-  
-  .planSetWindow .what {
-    margin-bottom: 30px;
-  }
-  
-  .planSetWindow .stepUl {
-    margin-top: 18px;
-    margin-bottom: 20px;
-  }
-  
-  .planSetWindow .stepUl li {
-    height: 18px;
-    line-height: 18px;
-    margin-bottom: 16px;
-  }
-  
-  .planSetWindow .stepUl li:last-child {
-    margin-bottom: 0;
-  }
-  
-  .planSetWindow .stepUl li .num {
-    background: #02a9d1;
-    width: 18px;
-    height: 18px;
-    line-height: 18px;
-    border-radius: 50%;
-    margin-right: 10px;
-    font-size: 12px;
-    text-align: center;
-    display: inline-block;
-    color: #ffffff;
-  }
-  
-  .planSetWindow .imgExplain {
-    width: 1026px;
-    height: 170px;
-    background: url(/images/energyterm/budgetManage/imgExplain.png) no-repeat top
-      left;
-    background-size: 100%;
-  }
-  
-  .planSetWindow .chooseButton {
-    height: 84px;
-    margin-top: 58px;
-  }
-  
-  .planSetWindow .chooseButton .leftCheck {
-    margin-top: 30px;
-    float: left;
-  }
-  
-  .planSetWindow .chooseButton .rigthButton {
-    float: right;
-    margin-top: 24px;
-    margin-right: 90px;
-    height: 30px;
-    line-height: 30px;
-  }
-  
-  .planSetWindow .chooseButton .rigthButton .btitle {
-    font-size: 16px;
-    vertical-align: text-bottom;
-    margin-right: 14px;
-  }
-  
-  .planSetWindow .closeButton {
-    height: 60px;
-    margin-top: 58px;
-    text-align: center;
-    padding-right: 60px;
-  }
-  
-  .layer {
-    position: fixed;
-    top: 0px;
-    left: 0px;
-    right: 0px;
-    z-index: 2;
-    bottom: 0px;
-    display: none;
-  }
-  
+  overflow: visible !important;
+}
+
+.budgetMangeWrap .highcharts-tooltip > span {
+  border: 1px solid #cdcdcd;
+  border-radius: 3px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  background: #fff;
+}
+
+.budgetMangeWrap .highcharts-tooltip > span > span:first-child {
+  color: #666;
+  line-height: 29px;
+  /*border-bottom: 1px solid #d2d2d2;*/
+  font-size: 12px;
+}
+
+.budgetMangeWrap .highcharts-tooltip > span > span {
+  display: block;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 8px;
+  font-size: 12px;
+  color: #333;
+}
+
+.budgetMangeWrap .budgetDataLabel {
+  border: 1px solid #cdcdcd;
+  border-radius: 3px;
+  background: #fff;
+}
+
+.budgetMangeWrap .budgetDataLabel > div {
+  height: 26px;
+  line-height: 26px;
+  padding: 0 8px;
+  font-size: 12px;
+  color: #333;
+  font-weight: 500;
+}
+
+.budgetMangeWrap .budgetDataLabel > div:first-child {
+  color: #666;
+  line-height: 29px;
+  font-size: 12px;
+}
+
+.budgetMangeWrap {
+  height: 100%;
+  background: #f0f3f6;
+  padding: 14px 10px 0px;
+  box-sizing: border-box;
+  overflow: hidden;
+  position: relative;
+}
+
+.budgetMangeWrap .bInputBox {
+  height: 30px;
+  position: relative;
+  line-height: 30px;
+}
+
+.budgetMangeWrap .bInputBox .bInput {
+  border: 1px solid #cacaca;
+  padding: 0 50px 0 68px;
+  width: 100%;
+  height: 100%;
+  font-size: 14px;
+  box-sizing: border-box;
+  line-height: 30px;
+  background: #fff;
+}
+
+.budgetMangeWrap .bInputBox .bInput.select {
+  border-color: #02aad1;
+}
+
+.budgetMangeWrap .bInputBox .perInput {
+  padding: 0 70px 0 80px;
+}
+
+.budgetMangeWrap .bInputBox .bInput:focus {
+  border-color: #02aad1;
+}
+
+.budgetMangeWrap .bInputBox.error .bInput {
+  border-color: #f97c7c;
+}
+
+.budgetMangeWrap .bInputBox .error-tip {
+  font-size: 12px;
+  height: 22px;
+  line-height: 20px;
+  white-space: nowrap;
+  position: absolute;
+  bottom: -22px;
+  left: 0px;
+  display: none;
+  color: #f97c7c;
+}
+
+.budgetMangeWrap .bInputBox.error .error-tip {
+  display: block;
+  color: #f97c7c;
+}
+
+.budgetMangeWrap .bInputBox .binputTitle {
+  position: absolute;
+  top: 1px;
+  bottom: 1px;
+  left: 1px;
+  color: #648098;
+  padding-left: 8px;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  background: #ffffff;
+}
+
+.budgetMangeWrap .bInputBox .inputUnit {
+  position: absolute;
+  top: 1px;
+  bottom: 1px;
+  right: 1px;
+  float: right;
+  color: #648098;
+  padding: 0 10px;
+  z-index: 1;
+  align-items: center;
+  display: flex;
+  background: #ffffff;
+}
+
+.budgetMangeWrap .bInputBox .inputUnit:before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  border-left: 1px solid #ccc;
+  height: 16px;
+  left: 0;
+  margin-top: -8px;
+}
+
+.budgetMangeWrap .redFont {
+  color: #ff7b7b !important;
+}
+
+.budgetMangeWrap .picEm {
+  color: #7a94ad;
+  font-family: "perficon";
+  margin-right: 8px;
+  vertical-align: baseline;
+  font-size: 15px;
+}
+
+.budgetMangeWrap .budgetPop {
+  width: 300px;
+  box-shadow: 0 0 7px rgba(0, 0, 0, 0.2);
+  background: #fff;
+  overflow: hidden;
+  border-radius: 2px;
+  padding: 10px 20px;
+  /*padding: 10px 16px 10px 20px;*/
+  box-sizing: border-box;
+  position: absolute;
+  top: 18px;
+  left: -6px;
+  display: none;
+  z-index: 3;
+}
+
+.budgetMangeWrap .monthBudgets .itemBlock:last-child .budgetPop {
+  left: auto;
+  right: -6px;
+}
+
+.budgetMangeWrap .budgetPop .popTitle {
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.budgetMangeWrap .budgetPop .popSubtitle {
+  font-size: 12px;
+  color: #6d6d6d;
+  margin-top: 8px;
+}
+
+.budgetMangeWrap .budgetPop .popButton {
+  margin-top: 14px;
+  overflow: hidden;
+}
+
+.budgetMangeWrap .disabled {
+  cursor: default !important;
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.budgetMangeWrap .budManCont {
+  height: 100%;
+  background: #ffffff;
+  box-sizing: border-box;
+  position: relative;
+  box-shadow: 0 -1px 5px 0 rgba(0, 0, 0, 0.05);
+  border-radius: 6px 6px 0 0;
+}
+
+.budgetMangeWrap .budManHeader {
+  height: 50px;
+  line-height: 50px;
+  border-bottom: 1px solid #d9e2e8;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+.budgetMangeWrap .budManHeader:after {
+  content: "";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+
+.budgetMangeWrap .budManHeader .leftTitle {
+  float: left;
+  font-size: 14px;
+}
+
+.budgetMangeWrap .budManHeader .leftTitle .clickTitle {
+  color: #637e99;
+  cursor: pointer;
+}
+
+.budgetMangeWrap .budManHeader .line {
+  margin: 0 3px;
+}
+
+.budgetMangeWrap .budManHeader .boldColor {
+  color: #151515;
+}
+
+.budgetMangeWrap .budManHeader .backButton {
+  vertical-align: middle;
+  margin-right: 4px;
+  display: inline-block;
+  height: 30px;
+  line-height: 0;
+}
+
+.budgetMangeWrap .budManHeader .helpIcon {
+  width: 30px;
+  height: 30px;
+  float: right;
+  cursor: pointer;
+  background: url(/images/energyterm/budgetManage/help.png) no-repeat center
+    center;
+  margin-top: 10px;
+}
+
+.budgetMangeWrap .budManHeader .rightBuildSel {
+  float: right;
+  margin-top: 10px;
+  width: 150px;
+}
+
+.budgetMangeWrap .monthBudgets {
+  background: #f8f8f8;
+  padding: 10px 8px;
+  position: relative;
+  height: 300px;
+  box-sizing: border-box;
+}
+
+.budgetMangeWrap .monthBudgets .backNowMonth {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: #02a9d1;
+  text-align: center;
+  line-height: 30px;
+  height: 30px;
+  width: 74px;
+  background: rgba(2, 169, 209, 0.3);
+  border-radius: 2px;
+  z-index: 1;
+  cursor: pointer;
+  display: none;
+}
+
+.budgetMangeWrap .monthBudgets.notNowMonth:hover .backNowMonth {
+  display: block;
+}
+
+.budgetMangeWrap .monthBudgets:after {
+  content: "";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+
+.budgetMangeWrap .monthBudgets .leftButton {
+  float: left;
+}
+
+.budgetMangeWrap .monthBudgets .rightButton {
+  float: right;
+}
+
+.budgetMangeWrap .monthBudgets .norButton {
+  width: 30px;
+  height: 280px;
+  border: 1px solid #d9e2e8;
+  box-sizing: border-box;
+  text-align: center;
+  line-height: 280px;
+  cursor: pointer;
+}
+
+.budgetMangeWrap .monthBudgets .norButton:hover {
+  background: #ffffff;
+}
+
+.budgetMangeWrap .monthBudgets .norButton span {
+  font-family: "perficon";
+  font-size: 18px;
+  color: #7a94ad;
+}
+
+.budgetMangeWrap .monthBudgets .norButton xmp {
+  font-family: "perficon";
+}
+
+.budgetMangeWrap .monthBudgets .monthBlocks {
+  float: left;
+  position: absolute;
+  left: 46px;
+  right: 46px;
+  top: 10px;
+}
+
+.budgetMangeWrap .monthBudgets .itemBlock {
+  float: left;
+  width: 280px;
+  height: 280px;
+  box-sizing: border-box;
+  border: 1px solid #d9e2e8;
+  background: #ffffff;
+  margin-right: 8px;
+  position: relative;
+}
+
+.budgetMangeWrap .monthBudgets .itemBlock.ide {
+  box-shadow: 0 0 6px #d9e2e8;
+}
+
+.budgetMangeWrap .monthBudgets .itemBlock:last-child {
+  margin-right: 0px;
+}
+
+.budgetMangeWrap .monthBudgets .itemBlock .blockTitle {
+  height: 48px;
+  line-height: 48px;
+  border-bottom: 1px solid #d9e2e8;
+  padding: 0 16px;
+  font-size: 14px;
+  color: #333333;
+}
+
+.budgetMangeWrap .monthBudgets .itemBlock .blockTitle .date {
+  font-size: 18px;
+  vertical-align: middle;
+}
+
+.budgetMangeWrap .monthBudgets .itemBlock .blockTitle .now {
+  background: #02a9d1;
+  font-size: 12px;
+  color: #ffffff;
+  width: 30px;
+  height: 14px;
+  text-align: center;
+  line-height: 14px;
+  border-radius: 2px;
+  vertical-align: middle;
+  display: inline-block;
+}
+
+.budgetMangeWrap .monthBudgets .itemBlock .remark {
+  float: right;
+  color: #637e99;
+  line-height: 1;
+  margin-top: 16px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.budgetMangeWrap .monthBudgets .itemBlock .lineInfo {
+  line-height: 1;
+  font-size: 12px;
+  color: #6d6d6d;
+  margin-top: 18px;
+  padding: 0 20px;
+  clear: both;
+}
+
+.budgetMangeWrap .monthBudgets .itemBlock .lineInfo .newWrap {
+  display: inline-block;
+  position: relative;
+}
+
+.budgetMangeWrap .monthBudgets .itemBlock .lineInfo .hasNew {
+  background: #7a94ad;
+  color: #ffffff;
+  border-radius: 3px;
+  padding: 2px 7px;
+  cursor: pointer;
+}
+
+.budgetMangeWrap .monthBudgets .itemBlock .lineInfo .hasNew:hover {
+  background: #637e99;
+}
+
+.budgetMangeWrap .monthBudgets .itemBlock .lineInfo .hasNew em {
+  color: #ffffff;
+  margin-right: 4px;
+}
+
+.budgetMangeWrap .monthBudgets .itemBlock .newWrap .budgetPop {
+  width: 330px;
+}
+
+.budgetMangeWrap .monthBudgets .itemBlock .infoData {
+  float: right;
+  font-size: 14px;
+  color: #333333;
+}
+
+.budgetMangeWrap .monthBudgets .itemBlock .smallFont {
+  font-size: 12px;
+}
+
+.budgetMangeWrap .monthBudgets .itemBlock .blackFont {
+  color: #333333;
+}
+
+.budgetMangeWrap .monthBudgets .itemBlock .unitFont {
+  font-size: 12px;
+  margin-left: 4px;
+}
+
+.budgetMangeWrap .monthBudgets .itemBlock .bCont {
+  padding-top: 2px;
+  height: 180px;
+  box-sizing: border-box;
+}
+
+.budgetMangeWrap .monthBudgets .itemBlock .planLine {
+  line-height: 1;
+  margin-top: 16px;
+  padding: 0 20px;
+  clear: both;
+}
+
+.budgetMangeWrap .monthBudgets .itemBlock .checkPlan {
+  color: #637e99;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.budgetMangeWrap .monthBudgets .itemBlock .editPlan {
+  color: #7a94ad;
+  font-family: "perficon";
+  font-size: 14px;
+  float: right;
+  cursor: pointer;
+}
+
+.budgetMangeWrap .monthBudgets .itemBlock .downPlan {
+  color: #7a94ad;
+  font-family: "perficon";
+  font-size: 14px;
+  float: right;
+  margin-left: 20px;
+  cursor: pointer;
+}
+
+.budgetMangeWrap .monthBudgets .itemBlock .createPlan {
+  color: #637e99;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.budgetMangeWrap .monthBudgets .itemBlock .bBottom {
+  height: 48px;
+  line-height: 46px;
+  border-top: 1px solid #d9e2e8;
+  padding: 0 16px;
+  color: #637e99;
+  font-size: 14px;
+}
+
+.budgetMangeWrap .monthBudgets .itemBlock .editBudget {
+  cursor: pointer;
+}
+
+.budgetMangeWrap .monthBudgets .itemBlock .budDisable {
+  cursor: default !important;
+  opacity: 0.3;
+}
+
+.budgetMangeWrap .monthBudgets .itemBlock .downBudget {
+  float: right;
+  line-height: 1;
+  margin-top: 15px;
+  cursor: pointer;
+}
+
+.budgetMangeWrap .monthBudgets .itemBlock .blockEdit {
+  /*padding: 0px 30px 0 20px;*/
+  position: relative;
+}
+
+.budgetMangeWrap .monthBudgets .itemBlock .blockEdit .sign {
+  color: #fd7b3d;
+  font-size: 12px;
+  padding-left: 20px;
+  line-height: 16px;
+  height: 16px;
+}
+
+.budgetMangeWrap .monthBudgets .itemBlock .blockEdit .sign span {
+  background: #f8f8f8;
+}
+
+.budgetMangeWrap .monthBudgets .itemBlock .blockEdit .bInputBox {
+  margin: 0px 30px 20px 20px;
+}
+
+.budgetMangeWrap .monthBudgets .itemBlock .blockEdit .bText {
+  height: 56px;
+  margin-bottom: 16px;
+  padding: 0px 30px 0 20px;
+}
+
+.budgetMangeWrap .monthBudgets .itemBlock .editButton {
+  padding: 0 30px;
+}
+
+.budgetMangeWrap .monthBudgets .itemBlock .editButton:after {
+  content: "";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+
+.budgetMangeWrap .monthBudgets .itemBlock .editCancel {
+  float: right;
+  height: 30px;
+  line-height: 30px;
+  margin-right: 20px;
+}
+
+.budgetMangeWrap .monthBudgets .itemBlock .editSave {
+  float: right;
+  position: relative;
+  height: 30px;
+}
+
+.budgetMangeWrap .monthBudgets .itemBlock .editSave .budgetPop {
+  top: 34px;
+  left: 0px;
+}
+
+.budgetMangeWrap .monthBudgets .itemBlock .blockEdit .bConnect {
+  position: absolute;
+  top: 29px;
+  right: 19px;
+  width: 12px;
+  height: 52px;
+  background: url(/images/energyterm/budgetManage/connect.png) no-repeat center
+    center;
+}
+
+.budgetMangeWrap .monthBudgets .itemBlock .changeButton {
+  text-align: center;
+}
+
+.budgetMangeWrap .monthBudgets .itemBlock .createPanel {
+  height: 230px;
+  line-height: 230px;
+  text-align: center;
+  color: #637e99;
+  cursor: pointer;
+}
+
+.budgetMangeWrap .monthBudgets .itemBlock .blockLoad {
+  height: 230px;
+  line-height: 230px;
+  text-align: center;
+  color: #cacaca;
+  font-size: 12px;
+}
+
+.budgetMangeWrap .budgetFloat {
+  width: 800px;
+  padding: 20px 20px 0;
+  box-sizing: border-box;
+  position: relative;
+  height: 100%;
+}
+
+/*.budgetMangeWrap .budgetFloat .remarkTitle {
+            height: 48px;
+            background: #F0F3F6;
+            border: 1px solid #D9E2E8;
+            padding-left: 18px;
+            color: #637E99;
+            line-height: 48px;
+        }*/
+.budgetMangeWrap .budgetFloat .remarkTitle {
+  margin-bottom: 14px;
+}
+
+.budgetMangeWrap .budgetFloat .remarkText {
+  height: 50px;
+}
+
+.budgetMangeWrap .budgetFloat .remarkSave {
+  float: right;
+  margin-top: 18px;
+  height: 30px;
+}
+
+.budgetMangeWrap .budgetFloat .reportTitle {
+  clear: both;
+  margin-bottom: 14px;
+  padding-top: 10px;
+}
+
+.budgetMangeWrap .budgetFloat .reportTable {
+  position: absolute;
+  top: 194px;
+  left: 20px;
+  right: 20px;
+  bottom: 20px;
+  box-sizing: border-box;
+  padding-top: 31px;
+}
+
+.budgetMangeWrap .budgetFloat .tableHead {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #eaeef0;
+  color: #000000;
+  font-size: 12px;
+  overflow: hidden;
+  border: 1px solid #d9e2e8;
+  box-sizing: border-box;
+  height: 31px;
+}
+
+.budgetMangeWrap .budgetFloat .tableCont {
+  overflow-x: hidden;
+  overflow-y: auto;
+  max-height: 100%;
+  border: 1px solid #edf1f4;
+  border-top: none;
+  box-sizing: border-box;
+}
+
+.remarkTable {
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+
+.budgetMangeWrap .budgetFloat .tableLine {
+  border-bottom: 1px solid #edf1f4;
+  height: 40px;
+}
+
+.budgetMangeWrap .budgetFloat .tableLine:last-child {
+  border-bottom: none;
+}
+
+.budgetMangeWrap .budgetFloat .tableHead > .tableLi {
+  line-height: 30px;
+  float: left;
+  box-sizing: border-box;
+}
+
+.budgetMangeWrap .budgetFloat .tableLine > .tableLi {
+  color: #151515;
+  font-size: 12px;
+}
+
+.budgetMangeWrap .budgetFloat .tableUl > .tableLi {
+  padding-left: 20px;
+  box-sizing: border-box;
+}
+
+.budgetMangeWrap .budgetFloat .tableUl > .tableLi:nth-child(1) {
+  width: 138px;
+  min-width: 138px;
+  max-width: 138px;
+}
+
+.budgetMangeWrap .budgetFloat .tableUl > .tableLi:nth-child(2) {
+  width: 88px;
+  min-width: 88px;
+  max-width: 88px;
+}
+
+.budgetMangeWrap .budgetFloat .tableUl > .tableLi:nth-child(3) {
+  width: 80px;
+  min-width: 80px;
+  max-width: 80px;
+}
+
+.budgetMangeWrap .budgetFloat .tableUl > .tableLi:nth-child(4) {
+  text-align: right;
+  padding-right: 20px;
+  width: 120px;
+  min-width: 120px;
+  max-width: 120px;
+}
+
+.budgetMangeWrap .budgetFloat .tableUl > .tableLi:nth-child(5) {
+  width: 326px;
+  min-width: 326px;
+  max-width: 326px;
+  padding-right: 10px;
+}
+
+.budgetMangeWrap .budgetFloat .tableUl .cell {
+  line-height: 16px;
+  word-break: break-all;
+}
+
+.budgetMangeWrap .budManCont .chartWrap {
+  height: calc(100% - 350px);
+  height: -moz-calc(100% - 350px);
+  height: -webkit-calc(100% - 350px);
+}
+
+.budgetMangeWrap .budManCont .chartWrap .chartTitle {
+  padding-left: 20px;
+  color: #141f2a;
+  font-size: 16px;
+  height: 50px;
+  line-height: 60px;
+}
+
+.budgetMangeWrap .budManCont .chartWrap .chartSubtile {
+  padding-top: 14px;
+  font-size: 12px;
+  color: #6d6d6d;
+  text-align: right;
+  padding-right: 30px;
+  height: 30px;
+  box-sizing: border-box;
+}
+
+.budgetMangeWrap .budManCont .chartWrap .chartSubtile .label {
+  margin-right: 12px;
+}
+
+.budgetMangeWrap .budManCont .chartWrap .chartSubtile .label em {
+  height: 10px;
+  width: 10px;
+  display: inline-block;
+  margin-right: 4px;
+}
+
+.budgetMangeWrap .budManCont .chartWrap .chartSubtile .plan em {
+  background: #d9e2e8;
+}
+
+.budgetMangeWrap .budManCont .chartWrap .chartSubtile .real em {
+  background: #02a9d1;
+}
+
+.budgetMangeWrap .budManCont .chartWrap .chartSubtile .over em {
+  background: #f89054;
+}
+
+.budgetMangeWrap .budManCont .chartWrap .chartCont {
+  height: calc(100% - 90px);
+  height: -moz-calc(100% - 90px);
+  height: -webkit-calc(100% - 90px);
+  position: relative;
+}
+
+.budgetMangeWrap .budManCont .chartWrap .chartCont .chartContCont {
+  margin: 0 12px;
+  /* width: 100%; */
+  height: 100%;
+}
+
+.budgetMangeWrap .itemPlanFloat {
+  width: 480px;
+  height: 100%;
+  padding-top: 38px;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.budgetMangeWrap .itemPlanFloat .pieChart {
+  width: 240px;
+  height: 260px;
+  margin: 0 auto 20px;
+}
+
+.budgetMangeWrap .itemPlanFloat .chartInfo {
+  position: absolute;
+  top: 318px;
+  left: 0;
+  width: 100%;
+  border-top: 1px solid #eeeeee;
+  bottom: 20px;
+  overflow-y: auto;
+  padding: 28px 0 0 72px;
+  box-sizing: border-box;
+}
+
+.budgetMangeWrap .itemPlanFloat .chartInfo .infoUl {
+  margin-bottom: 28px;
+  height: 14px;
+}
+
+.budgetMangeWrap .itemPlanFloat .chartInfo .infoUl:last-child {
+  margin-bottom: 0;
+}
+
+.budgetMangeWrap .itemPlanFloat .chartInfo .infoUl > li {
+  float: left;
+  line-height: 14px;
+}
+
+.budgetMangeWrap .itemPlanFloat .chartInfo .infoUl .circle {
+  width: 30px;
+}
+
+.budgetMangeWrap .itemPlanFloat .chartInfo .infoUl .circle > span {
+  width: 12px;
+  height: 12px;
+  background: #02a9d1;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.budgetMangeWrap .itemPlanFloat .chartInfo .infoUl .name {
+  width: 160px;
+}
+
+.budgetMangeWrap .itemPlanFloat .chartInfo .infoUl .value {
+  width: 170px;
+}
+
+.budgetMangeWrap .itemPlanFloat .chartInfo .infoUl .unit {
+  margin-left: 3px;
+}
+
+.budgetMangeWrap .dayPlanFloat {
+  position: absolute;
+  width: 100%;
+  height: 400px;
+  left: 0;
+  bottom: -400px;
+  box-shadow: 10px 0 30px rgba(0, 0, 0, 0.2);
+  background: #fff;
+  transition: 0.5s;
+  z-index: 20;
+}
+
+.budgetMangeWrap .dayPlanFloat .floatHead {
+  height: 56px;
+  font-size: 16px;
+  line-height: 64px;
+  padding: 0 30px;
+}
+
+.budgetMangeWrap .dayPlanFloat .floatHead .close {
+  float: right;
+  color: #7a94ad;
+  font-family: "perficon";
+  cursor: pointer;
+}
+
+.budgetMangeWrap .dayPlanFloat .columnChart {
+  height: 342px;
+}
+
+.planSetWindow {
+  width: 1180px;
+  padding: 50px 0 0 60px;
+  box-sizing: border-box;
+}
+
+.per-modal-global {
+  /*undo*/
+  width: auto;
+  height: auto;
+}
+
+.planSetWindow .explainHead {
+  font-size: 24px;
+  margin-bottom: 40px;
+  font-weight: bold;
+}
+
+.planSetWindow .stitle {
+  font-size: 16px;
+  margin-bottom: 6px;
+  font-weight: bold;
+}
+
+.planSetWindow .scont {
+  font-size: 14px;
+}
+
+.planSetWindow .what {
+  margin-bottom: 30px;
+}
+
+.planSetWindow .stepUl {
+  margin-top: 18px;
+  margin-bottom: 20px;
+}
+
+.planSetWindow .stepUl li {
+  height: 18px;
+  line-height: 18px;
+  margin-bottom: 16px;
+}
+
+.planSetWindow .stepUl li:last-child {
+  margin-bottom: 0;
+}
+
+.planSetWindow .stepUl li .num {
+  background: #02a9d1;
+  width: 18px;
+  height: 18px;
+  line-height: 18px;
+  border-radius: 50%;
+  margin-right: 10px;
+  font-size: 12px;
+  text-align: center;
+  display: inline-block;
+  color: #ffffff;
+}
+
+.planSetWindow .imgExplain {
+  width: 1026px;
+  height: 170px;
+  background: url(/images/energyterm/budgetManage/imgExplain.png) no-repeat top
+    left;
+  background-size: 100%;
+}
+
+.planSetWindow .chooseButton {
+  height: 84px;
+  margin-top: 58px;
+  margin-left: -60px;
+  padding-left: 60px;
+  background: #f8f8f8;
+  text-align: center;
+  overflow: hidden;
+}
+
+.planSetWindow .chooseButton .leftCheck {
+  margin-top: 30px;
+  float: left;
+}
+
+.planSetWindow .chooseButton .rigthButton {
+  float: right;
+  margin-top: 24px;
+  margin-right: 90px;
+  height: 30px;
+  line-height: 30px;
+}
+
+.planSetWindow .chooseButton .rigthButton .btitle {
+  font-size: 16px;
+  vertical-align: text-bottom;
+  margin-right: 14px;
+}
+
+.planSetWindow .closeButton {
+  height: 60px;
+  margin-top: 20px;
+  text-align: center;
+  padding-right: 166px;
+}
+
+.layer {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  z-index: 2;
+  bottom: 0px;
+  display: none;
+}
+
+#setPlanWindow .per-modal-global_x {
+  display: none;
+}

@@ -28,6 +28,24 @@ function v3(num) {
     : num;
 }
 
+function cs(real, budget) {
+  var _that = this;
+  return {
+    color: this.fcolor(real, budget)
+  };
+}
+function fcolor(real, budget) {
+  return _.isNumber(real) && _.isNumber(budget)
+    ? real > budget ? "#FF7B7B" : "#02A9D1"
+    : "#02A9D1";
+}
+
+function color(bool) {
+  return {
+    color: bool ? "#FF7B7B" : "#02A9D1"
+  };
+}
+
 var monthtotal_controller = {
   // 获取能耗预算概述
   FNCT_GetMonthEnergyDataInfo: function(argu) {
@@ -61,22 +79,22 @@ var monthtotal_controller = {
         url: "/FNCT_GetEnergyDataForDayAndItem",
         data: argu,
         success: function(res) {
-          res[0].day = res[0].day.map(function(item) {
-            // 计划数向下取整
-            item.planData = floor(item.planData);
-            // 实际能耗向下去整
-            item.energyData = v3(item.energyData);
+          // res[0].day = res[0].day.map(function(item) {
+          //   // 计划数向下取整
+          //   item.planData = floor(item.planData);
+          //   // 实际能耗向下去整
+          //   item.energyData = v3(item.energyData);
 
-            return item;
-          });
+          //   return item;
+          // });
 
-          res[0].items = res[0].items.map(function(item) {
-            item.planRatio = v3(item.planRatio);
-            item.energyData = v3(item.energyData);
-            item.monthTodayEnergyPlan = floor(item.monthTodayEnergyPlan);
-            item.monthEnergyPlan = floor(item.monthEnergyPlan);
-            return item;
-          });
+          // res[0].items = res[0].items.map(function(item) {
+          //   item.planRatio = v3(item.planRatio);
+          //   item.energyData = v3(item.energyData);
+          //   item.monthTodayEnergyPlan = floor(item.monthTodayEnergyPlan);
+          //   item.monthEnergyPlan = floor(item.monthEnergyPlan);
+          //   return item;
+          // });
 
           resolve(res);
         },

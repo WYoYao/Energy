@@ -3,10 +3,11 @@ v.pushComponent({
     el: "energyByDayHead",
     data: {},
     methods: {
-
+        // here
         backEnergyByproject: function () {
-            chart.chart != null ? chart.chart.destroy() : void 0;
-            v.initPage('energybyproject');
+            // chart.chart != null ? chart.chart.destroy() : void 0;
+            // v.initPage('energybyproject');
+            this.goLastPage();
         },
         //头部时间选择
         DTimeSel: function () {
@@ -36,7 +37,7 @@ v.pushComponent({
         this.Dactivate(paramObj);
         this.$nextTick(function () {
             // 进入本页默认选择本日,修改时间控件
-            canNotSelectFutureDay($("#energyByDayHead_ptime").psel().startTime, 'energyByDayHead_ptime');
+            cantSelectFutureDay($("#energyByDayHead_ptime").psel().startTime, 'energyByDayHead_ptime');
         })
     }
 })

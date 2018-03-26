@@ -68,6 +68,11 @@ v.pushComponent({
                 item.energyPlanRatio = (item.energyPlanRatio <= 0) ? item.energyPlanRatio : Math.round((item.energyPlanRatio - 0.1) * 10) / 10;
             }
             item.energyDataPlan = Math.round(item.energyPlanRatio * v.instance.monthPlanInfo.monthRemainData / 100);//计划
+
+
+
+            // 3.21
+            item.energyDataPlanDecimal = 0
         },
         downCountNumber: function (item, param) {//长按时
             if (param == 'down' && item.energyPlanRatio <= 0) { 
@@ -120,6 +125,9 @@ v.pushComponent({
                     addorRemove(0.1);
                 }
             }, 500);
+            
+            // 3.21
+            item.energyDataPlanDecimal = 0
         },
 
 
@@ -152,9 +160,15 @@ v.pushComponent({
             var resObj = verifyInput(event);
             item.energyDataPlan = resObj.invalue;
 
+
+
+            // debugger
+            // 3.21
+            item.energyDataPlanDecimal = 0;
+
             if (this.allocatePlanType == 0) { return; }//如果是按日分配 就不需要后面的了
             var percent = v.instance.monthPlanInfo.monthRemainData > 0 ? Number(item.energyDataPlan) / v.instance.monthPlanInfo.monthRemainData : 0;
-            item.energyPlanRatio = Math.round(percent * 1000) / 10;
+            item.energyPlanRatio = floor(percent * 1000) / 10;
         },
         showCountMachine: function (item, event, index) {//点开计算器
             event.stopPropagation();
@@ -215,6 +229,12 @@ v.pushComponent({
                 this.countItemPlan.energyDataPlan = this.countItemPlan.energyDataPlan < 0 ? 0 : this.countItemPlan.energyDataPlan;
             }
             v.instance.countMachineShow = false;
+
+
+            // 3.21
+            this.countItemPlan.energyDataPlanDecimal = 0;
+
+
             if (this.allocatePlanType == 0) { return; }//如果是按天计划
             var percent = v.instance.monthPlanInfo.monthRemainData > 0 ? this.countItemPlan.energyDataPlan / v.instance.monthPlanInfo.monthRemainData : 0;
             this.countItemPlan.energyPlanRatio = Math.round(percent * 1000) / 10;

@@ -10,18 +10,18 @@
     <!-- 头部 -->
     <div id="I_head">
         <div class="I_head_time">
-            <ptime-calendar id="I_head_ptime" orientation="down" sel="indexTimeSel">
+            <ptime-calendar id="I_head_ptime" orientation="down" sel="indexTimeSel" >
                 <panel timetype="M" align="left" double="false" iscommontime="false"></panel>
             </ptime-calendar>
         </div>
-        <div class="I_head_combo">
+        <div class="I_head_combo" @click.capture="bodyClick()">
             <pcombobox-normal id="'I_head_pcombo'" sel="indexItemSel" bind="true">
                 <header placeholder="切换分项：获取分项失败" prefix="切换分项："></header>
                 <item datasource="AllProjectItems" text="name" id="logicId"></item>
             </pcombobox-normal>
         </div>
         <ptab-button bind="true" id="'I_head_ptab'" datasource="ItabArr" text="name" sel="indexPageC" text="name"></ptab-button>
-        <div class="I_head_buttonR1">
+        <div class="I_head_buttonR1" @click.capture="bodyClick()">
             <a>D</a>
             <pbutton-menuminor sel="indexDownload" icon="D" id="'I_head_pbutcom'" bind="true" align="right">
                 <header placeholder="下载"></header>
@@ -29,12 +29,9 @@
             </pbutton-menuminor>
         </div>
         <div class="I_head_buttonR2" @click.stop="projectFilter">
-        <!-- <div class="I_head_buttonR2"> -->
-            <!-- <i class="iconfont icon-shaixuan"></i> -->
             <img src="/images/energycenter/centerindex/shaixuan.png" alt="">
             <a>筛选项目</a>
             （<a class="ABM">{{projectInfo.totalScreening}}</a><a class="AMT">/{{projectInfo.totalProjects}}</a>）
-            <!-- <pbutton-white bind="true" @click.stop="projectFilter" icon="'D'" text="'筛选项目(' + projectInfo.totalScreening + '/' + projectInfo.totalProjects + ')'"></pbutton-white> -->
         </div>
 
 

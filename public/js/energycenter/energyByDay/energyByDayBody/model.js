@@ -53,7 +53,7 @@ v.pushComponent({
                 data.splice(_index,1)
                 // 分项排序
                 data.sort(function(a,b){
-                    return a.id < b.id ? 1 : -1
+                    return a.id > b.id ? 1 : -1
                 })
                 //将预算管理节点置于首位
                 data.unshift(_budgetNode);
@@ -142,6 +142,7 @@ v.pushComponent({
         },
         //获取节点日能耗信息并更新图表
         getItemEnergyByDay : function(paramObj){
+            $(".DB_right_bottom").scrollTop(0);
             // this.Dloading = this.Dloading == 0 ? 1 : 0;
             this.Dloading == 0 ? this.Dloading = 1 : void 0;
             var _this = this;
@@ -156,7 +157,7 @@ v.pushComponent({
                     //处理分项能耗数据
                     if(data[0].items != undefined){
                         data[0].items.sort(function(a,b){
-                            return a.energyItemId < b.energyItemId ? 1 : -1
+                            return a.energyItemId > b.energyItemId ? 1 : -1
                         })
                         var energyDataMax = 0;
                         data[0].items.forEach(function(item){

@@ -1,3 +1,8 @@
+// 根据是否是有预算和过去月返回信息
+function getPageType(item) {
+  return item.ifHasBudget || item.isPastMonth ? "dataPage" : "newCreate";
+}
+
 function budgetController() {}
 budgetController.init = function(argu) {
   var selIndex = 0;
@@ -155,12 +160,6 @@ budgetController.getEnergyBudgetList = function(pageNum, cb) {
 
       // 返回的每项处理
       energyBudgetList.forEach(function(item) {
-        // 原数据不做任何处理
-        // item.energyDataBudget = item.energyDataBudget && Math.round(item.energyDataBudget);
-        // item.energyDataBudgetPerSquare = item.energyDataBudgetPerSquare && Math.round(item.energyDataBudgetPerSquare);
-        // item.energyDataReal = item.energyDataReal && Math.round(item.energyDataReal);
-        // item.realOccupyBudgetRatio = to3(item.realOccupyBudgetRatio);
-
         item.planDateStr = new Date(item.planDate.replace(/-/g, "/")).format(
           "yyyy.MM"
         );
@@ -180,8 +179,7 @@ budgetController.getEnergyBudgetList = function(pageNum, cb) {
         item.operate = ""; //保存的操作
         item.blockWidth = bockParam.blockWidth;
         item.againCreateBudget = false; //是否重新创建预算
-        item.showPage =
-          item.ifHasBudget || item.isPastMonth ? "dataPage" : "newCreate";
+        item.showPage = getPageType(item);
       });
       v.instance.energyBudgetList = energyBudgetList;
       // 用于取消编辑
@@ -317,16 +315,18 @@ budgetController.getMonthEnergyRealAndBudget = function(monparam, cb) {
       var resData = res[0] || {};
 
       if (monparam == "create") {
-        budgetController.historyEnergyChart &&
-          budgetController.historyEnergyChart.destroy();
-        budgetController.chartDataList = resData.dataList || [];
+        try {
+          budgetController.historyEnergyChart &&
+            budgetController.historyEnergyChart.destroy();
+        } catch (error) {}
 
+        budgetController.chartDataList = resData.dataList || [];
         var chartDataObj = getChartDataObj(
           budgetController.chartDataList,
           monparam
         );
 
-        if(v.instance.onPage == 'budget_manage'){
+        if (v.instance.onPage == "budget_manage") {
           budgetController.historyEnergyChart = columnComparisonChart(
             "historyEnergyChart",
             "month"
@@ -347,7 +347,6 @@ budgetController.getMonthEnergyRealAndBudget = function(monparam, cb) {
             data: chartDataObj.enerRealList
           });
         }
-
       } else {
         budgetController.historyEnergyChart.yAxis &&
           budgetController.historyEnergyChart.yAxis[0].removePlotLine(
@@ -356,16 +355,14 @@ budgetController.getMonthEnergyRealAndBudget = function(monparam, cb) {
         if (resData.samePriodHistoryDataAvg == null) {
           return;
         }
-        resData.samePriodHistoryDataAvg = Math.round(
-          resData.samePriodHistoryDataAvg
-        );
+        resData.samePriodHistoryDataAvg = RD(resData.samePriodHistoryDataAvg);
 
         budgetController.historyEnergyChart.yAxis &&
           budgetController.historyEnergyChart.yAxis[0].addPlotLine({
             value: resData.samePriodHistoryDataAvg,
             color: "#6d6d6d",
             dashStyle: "ShortDash",
-            width: 2,
+            width: 1,
             id: "averPlotLine",
             label: {
               align: "right",
@@ -395,25 +392,30 @@ function getChartDataObj(dataList, monparam) {
   //处理数据
   var enerRealList = [];
   var enerBudgetList = [];
-  dataList.forEach(function(item) {
+  dataList.forEach(function(item, aaa) {
     var thisMonth = new Date(item.time.replace(/-/g, "/")).getMonth() + 1;
     //  大于 1% 直接百分比   小于 1% 再保留三位小数
     // leo 2018 03 08
     // var radioUnd = item.energyDataBudget ? (item.energyDataReal / item.energyDataBudget * 100) : 0;
     // var radio = radioUnd > 100 ? Math.round((item.energyDataReal / item.energyDataBudget) * 1000) / 10 : radioUnd > 0 ? (radioUnd / 100000).toFixed(5) : 0;
 
+    var color =
+      item.energyDataReal > item.energyDataBudget ? "#FF8640" : "#02A9D1";
+    // var color =
+    //   item.energyDataReal > item.energyDataBudget ? "#EAA3FC" : "#AED09E";
+
     var radio = item.energyDataBudget
-      ? to3(item.energyDataReal / item.energyDataBudget * 100)
+      ? v3(item.energyDataReal / item.energyDataBudget * 100)
       : 0;
     var thishtml =
       '<div class="budgetDataLabel"><div>' +
       new Date(item.time.replace(/-/g, "/")).format("y.M") +
       "</div><div>预算管理节点：" +
       item.budgetItemName +
-      "</div><div>能耗预算：" +
-      (item.energyDataBudget ? toCom(item.energyDataBudget) + "kWh" : "--") +
       "</div><div>实际能耗：" +
-      (item.energyDataReal ? toCom(item.energyDataReal) + "kWh" : "--") +
+      (item.energyDataReal ? v3(item.energyDataReal) + "kWh" : "--") +
+      "</div><div>能耗预算：" +
+      (item.energyDataBudget ? floor(item.energyDataBudget) + "kWh" : "--") +
       "</div><div>实际能耗占预算比：" +
       (radio ? radio + "%" : "--") +
       "</div></div>";
@@ -433,7 +435,7 @@ function getChartDataObj(dataList, monparam) {
     }
     var budgetObj = {
       x: new Date(item.time.replace(/-/g, "/")).getTime(),
-      y: toCom(item.energyDataBudget),
+      y: floor(item.energyDataBudget),
       name: "能耗预算",
       realradio: radio,
       budgetItemName: item.budgetItemName,
@@ -445,7 +447,7 @@ function getChartDataObj(dataList, monparam) {
     };
     var realObj = {
       x: new Date(item.time.replace(/-/g, "/")).getTime(),
-      y: toCom(item.energyDataReal),
+      y: v3(item.energyDataReal),
       color:
         item.energyDataReal && item.energyDataBudget
           ? item.energyDataReal > item.energyDataBudget ? "#FCA471" : "#48BEDA"
@@ -455,17 +457,31 @@ function getChartDataObj(dataList, monparam) {
       budgetItemName: item.budgetItemName,
       states: {
         select: {
-          color:
-            item.energyDataReal > item.energyDataBudget ? "#FF8640" : "#02A9D1",
+          // color:
+          //   item.energyDataReal > item.energyDataBudget ? "#FFBD8A" : "#1BC2EA",
+          color: color,
           borderColor: "rgba(0,0,0,0)"
         }
       },
+      // states: {
+      //   select: {
+      //     // color:
+      //     //   item.energyDataReal > item.energyDataBudget ? "#FFBD8A" : "#1BC2EA",
+      //     color:
+      //       item.energyDataReal > item.energyDataBudget ? "#red" : "#black",
+      //     borderColor: "rgba(0,0,0,0)"
+      //   }
+      // },
       dataLabels:
         labelSign && item.energyDataReal > item.energyDataBudget
           ? enLabelObj
           : disLabelObj,
       selected: labelSign ? true : false
     };
+
+    console.log(
+      item.energyDataReal > item.energyDataBudget ? "#red" : "#black"
+    );
     enerRealList.push(realObj);
     enerBudgetList.push(budgetObj);
   });
@@ -560,7 +576,7 @@ function columnComparisonChart(itemId, dateType, callback) {
             budgetItemName = void 0;
 
           this.points = this.points.sort(function(a, b) {
-            return a.key < b.key? 1 : -1;
+            return a.key > b.key ? 1 : -1;
           });
 
           for (var i = 0; i < this.points.length; i++) {
@@ -625,7 +641,7 @@ function columnComparisonChart(itemId, dateType, callback) {
           // pointPlacement: -0.09,
           groupPadding: 0.3125,
           //=================
-          dataLabels: { 
+          dataLabels: {
             shared: true,
             useHTML: true,
             crop: false, //允许溢出

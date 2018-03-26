@@ -1,3 +1,71 @@
+@media screen and (min-width: 1440px) {
+  .more_box .content .tbody .c_pro .number {
+    font-size: 36px;
+  }
+  .more_box .content .tbody .c_pro .energy {
+    margin-top: 54px;
+  }
+  .more_box .content .item .tbody .c_pro {
+    height: 157px;
+  }
+  .more_box .content .item .tbody {
+    height: 239px;
+  }
+  .more_box .content .item{
+    height:320px;
+  }
+  .more_box .content .item .theader .buildname{
+    margin-left: 40px;
+  }
+  .more_box .content .tbody .c_pro .real_energy{
+    margin-left: 40px;
+    width: calc(50% - 40px);
+  }
+  .more_box .content .item .theader .title{
+    font-size: 16px;
+  }
+  .more_box .content .item .theader .buildname{
+    font-size: 16px;
+  }
+  .more_box .content .item .theader .report{
+    font-size: 18px;
+  }
+}
+
+@media screen and (max-width: 1440px) {
+  .more_box .content .tbody .c_pro .number {
+    font-size: 20px;
+  }
+  .more_box .content .tbody .c_pro .energy {
+    margin-top: 40px;
+  }
+  .more_box .content .item .tbody .c_pro {
+    height: 117px;
+  }
+  .more_box .content .item .tbody {
+    height: 190px;
+  }
+  .more_box .content .item{
+    height:272px;
+  }
+  .more_box .content .item .theader .buildname{
+    margin-left: 20px;
+  }
+  .more_box .content .tbody .c_pro .real_energy{
+    margin-left: 20px;
+    width: calc(50% - 20px);
+  }
+  .more_box .content .item .theader .title{
+    font-size: 14px;
+  }
+  .more_box .content .item .theader .buildname{
+    font-size: 14px;
+  }
+  .more_box .content .item .theader .report{
+    font-size: 14px;
+  }
+}
+
 /*  多建筑类型  */
 .more_box {
   position: absolute;
@@ -64,7 +132,7 @@
 .more_box .content .item {
   margin: 10px 6px 0;
   width: calc((100% - 70px) / 3);
-  height: 320px;
+  /* height: 320px; */
   border-radius: 8px;
   border: 1px solid #d9e2e8;
   box-sizing: border-box;
@@ -74,7 +142,7 @@
 
 .more_box .content .item:hover {
   /* background: rgba(0,0,0,.12); */
-  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.12);
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.12);
 }
 
 .more_box .content .item:nth-child(3n-2) {
@@ -94,18 +162,14 @@
 
 .more_box .content .item .tbody {
   width: 100%;
-  height: 239px;
 }
 
 .more_box .content .item .tbody .c_pro {
-  height: 157px;
   width: 100%;
 }
 
 .more_box .content .tbody .c_pro .real_energy {
   float: left;
-  margin-left: 40px;
-  width: calc(50% - 40px);
 }
 
 .more_box .content .tbody .c_pro .target_energy {
@@ -115,7 +179,6 @@
 }
 
 .more_box .content .tbody .c_pro .energy {
-  margin-top: 54px;
   font-size: 14px;
   color: #6d6d6d;
   height: 18px;
@@ -126,7 +189,7 @@
   font-family: Arial-BoldMT;
   font-weight: bold;
   margin-top: 10px;
-  font-size: 36px;
+  /* font-size: 36px; */
   color: #333333;
   line-height: 36px;
   overflow: hidden;
@@ -163,8 +226,7 @@
 .more_box .content .item .theader .buildname {
   float: left;
   font-family: MicrosoftYaHei-Bold;
-  margin-left: 40px;
-  font-size: 16px;
+  /* font-size: 16px; */
   max-width: calc(50% - 40px - 34px - 14px);
   overflow: hidden;
   text-overflow: ellipsis;
@@ -188,7 +250,6 @@
 .more_box .content .item .theader .report {
   font-family: perficon;
   float: right;
-  font-size: 18px;
 }
 
 .more_box .content .item .theader .title {
@@ -197,7 +258,7 @@
   margin-right: 20px;
   font-family: MicrosoftYaHei-Bold;
   /* color: #FF7B7B; */
-  font-size: 16px;
+  /* font-size: 16px; */
   max-width: calc(50% - 20px);
   overflow: hidden;
   text-overflow: ellipsis;

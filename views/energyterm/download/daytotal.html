@@ -23,6 +23,7 @@
     <script type="text/javascript" src="<%=host%>pcontrol/flatBlueSeries_src_2.0.js"></script>
 
     <script src="/js/public/lodash.min.js"></script>
+    <script src="/js/public/public.js"></script>
     <!-- highcharts Start -->
     <!-- <script src="https://img.hcharts.cn/highcharts/highcharts.js"></script>
     <script src="https://img.hcharts.cn/highcharts/highcharts-more.js"></script>
@@ -71,13 +72,13 @@
                             <div style="width:14%;" class="itemer">
                                 <div class="box">日能耗</div>
                                 <div class="box">
-                                    <div class="blacknumber" v-if="DayEnergyDataInfo.energyData">
+                                    <div class="blacknumber" v-if="_.isNumber(DayEnergyDataInfo.energyData)">
                                         {{DayEnergyDataInfo.energyData | v3 | toThousands}}
                                     </div>
-                                    <div class="company" v-if="DayEnergyDataInfo.energyData">
+                                    <div class="company" v-if="_.isNumber(DayEnergyDataInfo.energyData)">
                                         kWh
                                     </div>
-                                    <div class="blacknumber" v-if="!DayEnergyDataInfo.energyData">
+                                    <div class="blacknumber" v-if="!_.isNumber(DayEnergyDataInfo.energyData)">
                                         --
                                     </div>
                                 </div>
@@ -85,13 +86,13 @@
                             <div style="width:14%;" class="itemer1">
                                 <div class="box">日计划</div>
                                 <div class="box">
-                                    <div class="blacknumber" v-if="DayEnergyDataInfo.energyPlan">
+                                    <div class="blacknumber" v-if="_.isNumber(DayEnergyDataInfo.energyPlan)">
                                         {{DayEnergyDataInfo.energyPlan | floor | toThousands}}
                                     </div>
-                                    <div class="company" v-if="DayEnergyDataInfo.energyPlan">
+                                    <div class="company" v-if="_.isNumber(DayEnergyDataInfo.energyPlan)">
                                         kWh
                                     </div>
-                                    <div class="blacknumber" v-if="!DayEnergyDataInfo.energyPlan">
+                                    <div class="blacknumber" v-if="!_.isNumber(DayEnergyDataInfo.energyPlan)">
                                         --
                                     </div>
                                 </div>
@@ -99,13 +100,13 @@
                             <div style="width:14%;" class="itemer1">
                                 <div class="box">日能耗占计划比</div>
                                 <div class="box">
-                                    <div class="blacknumber" v-if="DayEnergyDataInfo.energyData && DayEnergyDataInfo.energyPlan">
+                                    <div class="blacknumber" v-if="_.isNumber(DayEnergyDataInfo.energyData) && _.isNumber(DayEnergyDataInfo.energyPlan)">
                                         {{(DayEnergyDataInfo.energyData/DayEnergyDataInfo.energyPlan)| x100 | v3 }}
                                     </div>
-                                    <div class="company" v-if="DayEnergyDataInfo.energyData && DayEnergyDataInfo.energyPlan">
+                                    <div class="company" v-if="_.isNumber(DayEnergyDataInfo.energyData) && _.isNumber(DayEnergyDataInfo.energyPlan)">
                                         %
                                     </div>
-                                    <div class="blacknumber" v-if="!(DayEnergyDataInfo.energyData && DayEnergyDataInfo.energyPlan)">
+                                    <div class="blacknumber" v-if="!(_.isNumber(DayEnergyDataInfo.energyData) && _.isNumber(DayEnergyDataInfo.energyPlan))">
                                         --
                                     </div>
                                 </div>
@@ -121,21 +122,20 @@
                                         同比能耗
                                     </div>
 
-                                    <div class="number" v-if="DayEnergyDataInfo.sameRatioData">
+                                    <div class="number" v-if="_.isNumber(DayEnergyDataInfo.sameRatioData)">
                                         {{DayEnergyDataInfo.sameRatioData | v3 | toThousands}} kWh
                                     </div>
 
-                                    <div class="number" v-if="!DayEnergyDataInfo.sameRatioData">
+                                    <div class="number" v-if="!_.isNumber(DayEnergyDataInfo.sameRatioData)">
                                         --
                                     </div>
-
                                 </div>
                                 <div class="box">
-                                    <div class="block_proportion" v-if="DayEnergyDataInfo.sameRatio" :class="{red:DayEnergyDataInfo.sameRatio>0,green:DayEnergyDataInfo.sameRatio<0}">
+                                    <div class="block_proportion" v-if="_.isNumber(DayEnergyDataInfo.sameRatio)" :class="{red:DayEnergyDataInfo.sameRatio>0,green:DayEnergyDataInfo.sameRatio<0}">
                                         {{DayEnergyDataInfo.sameRatio | x100 | v3}} &nbsp;%
                                     </div>
 
-                                    <div class="block_proportion" v-if="!DayEnergyDataInfo.sameRatio" :class="{red:DayEnergyDataInfo.sameRatio>0,green:DayEnergyDataInfo.sameRatio<0}">
+                                    <div class="block_proportion" v-if="!_.isNumber(DayEnergyDataInfo.sameRatio)" :class="{red:DayEnergyDataInfo.sameRatio>0,green:DayEnergyDataInfo.sameRatio<0}">
                                         --
                                     </div>
                                 </div>
@@ -151,20 +151,20 @@
                                         环比能耗
                                     </div>
 
-                                    <div class="number" v-if="DayEnergyDataInfo.circleRatioData">
+                                    <div class="number" v-if="_.isNumber(DayEnergyDataInfo.circleRatioData)">
                                         {{DayEnergyDataInfo.circleRatioData | v3 | toThousands}} kWh
                                     </div>
 
-                                    <div class="number" v-if="!DayEnergyDataInfo.circleRatioData">
+                                    <div class="number" v-if="!_.isNumber(DayEnergyDataInfo.circleRatioData)">
                                         --
                                     </div>
 
                                 </div>
                                 <div class="box">
-                                    <div class="block_proportion" v-if="DayEnergyDataInfo.circleRatio" :class="{red:DayEnergyDataInfo.circleRatio>0,green:DayEnergyDataInfo.circleRatio<0}">
+                                    <div class="block_proportion" v-if="_.isNumber(DayEnergyDataInfo.circleRatio)" :class="{red:DayEnergyDataInfo.circleRatio>0,green:DayEnergyDataInfo.circleRatio<0}">
                                         {{DayEnergyDataInfo.circleRatio | x100 | v3}} &nbsp;%
                                     </div>
-                                    <div class="block_proportion" v-if="!DayEnergyDataInfo.circleRatio" :class="{red:DayEnergyDataInfo.circleRatio>0,green:DayEnergyDataInfo.circleRatio<0}">
+                                    <div class="block_proportion" v-if="!_.isNumber(DayEnergyDataInfo.circleRatio)" :class="{red:DayEnergyDataInfo.circleRatio>0,green:DayEnergyDataInfo.circleRatio<0}">
                                         --
                                     </div>
                                 </div>
@@ -207,28 +207,28 @@
 
                                 </div>
 
-                                <div class="hitem" v-if="item.energyData">
+                                <div class="hitem" v-if="_.isNumber(item.energyData)">
                                     {{item.energyData | v3 | toThousands}}　kWh
-                                    <div v-if="item.monthEnergyPlan" class="progress" :style="width(item.energyData,item.monthEnergyPlan)"></div>
+                                    <div v-if="item.energyData" class="progress" :style="width(item)"></div>
                                 </div>
-                                <div class="hitem" v-if="!item.energyData">
+                                <div class="hitem" v-if="!_.isNumber(item.energyData)">
                                     --
                                 </div>
 
 
-                                <div class="hitem" v-if="item.energyPlan">
+                                <div class="hitem" v-if="_.isNumber(item.energyPlan)">
                                     {{item.energyPlan | floor | toThousands}}　kWh
                                 </div>
 
-                                <div class="hitem" v-if="!item.energyPlan">
+                                <div class="hitem" v-if="!_.isNumber(item.energyPlan)">
                                     --
                                 </div>
 
 
-                                <div class="hitem" v-if="item.planRatio">
+                                <div class="hitem" v-if="_.isNumber(item.planRatio)" :class="item.planRatio >= 1 ? 'red' : void 0">
                                     {{item.planRatio | x100 | v3}}%
                                 </div>
-                                <div class="hitem" v-if="!item.planRatio">
+                                <div class="hitem" v-if="!_.isNumber(item.planRatio)">
                                     --
                                 </div>
 
@@ -294,14 +294,14 @@
 
                     <div v-for="(item,index) in mo" class="tr">
                         <div class="bitems" v-text="item.energyItemName"></div>
-                        <div class="bitems" v-if="item.energyData">{{item.energyData | v3 | toThousands}}</div>
-                        <div class="bitems" v-if="!item.energyData">--</div>
+                        <div class="bitems" v-if="_.isNumber(item.energyData)">{{item.energyData | v3 | toThousands}}</div>
+                        <div class="bitems" v-if="!_.isNumber(item.energyData)">--</div>
 
-                        <div class="bitems" v-if="item.energyPlan">{{item.energyPlan | floor | toThousands}}</div>
-                        <div class="bitems" v-if="!item.energyPlan">--</div>
+                        <div class="bitems" v-if="_.isNumber(item.energyPlan)">{{item.energyPlan | floor | toThousands}}</div>
+                        <div class="bitems" v-if="!_.isNumber(item.energyPlan)">--</div>
 
-                        <div class="bitems" v-if="item.planRatio">{{item.planRatio | x100 | v3}} %</div>
-                        <div class="bitems" v-if="!item.planRatio">--</div>
+                        <div class="bitems" :class="item.planRatio >= 1 ? 'red' : void 0" v-if="_.isNumber(item.planRatio)">{{item.planRatio | x100 | v3}} %</div>
+                        <div class="bitems" v-if="!_.isNumber(item.planRatio)">--</div>
                     </div>
 
                 </div>
@@ -328,8 +328,8 @@
                 <div class="tr" v-for="item in DayEnergyDataInfo.hourData">
                     <div class="bitems" style="width:50%">{{new Date(item.time).format('hh:mm')}}</div>
                     
-                    <div class="bitems" style="width:50%" v-if="item.energyData">{{item.energyData | v3}}</div>
-                    <div class="bitems" style="width:50%" v-if="!item.energyData">--</div>
+                    <div class="bitems" style="width:50%" v-if="_.isNumber(item.energyData)">{{item.energyData | v3}}</div>
+                    <div class="bitems" style="width:50%" v-if="!_.isNumber(item.energyData)">--</div>
                    
                 </div>
 

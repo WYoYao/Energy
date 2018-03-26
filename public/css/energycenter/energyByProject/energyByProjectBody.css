@@ -10,8 +10,8 @@
 }
 .PB_left{
     width: 320px;
-    height: calc(100% - 20px) !important; 
-    padding-bottom: 20px;
+    height: 100% !important; 
+    /* padding-bottom: 20px; */
     overflow: hidden;
 }
 .PB_leftWrap{
@@ -37,7 +37,10 @@
     border-bottom: 1px solid #D9E2E8;
 }
 
-
+#PBBody .holderbox{
+    width: 100%;
+    height: 20px;
+}
 .PB_chart_lables>span{
     float: right;
     display: block;
@@ -109,7 +112,7 @@
     line-height: 36px;
 }
 .PB_LT_text1{
-    color: #333333;
+    /* color: #333333; */
     font-size: 14px;
 }
 .PB_LT_text2{
@@ -437,7 +440,7 @@
     top: 9px;
     left: calc(50% - 6px);
     transform:rotate(-103deg);
-    transition: transform 1s;
+    /* transition: transform 1s; */
 }
 #PB_circle{
     width: 12px;
@@ -456,7 +459,7 @@
     top: 18px;
     left: calc(50% - 4px);
     transform:rotate(-103deg);
-    transition: transform 1.5s;
+    /* transition: transform 1.5s; */
 }
 #PB_pointer{
     width: 8px;

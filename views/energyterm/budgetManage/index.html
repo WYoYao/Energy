@@ -32,7 +32,7 @@
                 <em class="line">/</em>
                 <span class="boldColor">预算管理</span>
             </div>
-            <div class="rightBuildSel" v-show="Buildings.length>1">
+            <div class="rightBuildSel" v-show="Buildings.length>1" @click.capture="bodyClick()">
                 <pcombobox-normal id="'budgetBuildList'" sel="budgetBuildClick" bind="true">
                     <item datasource="Buildings" text="buildingName"></item>
                 </pcombobox-normal>
@@ -75,7 +75,7 @@
                         <!-- 预算锁定标识 -->
                         <em class="picEm" title="预算已被锁定" v-show="item.state==0 && !item.isNowMonth && new Date(item.planDate.replace(/-/g,'/'))>new Date()">s</em>
                         <!-- 批注按钮 -->
-                        <div class="remark" @click.stop="PopClick();showModifyRecord(item)">
+                        <div class="remark" @click.stop="hideModifyRecordFloat(),PopClick();showModifyRecord(item)">
                             <em class="picEm">﹁</em>
                             批注
                         </div>
@@ -90,7 +90,7 @@
                                 <span>预算管理节点</span>
                                 <!-- 节点有更新操作提醒及操作 Start -->
                                 <div class="newWrap" v-show="item.isBudgetUpdated&&item.isNextMonth&&item.state!=0">
-                                    <span class="hasNew" @click="hideModifyRecordFloat(),showChangeWarn(event)">
+                                    <span class="hasNew" @click="ideItem($event,item),hideModifyRecordFloat(true),showChangeWarn(event)">
                                         <em class="picEm">y</em>
                                         有更新
                                     </span>
@@ -114,7 +114,7 @@
 
                                 <span class="infoData" v-if="!item.energyDataBudget">--</span>
 
-                                <span class="infoData" v-if="item.energyDataBudget">{{toThousands(item.energyDataBudget)}}
+                                <span class="infoData" v-if="item.energyDataBudget">{{item.energyDataBudget | floor | toThousands}}
                                     <em class="unitFont">kWh</em>
                                 </span>
 
@@ -126,13 +126,20 @@
 
                                 <span class="infoData" v-if="!item.energyDataReal">--</span>
 
-                                <span class="infoData" v-if="item.energyDataReal">{{toThousands(item.energyDataReal)}}
+                                <span class="infoData" v-if="item.energyDataReal">{{item.energyDataReal | v3 | toThousands}}
                                     <em class="unitFont">kWh</em>
                                 </span>
                             </div>
                             <div class="lineInfo" v-show="item.ifHasBudget&&!item.isNextMonth">
                                 <span>实际能耗占预算比</span>
-                                <span class="infoData" v-bind:class="{'redFont':item.realOccupyBudgetRatio>100}">{{ _.isNumber(item.realOccupyBudgetRatio)?to3(item.realOccupyBudgetRatio)+'%':'--'}}</span>
+                                <span class="infoData" v-bind:class="{'redFont':item.realOccupyBudgetRatio>100}">
+                                    <template v-if="_.isNumber(item.realOccupyBudgetRatio)">
+                                        {{item.realOccupyBudgetRatio | v3}} %
+                                    </template>
+                                    <template v-if="!_.isNumber(item.realOccupyBudgetRatio)">
+                                        --
+                                    </template>
+                                </span>
                             </div>
                             <div class="planLine" v-show="item.ifHasPlan">
                                 <span class="checkPlan" v-on:click="planInfoCheck(item)">
@@ -157,7 +164,7 @@
                     </div>
                     <!-- 新创建的预算页面显示 -->
                     <div class="createPanel" v-show="item.showPage=='newCreate'">
-                        <span v-on:click="hideModifyRecordFloat(),createNewBudget(item)">
+                        <span v-on:click="hideModifyRecordFloat(),createNewBudget(item,$event)">
                             <em class="picEm">J</em>点击创建预算</span>
                     </div>
                     <!-- 编辑预算页面显示 -->

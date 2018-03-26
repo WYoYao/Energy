@@ -1,74 +1,72 @@
-*{
-    margin: 0;
-    padding: 0;
-    /* font-family:MicrosoftYaHei; */
+* {
+  margin: 0;
+  padding: 0;
+  /* font-family:MicrosoftYaHei; */
 }
-body{
-    width: 100%;
-    height: 100%;
+body {
+  width: 100%;
+  height: 100%;
+  min-width: 1280px;
+  min-height: 670px;
 }
-#app{
-    width: calc(100% - 22px);
-    /* width: 1258px; */
-    height: calc(100% - 11px);
-    padding: 10px 10px 0;
-    background: #F8F8F8;
-    overflow: hidden;
+#app {
+  width: calc(100% - 22px);
+  height: calc(100% - 11px);
+  padding: 10px 10px 0;
+  background: #f8f8f8;
+  overflow: hidden;
 }
-.body{
-    width: 100%;
-    height: 100%;
-    border-radius: 3px;
-    border: 1px solid #D9E2E8;
-    border-bottom: none;
-    background: #FFFFFF;
-    position: relative;
-    box-shadow: 0 2px 8px 0 rgba(0,0,0,0.12)
+.body {
+  width: 100%;
+  height: 100%;
+  border-radius: 3px;
+  border: 1px solid #d9e2e8;
+  border-bottom: none;
+  background: #ffffff;
+  position: relative;
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.12);
 }
-.redFont{
-    color: #F87C7C !important;
+.redFont {
+  color: #f87c7c !important;
 }
-.greenFont{
-    color: #68C5B3 !important;
+.greenFont {
+  color: #68c5b3 !important;
 }
-.grayFont{
-    color: #6D6D6D !important;
+.grayFont {
+  color: #6d6d6d !important;
 }
-.moreblackFont{
-    color: #151515 !important;
-    font-weight: 500;
+.moreblackFont {
+  color: #151515 !important;
+  font-weight: 500;
 }
-.blackFont{
-    color: #151515;
+.blackFont {
+  color: #151515;
 }
-[v-cloak]{
-    display: none !important;
-}
-
-.blackFont3{
-    color: #333333 !important;
-}
-.clear{
-    zoom: 1;
+[v-cloak] {
+  display: none !important;
 }
 
-.clear:after{
-    content: " ";
-    display: block;
-    height: 0;
-    clear: both;
-} 
-
-.tTM{
-    overflow: hidden;
-    text-overflow: ellipsis;
-    word-wrap: break-word;
-    white-space: nowrap; 
+.blackFont3 {
+  color: #333333 !important;
 }
-.wordAuto{
-    word-wrap:break-word;
-    overflow:hidden;
+.clear {
+  zoom: 1;
 }
 
+.clear:after {
+  content: " ";
+  display: block;
+  height: 0;
+  clear: both;
+}
 
-
+.tTM {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+  white-space: nowrap;
+}
+.wordAuto {
+  word-wrap: break-word;
+  overflow: hidden;
+}

@@ -1,29 +1,4 @@
 $(function() {
-  //  转换成为地方特色的数字单位
-  function toThousands(num) {
-    if (!_.isNumber(num)) return 0;
-
-    if (_.isNaN(num)) return 0;
-
-    if (!num) return 0;
-
-    num = num.toFixed(1);
-    // 转换为数字
-    num = +num;
-    if (Object.prototype.toString.call(num).slice(8, -1) != "Number")
-      throw new TypeError("arguments must be Number");
-
-    // 转换为字符
-    num = num.toString();
-
-    // 正常函数直接返回本地的方法
-    if (!/\./.test(num)) return (+num).toLocaleString();
-
-    // 小数点分割
-    num = num.split(/\./);
-    return (+num[0]).toLocaleString() + "." + num[1];
-  }
-
   /**
    * 依次执行多个会返回Promise的方法,并行执行
    * @param {一个数组 数组里面每一项都是一个方法,每个方法可以返回一个Promise 对象 } arr
@@ -208,6 +183,9 @@ $(function() {
       EnergyDataForDayAndItem: {}
     },
     methods: {
+      cs: cs,
+      fcolor: fcolor,
+      color: color,
       // HTML 分段使用
       createSkip: createSkip,
       // 排序
@@ -230,8 +208,11 @@ $(function() {
             return item;
           });
 
-          return arr.sort(function(item) {
-            return item[key];
+          // return arr.sort(function(item) {
+          //   return item[key];
+          // });
+          return arr.sort(function(a, b) {
+            return a[key] > b[key] ? 1 : -1;
           });
         } else {
           return [];
@@ -248,6 +229,11 @@ $(function() {
             timeTo: _that.timeTo
           })
           .then(function(res) {
+            if (_.isArray(res) && res.length && res[0]) {
+              res[0].items.sort(function(a, b) {
+                return a.energyItemId > b.energyItemId ? 1 : -1;
+              });
+            }
             _that.EnergyDataForDayAndItem =
               (_.isArray(res) && res.length && res[0]) || {};
 
@@ -351,15 +337,11 @@ $(function() {
                       ) {
                         return {
                           id: index,
-                          y: item.energyData ? +item.energyData.toFixed(2) : 0,
-                          color: item.planData
-                            ? item.energyData > item.planData
-                              ? "#FF7B7B"
-                              : "#02A9D1"
-                            : "#02A9D1"
+                          y: item.energyData ? v3(item.energyData) : 0,
+                          color: _that.fcolor(item.energyData, item.planData)
                         };
                       }),
-                      color: "#02A9D1",
+                      // color: "#02A9D1",
                       pointPadding: 0.2,
                       pointPlacement: 0.18,
                       tooltip: { valueSuffix: " kWh" },
@@ -408,12 +390,14 @@ $(function() {
                 return new Promise(function(resolve) {
                   var start, end, backgroundColor;
 
-                  var num = _that.$options.filters["v3"](_that.$options.filters["x100"](
-                    _that.MonthEnergyDataInfo.energyOccupyPlanRatio
-                  ));
+                  var num = _that.$options.filters["v3"](
+                    _that.$options.filters["x100"](
+                      _that.MonthEnergyDataInfo.energyOccupyPlanRatio
+                    )
+                  );
 
                   if (num < 100) {
-                    start = num / 2;
+                    start = num > 50 ? 100 - num : 0;
                     end = 50;
                     backgroundColor = "#02A9D1";
                   } else {
@@ -422,7 +406,6 @@ $(function() {
                     backgroundColor = "#FF7B7B";
                   }
 
-                  console.log($("#child").length);
                   var b = new Highcharts.chart(
                     new Solidgauge(
                       "child",
@@ -490,30 +473,7 @@ $(function() {
       floor: floor,
       v3: v3,
       // 千分位加点
-      toThousands: function(num) {
-        if (!_.isNumber(num)) return 0;
-
-        if (_.isNaN(num)) return 0;
-
-        if (!num) return 0;
-
-        num = num.toFixed(1);
-        // 转换为数字
-        num = +num;
-        if (Object.prototype.toString.call(num).slice(8, -1) != "Number")
-          throw new TypeError("arguments must be Number");
-
-        // 转换为字符
-        num = num.toString();
-
-        // 正常函数直接返回本地的方法
-        if (!/\./.test(num)) return (+num).toLocaleString();
-
-        // 小数点分割
-        num = num.split(/\./);
-
-        return (+num[0]).toLocaleString() + "." + num[1];
-      }
+      toThousands: toThousands
     }
   });
 

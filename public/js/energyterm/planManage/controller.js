@@ -56,10 +56,13 @@ planManController.getEnergyPlanInfo = function(bitem, autoType) {
     success: function(res) {
       var resData = res[0] || {};
       var a = pindex == 1 ? res[0].itemPlan : res[0].dayPlan;
-      a.forEach(function(item){
-        item.energyDataPlanDecimal = item.energyDataPlan != null ? item.energyDataPlan - Math.floor(item.energyDataPlan) : 0;
+      a.forEach(function(item) {
+        item.energyDataPlanDecimal =
+          item.energyDataPlan != null
+            ? item.energyDataPlan - Math.floor(item.energyDataPlan)
+            : 0;
         item.energyDataPlan = BD(item.energyDataPlan);
-      })
+      });
       var nowday = new Date();
       var yesterday = new Date(
         nowday.getFullYear(),
@@ -125,9 +128,9 @@ planManController.getEnergyPlanInfo = function(bitem, autoType) {
         };
       }
 
-      resData.monthBudgetData = Math.round(resData.monthBudgetData);
-      resData.monthRealData = Math.round(resData.monthRealData);
-      resData.monthRemainData = Math.round(resData.monthRemainData);
+      resData.monthBudgetData = floor(resData.monthBudgetData);
+      resData.monthRealData = floor(resData.monthRealData);
+      resData.monthRemainData = floor(resData.monthRemainData);
       if (pindex == 1) {
         //按分项
         var totalData = 0;
@@ -136,17 +139,17 @@ planManController.getEnergyPlanInfo = function(bitem, autoType) {
           // ele.energyOccurredRatio =
           //   ele.energyOccurredRatio &&
           //   Math.round(ele.energyOccurredRatio * 10) / 10;
-          ele.energyOccurredRatio != null ? ele.energyOccurredRatio = FBI(ele.energyOccurredRatio) : void 0;
+          ele.energyOccurredRatio != null
+            ? (ele.energyOccurredRatio = FBI(ele.energyOccurredRatio))
+            : void 0;
           var percent =
             resData.monthRemainData > 0
               ? ele.energyDataPlan / resData.monthRemainData
               : 0;
           ele.energyPlanRatio = Math.round(percent * 1000) / 10;
           totalData += ele.energyDataPlan;
-          ele.energyDataPlan =
-            ele.energyDataPlan && Math.round(ele.energyDataPlan);
-          ele.energyDataReal =
-            ele.energyDataReal && Math.round(ele.energyDataReal);
+          ele.energyDataPlan = ele.energyDataPlan && floor(ele.energyDataPlan);
+          ele.energyDataReal = ele.energyDataReal && v3(ele.energyDataReal);
         });
       } else {
         //按日期
@@ -169,10 +172,8 @@ planManController.getEnergyPlanInfo = function(bitem, autoType) {
           if (ele.isThisMonth && !ele.isPassDay) {
             totalData += ele.energyDataPlan;
           }
-          ele.energyDataPlan =
-            ele.energyDataPlan && Math.round(ele.energyDataPlan);
-          ele.energyDataReal =
-            ele.energyDataReal && Math.round(ele.energyDataReal);
+          ele.energyDataPlan = ele.energyDataPlan && floor(ele.energyDataPlan);
+          ele.energyDataReal = ele.energyDataReal && v3(ele.energyDataReal);
         });
         var appendNum = 6 - lastDate.getDay(); //追加的
         for (var i = 0; i < appendNum; i++) {
@@ -183,8 +184,8 @@ planManController.getEnergyPlanInfo = function(bitem, autoType) {
         }
       }
 
-      resData.totalPlanData = Math.round(totalData);
-      resData.allotOverData = Math.round(totalData - resData.monthRemainData);
+      resData.totalPlanData = floor(totalData);
+      resData.allotOverData = floor(totalData - floor(resData.monthRemainData));
 
       resData.planDate = bitem.planDate;
       resData.budgetItemId = bitem.budgetItemId;
@@ -215,13 +216,16 @@ planManController.saveEnergyPlan = function(pinfo, pindex) {
     var planArr = pinfo.itemPlan;
     planArr.forEach(function(ele) {
       // planMap[ele.planItemId] = Number(ele.energyDataPlan);
-      planMap[ele.planItemId] = Number(ele.energyDataPlan + ele.energyDataPlanDecimal);
+      planMap[ele.planItemId] = Number(
+        ele.energyDataPlan + ele.energyDataPlanDecimal
+      );
     });
   } else {
     var planArr = pinfo.dayPlan;
     planArr.forEach(function(ele) {
       if (ele.isThisMonth && !ele.isPassDay) {
-        planMap[ele.time] = Number(ele.energyDataPlan) + Number(ele.energyDataPlanDecimal);
+        planMap[ele.time] =
+          Number(ele.energyDataPlan) + Number(ele.energyDataPlanDecimal);
       }
     });
   }
@@ -296,9 +300,15 @@ planManController.getPlanTotalChart = function(pinfo, pindex) {
       if (ele.isThisMonth) {
         var dobj = {
           x: new Date(ele.time.replace(/-/g, "/")).getTime(),
-          y: ele.isPassDay ? ele.energyDataReal : Number(ele.energyDataPlan),
-          color: ele.isPassDay ? "#C3CDD0" : "#02a9d1",
-          name: ele.isPassDay ? "实际能耗" : "计划能耗"
+          y: floor(Number(ele.energyDataPlan)) || floor(ele.energyDataReal),
+          color: "#02a9d1",
+          name: "计划能耗"
+          // 20180322 leo 修改全部使用计划
+          // y: ele.isPassDay
+          //   ? floor(ele.energyDataReal)
+          //   : floor(Number(ele.energyDataPlan)),
+          // color: ele.isPassDay ? "#C3CDD0" : "#02a9d1",
+          // name: ele.isPassDay ? "实际能耗" : "计划能耗"
         };
         chartArr.push(dobj);
       }
@@ -308,7 +318,7 @@ planManController.getPlanTotalChart = function(pinfo, pindex) {
       "day"
     );
 
-    //  
+    //
     chartArr = chartArr.map(function(item) {
       item.y = +item.y;
       return item;
@@ -351,9 +361,17 @@ planManController.generateDayPlanByItemSum = function(planDate, pitem) {
           yesterday.getTime(); //过去
         var dobj = {
           x: new Date(ele.time.replace(/-/g, "/")).getTime(),
-          y: isPassDay ? _.isNull(ele.realData) ? 0 : _.floor(ele.realData) : _.isNull(ele.planData) ? 0 : _.floor(ele.planData),
-          color: isPassDay ? "#C3CDD0" : "#02a9d1",
-          name: isPassDay ? "实际能耗" : "计划能耗"
+          y: _.isNumber(ele.planData)
+            ? floor(ele.planData)
+            : floor(ele.realData),
+          color: "#02a9d1",
+          name: "计划能耗"
+          // 20180322 leo 修改全部使用计划能耗
+          // y: isPassDay
+          //   ? _.isNull(ele.realData) ? 0 : floor(ele.realData)
+          //   : _.isNull(ele.planData) ? 0 : floor(ele.planData),
+          // color: isPassDay ? "#C3CDD0" : "#02a9d1",
+          // name: isPassDay ? "实际能耗" : "计划能耗"
         };
         chartArr.push(dobj);
       });
@@ -394,7 +412,7 @@ planManController.generateItemPlanByDaySum = function(budgetItemId, pitem) {
         var colorNum = num > 31 ? num - 32 : num;
         var dobj = {
           name: ele.itemName,
-          y: Math.round(Number(ele.planData)),
+          y: floor(Number(ele.planData)),
           color: pcolor.cd[colorNum]
         };
         chartArr.push(dobj);

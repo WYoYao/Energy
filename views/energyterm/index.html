@@ -99,7 +99,7 @@
                                            <div class="title">极敏感</div>
                                        </div>
                                        <div class="text" v-if="AlarmAndWarning.length && AlarmAndWarning[0].warning.sensitive.SELECTED!=null">
-                                            <div class="colorbox lightblue">
+                                            <div class="colorbox lightblue" :style="getBlueColor(AlarmAndWarning[0].warning.sensitive.SELECTED)">
                                             </div>
                                             "风险率"（月实际总能耗超过能耗预算的概率）高于
                                             {{AlarmAndWarning[0].warning.sensitive[+(+AlarmAndWarning[0].warning.sensitive.SELECTED)] * 100}}
@@ -136,8 +136,7 @@
                                                             <div class="title">极敏感</div>
                                                         </div>
                                                         <div class="text" v-if="AlarmAndWarning.length && AlarmAndWarning[0].alarm.sensitive.SELECTED!=null">
-                                                                <div class="colorbox blue">
-                                        
+                                                                <div class="colorbox blue" :style="getBlueColor(AlarmAndWarning[0].alarm.sensitive.SELECTED)">
                                                                 </div>
                                                                 "超标率"（月实际总能耗超过能耗预算的比例）高于
                                                                 {{AlarmAndWarning[0].alarm.sensitive[+(+AlarmAndWarning[0].alarm.sensitive.SELECTED)] * 100}}

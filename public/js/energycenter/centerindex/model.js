@@ -301,6 +301,7 @@ v.pushComponent({
         },
         //打开项目筛选窗口   
         projectFilter : function(){     
+            bodyClick();
             if(this.projectSelCache != null){
                 this.projectSelectParam = JSON.parse(JSON.stringify(this.projectSelCache));
             }else{
@@ -833,14 +834,30 @@ v.pushComponent({
                 itemId:this.projectSel.projectInfoReady.budgetItemId
             };
             var _this = this;
-            indexController.getProjectArea(paramObj,function(data){
-                data = JSON.parse(JSON.stringify(data));
-                _this.projectSel.projectInfo.area = data[0].area;
-                _this.projectSel.projectInfo.ifHasArea = true;
-            },function(){
-                $("#globalnotice").pshow({ text: "获取数据失败！", state: "failure" });
-            },function(){
-                _this.indexBudget = true;
+
+
+
+            // indexController.getProjectArea(paramObj,function(data){
+            //     data = JSON.parse(JSON.stringify(data));
+            //     _this.projectSel.projectInfo.area = data[0].area;
+            //     _this.projectSel.projectInfo.ifHasArea = true;
+            // },function(){
+            //     $("#globalnotice").pshow({ text: "获取数据失败！", state: "failure" });
+            // },function(){
+            //     _this.indexBudget = true;
+            // })
+
+
+            return new Promise(function(resolve,reject){
+                indexController.getProjectArea(paramObj,function(data){
+                    data = JSON.parse(JSON.stringify(data));
+                    _this.projectSel.projectInfo.area = data[0].area;
+                    _this.projectSel.projectInfo.ifHasArea = true;
+                },function(){
+                    $("#globalnotice").pshow({ text: "获取数据失败！", state: "failure" });
+                },function(){
+                    resolve();
+                })
             })
         },
         //还原预算管理界面
@@ -882,16 +899,33 @@ v.pushComponent({
         //用户点击编辑预算时将其所选项目已有数据填充至缓存数据中
         BudgetEdit : function(){                                   
             this.indexRemark = false;
+            // this.projectBudgetEditCache.total = this.projectSel.projectInfo.energyDataBudget == null ? this.projectSel.projectInfo.energyDataBudgetPerSquare*this.projectSel.projectInfo.area : Math.floor(this.projectSel.projectInfo.energyDataBudget);
+            // this.projectBudgetEditCache.square = this.projectSel.projectInfo.energyDataBudgetPerSquare == null ?  Math.floor(this.projectSel.projectInfo.energyDataBudget/this.projectSel.projectInfo.area) : Math.floor(this.projectSel.projectInfo.energyDataBudgetPerSquare);
+            // this.projectBudgetEditCache.remark = null;
+            // this.indexPage.budgetCanSave = true;
+            // if(this.projectSel.projectInfo.ifHasArea){
+            //     this.indexBudget = true; 
+            // }else{
+            //     this.getProjectArea();
+            // }
+
+            if(this.projectSel.projectInfo.ifHasArea){
+                this.BudgerEditReady();
+            }else{
+                this.getProjectArea().then(function(){
+                    v._instance.BudgerEditReady();
+                });
+            }
+        },
+        BudgerEditReady : function(){
             this.projectBudgetEditCache.total = this.projectSel.projectInfo.energyDataBudget == null ? this.projectSel.projectInfo.energyDataBudgetPerSquare*this.projectSel.projectInfo.area : Math.floor(this.projectSel.projectInfo.energyDataBudget);
             this.projectBudgetEditCache.square = this.projectSel.projectInfo.energyDataBudgetPerSquare == null ?  Math.floor(this.projectSel.projectInfo.energyDataBudget/this.projectSel.projectInfo.area) : Math.floor(this.projectSel.projectInfo.energyDataBudgetPerSquare);
             this.projectBudgetEditCache.remark = null;
-            this.indexPage.budgetCanSave = true;
-            if(this.projectSel.projectInfo.ifHasArea){
-                this.indexBudget = true; 
-            }else{
-                this.getProjectArea();
-            }
+            this.indexBudget = true; 
         },
+
+
+
         //用户创建预算，打开预算创建界面并清空批注缓存
         createEnergyBudget : function(){                                
             this.indexRemark = false;                           
@@ -899,7 +933,9 @@ v.pushComponent({
             if(this.projectSel.projectInfo.ifHasArea){
                 this.indexBudget = true; 
             }else{
-                this.getProjectArea();
+                this.getProjectArea().then(function(){
+                    v._instance.indexBudget = true; 
+                });
             }
         },
         //锁定及解锁预算

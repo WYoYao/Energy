@@ -336,7 +336,7 @@
 .I_BW_BH_button1{
     height: 20px;
     width: 90px;
-    padding: 15px 0 15px 30px;
+    padding: 15px 0 15px 18px;
     float: left;
 }
 .I_BW_BH_button2{
@@ -473,15 +473,29 @@
 
 
 .I_BW_B_foot_button{
-    width: 148px;
+    width: 160px;
     height: 30px;
     margin: 7px 0 7px;
     background: #F0F3F6;
+    border-radius: 2px;
 }
 .I_BW_B_foot_button>div{
     height: 20px;
     padding: 5px 20px 5px;
+    text-align: center;
 }
+
+
+
+
+
+
+
+
+
+
+
+
 .I_BW_B_foot_text{
     width: 100%;
     margin: 7px 0 7px;
@@ -791,7 +805,7 @@
     display: none;
     z-index:102;
     top: 145px;
-    right: 360px;
+    right: 437px;
 }
 .BudgetWindowTS_t1{
     width: 100%;
@@ -1076,4 +1090,7 @@
     padding-left: 21px;
     padding-right: 20px;
     width: calc(100% - 41px);
+}
+.I_foot_ul_wrap #IGpartloading{
+    z-index: 87;
 }

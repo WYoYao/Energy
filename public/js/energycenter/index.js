@@ -254,27 +254,6 @@ if (typeof Date.prototype.isToMonth != 'function') {
 
 //console.log(new Date().isToMonth());
 
-//  转换成为地方特色的数字单位
-function toThousands(num) {
-
-    // 转换为数字
-    num = +num;
-    if (Object.prototype.toString.call(num).slice(8, -1) != 'Number') throw new TypeError('arguments must be Number');
-
-    // 转换为字符
-    num = num.toString();
-
-    // 正常函数直接返回本地的方法
-    if (!/\./.test(num)) return (+num).toLocaleString();
-
-    // 小数点分割
-    num = num.split(/\./);
-    return (+num[0]).toLocaleString() + '.' + num[1];
-}
-
-// console.log(toThousands(11111111111111))
-// console.log(toThousands(11111.111111))
-
 // 转换成为百分比的内容
 function convertPercentage(num) {
 
@@ -282,8 +261,6 @@ function convertPercentage(num) {
 }
 
 //console.log(convertPercentage(11));
-
-
 
 ;
 (function () {
@@ -482,6 +459,7 @@ v.pushComponent({
         NotSelHistoryMonth: true,                                               //用户没有选择历史月
         projectSelCache: null,
         userId: "persagyAdmin",
+        oldPage:'centerindex',
     },
     methods: {
         toThousands　: toThousands,
@@ -492,6 +470,16 @@ v.pushComponent({
         getToday: getToday,
         getMonthLastDay: getMonthLastDay,
         arr2tree: arr2tree,
+        bodyClick:bodyClick,
+        goLastPage : function(){
+            v.initPage(this.oldPage);
+        }
+    },
+    watch:{
+        onPage : function(N,O){
+            if(O){this.oldPage = O;}
+            if(O == 'energybyday'){chart.chart != null ? chart.chart.destroy() : void 0;}
+        }
     }
 })
 
