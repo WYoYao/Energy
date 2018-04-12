@@ -1,6 +1,6 @@
 <% include ../header.html %>
 
-    <link rel="stylesheet" href="/css/energycenter/lookPlan.css">
+    <link rel="stylesheet" href="/css/energycenter/lookplan.css">
 
     <script>
         var query = '<%=query%>';
@@ -15,44 +15,42 @@
     <!-- 挂载DOM -->
     <div id="app">
         <div class="body">
-            <div id="lookPlan" v-cloak v-if='onPage=="lookplan"'>
-                <div class="lookPlan_head">
+            <div id="lookplan" v-cloak v-if='onPage=="lookplan"'>
+
+                <div class="nav">
                     {{projectName}}&nbsp;&nbsp;{{projectTime + "能耗计划"}}(kWh)
                     <div>
                         <pbutton-white icon="D" text="下载能耗计划" @click="EnergyPlanDownload"></pbutton-white>
                     </div>
                 </div>
-                <div id="lookPlan_grid" :style="{width:witdthNeed}">
-                    <div class="LGW" :style="{width:witdthNeed}">
-                        <div class="lookPlan_grid_head" :style="{width:witdthNeed}">
+
+                <div id="grid">
+
+                        <div class="head" :style="{width:wrapWidth}">
                             <span></span>
-                            <span v-for="item in planGridData.items" :title="item.name + 'kWh'" v-text="item.name"></span>
-                            <span>汇总</span>
+                            <span :style="{width:elNBWidth}" v-for="item in planGridData.items" :title="item.name + 'kWh'" v-text="item.name"></span>
+                            <span :style="{width:elNBWidth}">汇总</span>
                         </div>
 
-                        <div class="LGBW" :style="{width:witdthNeedWrap}">
+                        <ul class="box" :style="{width:wrapWidth}">
 
-                            <ul class="lookPlan_grid_body clear" :style="{width:witdthNeed}">
-                                <li class="lookPlan_grid_tr" v-for="(model,index) in planGridData.time">
-                                    <span>{{model}}</span>
-                                    <span class="lookPlan_grid_tr_span2" v-for="(data,index1) in planGridData.items" :title="data.data[index] + 'kWh'" v-text="data.data[index]"></span>
-                                    <span class="lookPlan_grid_tr_span2" :title="planGridData.sumdata[index] + 'kWh'" v-text="planGridData.sumdata[index]"></span>
-                                </li>
+                            <li class="row" v-for="(model,index) in planGridData.time">
+                                <span>{{model}}</span>
+                                <span :style="{width:elWidth}" class="" v-for="(data,index1) in planGridData.items" :title="data.data[index] + 'kWh'" v-text="data.data[index]"></span>
+                                <span :style="{width:elWidth}" class="" :title="planGridData.sumdata[index] + 'kWh'" v-text="planGridData.sumdata[index]"></span>
+                            </li>
 
-                                <li class="lookPlan_grid_tr">
-                                    <span>汇总</span>
-                                    <span class="lookPlan_grid_tr_span2" v-for="item1 in planGridData.items" v-if="planGridData.items" :title="item1.data[Planlast] + 'kWh'"
-                                        v-text="item1.data[Planlast]"></span>
-                                    <span class="lookPlan_grid_tr_span2" v-if="planGridData.sumdata" :title="planGridData.sumdata[Planlast] + 'kWh'" v-text="planGridData.sumdata[Planlast]"></span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+                            <li class="row">
+                                <span>汇总</span>
+                                <span :style="{width:elWidth}" class="" v-for="item1 in planGridData.items" v-if="planGridData.items" :title="item1.data[Planlast] + 'kWh'"
+                                    v-text="item1.data[Planlast]"></span>
+                                <span :style="{width:elWidth}" class="" v-if="planGridData.sumdata" :title="planGridData.sumdata[Planlast] + 'kWh'" v-text="planGridData.sumdata[Planlast]"></span>
+                            </li>
 
-                        
-                        
+                        </ul>
 
                 </div>
+
             </div>
 
         </div>

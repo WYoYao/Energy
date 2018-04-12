@@ -16,9 +16,11 @@
     margin-left: 20px;
     border: 1px solid #CACACA;
     text-align: center;
+    border-radius: 2px;
 }
 .energyProHead_back:hover{
     cursor: pointer;
+    background: #F8F8F8;
 }
 .energyProHead_back>i{
     font-size: 14px;
@@ -34,7 +36,8 @@
 }
 .energyProHead_text>span:nth-of-type(2){
     color: #151515;
-    font-family: MicrosoftYaHei-Bold;
+    /* font-family: Microsoft YaHei; */
+    font-weight: 600;
 }
 .energyProHead_text>span:nth-of-type(1){
     color: #637E99;
@@ -45,6 +48,9 @@
 }
 .energyProHead_but1{
     margin-right: 20px;
+}
+.energyProHead_but1>div:hover{
+    background: #F8F8F8;
 }
 .energyProHead_but2{
     margin-right: 8px;

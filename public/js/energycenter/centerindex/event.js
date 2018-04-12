@@ -32,10 +32,25 @@ function budgetFillInputBlur(){
     document.getElementById("indexBudgetEditRemark").getElementsByTagName('input')[0].addEventListener('input',function(){
         var a = $("#indexBudgetEditRemark input").val();
         v._instance.indexBudgerWarn.pizhu2 = a.toString().length < 101 ? false : true;
-        iThreePve();
+        // iThreePve();
     })
 
     document.getElementById("indexBudgetRemark").getElementsByTagName('input')[0].addEventListener('input',function(){
+        var a = $("#indexBudgetRemark input").val();
+        if(a != ""){
+            v._instance.indexPage.budgetCanSave = a.length < 101 ? true : false;
+            // $("#IRW1").text("不可超过100个字");
+            // v._instance.indexBudgerWarn.pizhu = a.length < 101 ?  false : true;
+        }else{
+            v._instance.indexPage.budgetCanSave = false;
+            // v._instance.indexBudgerWarn.pizhu = true;
+            // $("#IRW1").text("不能为空");
+        } 
+    })
+    document.getElementById("indexBudgetRemark").getElementsByTagName('input')[0].addEventListener('focus',function(){
+        v._instance.indexBudgerWarn.pizhu = false;
+    })
+    document.getElementById("indexBudgetRemark").getElementsByTagName('input')[0].addEventListener('blur',function(){
         var a = $("#indexBudgetRemark input").val();
         if(a != ""){
             v._instance.indexPage.budgetCanSave = a.length < 101 ? true : false;

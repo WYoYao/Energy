@@ -14,12 +14,23 @@ v.pushComponent({
     arrowLoadState: false, //如果列表加载中
 
     currentPage: 0, //预算的翻页
-    budgetBuildSel: null
+    budgetBuildSel: null,
+
+    // 记录弹窗显示的变量
+    // ModifyRecordModel: null
   },
   methods: {
     hideModifyRecordFloat: function(bool) {
+      var _that = this;
+
       if (bool !== true) $(".budgetPop").hide();
+
+      // setTimeout(function() {
+      //   _that.ModifyRecordModel = null;
+      // }, 0);
+
       $("#modifyRecordFloat").phide();
+      this.bodyClick();
     },
     showSetPlanWindow: function() {
       var bool = eval(window.localStorage.getItem("hintStore"));
@@ -229,6 +240,17 @@ v.pushComponent({
       budgetController.saveEditBudget(item, callback); //保存预算
     },
     showModifyRecord: function(item) {
+      var _that = this;
+
+      // if (item == this.ModifyRecordModel) {
+      //   this.ModifyRecordModel = null;
+      //   $("#modifyRecordFloat").phide();
+      //   return;
+      // }
+
+      // setTimeout(function() {
+      //   _that.ModifyRecordModel = item;
+      // }, 0);
       bodyClick();
       //备注信息 todo  名字
       var month = item.planDateStr.replace(".", "年") + "月";

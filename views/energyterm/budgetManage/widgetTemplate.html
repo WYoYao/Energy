@@ -4,9 +4,11 @@
             填写批注
         </div>
         <div class="remarkText">
-            <ptext-textarea  placeholder="请填写批注，100字以内" id="newRemarkText"  onkeyup="newRemarkInput()">
-                  <verify errtip="不可超过100字" verifytype="length" length="100"></verify> 
-                </ptext-textarea>
+            <!-- <ptext-textarea  placeholder="请填写批注，100字以内" id="newRemarkText"  onkeyup="newRemarkInput()"> -->
+            <ptext-textarea  placeholder="请填写批注，100字以内" id="newRemarkText" onkeyup="newRemarkInput()">
+                  <verify errtip="不可超过100字" verifytype="length" length="100"></verify>
+                  <verify errtip="不可为空" verifytype="space"></verify>
+            </ptext-textarea>
         </div>
         <div class="remarkSave">
             <pbutton-blue text="保存" @click="budgetRemarkSave()" id="remarkSaveButton"></pbutton-blue>
@@ -33,7 +35,7 @@
                         <span class="cell" v-text="item.operate"></span>
                     </td>
                     <td class="tableLi">
-                        <span class="cell" v-text="item.energyDataBudget"></span>
+                        <span class="cell" v-text="item.energyDataBudget?item.energyDataBudget:'--'"></span>
                     </td>
                     <td class="tableLi">
                         <span class="cell" v-text="item.remark"></span></td>

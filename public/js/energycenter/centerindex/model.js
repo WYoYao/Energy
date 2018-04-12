@@ -331,6 +331,7 @@ v.pushComponent({
         // 首页打开预算管理侧弹窗
         IndexBudgetWindowOpenReady : function(model){
             // 将当前项目信息存入projectSel.projectInfoReady,将时间信息存入projectUserSel
+            bodyClick();
             this.projectSel.projectInfoReady = model;
             var time = new Date($("#I_head_ptime").psel().startTime);
             this.projectUserSel.timeDay = time.format("yyyy-M-d h:m:s");
@@ -401,13 +402,7 @@ v.pushComponent({
         //     return cachePY.concat(cacheHZ);
         // },
         indexGridHover : function(index){
-            chart.chart.xAxis[0].removePlotBand('thisProject');
-            chart.chart.xAxis[0].addPlotBand({
-                from: index-0.5,
-                to: index+0.5,
-                color: '#E6F5E6',
-                id: 'thisProject'
-            });
+            this.indexGridClearHover();
             if(this.NotSelFutureMonth){
                 chart.chart.tooltip.refresh([chart.chart.series[0].points[index],chart.chart.series[1].points[index],chart.chart.series[2].points[index]]);
             }else{
@@ -415,7 +410,17 @@ v.pushComponent({
             }
         },
         indexGridLeave : function(){
-            chart.chart.xAxis[0].removePlotBand('thisProject');
+
+        },
+        indexGridClearHover : function(){
+            var a = this.projectInfo.projectInfo.length;
+            for(var i=0;i<a;i++){
+                chart.chart.series[0].points[i].setState("");
+                if(this.NotSelFutureMonth){
+                    chart.chart.series[1].points[i].setState("");
+                    chart.chart.series[2].points[i].setState("");
+                }
+            }
         },
         //初始化图表，此时无数据
         indexInitChart : function(){                                 
@@ -424,7 +429,6 @@ v.pushComponent({
             chart.options.chart.plotBorderColor = "#EEEEEE";
             chart.options.chart.plotBorderWidth = 1;
             chart.options.yAxis[0].gridLineWidth = 0;
-            chart.options.tooltip.style.boxShadow = '0 1px 6px 0';
             Highcharts.setOptions({
                 lang: {
                     thousandsSep: ','
@@ -438,10 +442,15 @@ v.pushComponent({
                 labels: {
                     formatter: function() {
                         return this.value +'%';
+                    },
+                    style:{
+                        "fontFamily":"Arial"
                     }
                 },
-                min:0,
-                opposite: true //第二根Y轴在页面右边
+                softMin:0,
+                softMax:100,
+                opposite: true, //第二根Y轴在页面右边
+                showEmpty : true
             })
             var chartEnergyBudget = {
                 name:"能耗预算",
@@ -462,11 +471,11 @@ v.pushComponent({
                     },
                 },
                 yAxis: 0,
-                // states:{
-                //     hover:{
-                //         enabled : false
-                //     }
-                // }
+                states:{
+                    select:{
+                        color : "red"
+                    }
+                }
             }
             var chartEnergyReal = {
                 name:"实际能耗",
@@ -487,11 +496,11 @@ v.pushComponent({
                     },
                 },
                 yAxis: 0,
-                // states:{
-                //     hover:{
-                //         enabled : false
-                //     }
-                // }
+                states:{
+                    select:{
+                        color : "red"
+                    }
+                }
             }
             var chartEnergyPercent = {
                 name:"实际能耗占预算比",
@@ -518,11 +527,11 @@ v.pushComponent({
                     lineColor:'#637E99',  
                     fillColor:'#ffffff'
                 },
-                // states:{
-                //     hover:{
-                //         enabled : false
-                //     }
-                // }
+                states:{
+                    select:{
+                        color : "red"
+                    }
+                }
             }
             chart.addSeries(chartEnergyBudget);
             chart.addSeries(chartEnergyReal);
@@ -535,38 +544,41 @@ v.pushComponent({
             chart.options.tooltip.formatter = function () {
                 var index = this.points[0].point.index;
                 var pro = v._instance.projectInfo.projectInfo[index];
-                var tool = "<a style='color:#6D6D6D;font-size:12px;'>" + this.x + "</a><br/>";
-                tool += "<a>实际能耗&nbsp;:&nbsp;&nbsp;<a style='font-family:ArialMT;font-size:14px;'>" + pro.energyDataShow + (pro.energyData == null ? "" : "  kWh") + "</a></a><br/>";
-                tool += "<a>能耗预算&nbsp;:&nbsp;&nbsp;<a style='font-family:ArialMT;font-size:14px;'>" + pro.budgetDataShow + (pro.budgetData == null ? "" : "  kWh")+ "</a></a><br/>";
-                tool += "<a>实际能耗占预算比&nbsp;:&nbsp;&nbsp;<a style='font-family:ArialMT;font-size:14px;'>"+ pro.realBudgetRatioShow + "</a>&nbsp;&nbsp;&nbsp;&nbsp;</a>"
+                var tool = "<div><a style='color:#6D6D6D;font-size:12px;'>" + this.x + "</a></div>";
+                tool += "<div><a>实际能耗&nbsp;:&nbsp;&nbsp;<a style='font-family:Arial;font-size:14px;'>" + pro.energyDataShow + (pro.energyData == null ? "" : "  kWh") + "</a></a></div>";
+                tool += "<div><a>能耗预算&nbsp;:&nbsp;&nbsp;<a style='font-family:Arial;font-size:14px;'>" + pro.budgetDataShow + (pro.budgetData == null ? "" : "  kWh")+ "</a></a></div>";
+                tool += "<div><a>实际能耗占预算比&nbsp;:&nbsp;&nbsp;<a style='font-family:Arial;font-size:14px;'>"+ pro.realBudgetRatioShow + "</a>&nbsp;&nbsp;&nbsp;&nbsp;</a></div>"
                 tool = v._instance.indexPage.energy ? tool : tool.replace(/kWh/g,"kWh/m²");
                 // 根据是否选择未来月决定图表tooltip
                 if(!v._instance.NotSelFutureMonth){
-                    tool = tool.split("<a>实际能耗占预算比")[0];
-                    tool = tool.split("<a>能耗预算")[1];
-                    tool = "<a style='color:#6D6D6D;font-size:12px;'>" + this.x + "</a><br/><a>能耗预算" + tool;
+                    tool = tool.split("<div><a>实际能耗占预算比")[0];
+                    tool = tool.split("<div><a>能耗预算")[1];
+                    tool = "<div><a style='color:#6D6D6D;font-size:12px;'>" + this.x + "</a></div><div><a>能耗预算" + tool;
                 }
                 return tool;
-            },
-            // 重置图表对象并填充图表参数
+            }
+            // 填充数据
+            var chartdata = this.indexGetChartData();
+            chart.xAxisFill(chartdata[3]);
+            chart.dataFill('energyReal',chartdata[1]);
+            chart.dataFill('energyPercent',chartdata[2]);
+            chart.dataFill('energyBudget',chartdata[0]); 
+            if(!this.NotSelFutureMonth){
+                chart.options.yAxis[1].min = 0;
+                chart.options.yAxis[1].max = 100;
+            }else{
+                chart.options.yAxis[1].min = undefined;
+                chart.options.yAxis[1].max = undefined;
+            }
+            // 重新构造图表
             chart.InitChart('I_chart');
-            //如果选择了未来月并且当前图表实例有3个数据列则删除两个数据列
+            // 选择性删除图表数据实例
             if(!this.NotSelFutureMonth&&chart.chart.series.length==3){
                 //仅仅只是删除图表实例
                 var series = chart.chart.series;
                 for(var i=0;i<series.length;i++) {
                     var s = series[i];
                     s.name == "实际能耗" || s.name == "实际能耗占预算比" ? s.remove() : void 0;
-                }
-            }
-            //填充图表数据
-            var chartdata = this.indexGetChartData();
-            if(this.onPage == 'centerindex'){
-                chart.xAxisUpdate(chartdata[3]);
-                chart.update('energyBudget',chartdata[0]); 
-                if(this.NotSelFutureMonth){
-                    chart.update('energyReal',chartdata[1]);
-                    chart.update('energyPercent',chartdata[2]);
                 }
             }
         },
@@ -589,7 +601,7 @@ v.pushComponent({
                 chart.chart.yAxis[0].addPlotLine({
                     value: this.projectInfo.avgBudgetData != null ? BD(this.projectInfo.avgBudgetData) : null,
                     color: '#8D8D8D',
-                    width: 2,
+                    width: 1,
                     id: 'energyBudgetAVG',
                     zIndex:5,
                     dashStyle:"Dash"
@@ -600,10 +612,11 @@ v.pushComponent({
                 chart.chart.yAxis[0].addPlotLine({
                     value: this.projectInfo.avgEnergyData != null ? RD(this.projectInfo.avgEnergyData) : null,
                     color: '#00A8D3',
-                    width: 2,
+                    width: 1,
                     id: 'energyRealAVG',
                     zIndex:5,
-                    dashStyle:"Dash"
+                    dashStyle:"Dash",
+                    // dashStyle:"Solid"
                 }) : chart.chart.yAxis[0].removePlotLine('energyRealAVG');
             }
         },
@@ -757,6 +770,7 @@ v.pushComponent({
         },
         //获取项目预算批注信息
         getProjectBudgetRemark : function(){
+            this.isEnergyRemarkLoading = true;
             var _this = this;
             var paramObj = {
                 buildingId:this.projectSel.projectInfoReady.buildingId,
@@ -771,11 +785,14 @@ v.pushComponent({
                     return item
                 })
             },function(){
-                $("#globalnotice").pshow({ text: "获取项目预算历史信息失败", state: "failure" });
+                $("#globalnotice").pshow({ text: "获取项目预算批注信息失败", state: "failure" });
+            },function(){
+                _this.isEnergyRemarkLoading = false;
             })
         },
         //获取并绘制预算历史信息
-        getProjectHistoryBudget : function(){                        
+        getProjectHistoryBudget : function(){    
+            this.isEnergyHistoryLoading = true;                    
             var date = getThisMonth();
             var _Month = getThisMonth().format("M");
             var __Month = TC(this.projectSel.projectInfoReady.timeFrom);
@@ -826,6 +843,8 @@ v.pushComponent({
                 }
             },function(){
                 $("#globalnotice").pshow({ text: "获取数据失败！", state: "failure" });
+            },function(){
+                _this.isEnergyHistoryLoading = false;   
             });
         },
         getProjectArea : function(){
@@ -834,20 +853,6 @@ v.pushComponent({
                 itemId:this.projectSel.projectInfoReady.budgetItemId
             };
             var _this = this;
-
-
-
-            // indexController.getProjectArea(paramObj,function(data){
-            //     data = JSON.parse(JSON.stringify(data));
-            //     _this.projectSel.projectInfo.area = data[0].area;
-            //     _this.projectSel.projectInfo.ifHasArea = true;
-            // },function(){
-            //     $("#globalnotice").pshow({ text: "获取数据失败！", state: "failure" });
-            // },function(){
-            //     _this.indexBudget = true;
-            // })
-
-
             return new Promise(function(resolve,reject){
                 indexController.getProjectArea(paramObj,function(data){
                     data = JSON.parse(JSON.stringify(data));
@@ -899,16 +904,6 @@ v.pushComponent({
         //用户点击编辑预算时将其所选项目已有数据填充至缓存数据中
         BudgetEdit : function(){                                   
             this.indexRemark = false;
-            // this.projectBudgetEditCache.total = this.projectSel.projectInfo.energyDataBudget == null ? this.projectSel.projectInfo.energyDataBudgetPerSquare*this.projectSel.projectInfo.area : Math.floor(this.projectSel.projectInfo.energyDataBudget);
-            // this.projectBudgetEditCache.square = this.projectSel.projectInfo.energyDataBudgetPerSquare == null ?  Math.floor(this.projectSel.projectInfo.energyDataBudget/this.projectSel.projectInfo.area) : Math.floor(this.projectSel.projectInfo.energyDataBudgetPerSquare);
-            // this.projectBudgetEditCache.remark = null;
-            // this.indexPage.budgetCanSave = true;
-            // if(this.projectSel.projectInfo.ifHasArea){
-            //     this.indexBudget = true; 
-            // }else{
-            //     this.getProjectArea();
-            // }
-
             if(this.projectSel.projectInfo.ifHasArea){
                 this.BudgerEditReady();
             }else{
@@ -923,9 +918,6 @@ v.pushComponent({
             this.projectBudgetEditCache.remark = null;
             this.indexBudget = true; 
         },
-
-
-
         //用户创建预算，打开预算创建界面并清空批注缓存
         createEnergyBudget : function(){                                
             this.indexRemark = false;                           
@@ -969,14 +961,11 @@ v.pushComponent({
             indexController.projectBudgetMessageEdit(paramObj,function(data){
                 //弹出提示框提示成功
                 $("#globalnotice").pshow({ text: "保存成功！", state: "success" });
-                //如果该界面实在首页被唤出则如下，否则仅仅重置缓存数据 here
-                //重置所有缓存数据
-                if(_this.onPage == "centerindex"){
-                    if(_this.indexBudget || (paramObj.operate == "编辑预算" || paramObj.operate == "添加预算")){
+                //如果为预算操作则刷新页面数据
+                if(_this.indexBudget || (paramObj.operate == "编辑预算" || paramObj.operate == "创建预算")){
+                    if(_this.onPage == "centerindex"){
                         _this.indexRefreshRender();
-                    }
-                }else{
-                    if(_this.indexBudget || (paramObj.operate == "编辑预算" || paramObj.operate == "添加预算")){
+                    }else{
                         var objParam = {
                             NowModel:"center",
                             buildingId:_this.projectUserSel.buildingId,
@@ -989,6 +978,7 @@ v.pushComponent({
             },function(){
                 $("#globalnotice").pshow({ text: "保存失败", state: "failure" })
             },function(){ 
+                // 刷新侧弹窗数据
                 _this.BudgetWindowOpen();
             })
         },
@@ -1005,7 +995,7 @@ v.pushComponent({
                     planDate:this.projectUserSel.timeDay,
                     energyDataBudget:this.projectBudgetEditCache.total,
                     energyDataBudgetPerSquare:this.projectBudgetEditCache.square,
-                    operate:this.projectSel.projectInfo.ifHasBudget ? "编辑预算" : "添加预算",
+                    operate:this.projectSel.projectInfo.ifHasBudget ? "编辑预算" : "创建预算",
                     operateUser: this.userId,
                     state:1,
                     remark:this.projectBudgetEditCache.remark || ""
@@ -1075,10 +1065,12 @@ v.pushComponent({
             if(this.onPage == 'centerindex'){
                 if(N == 0){
                     $("#IGpartloading").phide();
+                    // $("#ICpartloading").phide();
                     $("#I_shadow").hide();
                 }
                 if(N == 1){
                     $("#IGpartloading").pshow();
+                    // $("#ICpartloading").pshow();
                     $("#I_shadow").show();
                 }
             }

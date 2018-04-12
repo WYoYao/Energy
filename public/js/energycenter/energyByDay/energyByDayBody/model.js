@@ -204,14 +204,18 @@ v.pushComponent({
                             v._instance.DgridHeight = "calc(100% - 50px)";
                         }
                         v._instance.$nextTick(function(){
+                            // 3.26
+                            // chart.InitChart('energyByDayChart');
+                            // chart.xAxisUpdate(ChartxAxis);
+                            // chart.update('energy',ChartEnergyData);
+                            chart.xAxisFill(ChartxAxis);
+                            chart.dataFill('energy',ChartEnergyData);
                             chart.InitChart('energyByDayChart');
-                            chart.xAxisUpdate(ChartxAxis);
-                            chart.update('energy',ChartEnergyData);
+                            giveChartTopLine("energyByDayChart");
                         })
                     }
                     
                 },0)
-
             },function(){
                 //接口调用失败
                 $("#globalnotice").pshow({ text: "无法连接服务器", state: "failure" });
@@ -229,6 +233,13 @@ v.pushComponent({
                     thousandsSep: ','
                 }
             });
+            chart.options.tooltip.formatter = function () {
+                var index = this.points[0].point.index;
+                var data = toThousands(RD(v._instance.DItemEnergyData.hourData[index].energyData));
+                var tool = "<a style='color:#6D6D6D;font-size:12px;'>" + this.x + "</a><br/>";
+                tool += "<a>实际能耗&nbsp;:&nbsp;&nbsp;<a style='font-family:Arial;font-size:14px;'>" + data + (data == null ? "" : "  kWh") + "</a></a><br/>";
+                return tool;
+            }
             var chartEnergyByHour = {
                 name:"实际能耗",
                 type :"column",

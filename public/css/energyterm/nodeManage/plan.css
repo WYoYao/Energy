@@ -33,13 +33,14 @@
   margin: 10px 0 0 8px;
   height: 30px;
   line-height: 30px;
-  font-family: MicrosoftYaHei;
+  /* font-family: Microsoft YaHei; */
   font-size: 14px;
   color: #637e99;
 }
 
 .plan_content .sitemap .map_index .map_name {
-  font-family: MicrosoftYaHei-Bold;
+  /* font-family: Microsoft YaHei; */
+  font-weight: 600;
   font-size: 14px;
   color: #151515;
   font-weight: bold;
@@ -48,7 +49,7 @@
 .plan_content .contenter {
   position: absolute;
   top: 66px;
-  bottom: 70px;
+  bottom: 51px;
   left: 30px;
   right: 30px;
 }
@@ -121,9 +122,9 @@
 .plan_content .box {
   position: absolute;
   top: 246px;
-  bottom: 0;
+  bottom: 20px;
   left: -17px;
-  right: 0;
+  right: -12px;
   overflow: auto;
 }
 
@@ -230,6 +231,30 @@
   color: #6d6d6d;
   font-size: 12px;
 }
+
+.plan_content .box .code .title.disabled:hover,
+.plan_content .box .code .title.disabled.on {
+  background: #00a8d3;
+  color: #ffffff;
+}
+
+.plan_content .box .code .title.disabled:hover i,
+.plan_content .box .code .title.disabled.on i {
+  background: #ffffff;
+}
+
+.plan_content .box .code .title.disabled:hover i,
+.plan_content .box .code .title.disabled.on i {
+  background: #ffffff;
+}
+
+.plan_content .box .code .title.disabled:hover i::after,
+.plan_content .box .code .title.disabled.on i::after,
+.plan_content .box .code .title.disabled:hover i::before,
+.plan_content .box .code .title.disabled.on i::before {
+  background: #00a8d3;
+}
+
 .plan_content .box .code .title.disabled {
   cursor: pointer;
 }

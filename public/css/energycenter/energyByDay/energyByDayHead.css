@@ -17,9 +17,11 @@
     border: 1px solid #CACACA;
     margin-left: 19px;
     margin-top: 9px;
+    border-radius: 2px;
 }
 .energyByDayHead_back:hover{
     cursor: pointer;
+    background: #F8F8F8;
 }
 .energyByDayHead_back>i{
     font-size: 14px;
@@ -47,12 +49,17 @@
 }
 .energyByDayHead_backtext>span:nth-of-type(3){
     color: #151515;
-    font-family:MicrosoftYaHei-Bold;
+    font-family:Microsoft YaHei;
+    font-weight: 600;
 }
 .energyByDayHead_download{
     float: right;
     margin-top: 10px;
     margin-right: 20px;
+    height: 30px;
+}
+.energyByDayHead_download>div:hover{
+    background: #F8F8F8;
 }
 .energyByDayHead_time{
     float: right;

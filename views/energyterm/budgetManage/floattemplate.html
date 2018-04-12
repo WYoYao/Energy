@@ -32,7 +32,7 @@
 
         <div class="I_BW_B">
 
-            <pnotice-nodata text="暂无数据" subtitle="正在获取数据" v-show="!projectSel.projectInfoState"></pnotice-nodata>
+            <div class="loading" v-show="!projectSel.projectInfoState">正在加载...</div>
 
             <div class="I_BW_BH" v-show="projectSel.projectInfoState">
                 <!-- 用户仅在未来月且项目有预算时可以编辑预算，项目冻结时该按钮不可用 -->
@@ -158,23 +158,26 @@
 
                     <div class="I_BW_BO">
 
-                        <ul v-if="projectSel.projectRemark.length!=0">
+                        <ul v-if="projectSel.projectRemark.length!=0 && !isEnergyRemarkLoading">
                             <li class="I_BW_BO_lh">
                                 <span>修改时间</span>
                                 <span>操作人</span>
                                 <span>操作</span>
-                                <span>能耗预算(kWh)</span>
+                                <span>能耗预算(kWh) </span>
                                 <span>批注</span>
                             </li>
                             <li class="I_BW_BO_li" v-for="model in projectSel.projectRemark"> 
                                 <span class="I_BW_BO_SAH AMT" :title="model.updateTime">{{model.updateTime}}</span>
                                 <span class="I_BW_BO_SAH" :title="model.operateUserShow">{{model.operateUserShow}}</span>
                                 <span class="I_BW_BO_SAH" :title="model.operate">{{model.operate}}</span>
-                                <span class="I_BW_BO_SAH PFR" :title="model.energyDataBudgetShow + 'kWh'">{{model.energyDataBudgetShow}}&nbsp;&nbsp;<span class="I_BW_BO_St1" v-show="model.energyDataBudgetShow != noData">kWh</span></span>
+                                <span class="I_BW_BO_SAH PFR" :title="model.energyDataBudgetShow + 'kWh'">{{model.energyDataBudgetShow}}&nbsp;&nbsp;</span>
                                 <span class="wordAuto" :title="model.remark">{{model.remark}}</span>
                             </li>
                         </ul>
-                        <div class="I_BW_BO_nodata" v-if="projectSel.projectRemark.length==0">
+                        <div class="nodata nodata2" v-show="isEnergyRemarkLoading">
+                            正在加载...
+                        </div>
+                        <div class="nodata" v-if="projectSel.projectRemark.length==0 && !isEnergyRemarkLoading">
                             <pnotice-nodata text="暂无数据" subtitle="该月还没有预算修改记录哦" v-if="projectSel.projectRemark.length==0"></pnotice-nodata>
                         </div>
                         
@@ -191,11 +194,14 @@
                         <span class="I_budgetWindow_littleColor littleBlue"></span>
                     </div>
 
-                    <div class="I_BW_BO_nodata" v-if="projectSel.projectHistoryBudget.length==0">
+                    <div class="nodata nodata2" v-show="isEnergyHistoryLoading">
+                        正在加载...
+                    </div>
+                    <div class="nodata" v-show="projectSel.projectHistoryBudget.length==0 && !isEnergyHistoryLoading">
                         <pnotice-nodata text="暂无数据" subtitle="该建筑没有历史能耗参考值" v-if="projectSel.projectHistoryBudget.length==0"></pnotice-nodata>
                     </div>
 
-                    <div class="I_BW_H" @mouseleave="pmouseleaveHistoryEnergy" v-if="projectSel.projectHistoryBudget.length!=0">
+                    <div class="I_BW_H" @mouseleave="pmouseleaveHistoryEnergy" v-if="projectSel.projectHistoryBudget.length!=0 && !isEnergyHistoryLoading">
                         <div class="I_BW_H_one" @mouseenter="pmouseenterHistoryEnergy(model)" v-for="model in projectSel.projectHistoryBudget" :class="model.hovered ? 'I_BW_H_hover' : void 0">
                             <div class="I_BW_H_time">
                                 <div :class="model.HN ? 'I_BW_H_timeHN' : 'I_BW_H_timeH'">{{model.timeUsed}}</div>

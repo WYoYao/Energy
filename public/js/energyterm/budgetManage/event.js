@@ -50,6 +50,16 @@ function saveSureShow(event) {
     $saveSurePop.hide();
     $layer.hide();
   } else {
+    // 是最后一个
+    if (
+      $(event.currentTarget).parents(".itemBlock")[0] ==
+      $(".itemBlock")[$(".itemBlock").length - 1]
+    ) {
+      $saveSurePop.css({ left: "-220px" });
+    } else {
+      $saveSurePop.css({ left: 0 });
+    }
+
     $saveSurePop.show();
     $layer.show();
 
@@ -176,8 +186,8 @@ function testNumber(val) {
   }
 }
 function focusInput(evnet) {
-    var $input = $(event.currentTarget);
-    $input.parent(".bInputBox").removeClass('error');
+  var $input = $(event.currentTarget);
+  $input.parent(".bInputBox").removeClass("error");
 }
 var onmouseoverRecord;
 function historyChartEnter(event) {
@@ -206,6 +216,8 @@ function historyChartLeave(event) {
 //   if (e.stopPropagation) e.stopPropagation();
 // }
 function budgetBuildClick(currItem) {
+  $(".budgetPop").hide();
+
   //楼层建筑的选择
   v.instance.budgetBuildSel = currItem;
   v.instance.currentBuild = currItem;

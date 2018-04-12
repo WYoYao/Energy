@@ -14,14 +14,14 @@
                 <panel timetype="M" align="left" double="false" iscommontime="false"></panel>
             </ptime-calendar>
         </div>
-        <div class="I_head_combo" @click.capture="bodyClick()">
+        <div class="I_head_combo clickMark" @click.capture="bodyClick(event)">
             <pcombobox-normal id="'I_head_pcombo'" sel="indexItemSel" bind="true">
                 <header placeholder="切换分项：获取分项失败" prefix="切换分项："></header>
                 <item datasource="AllProjectItems" text="name" id="logicId"></item>
             </pcombobox-normal>
         </div>
         <ptab-button bind="true" id="'I_head_ptab'" datasource="ItabArr" text="name" sel="indexPageC" text="name"></ptab-button>
-        <div class="I_head_buttonR1" @click.capture="bodyClick()">
+        <div class="I_head_buttonR1 clickMark" @click.capture="bodyClick(event)">
             <a>D</a>
             <pbutton-menuminor sel="indexDownload" icon="D" id="'I_head_pbutcom'" bind="true" align="right">
                 <header placeholder="下载"></header>
@@ -41,12 +41,13 @@
     <!-- 图表 -->
     <div id="I_body">
         <div id="I_chart_shadow" v-show="Iloading == 1"><div></div></div> 
+        <ploading-part id="ICpartloading" text="努力加载中..."></ploading-part>
         <div id="I_chart" v-show="Iloading == 0"></div>
         <div id="I_chart_Avg" v-show="Iloading == 0">
             <span class="I_chart_AvgText2 I_chart_AvgText" @click="indexChartPlot(1)"><a :class="indexChartAvgLine.energyReal ? 'avgly' : 'avgh'">项目能耗平均值 : </a><a :class="indexChartAvgLine.energyReal ? 'avgly' : 'avgh'" class="ABM">{{projectInfo.avgEnergyDataShow}}</a></span>
-            <span class="I_chart_AvgLine2 I_chart_AvgLine" @click="indexChartPlot(1)"></span>
-            <span class="I_chart_AvgText1 I_chart_AvgText" @click="indexChartPlot(0)"><a :class="indexChartAvgLine.energyBudget ? 'avglr' : 'avgh'">项目预算平均值 : </a><a :class="indexChartAvgLine.energyBudget ? 'avglr' : 'avgh'" class="ABM">{{projectInfo.avgBudgetDataShow}}</a></span>
-            <span class="I_chart_AvgLine1 I_chart_AvgLine" @click="indexChartPlot(0)"></span>
+            <span class="I_chart_AvgLine" @click="indexChartPlot(1)" :class="indexChartAvgLine.energyReal ? 'avgly' : 'avgh'">- -</span>
+            <span class="I_chart_AvgText1 I_chart_AvgText" @click="indexChartPlot(0)"><a :class="indexChartAvgLine.energyBudget ? 'blackFont3' : 'avgh'">项目预算平均值 : </a><a :class="indexChartAvgLine.energyBudget ? 'blackFont3' : 'avgh'" class="ABM">{{projectInfo.avgBudgetDataShow}}</a></span>
+            <span class="I_chart_AvgLine" @click="indexChartPlot(0)" :class="indexChartAvgLine.energyBudget ? 'blackFont3' : 'avgh'">- -</span>
         </div>
     </div>
     
@@ -148,16 +149,16 @@
             <div class="MSYB" :class="!NotSelFutureMonth ? 'wid1' : indexPage.energy ? 'wid31' : 'wid61'">项目总和</div>
             <div :class="!NotSelFutureMonth ? 'wid2' : indexPage.energy ? 'wid32' : 'wid62'"></div>
             <div :class="!NotSelFutureMonth ? 'wid3' : indexPage.energy ? 'wid33' : 'wid63'"></div>
-            <div class="ABM tTM" :class="!NotSelFutureMonth ? 'wid4' : indexPage.energy ? 'wid34' : 'wid64'">{{projectInfo.areaSumShowShow}}</div>
-            <div class="ABM" :class="!NotSelFutureMonth ? 'wid5' : indexPage.energy ? 'wid35' : 'wid65'">
+            <div class="ABM tTM" :class="!NotSelFutureMonth ? 'wid4' : indexPage.energy ? 'wid34' : 'wid64'" v-show="Iloading == 0">{{projectInfo.areaSumShowShow}}</div>
+            <div class="ABM" :class="!NotSelFutureMonth ? 'wid5' : indexPage.energy ? 'wid35' : 'wid65'" v-show="Iloading == 0">
                 <div class="box2 tTM">{{projectInfo.budgetDataSumShow}}</div>
             </div>
             <div :class="!NotSelFutureMonth ? 'wid6' : indexPage.energy ? 'wid36' : 'wid66'"></div>
             <div :class="!NotSelFutureMonth ? 'wid7' : indexPage.energy ? 'wid37' : 'wid67'"></div>
-            <div class="ABM" :class="!NotSelFutureMonth ? 'wid8' : indexPage.energy ? 'wid38' : 'wid68'">
+            <div class="ABM" :class="!NotSelFutureMonth ? 'wid8' : indexPage.energy ? 'wid38' : 'wid68'" v-show="Iloading == 0">
                 <div class="box2 tTM">{{projectInfo.energyDataSumShow}}</div>
             </div>
-            <div class="ABM" :class="!NotSelFutureMonth ? 'wid9' : indexPage.energy ? 'wid39' : 'wid69'">
+            <div class="ABM" :class="!NotSelFutureMonth ? 'wid9' : indexPage.energy ? 'wid39' : 'wid69'"  v-show="Iloading == 0">
                 <div class="tTM box5" :class="projectInfo.realBudgetRatioShow !=noData ?  projectInfo.realBudgetRatioSum > 1 ? 'redFont' : 'greenFont' : void 0">{{projectInfo.realBudgetRatioShow}}</div>
             </div>
             <div :class="!NotSelFutureMonth ? 'wid30' : indexPage.energy ? 'wid40' : 'wid70'"></div>
@@ -171,7 +172,7 @@
                 <li class="I_foot_li" :style="{width:noscW}" v-for="(item,index) in projectInfo.projectInfo" @click.stop="item.noneDataType != -1 ? IndexBudgetWindowOpenReady(item) : void 0" @mouseenter="indexGridHover(index)">
                     
                     <div class="wid0 tTM" :title="index+1">
-                        <div class="box tTM">{{index+1}}</div>
+                        <div class="boxindex tTM">{{index+1}}</div>
                     </div>
 
                     <div :class="!NotSelFutureMonth ? 'wid1' : indexPage.energy ? 'wid31' : 'wid61'" :title="item.projectName">
@@ -215,18 +216,18 @@
                     </div> 
 
                     <div class="tTM" :class="!NotSelFutureMonth ? 'wid10' : indexPage.energy ? 'wid40' : 'wid70'" v-if="item.noneDataType==0">
-                        <div class="grayblueFont lookplan" v-show="item.ifSetPlan" @click.stop="EnergyPlanOpen(item)">查看计划</div>
+                        <div class="grayblueFont lookplan hasPlan" v-show="item.ifSetPlan" @click.stop="EnergyPlanOpen(item)">查看计划</div>
                         <div class='greyFont lookplan' v-show="!item.ifSetPlan">无</div>
                     </div>
 
                     <div :class="!NotSelFutureMonth ? 'wid12' : indexPage.energy ? 'wid42' : 'wid72'" v-if="item.noneDataType != 0">
-                        <div v-if="item.noneDataType == -1">项目该月未上线,无数据……</div>
-                        <div v-if="item.noneDataType == 1">项目该月数据质量不合格</div>
+                        <div v-if="item.noneDataType == -1" class="greyFont">项目该月未上线,无数据……</div>
+                        <div v-if="item.noneDataType == 1" class="greyFont">项目该月数据质量不合格</div>
                     </div>
 
-                    <div :class="!NotSelFutureMonth ? 'wid11' : indexPage.energy ? 'wid41' : 'wid71'">
+                    <div :class="!NotSelFutureMonth ? 'wid11' : indexPage.energy ? 'wid41' : 'wid71'" v-show="NotSelFutureMonth">
                         <div>
-                            <pbutton-blue isborder="false" text="'查看能耗详情'" bind="true" disabled="item.noneDataType == -1 || !NotSelFutureMonth" @click.stop="openEnergyByProject(item)"></pbutton-blue>
+                            <pbutton-blue isborder="false" text="'查看能耗详情'" bind="true" disabled="item.noneDataType == -1" @click.stop="openEnergyByProject(item)"></pbutton-blue>
                         </div>
                     </div>
                 </li>

@@ -5,9 +5,8 @@ v.pushComponent({
     methods: {
         // here
         backEnergyByproject: function () {
-            // chart.chart != null ? chart.chart.destroy() : void 0;
-            // v.initPage('energybyproject');
-            this.goLastPage();
+            chart.chart != null ? chart.chart.destroy() : void 0;
+            v.initPage('energybyproject');
         },
         //头部时间选择
         DTimeSel: function () {

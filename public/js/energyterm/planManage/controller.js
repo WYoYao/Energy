@@ -327,6 +327,9 @@ planManController.getPlanTotalChart = function(pinfo, pindex) {
     planManController.planDayChart.addSeries({
       data: chartArr
     });
+
+    giveChartTopLine("itemDayChart");
+
     $("#dayPlanFloat").css({ bottom: "0px" });
     $("#dayPlanFloat .floatTitle").text("逐日计划能耗");
   }
@@ -382,6 +385,9 @@ planManController.generateDayPlanByItemSum = function(planDate, pitem) {
       planManController.planDayChart.addSeries({
         data: chartArr
       });
+
+      giveChartTopLine("itemDayChart");
+
       $("#dayPlanFloat").css({ bottom: "0px" });
       $("#dayPlanFloat .floatTitle").text(pitem.planItemName + "逐日计划能耗");
     },

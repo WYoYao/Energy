@@ -1,79 +1,18 @@
-#app,.body,#lookPlan{
-    width: 100%;
-    height: 100%;
-}
-.lookPlan_head{
-    width: calc(100% - 60px);
-    margin: 0 30px 12px;
-    padding-top: 48px;
-    height: 30px;
-    line-height: 30px;
-}
-.lookPlan_head>div{
-    float: right;
-}
-#lookPlan_grid{
-    max-width: calc(100% - 60px);
-    margin: 0 auto;
-    height: calc(100% - 120px);
-    overflow-x: scroll; 
-    overflow-y: hidden;
-    text-align: center;
-    border: 1px solid #CCCCCC;
-}
-.LGW{
-    height: 100%;
-    overflow-x: hidden; 
-    overflow-y: hidden;
-}
+* { margin: 0; padding: 0; }
 
+#app, .body, #lookplan { width: 100%; height: 100%; }
 
-.zhanwei{
-    width: 100%;
-    height: 30px;
-}
-.lookPlan_grid_head{
-    height: 30px;
-    background: #8B9599;
-    font-size: 12px;
-    line-height: 30px;
-    color: white;
-}
-.lookPlan_grid_head>span{
-    float: left;
-    display: block;
-    width: 141px;
-    height: 100%;
-}
-.lookPlan_grid_head>span:nth-of-type(1){
-    width: 52px;
-}
-.LGBW{
-    max-height: calc(100% - 30px);
-    height: auto;
-    overflow-y: scroll;
-    overflow-x: hidden;
-}
-.lookPlan_grid_body{
-    height: auto;
-}
-.lookPlan_grid_tr{
-    height: 32px;
-    width: 100%;
-    line-height: 32px;
-}
-.lookPlan_grid_tr:nth-of-type(even){
-    background: #F7F7F7;
-}
-.lookPlan_grid_tr>span{
-    border-right: 1px solid #CCCCCC;
-    border-bottom: 1px solid #CCCCCC;
-    height: 31px;
-    width: 140px;
-    display: block;
-    float: left;
-}
-.lookPlan_grid_tr>span:nth-of-type(1){
-    width: 50px;
-    border-left:  1px solid #CCCCCC;
-}
+#lookplan .nav { width: calc(100% - 60px); margin: 0 30px 12px; padding-top: 48px; height: 30px; line-height: 30px; font-size: 16px; }
+#lookplan .nav div { float: right; }
+#lookplan #grid { width: calc(100% - 60px); margin: 0 30px 0; height: calc(100% - 120px); border: 1px solid #CCCCCC; overflow-y: scroll; overflow-x: scroll; position: relative;}
+#lookplan #grid .head { height: 30px; background: #8B9599; font-size: 12px; line-height: 30px; color: white;}
+#lookplan #grid .head span { display: block; float: left; text-align: center; }
+#lookplan #grid .head span:nth-of-type(1) { width: 50px; height: 30px; }
+#lookplan #grid .head > span:nth-of-type(1) { width: 49px; border-right: 1px; }
+#lookplan #grid .box { height: calc(100% - 30px); }
+#lookplan #grid .box .row { height: 30px; }
+#lookplan #grid .box .row span { display: block; float: left; border-right: 1px solid #CCCCCC; border-bottom: 1px solid #CCCCCC; height: 29px; text-align: center; line-height: 29px; }
+#lookplan #grid .box .row span:nth-of-type(1) { width: 49px; height: 29px; }
+#lookplan #grid .box .row:nth-of-type(even) { background: #F7F7F7; }
+
+/*# sourceMappingURL=lookplan.css.map */

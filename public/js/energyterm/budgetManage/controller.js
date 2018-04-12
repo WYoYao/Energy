@@ -338,13 +338,28 @@ budgetController.getMonthEnergyRealAndBudget = function(monparam, cb) {
               select: {
                 color: "#C3CDD0",
                 borderColor: "rgba(0,0,0,0)"
+              },
+              hover:{
+                color:"#C3CDD0",
+                animation:false,
               }
             },
             data: chartDataObj.enerBudgetList
           });
           // 添加实际节点
           budgetController.historyEnergyChart.addSeries({
-            data: chartDataObj.enerRealList
+            // color: "#D9E2E8",
+            states: {
+              // select: {
+              //   color: "#FF8640",
+              //   borderColor: "rgba(0,0,0,0)"
+              // },
+              hover:{
+                // color:"#C3CDD0",
+                animation:false,
+              }
+            },  
+            data: chartDataObj.enerRealList,
           });
         }
       } else {
@@ -360,7 +375,7 @@ budgetController.getMonthEnergyRealAndBudget = function(monparam, cb) {
         budgetController.historyEnergyChart.yAxis &&
           budgetController.historyEnergyChart.yAxis[0].addPlotLine({
             value: resData.samePriodHistoryDataAvg,
-            color: "#6d6d6d",
+            color: "#7a94ad",
             dashStyle: "ShortDash",
             width: 1,
             id: "averPlotLine",
@@ -372,11 +387,18 @@ budgetController.getMonthEnergyRealAndBudget = function(monparam, cb) {
                 "kWh",
               x: -10,
               y: -10,
-              color: "#333333"
+              useHTML:true,
+              style:{
+                color: "#7a94ad",
+                fontFamily:"Microsoft YaHei",
+              }
             },
             zIndex: 3
           });
       }
+      try{
+        giveChartTopLine("historyEnergyChart");
+      }catch(err){}
     },
     error: function(errObj) {
       console.error("getMonthEnergyRealAndBudget err");
@@ -400,7 +422,7 @@ function getChartDataObj(dataList, monparam) {
     // var radio = radioUnd > 100 ? Math.round((item.energyDataReal / item.energyDataBudget) * 1000) / 10 : radioUnd > 0 ? (radioUnd / 100000).toFixed(5) : 0;
 
     var color =
-      item.energyDataReal > item.energyDataBudget ? "#FF8640" : "#02A9D1";
+      (item.energyDataReal > item.energyDataBudget) && item.energyDataBudget != null ? "#FF8640" : "#02A9D1";
     // var color =
     //   item.energyDataReal > item.energyDataBudget ? "#EAA3FC" : "#AED09E";
 
@@ -451,7 +473,7 @@ function getChartDataObj(dataList, monparam) {
       color:
         item.energyDataReal && item.energyDataBudget
           ? item.energyDataReal > item.energyDataBudget ? "#FCA471" : "#48BEDA"
-          : "#02a9d1",
+          : "#48BEDA",
       name: "实际能耗",
       realradio: radio,
       budgetItemName: item.budgetItemName,
@@ -461,6 +483,11 @@ function getChartDataObj(dataList, monparam) {
           //   item.energyDataReal > item.energyDataBudget ? "#FFBD8A" : "#1BC2EA",
           color: color,
           borderColor: "rgba(0,0,0,0)"
+        },
+        hover: {
+          color: color,
+          // borderColor: "rgba(0,0,0,0)",
+          animation:false,
         }
       },
       // states: {
@@ -479,9 +506,6 @@ function getChartDataObj(dataList, monparam) {
       selected: labelSign ? true : false
     };
 
-    console.log(
-      item.energyDataReal > item.energyDataBudget ? "#red" : "#black"
-    );
     enerRealList.push(realObj);
     enerBudgetList.push(budgetObj);
   });
@@ -523,6 +547,7 @@ function columnComparisonChart(itemId, dateType, callback) {
         //tickLength: 6,
         //tickmarkPlacement: 'on',
         //minorTickLength: 1,
+        tickWidth: 0,
         labels: {
           style: {
             fontFamily: 'Arial,"微软雅黑",sans-serif'
@@ -626,16 +651,25 @@ function columnComparisonChart(itemId, dateType, callback) {
           //pointPadding: 0,
           grouping: true,
           //=================
-          states: {
-            hover: {
-              halo: {
-                opacity: 0.5
-              }
-            }
-          }
+          // states: {
+          //   hover: {
+          //     halo: {
+          //       opacity: 0.5
+          //     }
+          //   }
+          // }
         },
 
         series: {
+          // 2018 03 27 修改hover 状态的预算高亮
+          states:{
+            hover:{
+              marker:{
+                
+              }
+            }
+          },
+
           //==========20180314 修改柱状图边距 leo
           pointPadding: 0,
           // pointPlacement: -0.09,

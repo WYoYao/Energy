@@ -62,3 +62,14 @@ body {
   word-wrap: break-word;
   overflow: hidden;
 }
+/*  控制表格颜色  */
+.highcharts-grid-line,
+.highcharts-axis-line,
+.highcharts-xaxis-line {
+  color: #eeeeee;
+}
+
+/*  返回按钮Hover 颜色 */
+.backbtn:hover {
+  background: #f8f8f8;
+}

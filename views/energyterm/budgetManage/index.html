@@ -32,7 +32,7 @@
                 <em class="line">/</em>
                 <span class="boldColor">预算管理</span>
             </div>
-            <div class="rightBuildSel" v-show="Buildings.length>1" @click.capture="bodyClick()">
+            <div class="rightBuildSel clickMark" v-show="Buildings.length>1" @click.capture="bodyClick(event)">
                 <pcombobox-normal id="'budgetBuildList'" sel="budgetBuildClick" bind="true">
                     <item datasource="Buildings" text="buildingName"></item>
                 </pcombobox-normal>
@@ -65,8 +65,8 @@
             <!-- 每个月的滚动信息 Start -->
             <div class="monthBlocks" id="monthBudgets">
 
-                <div class="itemBlock" v-for="(item,index) in energyBudgetList" :class="{ide:item.showPage=='editPage'}" :style="{width:item.blockWidth+'px'}"
-                    @click="ideItem($event,item)" @mouseenter="changeOnRemarkInput(item,$event)">
+                <div class="itemBlock" v-for="(item,index) in energyBudgetList" :class="{ide:item.showPage=='editPage',over:item.isPastMonth}"
+                    :style="{width:item.blockWidth+'px'}" @click="ideItem($event,item)" @mouseenter="changeOnRemarkInput(item,$event)">
                     <div class="blockTitle">
 
                         <span class="date" v-text="item.planDateStr">2017.02</span>
@@ -76,8 +76,7 @@
                         <em class="picEm" title="预算已被锁定" v-show="item.state==0 && !item.isNowMonth && new Date(item.planDate.replace(/-/g,'/'))>new Date()">s</em>
                         <!-- 批注按钮 -->
                         <div class="remark" @click.stop="hideModifyRecordFloat(),PopClick();showModifyRecord(item)">
-                            <em class="picEm">﹁</em>
-                            批注
+                            <em class="picEm">﹁</em>批注
                         </div>
                     </div>
                     <div class="blockLoad" v-show="item.showPage=='blockLoad'">
@@ -91,8 +90,7 @@
                                 <!-- 节点有更新操作提醒及操作 Start -->
                                 <div class="newWrap" v-show="item.isBudgetUpdated&&item.isNextMonth&&item.state!=0">
                                     <span class="hasNew" @click="ideItem($event,item),hideModifyRecordFloat(true),showChangeWarn(event)">
-                                        <em class="picEm">y</em>
-                                        有更新
+                                        <em class="picEm">y</em>有更新
                                     </span>
                                     <div class="budgetPop" @click="hideModifyRecordFloat(),eventStop(event)">
                                         <div class="popTitle">该建筑预算管理节点现已改为"{{item.newBudgetItemName}}"，是否使用新管理节点重新创建预算？</div>
@@ -150,8 +148,7 @@
                             <div class="planLine" v-show="!item.ifHasPlan&&!item.isPastMonth">
                                 <span class="createPlan" @click.stop="hideModifyRecordFloat(),showEditPlan(item,$event)" v-bind:class="{'budDisable':item.isBudgetUpdated && !item.isNowMonth}"
                                     v-bind:title="item.isNowMonth ? '' : item.isBudgetUpdated ? '请先更新预算管理节点' : !item.ifHasPlanNode ? '该预算管理节点无对应计划管理节点，无法创建计划' : ''">
-                                    <em class="picEm">J</em>
-                                    创建能耗计划</span>
+                                    <em class="picEm">J</em>创建能耗计划</span>
                             </div>
                         </div>
                         <div class="bBottom">

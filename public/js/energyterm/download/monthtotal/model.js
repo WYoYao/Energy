@@ -250,7 +250,8 @@ $(function() {
                   chart: {
                     type: "column",
                     zoomType: "xy",
-                    plotBackgroundColor: "#F8F8F8"
+                    plotBackgroundColor: "#ffffff",
+                    backgroundColor: "#ffffff"
                   },
                   title: {
                     text: ""
@@ -261,12 +262,13 @@ $(function() {
                     ) {
                       return new Date(item.time).format("MM.dd");
                     }),
-                    visible: true
+                    visible: true,
+                    tickWidth: 0
                   },
                   yAxis: [
                     {
                       title: { text: "" },
-                      gridLineWidth: 0,
+                      gridLineWidth: 1,
                       gridLineDashStyle: "Dash"
                     },
                     {
@@ -309,12 +311,12 @@ $(function() {
                         return {
                           id: index,
                           y: item.planData ? item.planData : 0,
-                          color: "#C3CDD0"
+                          color: "#d6dde5"
                         };
                       }),
-                      color: "#C3CDD0",
-                      pointPadding: 0.2,
-                      pointPlacement: -0.18,
+                      color: "#d6dde5",
+                      pointPadding: 0.3,
+                      pointPlacement: -0.11,
                       tooltip: { valueSuffix: " kWh" },
                       events: {},
                       yAxis: 0
@@ -324,13 +326,6 @@ $(function() {
                       type: "column",
                       id: "energyReal",
                       keys: ["y", "color", "id"],
-                      // "data": _.range(30).map((item, index) => {
-                      //     return {
-                      //         id: index,
-                      //         y: (index + _.random(1, 30)) * 100,
-                      //         color: index % 2 ? '#02A9D1' : '#F89054',
-                      //     }
-                      // }),
                       data: _that.EnergyDataForDayAndItem.day.map(function(
                         item,
                         index
@@ -338,12 +333,17 @@ $(function() {
                         return {
                           id: index,
                           y: item.energyData ? v3(item.energyData) : 0,
-                          color: _that.fcolor(item.energyData, item.planData)
+                          color:
+                            item.energyData && item.planData
+                              ? item.energyData > item.planData
+                                ? "#FABB97"
+                                : "#02A9D1"
+                              : "#02A9D1"
                         };
                       }),
                       // color: "#02A9D1",
-                      pointPadding: 0.2,
-                      pointPlacement: 0.18,
+                      pointPadding: 0.3,
+                      pointPlacement: 0.11,
                       tooltip: { valueSuffix: " kWh" },
                       events: {},
                       yAxis: 0
@@ -397,12 +397,12 @@ $(function() {
                   );
 
                   if (num < 100) {
-                    start = num > 50 ? 100 - num : 0;
+                    start = num > 50 ? num - 50 : 0;
                     end = 50;
                     backgroundColor = "#02A9D1";
                   } else {
                     start = 50;
-                    end = num / 2;
+                    end = num < 150 ? num - 50 : 100;
                     backgroundColor = "#FF7B7B";
                   }
 
@@ -439,7 +439,7 @@ $(function() {
         return window.location.origin + path;
       },
       width: function(item) {
-        return { width: item.width + "px" };
+        return { width: item.width / 1.5 + "px" };
       }
     },
     computed: {
@@ -479,6 +479,10 @@ $(function() {
 
   app.init().then(function() {
     setTimeout(function() {
+      // 修改时候注释的 20180328 leo
+
+      giveChartTopLine("tio");
+
       var arr = createHtml("#monthtotal");
 
       pajax.post({

@@ -26,7 +26,7 @@ v.pushComponent({
       index: null,
       show: false
     },
-    planBackPage: "more_build"
+    planBackPage: "more_build",
   },
   methods: {
     // 激活该页
@@ -189,11 +189,15 @@ v.pushComponent({
           ? (window.PChartHoverNum = index)
           : void 0;
       });
-      chart.InitChart("PB_chart");
       // //填充数据刷新图表
-      chart.xAxisUpdate(energyProxAxis);
-      chart.update("energyPlan", energyPlan);
-      chart.update("energyReal", energyReal);
+      chart.xAxisFill(energyProxAxis);
+      chart.dataFill("energyPlan", energyPlan);
+      chart.dataFill("energyReal", energyReal);
+      chart.InitChart("PB_chart");
+      giveChartTopLine("PB_chart");
+
+
+
       setTimeout(function() {
         v._instance.chartLeave(PChartHoverNum);
       }, 0);
@@ -232,8 +236,8 @@ v.pushComponent({
       window.chart = new chartControl();
       chart.options.xAxis.visible = true;
       chart.options.xAxis.tickWidth = 0;
-      chart.options.yAxis[0].gridLineDashStyle = "Dash";
-      chart.options.yAxis[0].gridLineColor = "#EEEEEE";
+      // chart.options.yAxis[0].gridLineDashStyle = "Dash";
+      // chart.options.yAxis[0].gridLineColor = "#EEEEEE";
       chart.options.chart.plotBackgroundColor = "#fff";
       chart.options.tooltip.useHTML = true;
       chart.options.tooltip.style = { opacity: 0 };
@@ -262,7 +266,11 @@ v.pushComponent({
         labels: {
           formatter: function() {
             return this.value + "%";
+          },
+          style:{
+              "fontFamily":"Arial"
           }
+          
         },
         min: 0,
         opposite: true //第二根Y轴在页面右边

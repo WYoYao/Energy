@@ -7,6 +7,7 @@ var more_build_init = function() {
 
 var build_select_sel = function(item) {
   if (item.index == 1) {
+    v.instance.isIndexGoF = true;
     v.initPage("subOption");
     $("#build_setting").precover("基础设置");
   } else if (item.index == 0) v.instance.alarmwindow = true;
@@ -15,7 +16,6 @@ var build_select_sel = function(item) {
 var DTimeSelhistorys = [new Date().format("yyyy-MM-dd hh:mm:ss")];
 
 window.DTimeSel = function() {
-  
   var val = $("#daterightdate").psel(),
     start = new Date(val.startTime).format("yyyy-MM-dd hh:mm:ss"),
     end = new Date(val.realEndTime).format("yyyy-MM-dd hh:mm:ss");

@@ -1,217 +1,215 @@
 /*  多建筑类型  */
-.more_box{
-    position: absolute;
-    left: 10px;
-    right: 10px;
-    top: 14px;
-    bottom: 12px;
-    background: #FFFFFF;
-    border-radius: 3px;
+.more_box {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  top: 14px;
+  bottom: 12px;
+  background: #ffffff;
+  border-radius: 3px;
 }
 
-.more_box .header{
-    height: 50px;
-    line-height: 50px;
-    width: 100%;
-    box-sizing: border-box;
-    border-radius: 3px 3px 0 0;
-    border:1px solid #D9E2E8;
+.more_box .header {
+  height: 50px;
+  line-height: 50px;
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 3px 3px 0 0;
+  border: 1px solid #d9e2e8;
 }
 
-.more_box .header .build_select{
-    height: 30px;
-    width: 160px;
-    margin: 9px 20px;
-    float: left;
+.more_box .header .build_select {
+  height: 30px;
+  width: 160px;
+  margin: 9px 20px;
+  float: left;
 }
 
-.more_box .header .build_date{
-    float: right;
-    margin-right:10px;
+.more_box .header .build_date {
+  float: right;
+  margin-right: 10px;
 }
 
-.more_box .header .build_pre{
-    float: right;
-    margin:9px 10px 0 0;
+.more_box .header .build_pre {
+  float: right;
+  margin: 9px 10px 0 0;
 }
 
-.more_box .header .build_pre>div{
-    width: 143px;
+.more_box .header .build_pre > div {
+  width: 143px;
 }
 
-.more_box .header .build_sett{
-    float: right;
-    margin:9px 20px 0 0;
+.more_box .header .build_sett {
+  float: right;
+  margin: 9px 20px 0 0;
 }
 
-.more_box .content{
-    position: absolute;
-    top: 50px;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    border:1px solid #D9E2E8;
-    background: #F8F8F8;
-    border-top: none;
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: flex-start;
-    align-content: flex-start;
-    overflow: auto;
+.more_box .content {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 1px solid #d9e2e8;
+  background: #f8f8f8;
+  border-top: none;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  align-content: flex-start;
+  overflow: auto;
 }
 
-.more_box .content .item{
-    margin: 10px 6px 0;
-    width: calc((100% - 64px)/3);
-    height:320px;
-    border-radius: 8px;
-    border: 1px solid #D9E2E8;
-    box-sizing: border-box;
+.more_box .content .item {
+  margin: 10px 6px 0;
+  width: calc((100% - 64px) / 3);
+  height: 320px;
+  border-radius: 8px;
+  border: 1px solid #d9e2e8;
+  box-sizing: border-box;
 }
 
-.more_box .content .item:nth-child(3n-2){
-    margin-left: 20px;
+.more_box .content .item:nth-child(3n-2) {
+  margin-left: 20px;
 }
 
-.more_box .content .item:nth-child(3n){
-    margin-right: 20px;
+.more_box .content .item:nth-child(3n) {
+  margin-right: 20px;
 }
 
-.more_box .content .item .theader{
-    width: 100%;
-    height: 80px;
-    line-height: 80px;
-    border-bottom: 1px solid #D9E2E8;
+.more_box .content .item .theader {
+  width: 100%;
+  height: 80px;
+  line-height: 80px;
+  border-bottom: 1px solid #d9e2e8;
 }
 
-.more_box .content .item .tbody{
-    width: 100%;
-    height: 239px;
+.more_box .content .item .tbody {
+  width: 100%;
+  height: 239px;
 }
 
-.more_box .content .item .tbody .c_pro{
-    height: 157px;
-    width: 100%;
+.more_box .content .item .tbody .c_pro {
+  height: 157px;
+  width: 100%;
 }
 
-.more_box .content .tbody .c_pro .real_energy{
-    float: left;
-    margin-left: 40px;
-    width: calc(50% - 40px);
+.more_box .content .tbody .c_pro .real_energy {
+  float: left;
+  margin-left: 40px;
+  width: calc(50% - 40px);
 }
 
-.more_box .content .tbody .c_pro .target_energy{
-    float: left;
-    margin-left: 20px;
-    width: calc(50% - 20px);
+.more_box .content .tbody .c_pro .target_energy {
+  float: left;
+  margin-left: 20px;
+  width: calc(50% - 20px);
 }
 
-.more_box .content .tbody .c_pro .energy{
-    margin-top: 54px;
-    font-size: 14px;
-    color: #6D6D6D;
-    height: 18px;
-    line-height: 18px;
+.more_box .content .tbody .c_pro .energy {
+  margin-top: 54px;
+  font-size: 14px;
+  color: #6d6d6d;
+  height: 18px;
+  line-height: 18px;
 }
 
-.more_box .content .tbody .c_pro .number{
-    font-family: Arial-BoldMT;
-    font-weight: bold;
-    margin-top: 10px;
-    font-size: 36px;
-    color: #333333;
-    line-height: 36px;
+.more_box .content .tbody .c_pro .number {
+   /* font-family: Arial; */
+  font-weight: 600;
+  font-weight: bold;
+  margin-top: 10px;
+  font-size: 36px;
+  color: #333333;
+  line-height: 36px;
 }
 
-.more_box .content .tbody .c_pro .number .company{
-    font-family: MicrosoftYaHei;
-    font-weight: 200;
-    font-size: 12px;
-    color: #6d6d6d;
+.more_box .content .tbody .c_pro .number .company {
+  /* font-family: Microsoft YaHei; */
+  font-weight: 200;
+  font-size: 12px;
+  color: #6d6d6d;
 }
 
-.more_box .content .item .tbody .progress_number{
-    margin: 0 20px;
-    height: 14px;
-    line-height: 14px;
-    /* text-align: right; */
+.more_box .content .item .tbody .progress_number {
+  margin: 0 20px;
+  height: 14px;
+  line-height: 14px;
+  /* text-align: right; */
 }
 
 /* 父子级进度条公用属性 */
 .more_box .content .item .tbody .innser_progress,
-.more_box .content .item .tbody .progress{
-    height: 12px;
-    border-radius: 200px;
-    background: #F0F3F6;
+.more_box .content .item .tbody .progress {
+  height: 12px;
+  border-radius: 200px;
+  background: #f0f3f6;
 }
 
-.more_box .content .item .tbody .progress{
-    margin: 8px 20px 0;
+.more_box .content .item .tbody .progress {
+  margin: 8px 20px 0;
 }
 
-
-
-.more_box .content .item .theader .buildname{
-    float: left;
-    font-family: MicrosoftYaHei-Bold;
-    margin-left: 40px;
-    font-size: 16px;
-    max-width: calc(50% - 40px - 34px - 14px);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    font-weight: bold;
+.more_box .content .item .theader .buildname {
+  float: left;
+  /* font-family: Microsoft YaHei; */
+  font-weight: 600;
+  margin-left: 40px;
+  font-size: 16px;
+  max-width: calc(50% - 40px - 34px - 14px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: bold;
 }
 
-.more_box .content .item .theader .projecticon{
-    width: 34px;
-    height: 16px;
-    background: #02A9D1;
-    border-radius: 2px;
-    color: #FFFFFF;
-    text-align: center;
-    font-size: 12px;
-    font-family: MicrosoftYaHei;
-    padding: 0 5px;
+.more_box .content .item .theader .projecticon {
+  width: 34px;
+  height: 16px;
+  background: #02a9d1;
+  border-radius: 2px;
+  color: #ffffff;
+  text-align: center;
+  font-size: 12px;
+  /* font-family: Microsoft YaHei; */
+  padding: 0 5px;
 }
 
-.more_box .content .item .theader .report{
-    font-family: perficon;
-    float: right;
+.more_box .content .item .theader .report {
+  font-family: perficon;
+  float: right;
 }
 
-.more_box .content .item .theader .title{
-    float: right;
-    font-weight: bold;
-    margin-right: 20px;
-    font-family: MicrosoftYaHei-Bold;
-    /* color: #FF7B7B; */
-    font-size: 16px;
-    max-width: calc(50% - 20px);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+.more_box .content .item .theader .title {
+  float: right;
+  font-weight: bold;
+  margin-right: 20px;
+  /* font-family: Microsoft YaHei; */
+  font-weight: 600;
+  /* color: #FF7B7B; */
+  font-size: 16px;
+  max-width: calc(50% - 20px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.more_box .content .item .report_color{
-    color: #FF7B7B !important;
+.more_box .content .item .report_color {
+  color: #ff7b7b !important;
 }
 
-.more_box .content .item .report_bgcolor{
-    background: #FF7B7B !important;
+.more_box .content .item .report_bgcolor {
+  background: #ff7b7b !important;
 }
 
-.more_box .content .item .blue_bgcolor{
-    background: #02A9D1 !important;
+.more_box .content .item .blue_bgcolor {
+  background: #02a9d1 !important;
 }
 
-.more_box .content .item .blue_color{
-    color: #02A9D1 !important;
+.more_box .content .item .blue_color {
+  color: #02a9d1 !important;
 }
 
-.more_box .content .item .warning_color{
-    color: #F89054;
+.more_box .content .item .warning_color {
+  color: #f89054;
 }
-
-
-

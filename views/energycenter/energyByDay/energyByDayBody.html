@@ -9,7 +9,7 @@
                     <i class="per-bIcon"  :class="item.clicked ? 'DB_items_clicked' : void 0" v-if="item.budgetNode == 1" title="该分项为建筑的预算管理节点">M</i>
                 </span>
                 <span :title="item.name">{{item.name}}</span>
-                <span :title="PDS(item.energyData,1)" class="AMT">{{item.energyDataShow}}<a v-show="item.energyDataShow != noData">&nbsp;&nbsp;kWh</a></span>
+                <span :title="PDS(item.energyData,1)" class="AMT">{{item.energyDataShow}}<a v-show="item.energyDataShow != noData">&nbsp;kWh</a></span>
             </div>
         </div>
     </div>
@@ -25,7 +25,7 @@
                 <div :title="PDS(DItemEnergyData.energyData,1)"> 
                     <span class="moreblackFont text24" v-if="DItemEnergyData.energyData==null">{{noData}}</span>
                     <span class="moreblackFont tTM text24 box1 textfl" v-if="DItemEnergyData.energyData!=null">{{toThousands(RD(DItemEnergyData.energyData))}}</span>
-                    <span class="text14 text118 textfl" v-if="DItemEnergyData.energyData!=null">kWh</span>
+                    <span class="text14 text118 textfl" v-if="DItemEnergyData.energyData!=null">&nbsp;kWh</span>
                 </div>
             </div>
 
@@ -35,7 +35,7 @@
                 <div :title="PDS(DItemEnergyData.energyPlan,0)">
                     <span class="moreblackFont text24" v-if="DItemEnergyData.energyPlan==null">{{noData}}</span>
                     <span class="moreblackFont tTM text24 box1 textfl" v-if="DItemEnergyData.energyPlan!=null">{{toThousands(BD(DItemEnergyData.energyPlan))}}</span>
-                    <span class="text14 text118 textfl" v-if="DItemEnergyData.energyPlan!=null">kWh</span>
+                    <span class="text14 text118 textfl" v-if="DItemEnergyData.energyPlan!=null">&nbsp;kWh</span>
                 </div>
             </div>
 
@@ -45,7 +45,7 @@
                 <div :title="PDS(DItemEnergyData.planRatio,3)">
                     <span class="moreblackFont text24" v-if="DItemEnergyData.planRatio==null">{{noData}}</span>
                     <span class="moreblackFont text24 tTM box1 textfl" v-if="DItemEnergyData.planRatio!=null">{{FBI(DItemEnergyData.planRatio*100)}}</span>
-                    <span class="text14 text118 textfl" v-if="DItemEnergyData.planRatio!=null">%</span>
+                    <span class="text14 text118 textfl" v-if="DItemEnergyData.planRatio!=null">&nbsp;%</span>
                 </div>
             </div>
 
@@ -112,7 +112,7 @@
                             <span class="DB_lispan2 tTM AMT" :title="PDS(model.energyData,1)">{{model.energyDataShow}}</span>
                             <span class="DB_lispan3"><div class="DB_li_bar"></div></span>
                             <span class="DB_lispan4 tTM AMT" :title="PDS(model.energyPlan,0)">{{model.energyPlanShow}}</span>
-                            <span class="DB_lispan5 AMT" :title="PDS(model.planRatio,2)" :class="model.planRatioShow != noData ? model.planRatioShow >= 100 ? 'redFont' : void 0 : void 0">
+                            <span class="DB_lispan5 AMT" :title="PDS(model.planRatio,3)" :class="model.planRatioShow != noData ? model.planRatioShow >= 100 ? 'redFont' : void 0 : void 0">
                                 {{model.planRatioShow}}
                                 <a v-show="model.planRatioShow != noData">%</a>
                             </span>
@@ -125,7 +125,7 @@
                     <div class="energyByDayChart_Lables">
                         <span></span>&nbsp;&nbsp;实际能耗&nbsp;&nbsp;单位&nbsp;:&nbsp;kWh
                     </div>
-                    <div class="DB_faker"></div>
+                    <!-- <div class="DB_faker"></div> -->
                 </div>
                 <div :style="{height:DgridHeight}" id="energyByDayChart"></div>
             </div>

@@ -11,23 +11,23 @@
   .more_box .content .item .tbody {
     height: 239px;
   }
-  .more_box .content .item{
-    height:320px;
+  .more_box .content .item {
+    height: 320px;
   }
-  .more_box .content .item .theader .buildname{
+  .more_box .content .item .theader .buildname {
     margin-left: 40px;
   }
-  .more_box .content .tbody .c_pro .real_energy{
+  .more_box .content .tbody .c_pro .real_energy {
     margin-left: 40px;
     width: calc(50% - 40px);
   }
-  .more_box .content .item .theader .title{
+  .more_box .content .item .theader .title {
     font-size: 16px;
   }
-  .more_box .content .item .theader .buildname{
+  .more_box .content .item .theader .buildname {
     font-size: 16px;
   }
-  .more_box .content .item .theader .report{
+  .more_box .content .item .theader .report {
     font-size: 18px;
   }
 }
@@ -45,23 +45,23 @@
   .more_box .content .item .tbody {
     height: 190px;
   }
-  .more_box .content .item{
-    height:272px;
+  .more_box .content .item {
+    height: 272px;
   }
-  .more_box .content .item .theader .buildname{
+  .more_box .content .item .theader .buildname {
     margin-left: 20px;
   }
-  .more_box .content .tbody .c_pro .real_energy{
+  .more_box .content .tbody .c_pro .real_energy {
     margin-left: 20px;
     width: calc(50% - 20px);
   }
-  .more_box .content .item .theader .title{
+  .more_box .content .item .theader .title {
     font-size: 14px;
   }
-  .more_box .content .item .theader .buildname{
+  .more_box .content .item .theader .buildname {
     font-size: 14px;
   }
-  .more_box .content .item .theader .report{
+  .more_box .content .item .theader .report {
     font-size: 14px;
   }
 }
@@ -186,7 +186,8 @@
 }
 
 .more_box .content .tbody .c_pro .number {
-  font-family: Arial-BoldMT;
+   /* font-family: Arial; */
+  font-weight: 600;
   font-weight: bold;
   margin-top: 10px;
   /* font-size: 36px; */
@@ -198,7 +199,7 @@
 }
 
 .more_box .content .tbody .c_pro .number .company {
-  font-family: MicrosoftYaHei;
+  /* font-family: Microsoft YaHei; */
   font-weight: 200;
   font-size: 12px;
   color: #6d6d6d;
@@ -225,7 +226,8 @@
 
 .more_box .content .item .theader .buildname {
   float: left;
-  font-family: MicrosoftYaHei-Bold;
+  /* font-family: Microsoft YaHei; */
+  font-weight: 600;
   /* font-size: 16px; */
   max-width: calc(50% - 40px - 34px - 14px);
   overflow: hidden;
@@ -242,7 +244,7 @@
   color: #ffffff;
   text-align: center;
   font-size: 12px;
-  font-family: MicrosoftYaHei;
+  /* font-family: Microsoft YaHei; */
   padding: 0 5px;
   margin-left: 0.5em;
 }
@@ -250,13 +252,15 @@
 .more_box .content .item .theader .report {
   font-family: perficon;
   float: right;
+  margin-right: 8px;
 }
 
 .more_box .content .item .theader .title {
   float: right;
   font-weight: bold;
   margin-right: 20px;
-  font-family: MicrosoftYaHei-Bold;
+  /* font-family: Microsoft YaHei; */
+  font-weight: 600;
   /* color: #FF7B7B; */
   /* font-size: 16px; */
   max-width: calc(50% - 20px);
@@ -448,13 +452,14 @@
   margin: 10px 0 0 8px;
   height: 30px;
   line-height: 30px;
-  font-family: MicrosoftYaHei;
+  /* font-family: Microsoft YaHei; */
   font-size: 14px;
   color: #637e99;
 }
 
 .more_box .sitemap .map_index .map_name {
-  font-family: MicrosoftYaHei-Bold;
+  /* font-family: Microsoft YaHei; */
+  font-weight: 600;
   font-size: 14px;
   color: #151515;
   font-weight: bold;

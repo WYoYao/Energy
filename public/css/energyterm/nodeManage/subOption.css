@@ -23,7 +23,7 @@
   color: #637e99;
   font-family: perficon;
   border: 1px solid #cacaca;
-  border-radius: 1px;
+  border-radius: 2px;
   cursor: pointer;
 }
 
@@ -32,13 +32,14 @@
   margin: 10px 0 0 8px;
   height: 30px;
   line-height: 30px;
-  font-family: MicrosoftYaHei;
+  /* font-family: Microsoft YaHei; */
   font-size: 14px;
   color: #637e99;
 }
 
 .sub_content .sitemap .map_index .map_name {
-  font-family: MicrosoftYaHei-Bold;
+  /* font-family: Microsoft YaHei; */
+  font-weight: 600;
   font-size: 14px;
   color: #151515;
   font-weight: bold;
@@ -60,8 +61,8 @@
 
 .sub_content .contenter {
   height: calc(100% - 50px);
-  margin: 0 0 0 20px;
-  padding: 0 20px 0 0;
+  margin: 0 0 0 0;
+  padding: 0 20px 0 20px;
   width: calc(100% - 43px);
   overflow: auto;
 }
@@ -85,7 +86,8 @@
   height: 60px;
   line-height: 60px;
   padding-left: 20px;
-  font-family: MicrosoftYaHei-Bold;
+  /* font-family: Microsoft YaHei; */
+  font-weight: 600;
   font-size: 16px;
   color: #333333;
   font-weight: bold;
@@ -101,7 +103,7 @@
   color: #ffffff;
   text-align: center;
   font-size: 12px;
-  font-family: MicrosoftYaHei;
+  /* font-family: Microsoft YaHei; */
   padding: 0 5px;
   font-weight: 500;
 }
@@ -116,7 +118,8 @@
 
 .sub_content .contenter .item .node {
   font-weight: bold;
-  font-family: MicrosoftYaHei-Bold;
+  /* font-family: Microsoft YaHei; */
+  font-weight: 600;
   font-size: 14px;
   color: #333333;
   margin-left: 8px;
@@ -200,6 +203,8 @@
   box-shadow: 0 2px 6px #888888;
   background: #ffffff;
   z-index: 6;
+  border-radius: 2px;
+  box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.12);
 }
 
 .alert .window .wboxer {
@@ -242,7 +247,7 @@
 
 .wboxer .wbody {
   line-height: 16px;
-  font-family: MicrosoftYaHei;
+  /* font-family: Microsoft YaHei; */
   font-size: 14px;
   color: #333333;
   margin-top: 6px;

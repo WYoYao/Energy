@@ -56,7 +56,7 @@
                                 <!-- <div class="title" @click="handler(plan_tree)" :class="{on:plan_tree.isplanNode}" :title="plan_tree.energyItemName"> -->
                                     <div class="title" :class="{on:plan_tree.isplanNode}" :title="plan_tree.energyItemName">
                                         <i :title="'该分项为建筑的预算管理节点'"></i>
-                                        <em style="width:80px;" v-text="plan_tree.energyItemName"></em>
+                                        <em style="width:80px; -webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none;" v-text="plan_tree.energyItemName"></em>
                                     
                                         <!-- <div class="icon" v-if="plan_tree.childs.length">
                                             {{'J'}}

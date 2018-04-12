@@ -1,312 +1,315 @@
-#DB{
+#DB {
+  width: 100%;
+  height: calc(100% - 1px);
+  border-top: 1px solid #d9e2e8;
+  background: #fff;
+  overflow: hidden;
+  position: relative;
+}
+.DB_left {
+  width: 280px;
+  height: 100%;
+  float: left;
+  overflow: hidden;
+  border-right: 1px solid #d9e2e8;
+}
+#DB > .right {
+  width: calc(100% - 281px);
+  height: 100%;
+  float: left;
+  position: relative;
+  overflow: hidden;
+}
+#DB > .right > .top {
+  width: 100%;
+  height: 145px;
+  border-bottom: 1px solid #d9e2e8;
+}
+.DB_right_bottom {
+  width: calc(100% + 20px);
+  height: calc(100% - 146px);
+  overflow: scroll;
+  overflow-x: hidden;
+}
+.DB_R_B_wrap {
+  width: calc(100% - 15px);
+  height: 100%;
+}
+@-moz-document url-prefix() {
+  .DB_R_B_wrap {
     width: 100%;
-    height: calc(100% - 1px);
-    border-top: 1px solid #D9E2E8;
-    background: #fff;
-    overflow: hidden;
-    position: relative;
+  }
 }
-.DB_left{
-    width: 280px;
-    height: 100%;
-    float: left;
-    overflow: hidden;
-    border-right: 1px solid #D9E2E8;
+.DB_itemenergy {
+  width: 100%;
+  height: auto;
 }
-#DB>.right{
-    width: calc(100% - 281px);
-    height: 100%;
-    float: left;
-    position: relative;
-    overflow: hidden;
+#energyByDayChart {
+  width: calc(100% - 30px);
+  padding: 0 15px 0;
 }
-#DB>.right>.top{
-    width: 100%;
-    height: 145px;
-    border-bottom: 1px solid #D9E2E8;
-}
-.DB_right_bottom{
-    width: calc(100% + 20px);
-    height: calc(100% - 146px);
-    overflow: scroll;
-    overflow-x: hidden;
-}
-.DB_R_B_wrap{
-    width: calc(100% - 15px);
-    height: 100%;
-}
-@-moz-document url-prefix(){
-    .DB_R_B_wrap{
-        width: 100%;
-    }
-}
-.DB_itemenergy{
-    width: 100%;
-    height: auto;
-}
-#energyByDayChart{
-    width: calc(100% - 30px);
-    padding: 0 15px 0;
+#energyByDayChart span {
+  background: #ffffff;
+  padding: 0 30px 9px 14px;
+  border-radius: 2px;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.12);
+  border: 1px solid #d9d9d9;
 }
 
-
-.DB_items_wrap{
-    width: 300px;
-    height: 100%;
-    overflow: scroll;
-    overflow-x: hidden;
+.DB_items_wrap {
+  width: 300px;
+  height: 100%;
+  overflow: scroll;
+  overflow-x: hidden;
 }
-.DB_items{
-    width: 280px;
-    height: 50px;
-    border-bottom: 1px solid #D9E2E8;
+.DB_items {
+  width: 280px;
+  height: 50px;
+  border-bottom: 1px solid #d9e2e8;
 }
-.DB_items:hover{
-    background: #02A9D1 !important;
-    color: white !important;
-    cursor: pointer;
+.DB_items:hover {
+  background: #02a9d1 !important;
+  color: white !important;
+  cursor: pointer;
 }
-.DB_items:hover span:nth-of-type(1)>i{
-    color: white !important; 
+.DB_items:hover span:nth-of-type(1) > i {
+  color: white !important;
 }
-.DB_items>span{
-    float: left;
-    height: 50px;
-    line-height: 50px;
-    display: block;
-    font-size: 14px;
+.DB_items > span {
+  float: left;
+  height: 50px;
+  line-height: 50px;
+  display: block;
+  font-size: 14px;
 }
-.DB_items>span:nth-of-type(1){
-    width: 42px;
+.DB_items > span:nth-of-type(1) {
+  width: 42px;
 }
-.DB_items>span:nth-of-type(1)>i{
-    color: #6D6D6D;
-    margin-left: 20px;
-    margin-right: 0;
-    font-size: 16px;
+.DB_items > span:nth-of-type(1) > i {
+  color: #6d6d6d;
+  margin-left: 20px;
+  margin-right: 0;
+  font-size: 16px;
 }
-.DB_items>span:nth-of-type(2){
-    width: 100px;
-    text-align: left;
-    overflow: hidden;
-    text-overflow:ellipsis;
-    margin-right: 6px;
-    word-wrap: break-word;
-    white-space: nowrap; 
+.DB_items > span:nth-of-type(2) {
+  width: 100px;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-right: 6px;
+  word-wrap: break-word;
+  white-space: nowrap;
 }
-.DB_items>span:nth-of-type(3){
-    width: 120px;
-    text-align: right;
-    overflow: hidden;
-    text-overflow:ellipsis;
-}
-
-
-#DB>.right>.top>div{
-    float: left;
-    height: 72px;
-    padding-top: 20px;
-}
-#DB>.right>.top>div>div{
-    line-height: 36px;
-    height: 36px;
-    width: 100%;
-}
-#DB .dayenergy{
-    width: 17.6%;
-    padding-left: 5%;
-}
-#DB .dayplan{
-    width: 17.8%;
-}
-#DB .daypercent{
-    width: 15.5%;
-}
-#DB .daytongbi{
-    width: 21.6%;
-}
-#DB .dayhuanbi{
-    width: 21.5%;
+.DB_items > span:nth-of-type(3) {
+  width: 120px;
+  text-align: right;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-#DB .text12{
-    font-size: 12px !important;
+#DB > .right > .top > div {
+  float: left;
+  height: 72px;
+  padding-top: 20px;
 }
-#DB .text14{
-    font-size: 14px !important;
+#DB > .right > .top > div > div {
+  line-height: 36px;
+  height: 36px;
+  width: 100%;
 }
-#DB .text16{
-    font-size: 16px !important;
+#DB .dayenergy {
+  width: 14.6%;
+  padding-left: 9%;
 }
-#DB .text24{
-    font-size: 24px !important;
+#DB .dayplan {
+  width: 13.8%;
 }
-#DB ._text14{
-    font-size: 14px !important;
-    line-height: 58px;
+#DB .daypercent {
+  width: 18.5%;
 }
-
-#DB .text124{
-    height: 24px !important;
-    margin-top: 12px;
-    line-height: 24px !important;
-    color: #333333;
+#DB .daytongbi {
+  width: 22.6%;
 }
-#DB .text118{
-    height: 18px !important;
-    margin-top: 12px;
-    line-height: 18px !important;
-}
-#DB .textfl{
-    float: left;
-    display: block;
+#DB .dayhuanbi {
+  width: 21.5%;
 }
 
-#DB>.right>.top .box1{
-    max-width: calc(100% - 45px);
+#DB .text12 {
+  font-size: 12px !important;
 }
-#DB>.right>.top .box2{
-    background: #F4F6F9;
-    margin-left: 3px;
-    padding: 0 5px 0;
-    max-width: calc(100% - 75px);
-    width:auto;
-    float: left;
-    height: 24px;
-    line-height: 24px;
-    margin-top: 12px;
-    font-size: 12px;
-    border-radius: 20px;
+#DB .text14 {
+  font-size: 14px !important;
 }
-#DB>.right>.top .box3{
-    width: auto;
+#DB .text16 {
+  font-size: 16px !important;
+}
+#DB .text24 {
+  font-size: 24px !important;
+  font-weight: 600;
+}
+#DB ._text14 {
+  font-size: 14px !important;
+  line-height: 58px;
 }
 
+#DB .text124 {
+  height: 24px !important;
+  margin-top: 12px;
+  line-height: 24px !important;
+  color: #333333;
+}
+#DB .text118 {
+  height: 18px !important;
+  margin-top: 12px;
+  line-height: 18px !important;
+}
+#DB .textfl {
+  float: left;
+  display: block;
+}
 
+#DB > .right > .top .box1 {
+  max-width: calc(100% - 45px);
+}
+#DB > .right > .top .box2 {
+  background: #f4f6f9;
+  margin-left: 3px;
+  padding: 0 5px 0;
+  max-width: calc(100% - 75px);
+  width: auto;
+  float: left;
+  height: 24px;
+  line-height: 24px;
+  margin-top: 12px;
+  font-size: 12px;
+  border-radius: 20px;
+}
+#DB > .right > .top .box3 {
+  width: auto;
+}
 
-
-
-
-
-.DB_itemenergy_head{
-    width: calc(100% - 40px);
-    height: 20px;
-    padding: 20px 20px 10px;
-    font-size: 16px;
-    line-height: 20px;
-    color: #000000;
-    position: relative;
+.DB_itemenergy_head {
+  width: calc(100% - 40px);
+  height: 20px;
+  padding: 20px 20px 10px;
+  font-size: 16px;
+  line-height: 20px;
+  color: #000000;
+  position: relative;
 }
-.DB_itemenergy_grid{
-    width: calc(100% - 40px);
-    padding: 0 20px 0;
-    height: auto;
+.DB_itemenergy_grid {
+  width: calc(100% - 40px);
+  padding: 0 20px 0;
+  height: auto;
 }
-.DB_itemenergy_grid span{
-    float: left;
-    display: block;
+.DB_itemenergy_grid span {
+  float: left;
+  display: block;
 }
-.DB_itemenergy_gridhead{
-    width: 100%;
-    height: 24px;
-    background: #F4F6F9;
-    line-height: 24px;
-    color: #000000;
-    display: block;
-    border-bottom: 1px solid #EEEEEE;
+.DB_itemenergy_gridhead {
+  width: 100%;
+  height: 24px;
+  background: #f4f6f9;
+  line-height: 24px;
+  color: #000000;
+  display: block;
+  border-bottom: 1px solid #eeeeee;
 }
-.DB_itemenergy_gridli{
-    width: 100%;
-    height: 60px;
-    border-bottom: 1px solid #EEEEEE;
-    line-height: 60px;
-    display: block;
+.DB_itemenergy_gridli {
+  width: 100%;
+  height: 60px;
+  border-bottom: 1px solid #eeeeee;
+  line-height: 60px;
+  display: block;
 }
-.DB_lhspan1,.DB_lispan1{
-    width: 10.5%;
-    text-align: left;
-    text-indent: 2em;
+.DB_lhspan1,
+.DB_lispan1 {
+  width: 10.5%;
+  text-align: left;
+  text-indent: 2em;
 }
-.DB_lhspan2,.DB_lispan2{
-    width: 20%;
-    text-align: right;
-    margin-right: 20px;
+.DB_lhspan2,
+.DB_lispan2 {
+  width: 20%;
+  text-align: right;
+  /* margin-right: 20px; */
 }
-.DB_lispan3{
-    width: 26%;
-    padding: 0 2% 0;
+.DB_lispan3 {
+  width: calc(28% - 10px);
+  padding: 0 2% 0 10px;
 }
-.DB_lispan3>div{
-    margin: 25px 0 25px;
-    height: 10px;
-    background: #02A9D1;
+.DB_lispan3 > div {
+  margin: 25px 0 25px;
+  height: 10px;
+  background: #02a9d1;
 }
-.DB_lhspan3{
-    width: 43%;
-    text-align: right;
+.DB_lhspan3 {
+  width: 43%;
+  text-align: right;
 }
-.DB_lispan4{
-    width: 13%;
-    text-align: right;
+.DB_lispan4 {
+  width: 13%;
+  text-align: right;
 }
-.DB_lhspan4,.DB_lispan5{
-    width: calc(22.5% - 20px);
-    text-align: right;
+.DB_lhspan4,
+.DB_lispan5 {
+  width: calc(22.5% - 20px);
+  text-align: right;
 }
 /* .DB_lhspan5{
     width: 4%;
 } */
-.DB_itemenergy_gridli>span{
-    height: 100%;
-    display: block;
-    float: left;
+.DB_itemenergy_gridli > span {
+  height: 100%;
+  display: block;
+  float: left;
 }
 
+.energyByDayChart_Lables {
+  position: absolute;
+  right: 25px;
+  top: 37px;
+  height: 12px;
+  line-height: 12px;
+  font-size: 12px;
+  color: #6d6d6d;
+}
+.energyByDayChart_Lables > span {
+  background: #02a9d1;
+  width: 12px;
+  height: 12px;
+  float: left;
+  display: block;
+}
+.DB_items_clicked {
+  background: #02a9d1;
+  color: white !important;
+}
 
-.energyByDayChart_Lables{
-    position: absolute;
-    right: 25px;
-    top: 37px;
-    height: 12px;
-    line-height: 12px;
-    font-size: 12px;
-    color: #6D6D6D;
+.ABM {
+   /* font-family: Arial; */
+  font-weight: 600;
 }
-.energyByDayChart_Lables>span{
-    background: #02A9D1;
-    width: 12px;
-    height: 12px;
-    float: left;
-    display: block;
+.AMT {
+   /* font-family: Arial; */
 }
-.DB_items_clicked{
-    background: #02A9D1;
-    color: white !important;
+.MSYB {
+  /* font-family: Microsoft YaHei; */
+  font-weight: 600;
 }
-
-
-.ABM{
-    font-family: Arial-BoldMT;
+.PFR {
+  /* font-family: Microsoft YaHei; */
 }
-.AMT{
-    font-family: ArialMT;
+.text_150 {
+  margin-left: -5px;
+  color: #f87c7c !important;
 }
-.MSYB{
-    font-family : MicrosoftYaHei-Bold;
-}
-.PFR{
-    font-family : PingFangSC-Regular;
-}
-.text_150{
-    margin-left: -5px;
-    color: #F87C7C !important;
-}
-.DB_faker{
-    width: calc(100% - 90px);
-    height: 0px;
-    border-bottom: 1px solid #EEEEEE;
-    position: absolute;
-    top: 59px;
-    right: 30px;
-    z-index: 2;
+.DB_faker {
+  width: calc(100% - 90px);
+  height: 0px;
+  border-bottom: 1px solid #eeeeee;
+  position: absolute;
+  top: 59px;
+  right: 30px;
+  z-index: 2;
 }

@@ -68,7 +68,7 @@
 
                     <!-- 文字显示 Start  -->
                     <div class="numtitle">
-                        <div class="itemer">
+                        <div style="width:14%;" class="itemer">
                             <div class="box">日能耗</div>
                             <div class="box">
                                 <div class="blacknumber" v-if="_.isNumber(DayEnergyDataInfo.energyData)">
@@ -82,7 +82,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="itemer1">
+                        <div style="width:14%;" class="itemer1">
                             <div class="box">日计划</div>
                             <div class="box">
                                 <div class="blacknumber" v-if="_.isNumber(DayEnergyDataInfo.energyPlan)">
@@ -96,7 +96,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="itemer1">
+                        <div style="width:14%;" class="itemer1">
                             <div class="box">日能耗占计划比</div>
                             <div class="box">
                                 <div class="blacknumber" v-if="_.isNumber(DayEnergyDataInfo.energyData) && _.isNumber(DayEnergyDataInfo.energyPlan)">
@@ -110,24 +110,28 @@
                                 </div>
                             </div>
                         </div>
-                        <div style="width:23%" class="itemer2">
+                        <div style="width:28%" class="itemer2">
                             <div class="box">
 
                                 <div class="font">
                                     同比
                                 </div>
 
-                                <div class="text">
-                                    同比能耗
-                                </div>
+                                <span class="round">
 
-                                <div class="number" v-if="_.isNumber(DayEnergyDataInfo.sameRatioData)">
-                                    {{DayEnergyDataInfo.sameRatioData | v3 | toThousands}} kWh
-                                </div>
+                                    <div class="text">
+                                        同比能耗
+                                    </div>
 
-                                <div class="number" v-if="!_.isNumber(DayEnergyDataInfo.sameRatioData)">
-                                    --
-                                </div>
+                                    <div class="number" v-if="_.isNumber(DayEnergyDataInfo.sameRatioData)">
+                                        {{DayEnergyDataInfo.sameRatioData | v3 | toThousands}} kWh
+                                    </div>
+
+                                    <div class="number" v-if="!_.isNumber(DayEnergyDataInfo.sameRatioData)">
+                                        --
+                                    </div>
+
+                                </span>
 
                             </div>
                             <div class="box">
@@ -140,24 +144,28 @@
                                 </div>
                             </div>
                         </div>
-                        <div style="width:23%" class="itemer3">
+                        <div style="width:28%" class="itemer3">
                             <div class="box">
 
                                 <div class="font">
                                     环比
                                 </div>
 
-                                <div class="text">
-                                    环比能耗
-                                </div>
+                                <span class="round">
 
-                                <div class="number" v-if="_.isNumber(DayEnergyDataInfo.circleRatioData)">
-                                    {{DayEnergyDataInfo.circleRatioData | v3 | toThousands}} kWh
-                                </div>
+                                    <div class="text">
+                                        环比能耗
+                                    </div>
 
-                                <div class="number" v-if="!_.isNumber(DayEnergyDataInfo.circleRatioData)">
-                                    --
-                                </div>
+                                    <div class="number" v-if="_.isNumber(DayEnergyDataInfo.circleRatioData)">
+                                        {{DayEnergyDataInfo.circleRatioData | v3 | toThousands}} kWh
+                                    </div>
+
+                                    <div class="number" v-if="!_.isNumber(DayEnergyDataInfo.circleRatioData)">
+                                        --
+                                    </div>
+
+                                </span>
 
                             </div>
                             <div class="box">
@@ -209,7 +217,7 @@
             <div class="tip">
                 能耗预算管理
             </div>
-            <div class="describe">
+            <div class="describe file">
                 附件1：逐时能耗详情
             </div>
             <div class="ttble">

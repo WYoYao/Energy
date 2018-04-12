@@ -19,14 +19,33 @@ function v3(num) {
 }
 
 // 最底层文档触发点击事件
-function bodyClick() {
-  // 兼容IE
-  $("body").trigger("click");
-
+function bodyClick(event) {
   // var fireOnThis = document.querySelector("body");
   // var evObj = document.createEvent("MouseEvents");
   // evObj.initMouseEvent("click");
   // fireOnThis.dispatchEvent(evObj);
+
+
+
+
+  if (event) {
+    var el = event.srcElement ? event.srcElement : event.target;
+    $(el).addClass("NowSelthisEl");
+
+    var elList = $("._combobox_bottom");
+
+    for (var i = 0; i < elList.length; i++) {
+      var elWrap = $(elList[i]).parents(".clickMark");
+      var len = $(elWrap).find(".NowSelthisEl").length;
+      len != 0 ? void 0 : $(elList[i]).css("display", "none");
+    }
+
+    $(el).removeClass("NowSelthisEl");
+  } else {
+    // 兼容IE,页面发生一次点击事件
+    $("body").trigger("click");
+  }
+  // $("body").trigger("click");
 }
 
 function FON(data) {
@@ -55,7 +74,16 @@ function RD(num) {
 // 将数据转换为带单位数据
 // 0预算及计划数据   1实际数据    2百分比数据   3未乘100的百分比数据
 function PDS(data, type) {
-  var _data = data == null? "--": type == 0? toThousands(BD(data)) + "kWh": type == 1 ? toThousands(v3(data)) + "kWh": type == 2 ? toThousands(v3(data)) + "%" : toThousands(v3(data*100)) + "%" ;
+  var _data =
+    data == null
+      ? "--"
+      : type == 0
+        ? toThousands(BD(data)) + " kWh"
+        : type == 1
+          ? toThousands(v3(data)) + " kWh"
+          : type == 2
+            ? toThousands(v3(data)) + "%"
+            : toThousands(v3(data * 100)) + "%";
   return _data;
 }
 
@@ -76,9 +104,9 @@ function toThousands(num) {
 }
 
 var chartControl = function() {
-  (this.options = {
+  this.options = {
     chart: {
-      zoomType: "None"
+      zoomType: "None",
     },
     title: {
       //标题
@@ -86,7 +114,12 @@ var chartControl = function() {
     },
     xAxis: {
       categories: [],
-      visible: true
+      visible: true,
+      labels:{
+        style:{
+          "fontFamily":"Arial"
+        }
+      }
     },
     plotOptions: {
       column: {
@@ -100,26 +133,35 @@ var chartControl = function() {
         },
         gridLineWidth: 1,
         gridLineDashStyle: "Dash",
-        gridLineColor: "#EEEEEE"
+        gridLineColor: "#EEEEEE",
+        labels:{
+          style:{
+            "fontFamily":"Arial"
+          }
+        }
       }
     ],
     legend: {
       enabled: false
     },
     tooltip: {
+
+
+      enabled: true,
+      hideDelay: 0,
+      borderColor: null,
+      borderWidth: 0,
+      shadow: false,
+      backgroundColor: null,
       shared: true,
-      backgroundColor: "#ffffff", // 背景颜色
-      borderColor: "#ffffff", // 边框颜色
-      borderRadius: 10, // 边框圆角
-      borderWidth: 1, // 边框宽度
-      shadow: true, // 是否显示阴影
+      borderRadius: 2, // 边框圆角
       animation: true, // 是否启用动画效果
       useHTML: true,
       style: {
         // 文字内容相关样式
         fontSize: "14px",
         lineHeight: "28px",
-        fontFamily: "MicrosoftYaHei",
+        fontFamily: "Microsoft YaHei",
         zIndex: 10,
         color: "#151515"
       }
@@ -130,9 +172,6 @@ var chartControl = function() {
         grouping: true,
         shadow: false,
         borderWidth: 0
-      },
-      series: {
-        animation: false
       }
     },
     series: [],
@@ -148,90 +187,90 @@ var chartControl = function() {
     exporting: {
       enabled: false
     }
-  }),
-    (this.circleOptions = {
-      chart: {
-        type: "solidgauge",
-        marginTop: 0
+  };
+  this.circleOptions = {
+    chart: {
+      type: "solidgauge",
+      marginTop: 0
+    },
+    credits: {
+      enabled: false
+    },
+    title: {
+      text: ""
+    },
+    // 中间文字
+    tooltip: {
+      enabled: false
+    },
+    pane: {
+      startAngle: -103,
+      endAngle: 103,
+      size: 150,
+      background: [
+        {
+          // Track for Move
+          outerRadius: "105%",
+          innerRadius: "86%",
+          backgroundColor: "#fff",
+          borderWidth: 0,
+          shape: "arc"
+        }
+      ]
+    },
+    yAxis: {
+      min: 0,
+      max: 1,
+      lineWidth: 0,
+      tickPositions: []
+    },
+    plotOptions: {
+      solidgauge: {
+        borderWidth: "12px",
+        dataLabels: {
+          enabled: false
+        },
+        linecap: "round",
+        stickyTracking: false
       },
-      credits: {
-        enabled: false
-      },
-      title: {
-        text: ""
-      },
-      // 中间文字
-      tooltip: {
-        enabled: false
-      },
-      pane: {
-        startAngle: -103,
-        endAngle: 103,
-        size: 150,
-        background: [
+      series: {
+        animation: false
+      }
+    },
+    series: [
+      {
+        name: "background",
+        borderColor: "#DBE6EA",
+        data: [
           {
-            // Track for Move
-            outerRadius: "105%",
-            innerRadius: "86%",
-            backgroundColor: "#fff",
-            borderWidth: 0,
-            shape: "arc"
+            radius: "100%",
+            innerRadius: "100%",
+            y: 1
           }
         ]
       },
-      yAxis: {
-        min: 0,
-        max: 1,
-        lineWidth: 0,
-        tickPositions: []
+      {
+        name: "data",
+        borderColor: "#DBE6EA",
+        data: [
+          {
+            radius: "100%",
+            innerRadius: "100%"
+          }
+        ]
       },
-      plotOptions: {
-        solidgauge: {
-          borderWidth: "12px",
-          dataLabels: {
-            enabled: false
-          },
-          linecap: "round",
-          stickyTracking: false
-        },
-        series: {
-          animation: false
-        }
-      },
-      series: [
-        {
-          name: "background",
-          borderColor: "#DBE6EA",
-          data: [
-            {
-              radius: "100%",
-              innerRadius: "100%",
-              y: 1
-            }
-          ]
-        },
-        {
-          name: "data",
-          borderColor: "#DBE6EA",
-          data: [
-            {
-              radius: "100%",
-              innerRadius: "100%"
-            }
-          ]
-        },
-        {
-          name: "shadow",
-          borderColor: "#DBE6EA",
-          data: [
-            {
-              radius: "101%",
-              innerRadius: "99%"
-            }
-          ]
-        }
-      ]
-    });
+      {
+        name: "shadow",
+        borderColor: "#DBE6EA",
+        data: [
+          {
+            radius: "101%",
+            innerRadius: "99%"
+          }
+        ]
+      }
+    ]
+  };
   this.chart = null;
   this.circleChart = null;
 };
@@ -259,10 +298,18 @@ chartControl.prototype.update = function(id, data) {
     ]
   });
 };
+chartControl.prototype.dataFill = function(id, data) {
+  this.options.series.forEach(function(item) {
+    item.id == id ? (item.data = data) : void 0;
+  });
+};
 chartControl.prototype.xAxisUpdate = function(data) {
   this.chart.xAxis[0].update({
     categories: data
   });
+};
+chartControl.prototype.xAxisFill = function(data) {
+  this.options.xAxis.categories = data;
 };
 chartControl.prototype.circleDraw = function(r, type) {
   if (type) {
@@ -375,9 +422,23 @@ function getTodayTime() {
   return getToday().getTime();
 }
 
-
 function cantSelectFutureDay(date, el) {
   el = window.document.getElementById(el);
-  var _el = $(el).find(".per-squarebutton-grayBorder").eq(1);
-  date >= getTodayTime() ? _el.attr("pdisabled", "true") : _el.attr("pdisabled", "false");
+  var _el = $(el)
+    .find(".per-squarebutton-grayBorder")
+    .eq(1);
+  date >= getTodayTime()
+    ? _el.attr("pdisabled", "true")
+    : _el.attr("pdisabled", "false");
+}
+
+
+function giveChartTopLine(el){
+  el = document.getElementById(el);
+  var _el = $(el).find(".highcharts-yaxis-grid");
+  var y;
+  for(var i=0;i<_el.length;i++){
+    $(_el[i]).find("path").length > 0 ? y = _el[i] : void 0;
+  }
+  $(y).find('path:last').attr("stroke-dasharray","");
 }

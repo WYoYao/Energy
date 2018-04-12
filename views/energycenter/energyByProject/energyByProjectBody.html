@@ -128,7 +128,7 @@
                             <img src="/images/energycenter/energybyproject/point.png">
                         </div>
                     </div>
-                    <div class="PB_number ABM" :class="PprojectInfo.energyOccupyPlanRatio>1 ? 'redFont' : 'greenFont'">{{PDS(PprojectInfo.energyOccupyPlanRatio,3)}}</div>
+                    <div class="PB_number ABM" :class="PprojectInfo.energyOccupyPlanRatio>1 ? 'redFont' : 'bluePerFont'">{{PDS(PprojectInfo.energyOccupyPlanRatio,3)}}</div>
                 </div>
                 <div class="PB_LM_text" v-if="PprojectSomeInfo.ifHasPlan">月累计能耗占当前总计划比</div>
                 <div class="PB_LM_button" v-if="PBaseMessage.NowModel == 'term' && (PBaseMessage.timeFrom == getThisMonth().format('yyyy-M-d h:m:s'))"
@@ -189,7 +189,7 @@
 
     <div class="PB_right">
         <div class="PB_chart_wrap" @mouseleave="chartLeave(PChartHoverNum)">
-            <div class="PB_fakerscale"></div>
+            <!-- <div class="PB_fakerscale"></div> -->
             <div class="PB_chart_title">
                 <span>逐日能耗统计与计划&nbsp;&nbsp;</span>
                 <span @click.stop="PproToDayEnergy">查看日能耗详情 ></span>

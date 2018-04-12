@@ -345,6 +345,7 @@
   float: right;
   display: none;
   cursor: pointer;
+  overflow: hidden;
 }
 
 .energyPlanWrap .itemPlan .tableLine:hover .showChart {

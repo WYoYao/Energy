@@ -167,10 +167,11 @@ v.pushComponent({
         planGridData: {},
         onPage: "lookplan",
         Planlast: 0,
-        witdthNeed: "100%",
-        witdthNeedWrap: "100%",
         projectName: "",
-        projectTime: ""
+        projectTime: "",
+        wrapWidth:"100%",
+        elWidth:"139px",
+        elNBWidth:"140px"
     },
     methods: {
         InitPage: function () {
@@ -186,22 +187,15 @@ v.pushComponent({
                 data = JSON.parse(JSON.stringify(data));
                 data.items.forEach(function(item){
                     item.data.forEach(function(model,index){
-                        // item.data[index] = Math.toFixed({value:model,fixNum:1});
                         item.data[index] = BD(model);
                     })
                 })
                 data.sumdata.forEach(function(item,index){
-                    // data.sumdata[index] = Math.toFixed({value:item,fixNum:1});
                     data.sumdata[index] = BD(item);
                 })
                 _this.planGridData = data;
                 _this.Planlast = data.time.length;
-                _this.$nextTick(function () {
-                    var widthHas = $("#lookPlan_grid").width();
-                    var witdthNeed = (data.items.length + 1)*141 + 52;
-                    _this.witdthNeed = witdthNeed + "px";
-                    _this.witdthNeedWrap = witdthNeed + 20 + "px"
-                })
+                _this.widthComputed();
             })
         },
         ceil: function (value) {
@@ -217,6 +211,19 @@ v.pushComponent({
             planController.getProjectDataByDay(paramObj).then(function(data){
                 pajax.download(data)
             })
+        },
+        widthComputed : function(){
+            var items = this.planGridData.items.length + 1;
+            var windowWidth = $('#grid .box')[0].clientWidth;
+            if((items*140 + 50) > windowWidth){
+                this.elWidth = "139px";
+                this.elNBWidth = "140px";
+                this.wrapWidth = items*140 + 50 + 1 + 'px';
+            }else{
+                this.elWidth = (windowWidth - 50)/items - 1 + "px";
+                this.elNBWidth = (windowWidth - 50)/items + "px";
+                this.wrapWidth = "100%";
+            }
         }
     },
     beforeMount: function () {
@@ -229,7 +236,7 @@ function TC(date){
 }  
 //get BudgetData and PlanData
 function BD(data){
-    return Math.floor(data);
+    return data == null ? '--' : Math.floor(data);
 }
 $(function () {
     v.createVue();

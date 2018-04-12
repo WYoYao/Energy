@@ -9,7 +9,7 @@
     <div class="header" v-show="onBlock!='detail'&&(onBlock=='list' ? Ploading == 0 ? true : false : true)">
 
         <!-- 建筑选择Start -->
-        <div class="build_select" v-show="Buildings.length>1" @click.capture="bodyClick()">
+        <div class="build_select clickMark" v-show="Buildings.length>1" @click.capture="bodyClick(event)">
             <pcombobox-normal id="'build_select'" sel='handler_build_select' bind="true">
                 <header placeholder="建筑：全部"></header>
                 <item datasource="BuildingsCed" text="buildingName"></item>
@@ -18,14 +18,14 @@
         <!-- 建筑选择End -->
 
         <!-- 基础设置Start -->
-        <div class="build_sett" @click.capture="bodyClick()">
+        <div class="build_sett clickMark" @click.capture="bodyClick(event)">
             <pcombobox-normal style="width:143px;" id="'build_setting'" sel="build_select_sel" bind="true">
                 <header placeholder="基础设置"></header>
                 <item datasource="[{name:'预警、报警设置',index:0},{name:'管理分项节点',index:1}]" text="name"></item>
             </pcombobox-normal>
         </div>
         <!-- 基础设置End -->
-
+ 
         <!-- 预算管理Start -->
         <div class="build_pre" @click.capture="v.initPage('budget_manage',v.instance.currentBuild.buildingId)">
             <pbutton-white text="预算管理" icon="G"></pbutton-white>
@@ -39,7 +39,7 @@
         <!-- 预算管理End -->
 
         <!-- 日历选择Start -->
-        <div class="build_date">
+        <div class="build_date clickMark" @click.capture="bodyClick(event)">
             <ptime-calendar id="divCalendar" orientation="down" sel="handler_date_select">
                 <panel iscommontime="false" timetype="M" align="right" double="false"></panel>
             </ptime-calendar>

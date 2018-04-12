@@ -15,15 +15,18 @@ v.pushComponent({
     },
     hover: false,
     //  卡片直接设置预算管理
-    isSettingbudget: ""
+    isSettingbudget: "",
+    // 是否首页跳转分项数
+    isIndexGoF: false
   },
   methods: {
     //根据SELECTED 值来返回对应的背景颜色
     getBlueColor: function(SELECTED) {
+      // 传入的值为字符串的时候
       return {
         background:
           "rgba(2, 169, 209, " +
-          [0.4, 0.55, 0.7, 0.85, 1][SELECTED] +
+          [0, 0.4, 0.55, 0.7, 0.85, 1][SELECTED] +
           ") !important"
       };
     },

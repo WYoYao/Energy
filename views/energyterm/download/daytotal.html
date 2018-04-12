@@ -51,7 +51,7 @@
 <body>
 
     <div id="monthtotal" class="monthtotal">
-        <div id="part1" class="part" v-for="(mo,th) in  createSkip(97, 62, 1845, 200)(sort(DayEnergyDataInfo.items))">
+        <div id="part1" class="part" v-for="(mo,th) in  createSkip(97, 62, 1380, 250)(sort(DayEnergyDataInfo.items))">
 
             <template v-if="th==0">
 
@@ -118,17 +118,22 @@
                                         同比
                                     </div>
 
-                                    <div class="text">
-                                        同比能耗
-                                    </div>
 
-                                    <div class="number" v-if="_.isNumber(DayEnergyDataInfo.sameRatioData)">
-                                        {{DayEnergyDataInfo.sameRatioData | v3 | toThousands}} kWh
-                                    </div>
+                                    <span class="round">
 
-                                    <div class="number" v-if="!_.isNumber(DayEnergyDataInfo.sameRatioData)">
-                                        --
-                                    </div>
+                                        <div class="text">
+                                            同比能耗
+                                        </div>
+
+                                        <div class="number" v-if="_.isNumber(DayEnergyDataInfo.sameRatioData)">
+                                            {{DayEnergyDataInfo.sameRatioData | v3 | toThousands}} kWh
+                                        </div>
+
+                                        <div class="number" v-if="!_.isNumber(DayEnergyDataInfo.sameRatioData)">
+                                            --
+                                        </div>
+
+                                    </span>
                                 </div>
                                 <div class="box">
                                     <div class="block_proportion" v-if="_.isNumber(DayEnergyDataInfo.sameRatio)" :class="{red:DayEnergyDataInfo.sameRatio>0,green:DayEnergyDataInfo.sameRatio<0}">
@@ -147,17 +152,21 @@
                                         环比
                                     </div>
 
-                                    <div class="text">
-                                        环比能耗
-                                    </div>
+                                    <span class="round">
 
-                                    <div class="number" v-if="_.isNumber(DayEnergyDataInfo.circleRatioData)">
-                                        {{DayEnergyDataInfo.circleRatioData | v3 | toThousands}} kWh
-                                    </div>
+                                        <div class="text">
+                                            环比能耗
+                                        </div>
 
-                                    <div class="number" v-if="!_.isNumber(DayEnergyDataInfo.circleRatioData)">
-                                        --
-                                    </div>
+                                        <div class="number" v-if="_.isNumber(DayEnergyDataInfo.circleRatioData)">
+                                            {{DayEnergyDataInfo.circleRatioData | v3 | toThousands}} kWh
+                                        </div>
+
+                                        <div class="number" v-if="!_.isNumber(DayEnergyDataInfo.circleRatioData)">
+                                            --
+                                        </div>
+
+                                    </span>
 
                                 </div>
                                 <div class="box">
@@ -178,66 +187,70 @@
 
             </template>
 
-            <div class="item budget" v-if="_.isArray(mo)">
-                <div class="describe">
-                    分项能耗统计
-                </div>
+            <div class="budgetSP">
 
-                <div class="contenter">
-
-                    <!-- 表头信息 Start -->
-                    <div class="chart_title">
-                        <a href="#part2" v-if="_.isArray(mo)">分项能耗与计划详情见附件1></a>
+                <div class="item" v-if="_.isArray(mo)">
+                    <div class="describe">
+                        分项能耗统计
                     </div>
-                    <!-- 表头信息 End -->
 
-                    <!-- 表部分内容 Start  -->
-                    <div class="chart_table">
-                        <div class="head">
-                            <div class="hitem">分项</div>
-                            <div class="hitem">实际能耗</div>
-                            <div class="hitem">日计划</div>
-                            <div class="hitem">实际能耗占计划比</div>
+                    <div class="contenter">
+
+                        <!-- 表头信息 Start -->
+                        <div class="chart_title">
+                            <a href="#part2" v-if="_.isArray(mo)">分项能耗与计划详情见附件1></a>
                         </div>
+                        <!-- 表头信息 End -->
 
-                        <div class="body">
+                        <!-- 表部分内容 Start  -->
+                        <div class="chart_table">
+                            <div class="head">
+                                <div class="hitem">分项</div>
+                                <div class="hitem">实际能耗</div>
+                                <div class="hitem">日计划</div>
+                                <div class="hitem">实际能耗占计划比</div>
+                            </div>
 
-                            <div v-for="(item,index) in mo" class="hrow">
-                                <div class="hitem" v-text="item.energyItemName">
+                            <div class="body">
 
-                                </div>
+                                <div v-for="(item,index) in mo" class="hrow">
+                                    <div class="hitem" v-text="item.energyItemName">
 
-                                <div class="hitem" v-if="_.isNumber(item.energyData)">
-                                    {{item.energyData | v3 | toThousands}}　kWh
-                                    <div v-if="item.energyData" class="progress" :style="width(item)"></div>
-                                </div>
-                                <div class="hitem" v-if="!_.isNumber(item.energyData)">
-                                    --
-                                </div>
+                                    </div>
 
-
-                                <div class="hitem" v-if="_.isNumber(item.energyPlan)">
-                                    {{item.energyPlan | floor | toThousands}}　kWh
-                                </div>
-
-                                <div class="hitem" v-if="!_.isNumber(item.energyPlan)">
-                                    --
-                                </div>
+                                    <div class="hitem" v-if="_.isNumber(item.energyData)">
+                                        {{item.energyData | v3 | toThousands}}kWh
+                                        <div v-if="item.energyData" class="progress" :style="width(item)"></div>
+                                    </div>
+                                    <div class="hitem" v-if="!_.isNumber(item.energyData)">
+                                        --
+                                    </div>
 
 
-                                <div class="hitem" v-if="_.isNumber(item.planRatio)" :class="item.planRatio >= 1 ? 'red' : void 0">
-                                    {{item.planRatio | x100 | v3}}%
-                                </div>
-                                <div class="hitem" v-if="!_.isNumber(item.planRatio)">
-                                    --
+                                    <div class="hitem" v-if="_.isNumber(item.energyPlan)">
+                                        {{item.energyPlan | floor | toThousands}}kWh
+                                    </div>
+
+                                    <div class="hitem" v-if="!_.isNumber(item.energyPlan)">
+                                        --
+                                    </div>
+
+
+                                    <div class="hitem" v-if="_.isNumber(item.planRatio)" :class="item.planRatio >= 1 ? 'red' : void 0">
+                                        {{item.planRatio | x100 | v3}}%
+                                    </div>
+                                    <div class="hitem" v-if="!_.isNumber(item.planRatio)">
+                                        --
+                                    </div>
+
                                 </div>
 
                             </div>
-
                         </div>
-                    </div>
-                    <!-- 表部分内容 End    -->
+                        <!-- 表部分内容 End    -->
 
+
+                    </div>
 
                 </div>
 
@@ -246,42 +259,45 @@
         </div>
 
         <div id="part1" class="part">
-            <div class="item budget">
-                <div class="describe">
-                    逐时能耗统计
-                </div>
 
-                <div class="contenter">
-                    <!-- 表头信息 Start -->
-                    <div class="chart_title">
-                        <a href="#part3">逐时能耗详情见附件2></a>
+            <div class="budgetSP">
+                <div class="item">
+                    <div class="describe">
+                        逐时能耗统计
+                    </div>
 
-                        <div class="font">单位：kWh</div>
-                        <div class="font">实际能耗</div>
-                        <div class="blockicon energy_block"></div>
+                    <div class="contenter">
+                        <!-- 表头信息 Start -->
+                        <div class="chart_title">
+                            <a href="#part3">逐时能耗详情见附件2></a>
+
+                            <div class="font">单位：kWh</div>
+                            <div class="font">实际能耗</div>
+                            <div class="blockicon energy_block"></div>
+
+                        </div>
+                        <!-- 表头信息 End -->
+
+                        <!--  柱状图 Start -->
+                        <div id="tio" class="chart_chart">
+
+                        </div>
+                        <!--  柱状图 End -->
 
                     </div>
-                    <!-- 表头信息 End -->
-
-                    <!--  柱状图 Start -->
-                    <div id="tio" class="chart_chart">
-
-                    </div>
-                    <!--  柱状图 End -->
 
                 </div>
-
             </div>
         </div>
 
 
-        <template v-for="(mo,th) in  createSkip(80, 30, 1845, 0)(sort(DayEnergyDataInfo.items))">
+        <template v-for="(mo,th) in  createSkip(80, 30, 1380, 0)(sort(DayEnergyDataInfo.items))">
 
             <div id="part2" class="part" v-if="_.isArray(mo)">
                 <div class="tip">
                     能耗预算管理
                 </div>
-                <div class="describe">
+                <div class="describe file">
                     附件1：分项能耗与计划详情
                 </div>
                 <div class="ttble">
@@ -293,7 +309,7 @@
                     </div>
 
                     <div v-for="(item,index) in mo" class="tr">
-                        <div class="bitems" v-text="item.energyItemName"></div>
+                        <div class="bitems word" v-text="item.energyItemName"></div>
                         <div class="bitems" v-if="_.isNumber(item.energyData)">{{item.energyData | v3 | toThousands}}</div>
                         <div class="bitems" v-if="!_.isNumber(item.energyData)">--</div>
 
@@ -313,7 +329,7 @@
             <div class="tip">
                 能耗预算管理
             </div>
-            <div class="describe">
+            <div class="describe file">
                 附件2：逐时能耗详情
             </div>
             <div class="ttble">
@@ -327,10 +343,10 @@
 
                 <div class="tr" v-for="item in DayEnergyDataInfo.hourData">
                     <div class="bitems" style="width:50%">{{new Date(item.time).format('hh:mm')}}</div>
-                    
+
                     <div class="bitems" style="width:50%" v-if="_.isNumber(item.energyData)">{{item.energyData | v3}}</div>
                     <div class="bitems" style="width:50%" v-if="!_.isNumber(item.energyData)">--</div>
-                   
+
                 </div>
 
             </div>

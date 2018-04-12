@@ -1,5 +1,4 @@
 $(function() {
-
   /**
    * 依次执行多个会返回Promise的方法,并行执行
    * @param {一个数组 数组里面每一项都是一个方法,每个方法可以返回一个Promise 对象 } arr
@@ -144,7 +143,8 @@ $(function() {
                   chart: {
                     type: "column",
                     zoomType: "xy",
-                    plotBackgroundColor: "#F8F8F8"
+                    plotBackgroundColor: "#ffffff",
+                    backgroundColor: "#ffffff"
                   },
                   title: {
                     text: ""
@@ -155,12 +155,13 @@ $(function() {
                     ) {
                       return new Date(item.time).format("hh:mm");
                     }),
-                    visible: true
+                    visible: true,
+                    tickWidth: 0
                   },
                   yAxis: [
                     {
                       title: { text: "" },
-                      gridLineWidth: 0,
+                      gridLineWidth: 1,
                       gridLineDashStyle: "Dash"
                     },
                     {
@@ -239,7 +240,7 @@ $(function() {
         return window.location.origin + path;
       },
       width: function(item) {
-        return { width: item.width + "px" };
+        return { width: item.width/1.5 + "px" };
       }
     },
     computed: {
@@ -284,6 +285,9 @@ $(function() {
 
   app.init().then(function() {
     setTimeout(function() {
+      // 修改时候注释的 20180328 leo
+      // return;
+      giveChartTopLine("tio");
       var arr = createHtml("#monthtotal");
 
       pajax.post({
@@ -298,7 +302,7 @@ $(function() {
             app.eDate.m +
             "月" +
             app.eDate.d +
-            "日总耗分析报告" //类型：String  必有字段  备注：pdf文件名
+            "日能耗分析报告" //类型：String  必有字段  备注：pdf文件名
         },
         success: function(res) {
           pajax.download(res[0]);

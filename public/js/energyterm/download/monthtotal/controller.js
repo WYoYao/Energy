@@ -79,6 +79,9 @@ var monthtotal_controller = {
         url: "/FNCT_GetEnergyDataForDayAndItem",
         data: argu,
         success: function(res) {
+
+          //res[0].day = res[0].day.concat(JSON.parse(JSON.stringify(res[0].day)))
+
           // res[0].day = res[0].day.map(function(item) {
           //   // 计划数向下取整
           //   item.planData = floor(item.planData);
@@ -88,6 +91,7 @@ var monthtotal_controller = {
           //   return item;
           // });
 
+          //res[0].items = res[0].items.concat(JSON.parse(JSON.stringify(res[0].items)))
           // res[0].items = res[0].items.map(function(item) {
           //   item.planRatio = v3(item.planRatio);
           //   item.energyData = v3(item.energyData);

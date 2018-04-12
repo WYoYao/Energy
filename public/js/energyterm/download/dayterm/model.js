@@ -86,7 +86,8 @@ $(function() {
                   chart: {
                     type: "column",
                     zoomType: "xy",
-                    plotBackgroundColor: "#F8F8F8"
+                    plotBackgroundColor: "#ffffff",
+                    backgroundColor: "#ffffff"
                   },
                   title: {
                     text: ""
@@ -97,12 +98,13 @@ $(function() {
                     ) {
                       return new Date(item.time).format("hh:mm");
                     }),
-                    visible: true
+                    visible: true,
+                    tickWidth: 0
                   },
                   yAxis: [
                     {
                       title: { text: "" },
-                      gridLineWidth: 0,
+                      gridLineWidth: 1,
                       gridLineDashStyle: "Dash"
                     },
                     {
@@ -212,6 +214,9 @@ $(function() {
 
   app.init().then(function() {
     setTimeout(function() {
+      // 修改时候注释的 20180328 leo
+      // return;
+      giveChartTopLine("tio");
       var arr = createHtml("#monthtotal");
 
       pajax.post({

@@ -459,7 +459,9 @@ v.pushComponent({
         NotSelHistoryMonth: true,                                               //用户没有选择历史月
         projectSelCache: null,
         userId: "persagyAdmin",
-        oldPage:'centerindex',
+        isEnergyHistoryLoading:false,
+        isEnergyRemarkLoading:false,
+        // oldPage:'centerindex',
     },
     methods: {
         toThousands　: toThousands,
@@ -471,15 +473,15 @@ v.pushComponent({
         getMonthLastDay: getMonthLastDay,
         arr2tree: arr2tree,
         bodyClick:bodyClick,
-        goLastPage : function(){
-            v.initPage(this.oldPage);
-        }
+        // goLastPage : function(){
+        //     v.initPage(this.oldPage);
+        // }
     },
     watch:{
-        onPage : function(N,O){
-            if(O){this.oldPage = O;}
-            if(O == 'energybyday'){chart.chart != null ? chart.chart.destroy() : void 0;}
-        }
+        // onPage : function(N,O){
+        //     if(O){this.oldPage = O;}
+        //     if(O == 'energybyday'){chart.chart != null ? chart.chart.destroy() : void 0;}
+        // }
     }
 })
 

@@ -2,7 +2,7 @@ v.pushComponent({
   name: "subOption",
   data: {
     NodeManage: [], //预算管理列表
-    subOptionTop: 0,
+    subOptionTop: 0
   },
   methods: {
     // 跳转预算管理节点管理页面
@@ -15,6 +15,10 @@ v.pushComponent({
     },
     // 记录用户点击时间
     localStorage: function() {
+      if (this.isIndexGoF == false) return;
+
+      this.isIndexGoF = false;
+
       this.hover = false;
 
       var cooky = window.localStorage.getItem("cooky") == "true";
@@ -23,6 +27,7 @@ v.pushComponent({
         this.checkboxModel = true;
       } else {
         this.checkboxModel = false;
+
         v.instance.hover = true;
       }
     },

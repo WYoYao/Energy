@@ -26,9 +26,10 @@
 }
 
 .budgetMangeWrap .budgetDataLabel {
-  border: 1px solid #cdcdcd;
-  border-radius: 3px;
-  background: #fff;
+  border-radius: 2px;
+  background: #FFFFFF;
+  box-shadow: 0 2px 12px 0 rgba(0,0,0,0.12);
+  border: 1px solid #D9D9D9;
 }
 
 .budgetMangeWrap .budgetDataLabel > div {
@@ -239,6 +240,7 @@
 
 .budgetMangeWrap .budManHeader .boldColor {
   color: #151515;
+  font-weight: bold;
 }
 
 .budgetMangeWrap .budManHeader .backButton {
@@ -330,6 +332,7 @@
 }
 
 .budgetMangeWrap .monthBudgets .norButton xmp {
+  margin: 0;
   font-family: "perficon";
 }
 
@@ -350,6 +353,10 @@
   background: #ffffff;
   margin-right: 8px;
   position: relative;
+}
+
+.budgetMangeWrap .monthBudgets .itemBlock.over {
+  background: #f4f6f9;
 }
 
 .budgetMangeWrap .monthBudgets .itemBlock.ide {
@@ -416,6 +423,7 @@
   border-radius: 3px;
   padding: 2px 7px;
   cursor: pointer;
+  font-weight: 100;
 }
 
 .budgetMangeWrap .monthBudgets .itemBlock .lineInfo .hasNew:hover {
@@ -893,6 +901,7 @@
 
 .budgetMangeWrap .dayPlanFloat .columnChart {
   height: 342px;
+  padding: 0px 20px;
 }
 
 .planSetWindow {
@@ -905,6 +914,7 @@
   /*undo*/
   width: auto;
   height: auto;
+  border-radius: 2px;
 }
 
 .planSetWindow .explainHead {
